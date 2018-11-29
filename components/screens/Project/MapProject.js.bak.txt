@@ -1,0 +1,686 @@
+import React from 'react';
+import {
+    View,
+    BackHandler,
+    Dimensions,
+    StyleSheet,
+    TextInput,
+    Picker,
+    // Platform,
+    Image,
+    TouchableOpacity,
+    Text,
+    Animated,
+    ScrollView,
+    Keyboard
+} from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+// import { MapView, Constants, Location, Permissions } from 'expo';
+import { Container, Content, Spinner } from 'native-base';
+import Header from '../Home/Header';
+
+import icPin from './../../../icons/marker.png';
+import icInvestor from './../../../icons/investor.png';
+import icHistory from './../../../icons/history.png';
+import icPartner from './../../../icons/partner.png';
+import icSearch from './../../../icons/icon_search.png';
+import imgDuan from './../../../images/duan.jpg';
+import icTitle from './../../../icons/ic_title.png';
+
+const { width, height } = Dimensions.get('window');
+let isHidden = true;
+let isHiddenPopup = true;
+const heightPopup = 220;
+export default class MapProject extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            txtAddress: '',
+            type: '',
+            kind: '',
+            loaded: false,
+            location: null,
+            errorMessage: null,
+            currentLocation: {
+                latitude: 21.027763,
+                longitude: 105.834160
+            },
+            text: 'Tìm kiếm dự án',
+            bounceValue: new Animated.Value(height),  //This is the initial position of the subview
+            popupValue: new Animated.Value(heightPopup)
+        };
+    }
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+        setTimeout(() => {
+            this.setState({ loaded: true });
+        }, 200);
+    }
+    onSearch() {
+        fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyByXMeeujrWpH517p7LkQrfBmTNIN1RTkQ&address=` + this.state.txtAddress, //eslint-disable-line
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
+                },
+            })
+            .then(res => res.json())
+            .then(resJson => {
+                if (resJson.results.length > 0) {
+                    this.setState({
+                        currentLocation: {
+                            latitude: resJson.results[0].geometry.location.lat,
+                            longitude: resJson.results[0].geometry.location.lng
+                        }
+                    });
+                }
+            })
+            .catch(err => console.log(err));
+    }
+
+    handleBackPress = () => {
+        if (!isHidden) {
+            this.toggleSubview();
+        } else {
+            this.props.navigation.navigate('HomeScreen');
+        }
+        return true;
+    }
+    showAdvanceSearch() {
+        Keyboard.dismiss();
+        this.toggleSubview();
+    }
+    toggleSubview() {
+        let toValue = height;
+        if (isHidden) {
+            toValue = 0;
+        }
+        //This will animate the transalteY of the subview between 0 & 100 depending on its current state
+        //100 comes from the style below, which is the height of the subview.
+        Animated.spring(
+            this.state.bounceValue,
+            {
+                toValue: toValue,
+                velocity: 3,
+                tension: 2,
+                friction: 8,
+            }
+        ).start();
+        isHidden = !isHidden;
+    }
+    togglePopup(wantHide) {
+        let toValue = heightPopup;
+        if (isHiddenPopup) {
+            toValue = 0;
+        }
+        if (wantHide) {
+            toValue = heightPopup;
+        } else {
+            toValue = 0;
+        }
+        Animated.spring(
+            this.state.popupValue,
+            {
+                toValue: toValue,
+                velocity: 3,
+                tension: 2,
+                friction: 8,
+            }
+        ).start();
+        isHiddenPopup = !isHiddenPopup;
+    }
+    render() {
+        if (!this.state.loaded) {
+            return (
+                <Container>
+                    <Header navigation={this.props.navigation} title='BẢN ĐỒ DỰ ÁN' />
+                    <Content>
+                        <Spinner />
+                    </Content>
+                </Container>
+            );
+        }
+        return (
+            <View style={styles.wrapper}>
+                <Header navigation={this.props.navigation} title='BẢN ĐỒ DỰ ÁN' />
+                <View style={styles.mapContainer}>
+                    <MapView
+                        style={{ width: width - 20, flex: 1 }}
+                        region={{
+                            latitude: this.state.currentLocation.latitude,
+                            longitude: this.state.currentLocation.longitude,
+                            latitudeDelta: 0.0922,
+                            longitudeDelta: 0.0421,
+                        }}
+                        mapType="standard"
+                        followsUserLocation
+                        showsUserLocation
+                        showsMyLocationButton
+                        moveOnMarkerPress
+                        onPress={() => {
+                            this.togglePopup(true);
+                        }}
+                    >
+                        <Marker
+                            coordinate={{
+                                latitude: 21.026700,
+                                longitude: 105.847544,
+                            }}
+                            title='Hải Phát Land'
+                            description='HPC Landmark 1'
+                            image={icPin}
+                            onPress={() => {
+                                this.togglePopup();
+                            }}
+                        />
+                        <Marker
+                            coordinate={{
+                                latitude: 21.016606,
+                                longitude: 105.849603,
+                            }}
+                            title='Vincom Bà Triệu'
+                            description='Dự án The Pride'
+                            image={icPin}
+                        />
+                        <Marker
+                            coordinate={{
+                                latitude: 21.009074,
+                                longitude: 105.824723,
+                            }}
+                            title='The Phoenix'
+                            description='Dự án The Pride'
+                            image={icPin}
+                        />
+                    </MapView>
+                </View>
+                <View style={styles.actionContainer}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: '500' }}>Tiện ích khu vực</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', paddingTop: 10, justifyContent: 'space-between', paddingHorizontal: 10 }}>
+                        <TouchableOpacity
+                            style={styles.btnAction}
+                        >
+                            <View style={{ alignItems: 'center' }}>
+                                <Image source={icInvestor} style={{ width: 45, height: 45 }} />
+                                <Text>Chung cư</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.btnAction}
+                        >
+                            <View style={{ alignItems: 'center' }}>
+                                <Image source={icHistory} style={{ width: 45, height: 45 }} />
+                                <Text>Biệt thự</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.btnAction}
+                        >
+                            <View style={{ alignItems: 'center' }}>
+                                <Image source={icPartner} style={{ width: 45, height: 45 }} />
+                                <Text>Liền kề</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.btnAction}
+                        >
+                            <View style={{ alignItems: 'center' }}>
+                                <Image source={icHistory} style={{ width: 45, height: 45 }} />
+                                <Text>Dự án</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: 'white',
+                                borderRadius: 15,
+                                height: 30,
+                                marginTop: 5,
+                                marginRight: 5,
+                                justifyContent: 'center',
+                                borderWidth: 1
+                            }}
+                            onPress={() => {
+                                this.togglePopup();
+                            }}
+                        >
+                            <Text style={{ fontWeight: '400', marginHorizontal: 15, fontSize: 12, color: 'black' }}>Roman Plaza</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: 'white',
+                                borderRadius: 15,
+                                height: 30,
+                                marginTop: 5,
+                                marginRight: 5,
+                                justifyContent: 'center',
+                                borderWidth: 1
+                            }}
+                        >
+                            <Text style={{ fontWeight: '400', marginHorizontal: 15, fontSize: 12, color: 'black' }}>Roman Plaza</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: 'white',
+                                borderRadius: 15,
+                                height: 30,
+                                marginTop: 5,
+                                marginRight: 5,
+                                justifyContent: 'center',
+                                borderWidth: 1
+                            }}
+                        >
+                            <Text style={{ fontWeight: '400', marginHorizontal: 15, fontSize: 12, color: 'black' }}>Roman Plaza</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: 'white',
+                                borderRadius: 15,
+                                height: 30,
+                                marginTop: 5,
+                                marginRight: 5,
+                                justifyContent: 'center',
+                                borderWidth: 1
+                            }}
+                        >
+                            <Text style={{ fontWeight: '400', marginHorizontal: 15, fontSize: 12, color: 'black' }}>Roman Plaza</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: 'white',
+                                borderRadius: 15,
+                                height: 30,
+                                marginTop: 5,
+                                marginRight: 5,
+                                justifyContent: 'center',
+                                borderWidth: 1
+                            }}
+                        >
+                            <Text style={{ fontWeight: '400', marginHorizontal: 15, fontSize: 12, color: 'black' }}>Roman Plaza</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: 'white',
+                                borderRadius: 15,
+                                height: 30,
+                                marginTop: 5,
+                                marginRight: 5,
+                                justifyContent: 'center',
+                                borderWidth: 1
+                            }}
+                        >
+                            <Text style={{ fontWeight: '400', marginHorizontal: 15, fontSize: 12, color: 'black' }}>Roman Plaza</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: 'white',
+                                borderRadius: 15,
+                                height: 30,
+                                marginTop: 5,
+                                marginRight: 5,
+                                justifyContent: 'center',
+                                borderWidth: 1
+                            }}
+                        >
+                            <Text style={{ fontWeight: '400', marginHorizontal: 15, fontSize: 12, color: 'black' }}>Roman Plaza</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
+                    <TextInput
+                        style={{
+                            height: 50,
+                            borderRadius: 5,
+                            borderWidth: 1,
+                            borderColor: '#33563743',
+                            backgroundColor: 'white',
+                            shadowColor: '#000',
+                            shadowOffset: { width: 5, height: 5 },
+                            shadowOpacity: 1,
+                            paddingLeft: 20,
+                            marginTop: 10
+                        }}
+                        placeholder='Tìm kiếm khu vực...'
+                        underlineColorAndroid='transparent'
+                        onChangeText={(text) => this.setState({ text })}
+                        value={this.state.text}
+                        onEndEditing={this.onSearch.bind(this)}
+                        onFocus={this.showAdvanceSearch.bind(this)}
+                    />
+                </View>
+
+                <Animated.View
+                    style={[styles.subView,
+                    { transform: [{ translateY: this.state.bounceValue }] }]}
+                >
+                    <Header navigation={this.props.navigation} title='Tìm kiếm nâng cao' />
+                    <View style={{ paddingHorizontal: 15, paddingTop: 15, height }}>
+                        <TextInput
+                            style={{
+                                height: 50,
+                                borderRadius: 5,
+                                borderWidth: 1,
+                                borderColor: '#33563743',
+                                backgroundColor: 'white',
+                                shadowColor: '#000',
+                                shadowOffset: { width: 5, height: 5 },
+                                shadowOpacity: 1,
+                                paddingLeft: 5
+                            }}
+                            placeholder='Tìm kiếm khu vực...'
+                            underlineColorAndroid='transparent'
+                            onChangeText={(text) => this.setState({ txtAddress: text })}
+                            value={this.state.txtAddress}
+                            onFocus={() => console.log('ok')}
+                        />
+                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%', paddingTop: 5 }}>
+                            <View
+                                style={{
+                                    borderWidth: 1,
+                                    borderColor: '#33563743',
+                                    width: '48%',
+                                    marginTop: 5,
+                                    borderRadius: 5,
+                                    backgroundColor: 'white'
+                                }}
+                            >
+                                <Picker
+                                    selectedValue={this.state.type}
+                                    onValueChange={(itemValue) => this.setState({ type: itemValue })}
+                                >
+                                    <Picker.Item label="Hà Nội" value="1" />
+                                    <Picker.Item label="Hải Phòng" value="1" />
+                                </Picker>
+                            </View>
+                            <View
+                                style={{
+                                    borderWidth: 1,
+                                    borderColor: '#33563743',
+                                    width: '48%',
+                                    marginTop: 5,
+                                    borderRadius: 5,
+                                    backgroundColor: 'white'
+                                }}
+                            >
+                                <Picker
+                                    selectedValue={this.state.kind}
+                                    onValueChange={(itemValue) => this.setState({ kind: itemValue })}
+                                >
+                                    <Picker.Item label="Hà Đông" value="1" />
+                                    <Picker.Item label="Thanh xuân" value="1" />
+                                </Picker>
+                            </View>
+                        </View>
+                        <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                            <View
+                                style={{
+                                    borderWidth: 1,
+                                    borderColor: '#33563743',
+                                    width: '48%',
+                                    marginTop: 5,
+                                    borderRadius: 5,
+                                    backgroundColor: 'white'
+                                }}
+                            >
+                                <Picker
+                                    selectedValue={this.state.type}
+                                    onValueChange={(itemValue) => this.setState({ type: itemValue })}
+                                >
+                                    <Picker.Item label="Chung cư" value="1" />
+                                    <Picker.Item label="Biệt thự" value="2" />
+                                    <Picker.Item label="Liền kề" value="3" />
+                                </Picker>
+                            </View>
+                            <View
+                                style={{
+                                    borderWidth: 1,
+                                    borderColor: '#33563743',
+                                    width: '48%',
+                                    marginTop: 5,
+                                    borderRadius: 5,
+                                    backgroundColor: 'white'
+                                }}
+                            >
+                                <Picker
+                                    selectedValue={this.state.kind}
+                                    onValueChange={(itemValue) => this.setState({ kind: itemValue })}
+                                >
+                                    <Picker.Item label="Roman Plaza" value="1" />
+                                    <Picker.Item label="The Pride" value="2" />
+                                    <Picker.Item label="The Phoenix Garden" value="3" />
+                                </Picker>
+                            </View>
+                        </View>
+
+
+                        <TouchableOpacity
+                            style={{ backgroundColor: '#F58319', height: 50, paddingTop: 15, borderRadius: 5, marginTop: 5, flexDirection: 'row', justifyContent: 'center' }}
+                            onPress={() => console.log('ok')}
+                        >
+                            <Image source={icSearch} style={styles.iconStyle} />
+                            <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 16 }}>Tìm kiếm</Text>
+                        </TouchableOpacity>
+                        <View style={{ paddingTop: 10, backgroundColor: 'white', marginTop: 10, flex: 10 }}>
+                            <Text style={{ fontWeight: '600', paddingLeft: 10 }}>Tìm kiếm gần đây</Text>
+                            <ScrollView>
+                                <View style={{ padding: 10, flexDirection: 'row' }}>
+                                    <Image source={icPin} style={{ width: 30, height: (30 / 100) * 121 }} />
+                                    <View style={{ flexDirection: 'column', paddingLeft: 5 }}>
+                                        <Text style={{ fontWeight: '600' }}>The Pride Hải Phát</Text>
+                                        <Text>Tố Hữu, Hà Đông, Hà Nội</Text>
+                                    </View>
+                                </View>
+                                <View
+                                    style={{
+                                        borderBottomColor: '#cccccc',
+                                        borderBottomWidth: 1,
+                                        width: '90%',
+                                        marginHorizontal: 10
+                                    }}
+                                />
+                                <View style={{ padding: 10, flexDirection: 'row' }}>
+                                    <Image source={icPin} style={{ width: 30, height: (30 / 100) * 121 }} />
+                                    <View style={{ flexDirection: 'column', paddingLeft: 5 }}>
+                                        <Text style={{ fontWeight: '600' }}>The Pride Hải Phát</Text>
+                                        <Text>Tố Hữu, Hà Đông, Hà Nội</Text>
+                                    </View>
+                                </View>
+                                <View
+                                    style={{
+                                        borderBottomColor: '#cccccc',
+                                        borderBottomWidth: 1,
+                                        width: '90%',
+                                        marginHorizontal: 10
+                                    }}
+                                />
+                                <View style={{ padding: 10, flexDirection: 'row' }}>
+                                    <Image source={icPin} style={{ width: 30, height: (30 / 100) * 121 }} />
+                                    <View style={{ flexDirection: 'column', paddingLeft: 5 }}>
+                                        <Text style={{ fontWeight: '600' }}>The Pride Hải Phát</Text>
+                                        <Text>Tố Hữu, Hà Đông, Hà Nội</Text>
+                                    </View>
+                                </View>
+                                <View
+                                    style={{
+                                        borderBottomColor: '#cccccc',
+                                        borderBottomWidth: 1,
+                                        width: '90%',
+                                        marginHorizontal: 10
+                                    }}
+                                />
+                                <View style={{ padding: 10, flexDirection: 'row' }}>
+                                    <Image source={icPin} style={{ width: 30, height: (30 / 100) * 121 }} />
+                                    <View style={{ flexDirection: 'column', paddingLeft: 5 }}>
+                                        <Text style={{ fontWeight: '600' }}>The Pride Hải Phát</Text>
+                                        <Text>Tố Hữu, Hà Đông, Hà Nội</Text>
+                                    </View>
+                                </View>
+                                <View
+                                    style={{
+                                        borderBottomColor: '#cccccc',
+                                        borderBottomWidth: 1,
+                                        width: '90%',
+                                        marginHorizontal: 10
+                                    }}
+                                />
+                                <View style={{ padding: 10, flexDirection: 'row' }}>
+                                    <Image source={icPin} style={{ width: 30, height: (30 / 100) * 121 }} />
+                                    <View style={{ flexDirection: 'column', paddingLeft: 5 }}>
+                                        <Text style={{ fontWeight: '600' }}>The Pride Hải Phát</Text>
+                                        <Text>Tố Hữu, Hà Đông, Hà Nội</Text>
+                                    </View>
+                                </View>
+                                <View
+                                    style={{
+                                        borderBottomColor: '#cccccc',
+                                        borderBottomWidth: 1,
+                                        width: '90%',
+                                        marginHorizontal: 10
+                                    }}
+                                />
+                                <View style={{ padding: 10, flexDirection: 'row' }}>
+                                    <Image source={icPin} style={{ width: 30, height: (30 / 100) * 121 }} />
+                                    <View style={{ flexDirection: 'column', paddingLeft: 5 }}>
+                                        <Text style={{ fontWeight: '600' }}>The Pride Hải Phát</Text>
+                                        <Text>Tố Hữu, Hà Đông, Hà Nội</Text>
+                                    </View>
+                                </View>
+                                <View
+                                    style={{
+                                        borderBottomColor: '#cccccc',
+                                        borderBottomWidth: 1,
+                                        width: '90%',
+                                        marginHorizontal: 10
+                                    }}
+                                />
+                                <View style={{ padding: 10, flexDirection: 'row' }}>
+                                    <Image source={icPin} style={{ width: 30, height: (30 / 100) * 121 }} />
+                                    <View style={{ flexDirection: 'column', paddingLeft: 5 }}>
+                                        <Text style={{ fontWeight: '600' }}>The Pride Hải Phát</Text>
+                                        <Text>Tố Hữu, Hà Đông, Hà Nội</Text>
+                                    </View>
+                                </View>
+                                <View
+                                    style={{
+                                        borderBottomColor: '#cccccc',
+                                        borderBottomWidth: 1,
+                                        width: '90%',
+                                        marginHorizontal: 10
+                                    }}
+                                />
+                                <View style={{ padding: 10, flexDirection: 'row' }}>
+                                    <Image source={icPin} style={{ width: 30, height: (30 / 100) * 121 }} />
+                                    <View style={{ flexDirection: 'column', paddingLeft: 5 }}>
+                                        <Text style={{ fontWeight: '600' }}>The Pride Hải Phát</Text>
+                                        <Text>Tố Hữu, Hà Đông, Hà Nội</Text>
+                                    </View>
+                                </View>
+                                <View
+                                    style={{
+                                        borderBottomColor: '#cccccc',
+                                        borderBottomWidth: 1,
+                                        width: '90%',
+                                        marginHorizontal: 10
+                                    }}
+                                />
+                            </ScrollView>
+                        </View>
+                    </View>
+                </Animated.View>
+                <Animated.View
+                    style={[styles.popupProject,
+                    { transform: [{ translateY: this.state.popupValue }] }]}
+                >
+                    <View style={{ padding: 10 }}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={{ paddingTop: 5 }}>
+                                <Image source={icTitle} style={{ width: 2, height: 13 }} />
+                            </View>
+
+                            <Text style={{ fontWeight: '600', fontSize: 16, paddingLeft: 5 }}>The Pride Hải Phát</Text>
+                        </View>
+                        <Text>Tố Hữu, Hà Đông, Hà Nội</Text>
+                        <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
+                            <Image source={imgDuan} style={{ width: 120, height: 120, marginRight: 5 }} />
+                            <Image source={imgDuan} style={{ width: 120, height: 120, marginRight: 5 }} />
+                            <Image source={imgDuan} style={{ width: 120, height: 120, marginRight: 5 }} />
+                            <Image source={imgDuan} style={{ width: 120, height: 120, marginRight: 5 }} />
+                            <Image source={imgDuan} style={{ width: 120, height: 120, marginRight: 5 }} />
+                            <Image source={imgDuan} style={{ width: 120, height: 120, marginRight: 5 }} />
+                        </ScrollView>
+
+                        <View style={{ flexDirection: 'row', paddingTop: 5, justifyContent: 'space-between' }}>
+                            <TouchableOpacity style={styles.btnDetail}>
+                                <Text style={{ fontWeight: '500', marginHorizontal: 15, fontSize: 12, color: 'black' }}>CHI TIẾT</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.btnTable}>
+                                <Text style={{ color: 'white', fontWeight: '500', marginHorizontal: 5, fontSize: 12 }}>BẢNG HÀNG</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                </Animated.View>
+            </View>
+        );
+        
+    }
+}
+const styles = StyleSheet.create({
+    wrapper: { flex: 1, backgroundColor: '#F6F6F6' },
+    mapContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 2,
+        backgroundColor: '#FFFFFF',
+        margin: 10,
+        borderRadius: 2,
+        shadowColor: '#3B5458',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2
+    },
+    actionContainer: {
+        justifyContent: 'flex-end',
+        padding: 10,
+        // flex: 1,
+        // backgroundColor: '#FFF',
+        // margin: 10,
+        // marginTop: 0,
+        borderRadius: 2,
+        shadowColor: '#3B5458',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2
+    },
+    subView: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#EAF0F3',
+        height
+    },
+    popupProject: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'white',
+        height: heightPopup
+    },
+    iconStyle: { width: 20, height: 20 },
+    btnDetail: {
+        height: 30,
+        borderColor: '#959595',
+        borderRadius: 5,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        borderWidth: 1
+    },
+    btnTable: {
+        height: 30,
+        borderColor: '#959595',
+        borderRadius: 5,
+        backgroundColor: '#F4AF47',
+        justifyContent: 'center'
+    }
+});
