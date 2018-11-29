@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, TextInput, Animated, TouchableHighlight, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Animated, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Header from './../Home/Header';
+import Modal from "react-native-modal";
 
 let isHidden = true;
-export default class GoScreen extends React.Component {
+export default class TestSlide extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,18 +39,38 @@ export default class GoScreen extends React.Component {
         isHidden = !isHidden;
     }
 
+    state = {
+        isModalVisible: false
+    };
+
+    _toggleModal = () =>
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+
     render() {
         return (
-            <View style={styles.container}>
-                <TouchableHighlight style={styles.button} onPress={() => { this._toggleSubview() }}>
-                    <Text style={styles.buttonText}>{this.state.buttonText}</Text>
-                </TouchableHighlight>
-                <Animated.View
-                    style={[styles.subView,
-                    { transform: [{ translateY: this.state.bounceValue }] }]}
-                >
-                    <Text>This is a sub view</Text>
-                </Animated.View>
+            // <View style={styles.container}>
+            //     <TouchableHighlight style={styles.button} onPress={() => { this._toggleSubview() }}>
+            //         <Text style={styles.buttonText}>{this.state.buttonText}</Text>
+            //     </TouchableHighlight>
+            //     <Animated.View
+            //         style={[styles.subView,
+            //         { transform: [{ translateY: this.state.bounceValue }] }]}
+            //     >
+            //         <Text>This is a sub view</Text>
+            //     </Animated.View>
+            // </View>
+            <View style={{ flex: 1 }}>
+                <TouchableOpacity onPress={this._toggleModal}>
+                    <Text>Show Modal</Text>
+                </TouchableOpacity>
+                <Modal isVisible={this.state.isModalVisible}>
+                    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+                        <Text>Hello!</Text>
+                        <TouchableOpacity onPress={this._toggleModal}>
+                            <Text>Hide me!</Text>
+                        </TouchableOpacity>
+                    </View>
+                </Modal>
             </View>
         );
     }

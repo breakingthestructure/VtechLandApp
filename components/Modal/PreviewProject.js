@@ -90,10 +90,10 @@ export default class AdvanceSearch extends Component {
             <View style={{ padding: 10 }}>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ paddingTop: 5 }}>
-                        <Image source={icTitle} style={{ width: 2, height: 13 }} />
+                        <Image source={icTitle} style={styles.icTitle} />
                     </View>
 
-                    <Text style={{ fontWeight: '600', fontSize: 16, paddingLeft: 5 }}>{project.name}</Text>
+                    <Text style={styles.title}>{project.name}</Text>
                 </View>
                 <Text>{project.address}</Text>
                 {/* <Text>{project.description}</Text> */}
@@ -128,7 +128,7 @@ export default class AdvanceSearch extends Component {
                         enablePreload
                     />
                 </Modal>
-                <View style={{ flexDirection: 'row', paddingTop: 5 }}>
+                <View style={styles.description}>
                     <TouchableOpacity
                         style={styles.btnDetail}
                         onPress={() => {
@@ -137,10 +137,10 @@ export default class AdvanceSearch extends Component {
                             });
                         }}
                     >
-                        <Text style={{ fontWeight: '500', marginHorizontal: 15, fontSize: 14, color: 'white', marginTop: 5 }}>
+                        <Text style={styles.txtDetail}>
                             XEM CHI TIẾT
                         </Text>
-                        <Icon active name='ios-arrow-forward' style={{ color: '#fff', fontSize: 14, marginTop: 7, marginLeft: 0 }} />
+                        <Icon active name='ios-arrow-forward' style={styles.iconBigBtn} />
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnTable}
@@ -150,7 +150,7 @@ export default class AdvanceSearch extends Component {
                             });
                         }}
                     >
-                        <Icon active name='ios-cart' style={{ color: '#fff', fontSize: 14 }} />
+                        <Icon active name='ios-cart' style={styles.iconBtn} />
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnTable}
@@ -160,7 +160,7 @@ export default class AdvanceSearch extends Component {
                             });
                         }}
                     >
-                        <Icon type="FontAwesome" name='dollar' style={{ color: '#fff', fontSize: 14 }} />
+                        <Icon type="FontAwesome" name='dollar' style={styles.iconBtn} />
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnTable}
@@ -170,7 +170,7 @@ export default class AdvanceSearch extends Component {
                             });
                         }}
                     >
-                        <Icon active name='ios-bookmark' style={{ color: '#fff', fontSize: 14 }} />
+                        <Icon active name='ios-bookmark' style={styles.iconBtn} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -200,4 +200,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginRight: 1,
     },
+    icTitle: { width: 2, height: 13 },
+    title: { fontWeight: '600', fontSize: 16, paddingLeft: 5 },
+    txtDetail: { fontWeight: '500', marginHorizontal: 15, fontSize: 14, color: 'white', marginTop: 5 },
+    iconBtn: { color: '#fff', fontSize: 14 },
+    iconBigBtn: { color: '#fff', fontSize: 14, marginTop: 7, marginLeft: 0 },
+    description: { flexDirection: 'row', paddingTop: 5 }
 });

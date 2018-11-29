@@ -108,14 +108,14 @@ export default class DetailProject extends React.Component {
         }
         const htmlContent = '<div class=\"tongquanduan\" style=\"color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif;\"><p style=\"text-align: justify;\"><span style=\"font-weight: bolder;\">T\u00ean d\u1ef1 \u00e1n:&nbsp;<\/span>Mulberry Lane<\/p><p style=\"text-align: justify;\"><span style=\"font-weight: bolder;\">V\u1ecb tr\u00ed:<\/span>&nbsp;Khu \u0111\u00f4 th\u1ecb m\u1edbi M\u1ed7 Lao, Qu\u1eadn H\u00e0 \u0110\u00f4ng, th\u00e0nh ph\u1ed1 H\u00e0 N\u1ed9i<\/p><p style=\"text-align: justify;\"><span style=\"font-weight: bolder;\">Ch\u1ee7 \u0111\u1ea7u t\u01b0 d\u1ef1 \u00e1n:&nbsp;<\/span>C\u00f4ng ty TNHH CapitaLand \u2013 Ho\u00e0ng Th\u00e0nh<\/p><p style=\"text-align: justify;\"><span style=\"font-weight: bolder;\">Qu\u1ea3n l\u00fd thi c\u00f4ng d\u1ef1 \u00e1n:&nbsp;<\/span>C\u00f4ng ty CapitaLand (VN)<\/p><p style=\"text-align: justify;\"><span style=\"font-weight: bolder;\">T\u1ed5ng di\u1ec7n t\u00edch d\u1ef1 \u00e1n<\/span>: 24,466 m2<\/p><p style=\"text-align: justify;\"><span style=\"font-weight: bolder;\">Quy m\u00f4 d\u1ef1 \u00e1n:&nbsp;<\/span>&nbsp;G\u1ed3m 5 t\u00f2a th\u00e1p v\u00e0 1.478 c\u0103n h\u1ed9<\/p><p style=\"text-align: justify;\"><\/p><\/div><div class=\"vitriduan\" style=\"color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif;\"><div class=\"left-title\" style=\"margin: 20px 0px;\"><h2 style=\"margin-bottom: 0px; font-weight: bold; color: rgb(245, 130, 31); font-size: 18px; text-transform: uppercase;\">V\u1eca TR\u00cd D\u1ef0 \u00c1N<\/h2><\/div><\/div>';
         return (
-            <View style={{ backgroundColor: 'white', flex: 1 }}>
+            <View style={styles.container}>
                 <ScrollView style={styles.wrapper}>
-                    <Text style={{ fontWeight: '400', fontSize: 18, color: '#1f7eb8', paddingBottom: 5 }}>AN PHÚ SHOP VILLA</Text>
+                    <Text style={styles.title}>AN PHÚ SHOP VILLA</Text>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{ paddingTop: 5 }}>
                             <Icon type="FontAwesome" name='map-marker' style={{ fontSize: 12, color: 'orange' }} />
                         </View>
-                        <Text style={{ fontSize: 12, marginTop: 4, paddingLeft: 10 }}>Khu đô thị Dương Nội, P. Dương Nội, Q. Hà Đông, TP. Hà Nội</Text>
+                        <Text style={{ fontSize: 12, marginTop: 4, paddingLeft: 5 }}>Khu đô thị Dương Nội, P. Dương Nội, Q. Hà Đông, TP. Hà Nội</Text>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{ paddingTop: 5 }}>
@@ -209,7 +209,7 @@ export default class DetailProject extends React.Component {
                     </ScrollView>
                     <View style={{ marginLeft: 0, margin: 0, width: '100%', top: 0 }}>
                         <Text style={{ fontWeight: '400', fontSize: 16, color: '#1f7eb8', paddingTop: 10, marginBottom: 0 }}>Sản phẩm</Text>
-                        <ListItem thumbnail style={{ marginLeft: 0, width: '100%' }}>
+                        <ListItem thumbnail style={{ marginLeft: 0, width: '100%', marginTop: 0 }}>
                             <Left>
                                 <Thumbnail square source={imgDuan} style={{ height: 60, borderRadius: 5 }} />
                             </Left>
@@ -345,4 +345,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center'
     },
+    container: { backgroundColor: 'white', flex: 1 },
+    title: { fontWeight: '400', fontSize: 18, color: '#1f7eb8', paddingBottom: 5 }
 });

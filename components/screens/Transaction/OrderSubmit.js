@@ -13,7 +13,7 @@ import {
     Switch
 } from 'react-native';
 
-import { Container, Content, Spinner, Item, Input } from 'native-base';
+import { Container, Content, Spinner, Item, Input, ListItem, CheckBox, Body } from 'native-base';
 import { TextInputMask } from 'react-native-masked-text';
 import Header from '../Home/Header';
 
@@ -203,7 +203,7 @@ export default class OrderSubmit extends React.Component {
                         <TextInputMask
                             value={this.state.txtMoney}
                             type={'money'}
-                            options={{ unit: '', suffixUnit: 'VND', precision: 0, separator: ' ' }}
+                            options={{ unit: '', precision: 0, separator: ' ' }}
                             style={{ fontSize: 12, width: '45%', borderWidth: 1, borderColor: '#cecece' }}
                         />
                         <View
@@ -215,23 +215,25 @@ export default class OrderSubmit extends React.Component {
                     <Text style={{ fontSize: 12, color: '#555', paddingTop: 10 }}>
                         (Lưu ý số tiền đặt cọc tối thiểu 20.000.000 vnd)
                     </Text>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Switch style={{ marginTop: 5 }} />
-                        <Text style={{ fontSize: 14, color: '#000', fontWeight: '400', paddingTop: 10 }}>
-                            Thanh toán tại sàn
-                        </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Switch style={{ marginTop: 5 }} />
-                        <Text style={{ fontSize: 14, color: '#000', fontWeight: '400', paddingTop: 10 }}>
-                            Thanh toán qua chuyển khoản ngân hàng
-                        </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Switch style={{ marginTop: 5 }} />
-                        <Text style={{ fontSize: 14, color: '#000', fontWeight: '400', paddingTop: 10 }}>
-                            Thanh toán online qua ứng dụng
-                        </Text>
+                    <View>
+                        <ListItem style={{ marginLeft: 0 }}>
+                            <CheckBox checked={true} />
+                            <Body>
+                                <Text> Thanh toán tại sàn</Text>
+                            </Body>
+                        </ListItem>
+                        <ListItem style={{ marginLeft: 0 }}>
+                            <CheckBox checked={false} />
+                            <Body>
+                                <Text> Thanh toán qua chuyển khoản ngân hàng</Text>
+                            </Body>
+                        </ListItem>
+                        <ListItem style={{ marginLeft: 0 }}>
+                            <CheckBox checked={false} />
+                            <Body>
+                                <Text> Thanh toán online qua ứng dụng</Text>
+                            </Body>
+                        </ListItem>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, marginBottom: 20 }}>
                         <TouchableOpacity style={{ width: (width - 50) / 2, height: 30, borderRadius: 15, backgroundColor: '#177dba', marginTop: 5 }}>

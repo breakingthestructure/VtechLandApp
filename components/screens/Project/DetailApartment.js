@@ -19,8 +19,9 @@ import icTitle from './../../../icons/ic_title.png';
 import Header from '../Home/Header';
 import getDetailApartment from './../../../api/getDetailApartment';
 import { BASE_URL, TYPE_ROOM, DIRECTIONS } from './../../../Globals';
+import ModalRN from "react-native-modal";
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default class DetailApartment extends React.Component {
     constructor(props) {
@@ -35,6 +36,13 @@ export default class DetailApartment extends React.Component {
             image3d: null
         };
     }
+    // state = {
+    //     isModalVisible: false
+    // };
+    // showAlert = () => {
+    //     console.log(222);
+    //     this.setState({ isModalVisible: !this.state.isModalVisible });
+    // }
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
@@ -71,6 +79,7 @@ export default class DetailApartment extends React.Component {
         return true;
     }
     onLockApartment() {
+        // this._toggleModal();
         Alert.alert(
             'Thông báo',
             'Bạn có chắc muốn lock căn này',
@@ -81,6 +90,14 @@ export default class DetailApartment extends React.Component {
             { cancelable: false }
         );
     }
+
+    state = {
+        isModalVisible: false
+    };
+
+    _toggleModal = () =>
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+
     render() {
         if (!this.state.loaded) {
             return (
@@ -99,15 +116,16 @@ export default class DetailApartment extends React.Component {
                     <Text style={{ fontWeight: '600', fontSize: 16, textAlign: 'center', color: '#053654' }}>CĂN HỘ {apartment.number} - {apartment.building.name} - {apartment.project.name}</Text>
                     <Text style={{ fontWeight: '300', fontSize: 14, textAlign: 'center', color: '#f48120', paddingTop: 5 }}>({apartment.status.description})</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                        <TouchableOpacity 
-                        onPress={this.onLockApartment.bind(this)}
-                        style={{ width: (width - 50) / 2, height: 30, borderRadius: 15, backgroundColor: '#177dba', marginTop: 5 }}
+                        <TouchableOpacity
+                            // onPress={this.onLockApartment.bind(this)}
+                            onPress={this._toggleModal}
+                            style={{ width: (width - 50) / 2, height: 30, borderRadius: 15, backgroundColor: '#177dba', marginTop: 5, marginHorizontal: 5 }}
                         >
                             <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff' }}>LOCK CĂN</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => this.props.navigation.navigate('OrderSubmitScreen')}
-                            style={{ width: (width - 50) / 2, height: 30, borderRadius: 15, backgroundColor: '#f48120', marginTop: 5 }}
+                            style={{ width: (width - 50) / 2, height: 30, borderRadius: 15, backgroundColor: '#f48120', marginTop: 5, marginHorizontal: 5 }}
                         >
                             <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff' }}>ĐẶT CỌC (ĐẶT CHỖ)</Text>
                         </TouchableOpacity>
@@ -201,14 +219,14 @@ export default class DetailApartment extends React.Component {
                         <ScrollView horizontal style={{ flexDirection: 'row' }}>
                             {apartment.image_3d.map(image => (
                                 <TouchableOpacity key={image} onPress={this.onDisplayImage.bind(this, '3d')}>
-                                    <Image source={{ uri: `${BASE_URL}${image}` }} style={{ width: width - 10, height: ((width - 10) / 337) * 367 }} />
+                                    <Image source={{ uri: `${BASE_URL}${image}` }} style={{ width: width - 50, height: ((width - 50) / 337) * 367 }} />
                                 </TouchableOpacity>
                             ))}
                         </ScrollView>
 
                         <Text style={{ fontSize: 14, color: '#000', fontWeight: '400' }}>Vị trí căn hộ</Text>
                         <TouchableOpacity onPress={this.onDisplayImage.bind(this, 'position')} style={{ justifyContent: 'center' }}>
-                            <Image source={{ uri: `${BASE_URL}${apartment.position_apartment}` }} style={{ width: width - 10, height: ((width - 10) / 337) * 367 }} />
+                            <Image source={{ uri: `${BASE_URL}${apartment.position_apartment}` }} style={{ width: width - 50, height: ((width - 50) / 337) * 367 }} />
                         </TouchableOpacity>
                         <Modal
                             visible={this.state.modalPosition}
@@ -260,7 +278,62 @@ export default class DetailApartment extends React.Component {
                     ))} */}
 
                 </ScrollView>
+                <ModalRN
+                    isVisible={this.state.isModalVisible}
+                    // animationInTiming='1500'
+                    onSwipe={() => this.setState({ isModalVisible: false })}
+                    swipeDirection="left"
+                >
+                    {/* <View style={{ height: height / 3.5, backgroundColor: '#1f7eb8', borderRadius: 15 }}>
+                        <View style={{ margin: 10 }}>
+                            <Text style={{ textAlign: 'center', color: '#fff', fontSize: 18, fontWeight: '600' }}>LOCK CĂN HỘ</Text>
+                            <Text style={{ color: '#fff' }}>Căn hộ sẽ được khóa trong 120 phút và thông báo với giám đốc dự án.
+                        Căn hộ sẽ được mở sau thời gian trên nếu không hoàn tất thủ tục thanh toán.</Text>
+                            <Text style={{ color: '#fff' }}>Bạn có chắc muốn khóa căn hộ này không?</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', paddingTop: 20 }}>
+                                <TouchableOpacity
+                                    // onPress={this.onLockApartment.bind(this)}
+                                    onPress={this._toggleModal}
+                                    style={{ width: (width - 100) / 2, height: 30, borderRadius: 15, backgroundColor: '#f48120', marginHorizontal: 5 }}
+                                >
+                                    <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff' }}>XÁC NHẬN</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={this._toggleModal}
+                                    style={{ width: (width - 100) / 2, height: 30, borderRadius: 15, backgroundColor: '#f48120', marginHorizontal: 5 }}
+                                >
+                                    <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff' }}>HỦY</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View> */}
 
+                    <View style={{ height: height / 3, backgroundColor: '#fff', borderRadius: 15 }}>
+                        <View style={{ backgroundColor: '#F58319', height: 50, borderTopLeftRadius: 15, borderTopRightRadius: 15, justifyContent: 'center' }}>
+                            <Text style={{ textAlign: 'center', color: '#fff', fontSize: 18, fontWeight: '600' }}>LOCK CĂN HỘ</Text>
+                        </View>
+                        <View style={{ margin: 10 }}>
+                            <Text style={{ color: '#666' }}>Căn hộ sẽ được khóa trong 120 phút và thông báo với giám đốc dự án.
+                        Căn hộ sẽ được mở sau thời gian trên nếu không hoàn tất thủ tục thanh toán.</Text>
+                            <Text style={{ color: '#666' }}>Bạn có chắc muốn khóa căn hộ này không?</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', paddingTop: 20, bottom: 0 }}>
+                                <TouchableOpacity
+                                    // onPress={this.onLockApartment.bind(this)}
+                                    onPress={this._toggleModal}
+                                    style={{ width: (width - 100) / 2, height: 30, borderRadius: 15, backgroundColor: '#f48120', marginHorizontal: 5 }}
+                                >
+                                    <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff' }}>XÁC NHẬN</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={this._toggleModal}
+                                    style={{ width: (width - 100) / 2, height: 30, borderRadius: 15, backgroundColor: '#f48120', marginHorizontal: 5 }}
+                                >
+                                    <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff' }}>HỦY</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </ModalRN>
             </View >
         );
     }

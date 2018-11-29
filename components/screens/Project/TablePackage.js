@@ -124,41 +124,41 @@ export default class TablePackage extends Component {
             <View style={styles.container}>
                 <Header navigation={this.props.navigation} title='Tòa CT1 - The Pride' />
                 <View style={styles.wrapper}>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: '#6EC9FF' }} />
-                            <Text>Còn trống</Text>
+                            <Text> Còn trống</Text>
                         </View>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: 'yellow' }} />
                             <Text>Chờ thanh toán</Text>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: 'green' }} />
-                            <Text>Đang giữ chỗ</Text>
+                            <Text> Đang giữ chỗ</Text>
                         </View>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: 'red' }} />
-                            <Text>Đã bán</Text>
+                            <Text> Đã bán</Text>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: 'gray' }} />
-                            <Text>Chưa mở bán</Text>
+                            <Text> Chưa mở bán</Text>
                         </View>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: 'yellow' }} />
-                            <Text>Chờ thanh toán</Text>
+                            <Text> Chờ thanh toán</Text>
                         </View>
                     </View>
                 </View>
                 <ScrollView horizontal={true}>
                     <FlatList
                         horizontal={false}
-                        // ListHeaderComponent={this.renderHeader}
+                        ListHeaderComponent={this.renderHeader}
                         numColumns={this.state.column}
                         // contentContainerStyle={{ flexDirection: 'row' }}
                         data={this.state.listApartmentId}

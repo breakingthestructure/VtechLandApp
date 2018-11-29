@@ -22,6 +22,7 @@ import MyNotification from './components/screens/Auth/MyNotification';
 import Profile from './components/screens/Auth/Profile';
 import imgWelcome from './images/welcome.jpg';
 import OrderSubmit from './components/screens/Transaction/OrderSubmit';
+import TestSlide from './components/screens/Project/TestSlide';
 
 const { width, height } = Dimensions.get('window');
 

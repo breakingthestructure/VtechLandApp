@@ -25,7 +25,7 @@ import SearchResult from '../../Modal/SearchResult';
 const { width, height } = Dimensions.get('window');
 let isHidden = true;
 let isHiddenPopup = true;
-let isHiddenResult = true;
+// let isHiddenResult = true;
 const heightPopup = 220;
 const heightResult = 300;
 const heightSearch = height - 15;
@@ -180,7 +180,7 @@ export default class MapProject extends React.Component {
                 friction: 8,
             }
         ).start();
-        isHiddenResult = !isHiddenResult;
+        // isHiddenResult = !isHiddenResult;
     }
     keyExtractor = (item) => item.id.toString(); //eslint-disable-line
     render() {
@@ -235,20 +235,13 @@ export default class MapProject extends React.Component {
                             />
                         ))}
                     </MapView>
-                    <View style={{ position: 'absolute', bottom: 0, width, padding: 5 }}>
-                        <View style={{ backgroundColor: 'white', padding: 5, margin: 10, borderRadius: 5 }}>
+                    <View style={styles.toolSearch}>
+                        <View style={styles.toolContent}>
                             <View
-                                style={{
-                                    paddingTop: 5,
-                                    backgroundColor: 'white',
-                                    height: 40,
-                                    borderRadius: 5,
-                                    borderColor: '#33563743',
-                                    flexDirection: 'row'
-                                }}>
-                                <Icon type='FontAwesome' name='dot-circle-o' style={{ color: 'orange', marginLeft: 5 }} />
+                                style={styles.sectionInput}>
+                                <Icon type='FontAwesome' name='dot-circle-o' style={styles.iconSearch} />
                                 <TouchableOpacity
-                                    style={{ marginTop: 5, borderBottomWidth: 1, borderColor: '#cecece', marginLeft: 15, width: width - 100 }}
+                                    style={styles.fakeInputSearch}
                                     onPress={() => {
                                         this.toggleAdvanceSearch();
                                     }}
@@ -281,7 +274,7 @@ export default class MapProject extends React.Component {
                                     this.toggleAdvanceSearch();
                                 }}
                             >
-                                <Text style={{ textAlign: 'center', fontSize: 12, color: '#053654' }}>Tìm kiếm nâng cao</Text>
+                                <Text style={styles.txtAdvanceSearch}>Tìm kiếm nâng cao</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -366,4 +359,17 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         height: heightResult
     },
+    toolSearch: { position: 'absolute', bottom: 0, width, padding: 5 },
+    toolContent: { backgroundColor: 'white', padding: 5, margin: 10, borderRadius: 5 },
+    sectionInput: {
+        paddingTop: 5,
+        backgroundColor: 'white',
+        height: 40,
+        borderRadius: 5,
+        borderColor: '#33563743',
+        flexDirection: 'row'
+    },
+    fakeInputSearch: { marginTop: 5, borderBottomWidth: 1, borderColor: '#cecece', marginLeft: 15, width: width - 100 },
+    iconSearch: { color: 'orange', marginLeft: 5 },
+    txtAdvanceSearch: { textAlign: 'center', fontSize: 12, color: '#053654' }
 });

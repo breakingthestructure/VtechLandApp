@@ -10,6 +10,7 @@ import SupportProject from './SupportProject';
 import DetailProject from './DetailProject';
 import CalcDebt from './CalcDebt';
 import AdvanceSearch from './AdvanceSearch';
+import News from './News';
 
 const { width, height } = Dimensions.get('window');
 const imageWidth = width;
@@ -49,6 +50,16 @@ export default class TabProject extends Component {
                                 activeTextStyle={{ color: 'white', fontWeight: '400', fontSize: 12 }}
                             >
                                 <DetailProject />
+                            </Tab>
+                            <Tab
+                                heading="Tin tức & Sự kiện"
+                                // heading={<TabHeading style={{ backgroundColor: '#cacaca' }} ><Icon name="ios-calculator" /></TabHeading>}
+                                tabStyle={{ backgroundColor: '#fff' }}
+                                textStyle={{ color: '#000', fontSize: 12, fontWeight: '400' }}
+                                activeTabStyle={{ backgroundColor: '#F58319' }}
+                                activeTextStyle={{ color: 'white', fontWeight: '400', fontSize: 12 }}
+                            >
+                                <News />
                             </Tab>
                             <Tab
                                 heading="Tính lãi suất vay"

@@ -39,6 +39,7 @@ export default class AdvanceSearch extends Component {
             direction: '',
             bounceValue: new Animated.Value(heightSearch), //This is the initial position of the subview
             resultValue: new Animated.Value(heightResult),
+            type: 'sell'
         };
     }
     componentDidMount() {
@@ -92,6 +93,10 @@ export default class AdvanceSearch extends Component {
             })
             .catch(err => console.log(err));
     }
+    onSelectType(type) {
+        console.log(type);
+        this.setState({ type });
+    }
     render() {
         const { cities, districts, wards, streets } = this.state;
         if (!this.state.loaded && !cities) {
@@ -107,46 +112,38 @@ export default class AdvanceSearch extends Component {
             <View style={{ flex: 1 }}>
                 <Header navigation={this.props.navigation} title='Tìm kiếm nâng cao' />
 
-                <ScrollView style={{ paddingHorizontal: 15, flex: 1 }}>
+                <ScrollView style={styles.wraper}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                         <TouchableOpacity
-                            // onPress={this.onLockApartment.bind(this)}
-                            style={{
-                                width: (width - 50) / 2,
-                                height: 30,
-                                borderTopLeftRadius: 15,
-                                borderBottomLeftRadius: 15,
-                                backgroundColor: '#177dba',
-                                marginTop: 15,
-                            }}
+                            onPress={() => this.onSelectType('sell')}
+                            style={this.state.type === 'sell' ? styles.btnSellActive : styles.btnSellDeactive}
                         >
-                            <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff', fontWeight: '600' }}>BÁN</Text>
+                            <Text style={this.state.type === 'sell' ? styles.textBtnActive : styles.textBtnDeactive}>BÁN</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            // onPress={() => this.props.navigation.navigate('OrderSubmitScreen')}
-                            style={{ width: (width - 50) / 2, height: 30, borderTopRightRadius: 15, borderBottomRightRadius: 15, backgroundColor: '#d7d7d7', marginTop: 15 }}
+                            onPress={() => this.onSelectType('rent')}
+                            style={this.state.type === 'rent' ? styles.btnRentActive : styles.btnRentDeactive}
                         >
-                            <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#666', fontWeight: '600' }}>CHO THUÊ</Text>
+                            <Text style={this.state.type === 'rent' ? styles.textBtnActive : styles.textBtnDeactive}>CHO THUÊ</Text>
                         </TouchableOpacity>
                     </View>
-                    <Text style={{ fontSize: 14, paddingTop: 5, color: '#000', fontWeight: '600' }}>Loại hình</Text>
-                    {/* <Text style={{ fontSize: 16, fontWeight: '600', color: '#555', paddingVertical: 10, textAlign: 'center' }}>Tìm kiếm nâng cao</Text> */}
-                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%', paddingTop: 5 }}>
+                    <Text style={styles.titleGroup}>Dự án</Text>
+                    <TextInput
+                        style={styles.inputStyle}
+                        placeholder='Nhập tên dự án...'
+                        underlineColorAndroid='transparent'
+                        value={this.state.name}
+                        onChangeText={text => this.setState({ name: text })}
+                    />
+                    <Text style={styles.titleGroup}>Loại hình</Text>
+                    <View style={styles.rowOption}>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '100%',
-                                // marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.optionAlone}
                         >
                             <Picker
                                 selectedValue={this.state.type}
                                 onValueChange={(itemValue) => this.setState({ type: itemValue })}
-                                style={{ height: 40 }}
+                                style={styles.picker}
                             >
                                 <Picker.Item label="Loại nhà đất" value="0" />
                                 <Picker.Item label="Biệt thự" value="1" />
@@ -155,21 +152,13 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <Text style={{ fontSize: 14, paddingTop: 5, color: '#000', fontWeight: '600' }}>Vị trí</Text>
-                    <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                    <Text style={styles.titleGroup}>Vị trí</Text>
+                    <View style={styles.rowOption}>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '48%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.option}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.city}
                                 onValueChange={(itemValue, itemPosition) =>
                                     this.onSelectCity(itemValue)
@@ -182,18 +171,10 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '48%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.option}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.district}
                                 onValueChange={(itemValue, itemPosition) =>
                                     this.onSelectDistrict(itemValue)
@@ -206,20 +187,12 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                    <View style={styles.rowOption}>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '48%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.option}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.ward}
                                 onValueChange={(itemValue) => this.setState({ ward: itemValue })}
                             >
@@ -230,18 +203,10 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '48%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.option}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.street}
                                 onValueChange={(itemValue) => this.setState({ street: itemValue })}
                             >
@@ -252,21 +217,13 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <Text style={{ fontSize: 14, paddingTop: 5, color: '#000', fontWeight: '600' }}>Phân khúc</Text>
-                    <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                    <Text style={styles.titleGroup}>Phân khúc</Text>
+                    <View style={styles.rowOption}>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '100%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.optionAlone}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.type}
                                 onValueChange={(itemValue) => this.setState({ type: itemValue })}
                             >
@@ -276,21 +233,13 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <Text style={{ fontSize: 14, paddingTop: 5, color: '#000', fontWeight: '600' }}>Tầm tài chính</Text>
-                    <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                    <Text style={styles.titleGroup}>Tầm tài chính</Text>
+                    <View style={styles.rowOption}>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '100%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.optionAlone}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.type}
                                 onValueChange={(itemValue) => this.setState({ type: itemValue })}
                             >
@@ -301,21 +250,13 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <Text style={{ fontSize: 14, paddingTop: 5, color: '#000', fontWeight: '600' }}>Tính chất sản phẩm</Text>
-                    <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                    <Text style={styles.titleGroup}>Tính chất sản phẩm</Text>
+                    <View style={styles.rowOption}>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '48%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.option}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.direction}
                                 onValueChange={(itemValue) => this.setState({ direction: itemValue })}
                             >
@@ -326,18 +267,10 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '48%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.option}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.kind}
                                 onValueChange={(itemValue) => this.setState({ kind: itemValue })}
                             >
@@ -347,20 +280,12 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                    <View style={styles.rowOption}>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '48%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.option}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.type}
                                 onValueChange={(itemValue) => this.setState({ type: itemValue })}
                             >
@@ -371,18 +296,10 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '48%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.option}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.kind}
                                 onValueChange={(itemValue) => this.setState({ kind: itemValue })}
                             >
@@ -392,20 +309,12 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+                    <View style={styles.rowOption}>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '48%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.option}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.bedroom}
                                 onValueChange={(itemValue) => this.setState({ bedroom: itemValue })}
                             >
@@ -417,18 +326,10 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                         <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#33563743',
-                                width: '48%',
-                                marginTop: 5,
-                                borderRadius: 2,
-                                backgroundColor: 'white',
-                                height: 40
-                            }}
+                            style={styles.option}
                         >
                             <Picker
-                                style={{ height: 40 }}
+                                style={styles.picker}
                                 selectedValue={this.state.livingroom}
                                 onValueChange={(itemValue) => this.setState({ livingroom: itemValue })}
                             >
@@ -440,7 +341,7 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <Text style={{ fontSize: 14, paddingTop: 5, color: '#000', fontWeight: '600' }}>Tiện ích</Text>
+                    <Text style={styles.titleGroup}>Tiện ích</Text>
                     <TextInput
                         style={styles.inputStyle}
                         placeholder='Hồ điều hòa, công viên nội khu...'
@@ -449,12 +350,12 @@ export default class AdvanceSearch extends Component {
                         onChangeText={text => this.setState({ name: text })}
                     />
                     <TouchableOpacity
-                        style={{ backgroundColor: '#F58319', height: 40, borderRadius: 5, marginTop: 10, marginBottom: 10, justifyContent: 'center' }}
+                        style={styles.btnSearch}
                         onPress={() => {
                             this.props.toggleAdvanceSearch(this.props.bounceValue, true);
                         }}
                     >
-                        <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 16 }}>TÌM KIẾM</Text>
+                        <Text style={styles.textBtnSearch}>TÌM KIẾM</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </View >
@@ -462,6 +363,7 @@ export default class AdvanceSearch extends Component {
     }
 }
 const styles = StyleSheet.create({
+    wraper: { paddingHorizontal: 15, flex: 1 },
     iconStyle: { width: 15, height: 15 },
     inputStyle: {
         height: 40,
@@ -471,4 +373,60 @@ const styles = StyleSheet.create({
         borderColor: '#cecece',
         backgroundColor: '#fff'
     },
+    btnSellActive: {
+        width: (width - 50) / 2,
+        height: 30,
+        borderTopLeftRadius: 15,
+        borderBottomLeftRadius: 15,
+        backgroundColor: '#177dba',
+        marginTop: 15,
+    },
+    btnSellDeactive: {
+        width: (width - 50) / 2,
+        height: 30,
+        borderTopLeftRadius: 15,
+        borderBottomLeftRadius: 15,
+        backgroundColor: '#d7d7d7',
+        marginTop: 15,
+    },
+    btnRentActive: {
+        width: (width - 50) / 2,
+        height: 30,
+        borderTopRightRadius: 15,
+        borderBottomRightRadius: 15,
+        backgroundColor: '#177dba',
+        marginTop: 15
+    },
+    btnRentDeactive: {
+        width: (width - 50) / 2,
+        height: 30,
+        borderTopRightRadius: 15,
+        borderBottomRightRadius: 15,
+        backgroundColor: '#d7d7d7',
+        marginTop: 15
+    },
+    textBtnActive: { fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff', fontWeight: '600' },
+    textBtnDeactive: { fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#666', fontWeight: '600' },
+    titleGroup: { fontSize: 14, paddingTop: 5, color: '#000', fontWeight: '600' },
+    rowOption: { justifyContent: 'space-between', flexDirection: 'row', width: '100%', paddingTop: 5 },
+    option: {
+        borderWidth: 1,
+        borderColor: '#33563743',
+        width: '48%',
+        marginTop: 5,
+        borderRadius: 2,
+        backgroundColor: 'white',
+        height: 40
+    },
+    optionAlone: {
+        borderWidth: 1,
+        borderColor: '#33563743',
+        width: '100%',
+        borderRadius: 2,
+        backgroundColor: 'white',
+        height: 40
+    },
+    btnSearch: { backgroundColor: '#F58319', height: 40, borderRadius: 5, marginTop: 10, marginBottom: 10, justifyContent: 'center' },
+    textBtnSearch: { textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 16 },
+    picker: { height: 40 }
 });
