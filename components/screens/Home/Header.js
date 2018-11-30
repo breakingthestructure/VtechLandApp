@@ -26,7 +26,7 @@ export default class Header extends Component {
                     <TouchableOpacity onPress={this.openMenu.bind(this)}>
                         <Image source={icMenu} style={iconStyle} />
                     </TouchableOpacity>
-                    <Text style={{ color: 'white', fontWeight: '500', fontSize: 16, marginTop: 5 }}>{this.props.title ? this.props.title : 'HẢI PHÁT LAND'}</Text>
+                    <Text style={{ color: 'white', fontWeight: '500', fontSize: 16, marginTop: 5 }}>{this.props.title ? this.props.title : 'VtechHome'}</Text>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileScreen')}>
                         <Image source={icAvatar} style={{ width: 30, height: 30, marginTop: 5, borderRadius: 15, borderWidth: 1, borderColor: 'white' }} />
                     </TouchableOpacity>

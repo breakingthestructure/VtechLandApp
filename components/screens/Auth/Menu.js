@@ -13,6 +13,9 @@ import icShutdown from './../../../icons/shutdown.png';
 import icSale from './../../../icons/sale.png';
 import saveToken from './../../../api/saveToken';
 import GLOBAL from './../../../Globals';
+import icLogo from './../../../icons/logo_new.png';
+
+const { width, height } = Dimensions.get('window');
 
 export default class Menu extends Component {
     // onSignOut() {
@@ -71,7 +74,10 @@ export default class Menu extends Component {
                 </TouchableOpacity> */}
 
                 <View style={{ paddingTop: 20, flex: 1 }}>
-                    <Text style={styles.textHeading}>V-TECHLAND</Text>
+                    {/* <Text style={styles.textHeading}>V-TECHLAND</Text> */}
+                    <View>
+                        <Image source={icLogo} style={{ width: width / 2, height: ((width / 2) / 492) * 79 }} />
+                    </View>
 
                     <View
                         style={styles.underLine}
@@ -127,8 +133,6 @@ export default class Menu extends Component {
         );
     }
 }
-
-const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     wrapper: {

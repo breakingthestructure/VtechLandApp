@@ -359,8 +359,24 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         height: heightResult
     },
-    toolSearch: { position: 'absolute', bottom: 0, width, padding: 5 },
-    toolContent: { backgroundColor: 'white', padding: 5, margin: 10, borderRadius: 5 },
+    toolSearch: {
+        position: 'absolute',
+        bottom: 0,
+        width,
+        padding: 5,
+    },
+    toolContent: {
+        backgroundColor: 'white',
+        padding: 5,
+        margin: 10,
+        borderRadius: 5,
+        shadowOffset: { width: 0, height: 10 },
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        elevation: 3,
+        // background color must be set
+        // backgroundColor: "#0000" // invisible color
+    },
     sectionInput: {
         paddingTop: 5,
         backgroundColor: 'white',
@@ -370,6 +386,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     fakeInputSearch: { marginTop: 5, borderBottomWidth: 1, borderColor: '#cecece', marginLeft: 15, width: width - 100 },
-    iconSearch: { color: 'orange', marginLeft: 5 },
+    iconSearch: { color: '#F58319', marginLeft: 5, fontSize: 18 },
     txtAdvanceSearch: { textAlign: 'center', fontSize: 12, color: '#053654' }
 });

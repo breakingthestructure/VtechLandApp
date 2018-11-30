@@ -16,7 +16,7 @@ import GLOBAL from './../../../Globals';
 
 import bgImg from './../../../icons/bg.png';
 import icDevelop from './../../../icons/develop.png';
-import icLogo from './../../../icons/logofull.png';
+import icLogo from './../../../icons/logo_new.png';
 import icPartner from './../../../icons/partner.png';
 import icSale from './../../../icons/sale.png';
 import icInvestor from './../../../icons/investor.png';
@@ -75,7 +75,8 @@ export default class Intro extends React.Component {
                     <View style={{ alignItems: 'center', paddingTop: 10 }}>
 
                         <View style={{ paddingTop: 20 }}>
-                            <Image source={icLogo} style={{ width: width - 200, height: ((width - 200) / 935) * 152 }} />
+                            <Image source={icLogo} style={{ width: width / 2, height: ((width / 2) / 492) * 79 }} />
+                            {/* <Image source={icLogo} style={{ width: width - 200, height: ((width - 200) / 935) * 152 }} /> */}
                         </View>
                         <View
                             style={{

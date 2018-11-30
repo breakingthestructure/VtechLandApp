@@ -308,11 +308,11 @@ export default class DetailApartment extends React.Component {
                         </View>
                     </View> */}
 
-                    <View style={{ height: height / 3, backgroundColor: '#fff', borderRadius: 15 }}>
+                    <View style={{ borderRadius: 15 }}>
                         <View style={{ backgroundColor: '#F58319', height: 50, borderTopLeftRadius: 15, borderTopRightRadius: 15, justifyContent: 'center' }}>
                             <Text style={{ textAlign: 'center', color: '#fff', fontSize: 18, fontWeight: '600' }}>LOCK CĂN HỘ</Text>
                         </View>
-                        <View style={{ margin: 10 }}>
+                        <View style={{ padding: 10, backgroundColor: '#fff', borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }}>
                             <Text style={{ color: '#666' }}>Căn hộ sẽ được khóa trong 120 phút và thông báo với giám đốc dự án.
                         Căn hộ sẽ được mở sau thời gian trên nếu không hoàn tất thủ tục thanh toán.</Text>
                             <Text style={{ color: '#666' }}>Bạn có chắc muốn khóa căn hộ này không?</Text>
@@ -326,7 +326,7 @@ export default class DetailApartment extends React.Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={this._toggleModal}
-                                    style={{ width: (width - 100) / 2, height: 30, borderRadius: 15, backgroundColor: '#f48120', marginHorizontal: 5 }}
+                                    style={{ width: (width - 100) / 2, height: 30, borderRadius: 15, backgroundColor: '#1f7eb8', marginHorizontal: 5 }}
                                 >
                                     <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff' }}>HỦY</Text>
                                 </TouchableOpacity>
