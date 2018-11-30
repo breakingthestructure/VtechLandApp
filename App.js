@@ -45,18 +45,18 @@ const Routes = createDrawerNavigator(
     DetailNewsScreen: {
       screen: DetailNews
     },
-    SetCalendarProjectScreen: {
-      screen: SetCalendar
-    },
+    // SetCalendarProjectScreen: {
+    //   screen: SetCalendar
+    // },
     TabProjectScreen: {
       screen: TabProject
     },
     ConfigScreen: {
       screen: Config
     },
-    CalcDebtScreen: {
-      screen: CalcDebt
-    },
+    // CalcDebtScreen: {
+    //   screen: CalcDebt
+    // },
     AdvanceSearchScreen: {
       screen: AdvanceSearch
     },
@@ -66,9 +66,9 @@ const Routes = createDrawerNavigator(
     DetailApartmentScreen: {
       screen: DetailApartment
     },
-    DetailProjectScreen: {
-      screen: DetailProject
-    },
+    // DetailProjectScreen: {
+    //   screen: DetailProject
+    // },
     NotificationScreen: {
       screen: MyNotification
     },
@@ -80,7 +80,7 @@ const Routes = createDrawerNavigator(
     }
   },
   {
-    initialRouteName: 'MapScreen',
+    initialRouteName: 'TabProjectScreen',
     contentComponent: Menu,
   }
 );
@@ -95,7 +95,7 @@ export default class App extends React.Component {
   async componentDidMount() {
     setTimeout(() => {
       this.setState({ loaded: true });
-    }, 200);
+    }, 1000);
     const notificationOpen: NotificationOpen = await firebase.notifications().getInitialNotification();
     if (notificationOpen) {
       const action = notificationOpen.action;

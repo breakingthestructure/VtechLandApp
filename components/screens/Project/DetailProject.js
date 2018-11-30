@@ -194,9 +194,7 @@ export default class DetailProject extends React.Component {
                         <TouchableOpacity onPress={this.onDisplayImage.bind(this)}>
                             <Image source={imgDuan} style={{ width: (width - 20) / 3, height: 110, marginRight: 5 }} />
                         </TouchableOpacity>
-                    </ScrollView>
 
-                    <ScrollView horizontal style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={this.onDisplayImage.bind(this)}>
                             <Image source={imgDuan} style={{ width: (width - 20) / 3, height: 110, marginRight: 5 }} />
                         </TouchableOpacity>
@@ -295,6 +293,7 @@ export default class DetailProject extends React.Component {
                     />
                     <TouchableOpacity
                         style={styles.bigBtn}
+                        onPress={() => this.props.onChangeTab(3)}
                     >
                         <Text style={{ color: '#555', fontWeight: '400', fontSize: 14, textAlign: 'center', marginTop: 10 }}>
                             Đặt lịch thăm quan dự án & Nhà mẫu
@@ -302,6 +301,7 @@ export default class DetailProject extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.bigBtnCall}
+                        onPress={() => this.props.onChangeTab(5)}
                     >
                         <Icon type="FontAwesome" name='volume-control-phone' style={{ fontSize: 14, color: 'white', marginTop: 10, marginRight: 5 }} />
                         <Text style={{ color: 'white', fontWeight: '400', fontSize: 14, textAlign: 'center', marginTop: 10 }}>

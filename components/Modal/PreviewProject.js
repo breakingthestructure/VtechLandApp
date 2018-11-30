@@ -48,18 +48,20 @@ export default class AdvanceSearch extends Component {
         this.arrayProject = [];
     }
     componentDidMount() {
-        this.setState({
-            listImage: this.props.project.data.images.feature.map((item, index) => {
-                return { url: `${BASE_URL}${item}` };
-            })
-        });
+        if (this.props.project.data.images.feature)
+            this.setState({
+                listImage: this.props.project.data.images.feature.map((item, index) => {
+                    return { url: `${BASE_URL}${item}` };
+                })
+            });
     }
     componentWillReceiveProps(props) {
-        this.setState({
-            listImage: props.project.data.images.feature.map((item, index) => {
-                return { url: `${BASE_URL}${item}` };
-            })
-        });
+        if (props.project.data.images.feature)
+            this.setState({
+                listImage: props.project.data.images.feature.map((item, index) => {
+                    return { url: `${BASE_URL}${item}` };
+                })
+            });
     }
     onDisplayImage(index) {
         this.setState({

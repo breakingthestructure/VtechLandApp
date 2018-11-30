@@ -72,7 +72,7 @@ export default class SearchResult extends Component {
             <Container>
                 <Content>
                     <TouchableOpacity
-                        style={{  }}
+                        style={{}}
                         onPress={() => {
                             this.props.toggleResult();
                         }}
@@ -82,12 +82,24 @@ export default class SearchResult extends Component {
                     <ScrollView>
                         <ListItem thumbnail>
                             <Left>
-                                <TouchableOpacity onPress={this.onLikeProject.bind(this)}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        this.props.navigation.navigate('TabProjectScreen', {
+                                            projectId: 1
+                                        });
+                                    }}
+                                >
                                     <Thumbnail square source={imgDuan} />
                                 </TouchableOpacity>
                             </Left>
                             <Body>
-                                <TouchableOpacity onPress={this.onLikeProject.bind(this)}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        this.props.navigation.navigate('TabProjectScreen', {
+                                            projectId: 1
+                                        });
+                                    }}
+                                >
                                     <Text style={styles.textTitle}>An Phú Shop Villa</Text>
                                     <Text style={styles.textDesc} note numberOfLines={1}>Khu đô thị Dương nội, Hà Đông, Hà Nội</Text>
                                     <Text style={styles.textDesc} note numberOfLines={1}>60.000.000 Tr - 80.000.000 tr/m2</Text>

@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
         borderColor: '#33563743',
         flexDirection: 'row'
     },
-    fakeInputSearch: { marginTop: 5, borderBottomWidth: 1, borderColor: '#cecece', marginLeft: 15, width: width - 100 },
-    iconSearch: { color: '#F58319', marginLeft: 5, fontSize: 18 },
+    fakeInputSearch: { marginTop: 5, borderBottomWidth: 1, borderColor: '#cecece', marginLeft: 15, width: width / 1.4 },
+    iconSearch: { color: '#F58319', marginLeft: 5, fontSize: 20 },
     txtAdvanceSearch: { textAlign: 'center', fontSize: 12, color: '#053654' }
 });

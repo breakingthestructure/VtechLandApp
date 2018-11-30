@@ -17,11 +17,20 @@ const imageWidth = width;
 const imageHeight = (imageWidth / 3900) * 2092;
 
 export default class TabProject extends Component {
+    constructor(props) {
+        super(props)
+        this.state = { initialPage: 0, activeTab: 0 };
+        this.onChangeTab = this.onChangeTab.bind(this)
+    }
+    onChangeTab(page) {
+        this.refs._scrollView.scrollTo({ x: 0, y: 0, animated: true });
+        this.setState({ activeTab: page, initialPage: page });
+    }
     render() {
         return (
             <Container>
                 <Header navigation={this.props.navigation} title='AN PHÚ SHOP VILLA' />
-                <ScrollView>
+                <ScrollView ref='_scrollView'>
                     <View style={{ height: height / 4 }}>
                         <Swiper showsButtons={true}>
                             <View>
@@ -40,6 +49,8 @@ export default class TabProject extends Component {
                             renderTabBar={() => <ScrollableTab style={{ backgroundColor: '#cacaca', height: 40 }} />}
                             locked
                             tabBarPosition='top'
+                            initialPage={this.state.initialPage}
+                            page={this.state.activeTab}
                         >
                             <Tab
                                 heading="Thông tin dự án"
@@ -49,7 +60,7 @@ export default class TabProject extends Component {
                                 activeTabStyle={{ backgroundColor: '#F58319' }}
                                 activeTextStyle={{ color: 'white', fontWeight: '400', fontSize: 12 }}
                             >
-                                <DetailProject />
+                                <DetailProject onChangeTab={this.onChangeTab} state={this.state} />
                             </Tab>
                             <Tab
                                 heading="Tin tức & Sự kiện"
