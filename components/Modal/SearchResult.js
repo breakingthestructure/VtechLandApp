@@ -29,6 +29,7 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import imgDuan from './../../images/duan.jpg';
 import icTitle from './../../icons/ic_title.png';
 import { BASE_URL, NO_IMAGE } from './../../Globals';
+import { loading } from '../../Helpers';
 
 // const { width, height } = Dimensions.get('window');
 
@@ -44,7 +45,7 @@ export default class SearchResult extends Component {
         this.arrayProject = [];
     }
     componentDidMount() {
-
+        console.log('haha', this.props.state.dataSearch);
     }
     onLikeProject() {
         Alert.alert(
@@ -59,14 +60,9 @@ export default class SearchResult extends Component {
     }
     keyExtractor = (item) => item.toString(); //eslint-disable-line
     render() {
-        if (!this.state.loaded) {
-            return (
-                <Container>
-                    <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
-                    </Content>
-                </Container>
-            );
+        const { dataSearch } = this.props.state;
+        if (!this.props.state.loaded) {
+            return loading();
         }
         return (
             <Container>
@@ -77,85 +73,42 @@ export default class SearchResult extends Component {
                             this.props.toggleResult();
                         }}
                     >
-                        <Text style={styles.textHeading}>10 kết quả tìm kiếm</Text>
+                        <Text style={styles.textHeading}>{dataSearch.length} kết quả tìm kiếm</Text>
                     </TouchableOpacity>
                     <ScrollView>
-                        <ListItem thumbnail>
-                            <Left>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        this.props.navigation.navigate('TabProjectScreen', {
-                                            projectId: 1
-                                        });
-                                    }}
-                                >
-                                    <Thumbnail square source={imgDuan} />
-                                </TouchableOpacity>
-                            </Left>
-                            <Body>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        this.props.navigation.navigate('TabProjectScreen', {
-                                            projectId: 1
-                                        });
-                                    }}
-                                >
-                                    <Text style={styles.textTitle}>An Phú Shop Villa</Text>
-                                    <Text style={styles.textDesc} note numberOfLines={1}>Khu đô thị Dương nội, Hà Đông, Hà Nội</Text>
-                                    <Text style={styles.textDesc} note numberOfLines={1}>60.000.000 Tr - 80.000.000 tr/m2</Text>
-                                </TouchableOpacity>
-                            </Body>
-                            <Right>
-                                <Button transparent onPress={this.onLikeProject.bind(this)}>
-                                    <Icon active name='ios-heart' style={{ color: 'orange' }} />
-                                </Button>
-                            </Right>
-                        </ListItem>
-                        <ListItem thumbnail>
-                            <Left>
-                                <Thumbnail square source={imgDuan} />
-                            </Left>
-                            <Body>
-                                <Text style={styles.textTitle}>An Phú Shop Villa</Text>
-                                <Text style={styles.textDesc} note numberOfLines={1}>Khu đô thị Dương nội, Hà Đông, Hà Nội</Text>
-                                <Text style={styles.textDesc} note numberOfLines={1}>60.000.000 Tr - 80.000.000 tr/m2</Text>
-                            </Body>
-                            <Right>
-                                <Button transparent>
-                                    <Icon active name='ios-heart' style={{ color: 'orange' }} />
-                                </Button>
-                            </Right>
-                        </ListItem>
-                        <ListItem thumbnail>
-                            <Left>
-                                <Thumbnail square source={imgDuan} />
-                            </Left>
-                            <Body>
-                                <Text style={styles.textTitle}>An Phú Shop Villa</Text>
-                                <Text style={styles.textDesc} note numberOfLines={1}>Khu đô thị Dương nội, Hà Đông, Hà Nội</Text>
-                                <Text style={styles.textDesc} note numberOfLines={1}>60.000.000 Tr - 80.000.000 tr/m2</Text>
-                            </Body>
-                            <Right>
-                                <Button transparent>
-                                    <Icon active name='ios-heart' style={{ color: 'orange' }} />
-                                </Button>
-                            </Right>
-                        </ListItem>
-                        <ListItem thumbnail>
-                            <Left>
-                                <Thumbnail square source={imgDuan} />
-                            </Left>
-                            <Body>
-                                <Text style={styles.textTitle}>An Phú Shop Villa</Text>
-                                <Text style={styles.textDesc} note numberOfLines={1}>Khu đô thị Dương nội, Hà Đông, Hà Nội</Text>
-                                <Text style={styles.textDesc} note numberOfLines={1}>60.000.000 Tr - 80.000.000 tr/m2</Text>
-                            </Body>
-                            <Right>
-                                <Button transparent>
-                                    <Icon active name='ios-heart' style={{ color: 'orange' }} />
-                                </Button>
-                            </Right>
-                        </ListItem>
+                        {dataSearch && dataSearch.map((value, key) => (
+                            <ListItem thumbnail key={key}>
+                                <Left>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            this.props.navigation.navigate('TabProjectScreen', {
+                                                projectId: value.id
+                                            });
+                                        }}
+                                    >
+                                        <Thumbnail square source={{ uri: (value.data.images.feature) ? `${BASE_URL}${value.data.images.feature[0]}` : NO_IMAGE }} />
+                                    </TouchableOpacity>
+                                </Left>
+                                <Body>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            this.props.navigation.navigate('TabProjectScreen', {
+                                                projectId: value.id
+                                            });
+                                        }}
+                                    >
+                                        <Text style={styles.textTitle}>{value.name}</Text>
+                                        <Text style={styles.textDesc} note numberOfLines={1}>{value.address}</Text>
+                                        <Text style={styles.textDesc} note numberOfLines={1}>{value.min_price} Tr - {value.max_price} tr/m2</Text>
+                                    </TouchableOpacity>
+                                </Body>
+                                <Right>
+                                    <Button transparent onPress={this.onLikeProject.bind(this)}>
+                                        <Icon active name='ios-heart' style={{ color: 'orange' }} />
+                                    </Button>
+                                </Right>
+                            </ListItem>
+                        ))}
                     </ScrollView>
                 </Content>
             </Container>

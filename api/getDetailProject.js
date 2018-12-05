@@ -1,7 +1,7 @@
 const GLOBAL = require('../Globals');
 
-const getProject = (query = '') => (
-    fetch(`${GLOBAL.API_URL}/project/get-projects?${query}`,  //eslint-disable-line
+const getDetailProject = (projectId) => (
+    fetch(`${GLOBAL.API_URL}/project/detail/${projectId}`,  //eslint-disable-line
     {   
         method: 'GET',
         headers: {
@@ -12,4 +12,4 @@ const getProject = (query = '') => (
     .then(res => res.json())
 );
 
-module.exports = getProject;
+module.exports = getDetailProject;

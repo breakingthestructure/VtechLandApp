@@ -2,63 +2,18 @@ import React from 'react';
 import {
     View,
     Text,
-    Dimensions,
-    StyleSheet,
     ScrollView,
     TouchableOpacity,
     Switch,
-    ListView,
     Alert,
     Keyboard,
     FlatList,
-    StatusBar
 } from 'react-native';
 import { Container, Content, Item, Input, Icon, Spinner, Picker, Form } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import { TextInputMask, MaskService } from 'react-native-masked-text';
-import Modal from "react-native-modal";
-// import icTitle from './../../../icons/ic_title.png';
-// import Header from './../Home/Header';
-// import imgDuan from './../../../images/duan.jpg';
-
-const { width, height } = Dimensions.get('window');
-
-function formatMoney(n, c, d, t) {
-    var c = isNaN(c = Math.abs(c)) ? 2 : c,
-        d = d == undefined ? "." : d,
-        t = t == undefined ? "," : t,
-        s = n < 0 ? "-" : "",
-        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
-        j = (j = i.length) > 3 ? j % 3 : 0;
-
-    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-}
-function getDaysInMonth(month, year) {
-    return new Date(year, month, 0).getDate();
-}
-
-function getDayNextMonth(date, numberMonth = 1) {
-    var day = date.getDate();
-    var month = date.getMonth() + 1 + numberMonth;
-    var year = date.getFullYear();
-    var totalDayInMonth = getDaysInMonth(month, year);
-    if (day > totalDayInMonth) {
-        day = totalDayInMonth;
-    }
-    if (month > 12) {
-        var times = Math.floor(month / 12);
-        var few = month % 12;
-        if (few > 0) {
-            month = few;
-            year += times;
-        }
-        if (times > 0 && few == 0) {
-            month = 12;
-            year += (times - 1);
-        }
-    }
-    return day + '-' + month + '-' + year;
-}
+import { MaskService } from 'react-native-masked-text';
+import { formatMoney, getDayNextMonth, loading } from './../../../Helpers';
+import styles from './../../../styles';
 
 export default class CalcDebt extends React.Component {
     constructor(props) {
@@ -94,10 +49,7 @@ export default class CalcDebt extends React.Component {
     componentDidMount() {
         setTimeout(() => {
             this.setState({ loaded: true });
-        }, 200);
-        // this.setState({
-        //     dataSource: this.state.dataSource.cloneWithRows(this.state.arrayCondition)
-        // });
+        }, 1000);
     }
     onSelectMode(value) {
         this.setState({
@@ -289,21 +241,15 @@ export default class CalcDebt extends React.Component {
     }
     render() {
         if (!this.state.loaded) {
-            return (
-                <Container>
-                    <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
-                    </Content>
-                </Container>
-            );
+            return loading();
         }
         return (
-            <View style={styles.wrapper}>
+            <View style={styles.content}>
                 <Text style={styles.txtHeader}>TÍNH LÃI SUẤT VAY DỰ ÁN</Text>
                 <Text style={{ color: '#333333' }}>Vui lòng nhập các tham số cần thiết</Text>
                 <ScrollView>
 
-                    <View style={styles.row}>
+                    <View style={styles.item}>
                         <Content>
                             <Item
                                 style={styles.inputItem}
@@ -329,7 +275,7 @@ export default class CalcDebt extends React.Component {
                             <Text style={styles.txtBtn}>VND</Text>
                         </View>
                     </View>
-                    <View style={styles.row}>
+                    <View style={styles.item}>
                         <Content>
                             <Item
                                 style={styles.inputItem}
@@ -353,7 +299,7 @@ export default class CalcDebt extends React.Component {
                             <Text style={styles.txtBtn}>THÁNG</Text>
                         </View>
                     </View>
-                    <View style={styles.row}>
+                    <View style={styles.item}>
                         <Content>
                             <Item
                                 style={styles.inputItem}
@@ -436,15 +382,6 @@ export default class CalcDebt extends React.Component {
                                     style={styles.inputLeft}
                                     regular
                                 >
-                                    {/* <Input
-                                        style={{ fontSize: 12 }}
-                                        placeholder='TỪ THÁNG'
-                                        placeholderTextColor='#999999'
-                                        underlineColorAndroid='transparent'
-                                        onChangeText={this.handleChangeFromInput.bind(this, index, 'from')}
-                                        value={this.state.arrayCondition[index].from}
-                                        keyboardType={'numeric'}
-                                    /> */}
                                     <Text style={{ fontSize: 12, paddingLeft: 10, color: '#000' }}>
                                         {this.state.arrayCondition[index].from}
                                     </Text>
@@ -496,79 +433,6 @@ export default class CalcDebt extends React.Component {
                             </TouchableOpacity>
                         </View>
                     ))}
-                    {/* <ListView
-                        dataSource={this.state.dataSource}
-                        renderRow={(rowData) => (
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    width: '100%',
-                                    paddingTop: 5
-                                }}
-                            >
-                                <Content>
-                                    <Item
-                                        style={styles.inputLeft}
-                                        regular
-                                    >
-                                        <Input
-                                            style={{ fontSize: 12 }}
-                                            placeholder='TỪ THÁNG'
-                                            placeholderTextColor='#999999'
-                                            underlineColorAndroid='transparent'
-                                            onChangeText={this.handleChangeFromInput.bind(this, rowData, 'from')}
-                                            value={this.state.txtDate}
-                                            keyboardType={'numeric'}
-                                        />
-                                    </Item>
-                                </Content>
-                                <Content>
-                                    <Item
-                                        style={styles.inputCenter}
-                                        regular
-                                    >
-                                        <Input
-                                            style={{ fontSize: 12 }}
-                                            placeholder='ĐẾN THÁNG'
-                                            placeholderTextColor='#999999'
-                                            underlineColorAndroid='transparent'
-                                            // onChangeText={(text) => this.setState({ txtTo: text })}
-                                            onChangeText={this.handleChangeFromInput.bind(this, rowData, 'to')}
-                                            value={this.state.txtTo}
-                                            keyboardType={'numeric'}
-                                        />
-                                    </Item>
-                                </Content>
-                                <Content>
-                                    <Item
-                                        style={styles.inputRight}
-                                        regular
-                                    >
-                                        <Input
-                                            style={{ fontSize: 12 }}
-                                            placeholder='LÃI SUẤT'
-                                            placeholderTextColor='#999999'
-                                            underlineColorAndroid='transparent'
-                                            onChangeText={(text) => this.setState({ txtTime: text })}
-                                            value={this.state.txtTime}
-                                            keyboardType={'numeric'}
-                                        />
-                                    </Item>
-                                </Content>
-                                <View
-                                    style={styles.labelBtn}
-                                >
-                                    <Text style={styles.txtBtn}>%</Text>
-                                </View>
-                                <TouchableOpacity
-                                    style={styles.btnClose}
-                                    onPress={this.subCondition.bind(this, rowData)}
-                                >
-                                    <Text style={styles.txtBtn}>x</Text>
-                                </TouchableOpacity>
-                            </View>
-                        )}
-                    /> */}
                     <TouchableOpacity
                         style={styles.btnAdd}
                         onPress={this.addCondition.bind(this)}
@@ -576,7 +440,7 @@ export default class CalcDebt extends React.Component {
                         <Text style={{ color: 'white', fontWeight: '500', marginHorizontal: 5, fontSize: 12, textAlign: 'center' }}>THÊM ĐIỀU KIỆN</Text>
                     </TouchableOpacity>
                     <Text style={{ color: '#333333', paddingTop: 15, fontSize: 12 }}>ÂN HẠN NỢ GỐC</Text>
-                    <View style={styles.row}>
+                    <View style={styles.item}>
                         <Switch onValueChange={this.onCharge.bind(this)} value={this.state.graceDebt} />
                         <Content>
                             <Item
@@ -619,7 +483,7 @@ export default class CalcDebt extends React.Component {
                         // renderItem={this.renderTable}
                         renderItem={({ item }) =>
                             <View key={item.key} style={styles.cell}>
-                                <Text style={styles.textRow}>
+                                <Text style={styles.textCell}>
 
                                     {item.key}
                                 </Text>
@@ -638,114 +502,3 @@ export default class CalcDebt extends React.Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-        flex: 1,
-        backgroundColor: 'white',
-        padding: 15,
-    },
-    txtHeader: { fontWeight: '600', fontSize: 14, color: '#333333' },
-    row: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        paddingTop: 5
-    },
-    inputItem: {
-        borderColor: '#808080',
-        height: 30,
-        marginLeft: 0,
-        width: '100%',
-        borderTopLeftRadius: 2,
-        borderBottomLeftRadius: 2,
-        borderLeftWidth: 1,
-        borderTopWidth: 1,
-        borderBottomWidth: 1
-    },
-    rightBtn: {
-        backgroundColor: '#F58319',
-        justifyContent: 'center',
-        width: '15%',
-        borderTopRightRadius: 2,
-        borderBottomRightRadius: 2
-    },
-    inputLeft: {
-        borderColor: '#808080',
-        borderWidth: 1,
-        height: 30,
-        borderRadius: 2,
-        width: width / 4.2,
-        marginLeft: 0
-    },
-    inputCenter: {
-        borderColor: '#808080',
-        borderWidth: 1,
-        height: 30,
-        borderRadius: 2,
-        width: width / 4.2,
-        marginLeft: 5
-    },
-    inputRight: {
-        borderColor: '#808080',
-        borderWidth: 1,
-        height: 30,
-        borderRadius: 2,
-        width: width / 4.2,
-        marginLeft: 10
-    },
-    labelBtn: {
-        backgroundColor: '#F58319',
-        justifyContent: 'center',
-        width: '10%',
-        borderTopRightRadius: 2,
-        borderBottomRightRadius: 2,
-        marginRight: 5,
-        marginLeft: 0
-    },
-    btnClose: {
-        backgroundColor: 'gray',
-        justifyContent: 'center',
-        width: '5%',
-        borderRadius: 2
-    },
-    btnAdd: {
-        width: '100%',
-        height: 30,
-        borderRadius: 2,
-        backgroundColor: 'gray',
-        justifyContent: 'center',
-        padding: 10,
-        marginTop: 15,
-    },
-    txtBtn: { color: 'white', textAlign: 'center', fontSize: 10 },
-    bigBtn: {
-        height: 40,
-        width: '100%',
-        borderRadius: 2,
-        backgroundColor: '#F58319',
-        justifyContent: 'center',
-        marginTop: 5,
-    },
-    headerRow: {
-        width: '20%',
-        height: 40,
-        borderWidth: 1,
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    },
-    textHeader: { textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 12 },
-    textRow: {
-        textAlign: 'center',
-        color: '#666',
-        fontSize: 10
-    },
-    cell: {
-        width: '20%',
-        height: 30,
-        borderWidth: 1,
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    },
-});

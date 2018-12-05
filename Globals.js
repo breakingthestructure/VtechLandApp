@@ -30,5 +30,6 @@ module.exports = {
         southwest: 'Tây Nam',
         northeast: 'Đông bắc',
         northeast: 'Tây Nam'
-    }
+    },
+    YOUTUBE_APIKEY: 'AIzaSyByXMeeujrWpH517p7LkQrfBmTNIN1RTkQ'
 };

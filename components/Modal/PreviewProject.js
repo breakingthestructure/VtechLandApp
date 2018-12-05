@@ -15,6 +15,7 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import imgDuan from './../../images/duan.jpg';
 import icTitle from './../../icons/ic_title.png';
 import { BASE_URL, NO_IMAGE } from './../../Globals';
+import styles from './../../styles';
 
 const images = [{
     // url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
@@ -147,8 +148,9 @@ export default class AdvanceSearch extends Component {
                     <TouchableOpacity
                         style={styles.btnTable}
                         onPress={() => {
-                            this.props.navigation.navigate('TablePackageScreen', {
-                                projectId: project.id
+                            this.props.navigation.navigate('TabProjectScreen', {
+                                projectId: project.id,
+                                activeTab: 3
                             });
                         }}
                     >
@@ -179,33 +181,3 @@ export default class AdvanceSearch extends Component {
         );
     }
 }
-const styles = StyleSheet.create({
-    thumbProject: { width: 120, height: 120, marginRight: 5 },
-    btnDetail: {
-        height: 30,
-        // borderColor: '#959595',
-        borderRadius: 5,
-        backgroundColor: '#F4AF47',
-        width: '40%',
-        marginRight: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        // borderWidth: 1
-    },
-    btnTable: {
-        height: 30,
-        borderColor: '#959595',
-        borderRadius: 5,
-        backgroundColor: '#F4AF47',
-        justifyContent: 'center',
-        width: '20%',
-        alignItems: 'center',
-        marginRight: 1,
-    },
-    icTitle: { width: 2, height: 13 },
-    title: { fontWeight: '600', fontSize: 16, paddingLeft: 5 },
-    txtDetail: { fontWeight: '500', marginHorizontal: 15, fontSize: 14, color: 'white', marginTop: 5 },
-    iconBtn: { color: '#fff', fontSize: 14 },
-    iconBigBtn: { color: '#fff', fontSize: 14, marginTop: 7, marginLeft: 0 },
-    description: { flexDirection: 'row', paddingTop: 5 }
-});

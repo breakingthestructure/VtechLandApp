@@ -16,6 +16,7 @@ import {
 import { Container, Content, Spinner, Item, Input, ListItem, CheckBox, Body } from 'native-base';
 import { TextInputMask } from 'react-native-masked-text';
 import Header from '../Home/Header';
+import styles from './../../../styles';
 
 const { width } = Dimensions.get('window');
 
@@ -54,20 +55,13 @@ export default class OrderSubmit extends React.Component {
             );
         }
         return (
-            <View style={{ backgroundColor: 'white', flex: 1 }}>
+            <View style={styles.wrapper}>
                 <Header navigation={this.props.navigation} title='GIAO DỊCH CĂN A0501' />
-                <Text style={{ fontWeight: '600', fontSize: 18, textAlign: 'center', color: '#053654', paddingTop: 10 }}>PHIẾU ĐẶT CỌC</Text>
-                <ScrollView style={{ marginHorizontal: 20, marginTop: 20 }}>
-                    <Text style={{ fontSize: 14, color: '#000', fontWeight: '400' }}>Thông tin sản phẩm</Text>
+                <ScrollView style={styles.content}>
+                    <Text style={styles.titleScreen}>PHIẾU ĐẶT CỌC</Text>
+                    <Text style={styles.txtHeader}>Thông tin sản phẩm</Text>
                     <View
-                        style={{
-                            justifyContent: 'space-between',
-                            flexDirection: 'row',
-                            borderBottomWidth: 1,
-                            borderStyle: 'dotted',
-                            borderBottomColor: '#959595',
-                            marginTop: 10
-                        }}
+                        style={styles.lineInfo}
                     >
                         <Text style={{ fontSize: 14 }}>Mã căn</Text>
                         <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
@@ -75,14 +69,7 @@ export default class OrderSubmit extends React.Component {
                         </View>
                     </View>
                     <View
-                        style={{
-                            justifyContent: 'space-between',
-                            flexDirection: 'row',
-                            borderBottomWidth: 1,
-                            borderStyle: 'dotted',
-                            borderBottomColor: '#959595',
-                            marginTop: 10
-                        }}
+                        style={styles.lineInfo}
                     >
                         <Text style={{ fontSize: 14 }}>Diện tích</Text>
                         <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
@@ -91,14 +78,7 @@ export default class OrderSubmit extends React.Component {
                         </View>
                     </View>
                     <View
-                        style={{
-                            justifyContent: 'space-between',
-                            flexDirection: 'row',
-                            borderBottomWidth: 1,
-                            borderStyle: 'dotted',
-                            borderBottomColor: '#959595',
-                            marginTop: 10
-                        }}
+                        style={styles.lineInfo}
                     >
                         <Text style={{ fontSize: 14 }}>Đơn giá</Text>
                         <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
@@ -107,14 +87,7 @@ export default class OrderSubmit extends React.Component {
                         </View>
                     </View>
                     <View
-                        style={{
-                            justifyContent: 'space-between',
-                            flexDirection: 'row',
-                            borderBottomWidth: 1,
-                            borderStyle: 'dotted',
-                            borderBottomColor: '#959595',
-                            marginTop: 10
-                        }}
+                        style={styles.lineInfo}
                     >
                         <Text style={{ fontSize: 14 }}>Tổng tiền (trước chiết khấu)</Text>
                         <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
@@ -122,7 +95,7 @@ export default class OrderSubmit extends React.Component {
                             <Text style={{ fontSize: 14 }}> VNĐ</Text>
                         </View>
                     </View>
-                    <Text style={{ fontSize: 14, color: '#000', fontWeight: '400', paddingTop: 10 }}>Thông tin khách hàng</Text>
+                    <Text style={styles.txtHeader}>Thông tin khách hàng</Text>
                     <TextInput
                         style={styles.inputStyle}
                         placeholder='Họ tên'
@@ -162,40 +135,26 @@ export default class OrderSubmit extends React.Component {
                     />
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <TextInput
-                            style={{
-                                height: 40,
-                                marginBottom: 10,
-                                marginTop: 10,
-                                borderWidth: 1,
-                                borderColor: '#cecece',
-                                width: '48%'
-                            }}
+                            style={styles.inputInline}
                             placeholder='Ngày cấp'
                             underlineColorAndroid='transparent'
                             value={this.state.identity}
                             onChangeText={text => this.setState({ identity: text })}
                         />
                         <TextInput
-                            style={{
-                                height: 40,
-                                marginBottom: 10,
-                                marginTop: 10,
-                                borderWidth: 1,
-                                borderColor: '#cecece',
-                                width: '48%'
-                            }}
+                            style={styles.inputInline}
                             placeholder='Nơi cấp'
                             underlineColorAndroid='transparent'
                             value={this.state.identity}
                             onChangeText={text => this.setState({ identity: text })}
                         />
                     </View>
-                    <Text style={{ fontSize: 14, color: '#000', fontWeight: '400', paddingTop: 10 }}>
+                    <Text style={styles.txtHeader}>
                         Số tiền và phương thức thanh toán tiền cọc
                     </Text>
-                    <View style={styles.row}>
-                        <View style={{ backgroundColor: '#1f7eb8', height: '100%', width: '40%', justifyContent: 'center' }}>
-                            <Text style={{ color: '#fff', textAlign: 'center' }}>
+                    <View style={styles.sectionMoneyOrder}>
+                        <View style={styles.sectionInputMoney}>
+                            <Text style={styles.labelMoney}>
                                 Số tiền đặt cọc (*)
                             </Text>
                         </View>
@@ -204,7 +163,7 @@ export default class OrderSubmit extends React.Component {
                             value={this.state.txtMoney}
                             type={'money'}
                             options={{ unit: '', precision: 0, separator: ' ' }}
-                            style={{ fontSize: 12, width: '45%', borderWidth: 1, borderColor: '#cecece' }}
+                            style={styles.inputMoney}
                         />
                         <View
                             style={styles.rightBtn}
@@ -212,8 +171,8 @@ export default class OrderSubmit extends React.Component {
                             <Text style={styles.txtBtn}>VND</Text>
                         </View>
                     </View>
-                    <Text style={{ fontSize: 12, color: '#555', paddingTop: 10 }}>
-                        (Lưu ý số tiền đặt cọc tối thiểu 20.000.000 vnd)
+                    <Text style={styles.textSuggest}>
+                        (Lưu ý số tiền đặt cọc tối thiểu 20.000.000 VND)
                     </Text>
                     <View>
                         <ListItem style={{ marginLeft: 0 }}>
@@ -236,11 +195,11 @@ export default class OrderSubmit extends React.Component {
                         </ListItem>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, marginBottom: 20 }}>
-                        <TouchableOpacity style={{ width: (width - 50) / 2, height: 30, borderRadius: 15, backgroundColor: '#177dba', marginTop: 5 }}>
-                            <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff' }}>ĐẶT CỌC</Text>
+                        <TouchableOpacity style={styles.btnSubmit}>
+                            <Text style={styles.textBtnActive}>ĐẶT CỌC</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ width: (width - 50) / 2, height: 30, borderRadius: 15, backgroundColor: '#464646', marginTop: 5 }}>
-                            <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff' }}>HỦY</Text>
+                        <TouchableOpacity style={styles.btnCancel}>
+                            <Text style={styles.textBtnActive}>HỦY</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -248,30 +207,3 @@ export default class OrderSubmit extends React.Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-        flex: 1,
-        backgroundColor: 'white',
-        margin: 10,
-    },
-    inputStyle: {
-        height: 40,
-        marginBottom: 10,
-        marginTop: 10,
-        borderWidth: 1,
-        borderColor: '#cecece'
-    },
-    row: {
-        width: '100%',
-        flexDirection: 'row',
-        marginTop: 5,
-        height: 40,
-    },
-    rightBtn: {
-        backgroundColor: '#F58319',
-        justifyContent: 'center',
-        width: '15%',
-    },
-    txtBtn: { color: 'white', textAlign: 'center', fontSize: 10 },
-});

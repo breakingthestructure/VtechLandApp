@@ -1,6 +1,6 @@
 import React from 'react';
-import { StatusBar, Alert, ImageBackground, Dimensions } from 'react-native';
-import { createDrawerNavigator } from 'react-navigation';
+import { StatusBar, Alert, ImageBackground, Dimensions, NetInfo } from 'react-native';
+import { createDrawerNavigator, DrawerActions } from 'react-navigation';
 import { Container, Content, Spinner } from 'native-base';
 import firebase from 'react-native-firebase';
 import type { Notification, NotificationOpen } from 'react-native-firebase';
@@ -22,13 +22,12 @@ import MyNotification from './components/screens/Auth/MyNotification';
 import Profile from './components/screens/Auth/Profile';
 import imgWelcome from './images/welcome.jpg';
 import OrderSubmit from './components/screens/Transaction/OrderSubmit';
-import TestSlide from './components/screens/Project/TestSlide';
 
 const { width, height } = Dimensions.get('window');
 
 // StatusBar.setHidden(true);
 
-const Routes = createDrawerNavigator(
+const LeftDrawer = createDrawerNavigator(
   {
     HomeScreen: {
       screen: Home
@@ -45,18 +44,12 @@ const Routes = createDrawerNavigator(
     DetailNewsScreen: {
       screen: DetailNews
     },
-    // SetCalendarProjectScreen: {
-    //   screen: SetCalendar
-    // },
     TabProjectScreen: {
       screen: TabProject
     },
     ConfigScreen: {
       screen: Config
     },
-    // CalcDebtScreen: {
-    //   screen: CalcDebt
-    // },
     AdvanceSearchScreen: {
       screen: AdvanceSearch
     },
@@ -66,9 +59,6 @@ const Routes = createDrawerNavigator(
     DetailApartmentScreen: {
       screen: DetailApartment
     },
-    // DetailProjectScreen: {
-    //   screen: DetailProject
-    // },
     NotificationScreen: {
       screen: MyNotification
     },
@@ -80,10 +70,31 @@ const Routes = createDrawerNavigator(
     }
   },
   {
-    initialRouteName: 'TabProjectScreen',
+    initialRouteName: 'MapScreen',
     contentComponent: Menu,
+    drawerOpenRoute: 'LeftSideMenu',
+    drawerCloseRoute: 'LeftSideMenuClose',
+    drawerToggleRoute: 'LeftSideMenuToggle',
   }
 );
+
+const RightDrawer = createDrawerNavigator({
+  Drafts: {
+    screen: LeftDrawer,
+  },
+}, {
+    drawerPosition: 'right',
+    drawerOpenRoute: 'RightSideMenu',
+    drawerCloseRoute: 'RightSideMenuClose',
+    drawerToggleRoute: 'RightSideMenuToggle',
+    getCustomActionCreators: (route, stateKey) => {
+      console.log('inner: ' + stateKey);
+      return {
+        toggleInnerDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }),
+      };
+    },
+    // contentComponent: Menu,
+});
 
 export default class App extends React.Component {
   constructor() {
@@ -93,6 +104,34 @@ export default class App extends React.Component {
     };
   }
   async componentDidMount() {
+
+    NetInfo.getConnectionInfo().then((connectionInfo) => {
+      if (connectionInfo.type === 'none') {
+        Alert.alert(
+          'Thông báo',
+          'Thiết bị của bạn không có kết nối internet. Vui lòng mở kết nối trước khi sử dụng',
+          [
+            // {text: 'Ko đùa đâu', onPress: () => console.log('Ask me later pressed')},
+            // {text: 'Kệ mầy', onPress: () => console.log('Cancel Pressed')},
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        );
+        return false;
+      }
+      // console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+    });
+    function handleFirstConnectivityChange(connectionInfo) {
+      // console.log('First change, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+      NetInfo.removeEventListener(
+        'connectionChange',
+        handleFirstConnectivityChange
+      );
+    }
+    NetInfo.addEventListener(
+      'connectionChange',
+      handleFirstConnectivityChange
+    );
     setTimeout(() => {
       this.setState({ loaded: true });
     }, 1000);
@@ -138,6 +177,7 @@ export default class App extends React.Component {
       );
       firebase.notifications().removeDeliveredNotification(notification.notificationId);
     });
+
   }
   componentWillUnmount() {
     this.notificationDisplayedListener();
@@ -147,12 +187,12 @@ export default class App extends React.Component {
   render() {
     if (this.state.loaded) {
       return (
-        <Routes />
+        <RightDrawer />
       );
     }
     return (
       <Container>
-        <ImageBackground source={imgWelcome} style={{width: '100%', height: '100%'}}/>
+        <ImageBackground source={imgWelcome} style={{ width: '100%', height: '100%' }} />
         {/* <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
           <Spinner />
         </Content> */}

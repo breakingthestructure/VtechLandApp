@@ -1,7 +1,7 @@
 const GLOBAL = require('../Globals');
 
 const postContact = (email, name, address, phone, date, time, note) => (
-    fetch(`${GLOBAL.BASE_URL}oauth/token`,  //eslint-disable-line
+    fetch(`http://news.nghetuvan.tk/api/contact`,  //eslint-disable-line
         {
             method: 'POST',
             headers: {

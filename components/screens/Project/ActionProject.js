@@ -36,7 +36,8 @@ export default class ActionProject extends React.Component {
         }, 200);
     }
     render() {
-        if (!this.state.loaded) {
+        const { buildings, navigation, project } = this.props;
+        if (!this.state.loaded || !this.props.navigation) {
             return (
                 <Container>
                     <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
@@ -47,14 +48,28 @@ export default class ActionProject extends React.Component {
         }
         return (
             <View style={{ backgroundColor: '#f2f2f2', flex: 1 }}>
-                {/* <Header navigation={this.props.navigation} title='DỰ ÁN' />
-                <ImageBackground source={imgDuan} style={{ width: '100%', height: height / 4 }}>
-                    <Text style={{ fontWeight: '600', fontSize: 16, paddingLeft: 5, color: 'white' }}>Tiện ích dự án</Text>
-                    <Text style={{ fontWeight: '600', fontSize: 16, paddingLeft: 5, color: 'white' }}>Hỗ trợ dự án</Text>
-                </ImageBackground> */}
                 <View style={styles.wrapper}>
                     <View style={styles.sectionAction}>
-                        <TouchableOpacity
+                        {Object.keys(buildings).map(function (key) {
+                            return <TouchableOpacity
+                                key={key}
+                                style={styles.btnAction}
+                                onPress={() => navigation.navigate('TablePackageScreen', {
+                                    project: project,
+                                    buildingId: key,
+                                    buildingName: buildings[key]
+                                })}
+                            >
+                                <View style={{ paddingVertical: 5 }}>
+                                    <Image source={icCalendar} style={{ width: 30, height: 30 }} />
+
+                                </View>
+                                <View style={{ justifyContent: 'center' }}>
+                                    <Text style={styles.btnTextAction}>{buildings[key]}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        })}
+                        {/* <TouchableOpacity
                             style={styles.btnAction}
                             onPress={() => this.props.navigation.navigate('SetCalendarProjectScreen')}
                         >
@@ -77,10 +92,10 @@ export default class ActionProject extends React.Component {
                             <View style={{ justifyContent: 'center' }}>
                                 <Text style={styles.btnTextAction}>Check bảng hàng online</Text>
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
 
                     </View>
-                    <View style={styles.sectionAction}>
+                    {/* <View style={styles.sectionAction}>
                         <TouchableOpacity
                             style={styles.btnAction}
                             onPress={() => this.props.navigation.navigate('CalcDebtScreen')}
@@ -95,7 +110,7 @@ export default class ActionProject extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.btnAction}
-                            onPress={() => this.props.navigation.navigate('CalcDebtScreen')}
+                            onPress={() => this.props.navigation.navigate('TablePackageScreen')}
                         >
                             <View style={{ paddingVertical: 5 }}>
                                 <Image source={icLadder} style={{ width: 30, height: 30 }} />
@@ -106,7 +121,7 @@ export default class ActionProject extends React.Component {
                             </View>
                         </TouchableOpacity>
 
-                    </View>
+                    </View> */}
                 </View>
 
             </View >

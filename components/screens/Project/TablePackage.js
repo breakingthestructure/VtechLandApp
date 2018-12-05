@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatList, Alert } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 
 import Header from '../Home/Header';
+import styles from './../../../styles';
 import getTablePackage from './../../../api/getTablePackage';
 import { AVAIABLE, HOLDING, WAITING, SOLD, DISABLED, INCOMPLETE } from './../../../constants/app';
-
 
 export default class TablePackage extends Component {
     constructor(props) {
@@ -15,28 +15,41 @@ export default class TablePackage extends Component {
             column: null,
             row: null,
             loaded: false,
-            listApartment: null
+            listApartment: null,
         };
     }
     componentDidMount() {
-        getTablePackage(2, 4)
-            .then(resJson => {
-                if (resJson.status) {
-                    // let result = Object.keys(resJson.data.listApartment.id).map(item => {
-                    //     return { key: item };
-                    // });
-                    this.setState({
-                        column: resJson.data.config.column,
-                        row: resJson.data.config.row,
-                        listApartmentId: Object.keys(resJson.data.listApartment.id).map(item => {
-                            return { key: item };
-                        }),
-                        listApartmentStatus: resJson.data.listApartment.status,
-                        loaded: true
-                    });
-                }
-            })
-            .catch(err => console.log(err));
+        const { navigation } = this.props;
+        const project = navigation.getParam('project', null);
+        const buildingId = navigation.getParam('buildingId', null);
+        const buildingName = navigation.getParam('buildingName', null);
+        if (project) {
+            getTablePackage(project.id, buildingId)
+                .then(resJson => {
+                    if (resJson.status) {
+                        this.setState({
+                            column: resJson.data.config.column,
+                            row: resJson.data.config.row,
+                            listApartmentId: Object.keys(resJson.data.listApartment.id).map(item => {
+                                return { key: item };
+                            }),
+                            listApartmentStatus: resJson.data.listApartment.status,
+                            loaded: true
+                        });
+                    } else {
+                        Alert.alert(
+                            'Thông báo',
+                            'Tòa nhà này chưa có bảng hàng',
+                            [
+                                { text: 'OK', onPress: () =>  this.props.navigation.navigate('MapScreen') },
+                            ],
+                            { cancelable: false }
+                        );
+                        return false;
+                    }
+                })
+                .catch(err => console.log(err));
+        }
     }
 
     getClassName(type) {
@@ -62,7 +75,6 @@ export default class TablePackage extends Component {
         return className;
     }
     renderTable(obj) {
-        console.log(this.props);
         return (
             <TouchableOpacity
                 style={styles.row}
@@ -111,6 +123,9 @@ export default class TablePackage extends Component {
         );
     }
     render() {
+        const { navigation } = this.props;
+        const buildingName = navigation.getParam('buildingName', null);
+        const project = navigation.getParam('project', null);
         if (!this.state.loaded) {
             return (
                 <Container>
@@ -122,36 +137,36 @@ export default class TablePackage extends Component {
         }
         return (
             <View style={styles.container}>
-                <Header navigation={this.props.navigation} title='Tòa CT1 - The Pride' />
-                <View style={styles.wrapper}>
+                <Header navigation={this.props.navigation} title={`${buildingName} - ${project.name}`} />
+                <View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: '#6EC9FF' }} />
-                            <Text> Còn trống</Text>
+                            <Text style={{ fontSize: 12 }}> Còn trống</Text>
                         </View>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: 'yellow' }} />
-                            <Text>Chờ thanh toán</Text>
+                            <Text style={{ fontSize: 12 }}>Chờ thanh toán</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: 'green' }} />
-                            <Text> Đang giữ chỗ</Text>
+                            <Text style={{ fontSize: 12 }}> Đang giữ chỗ</Text>
                         </View>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: 'red' }} />
-                            <Text> Đã bán</Text>
+                            <Text style={{ fontSize: 12 }}> Đã bán</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: 'gray' }} />
-                            <Text> Chưa mở bán</Text>
+                            <Text style={{ fontSize: 12 }}> Chưa mở bán</Text>
                         </View>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: 'yellow' }} />
-                            <Text> Chờ thanh toán</Text>
+                            <Text style={{ fontSize: 12 }}> Chờ thanh toán</Text>
                         </View>
                     </View>
                 </View>
@@ -174,7 +189,7 @@ export default class TablePackage extends Component {
                                         });
                                     }}
                                 >
-                                    <Text style={styles.textRow}>
+                                    <Text style={styles.textCell}>
                                         {obj.item.key}
                                     </Text>
                                 </TouchableOpacity>
@@ -186,107 +201,3 @@ export default class TablePackage extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    wrapper: {
-        padding: 10
-    },
-    firstCol: {
-        width: 80,
-        height: 40,
-        borderWidth: 1,
-        backgroundColor: '#A52D2D',
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    },
-    col: {
-        width: 80,
-        height: 40,
-        borderWidth: 1,
-        backgroundColor: '#F68121',
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    },
-    row: {
-        width: 80,
-        height: 40,
-        borderWidth: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    },
-    firstRow: {
-        width: 80,
-        height: 40,
-        borderWidth: 1,
-        backgroundColor: '#F68121',
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    },
-    textFirstCol: { textAlign: 'center', color: 'white', fontWeight: '500' },
-    textFirstRow: {
-        textAlign: 'center',
-        color: '#fff',
-        fontWeight: '500'
-    },
-    textRow: {
-        textAlign: 'center',
-        color: '#666'
-    },
-    list: {
-        justifyContent: 'center',
-        flexDirection: 'row',
-    },
-    note: { flexDirection: 'row', paddingTop: 5, width: '50%' },
-    avaiable: {
-        width: 80,
-        height: 40,
-        borderWidth: 1,
-        backgroundColor: '#6EC9FF',
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    },
-    sold: {
-        width: 80,
-        height: 40,
-        borderWidth: 1,
-        backgroundColor: '#F68121',
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    },
-    waiting: {
-        width: 80,
-        height: 40,
-        borderWidth: 1,
-        backgroundColor: '#FFDA23',
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    },
-    holding: {
-        width: 80,
-        height: 40,
-        borderWidth: 1,
-        backgroundColor: '#FF9323',
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    },
-    disabled: {
-        width: 80,
-        height: 40,
-        borderWidth: 1,
-        backgroundColor: 'gray',
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    },
-    incomplete: {
-        width: 80,
-        height: 40,
-        borderWidth: 1,
-        backgroundColor: 'gray',
-        justifyContent: 'center',
-        borderColor: '#dee2e6'
-    }
-});

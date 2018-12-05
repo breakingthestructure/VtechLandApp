@@ -1,26 +1,21 @@
 import React, { Component } from 'react';
 import {
     Text,
-    Dimensions,
     View,
-    StyleSheet,
     ScrollView,
     TouchableOpacity,
     Picker,
     TextInput,
-    Animated
 } from 'react-native';
-import { Container, Content, Item, Icon, Input, Spinner } from 'native-base';
 import Header from './../Home/Header';
 import getCities from './../../../api/getCities';
 import getDistricts from './../../../api/getDistricts';
 import getWards from './../../../api/getWards';
 import getStreets from './../../../api/getStreets';
-import { DIRECTIONS } from './../../../Globals';
-
-const { width, height } = Dimensions.get('window');
-const heightResult = 300;
-const heightSearch = height - 15;
+import styles from './../../../styles';
+import getOptionProjects from './../../../api/getOptionProjects';
+import { loading } from './../../../Helpers';
+import getProject from './../../../api/getProject';
 
 export default class AdvanceSearch extends Component {
     constructor(props) {
@@ -37,18 +32,25 @@ export default class AdvanceSearch extends Component {
             streets: [],
             street: '',
             direction: '',
-            bounceValue: new Animated.Value(heightSearch), //This is the initial position of the subview
-            resultValue: new Animated.Value(heightResult),
-            type: 'sell'
+            kind: 'sell',
+            options: [],
+            level: '',
         };
     }
     componentDidMount() {
+        getOptionProjects()
+            .then(resJson => {
+                if (resJson) {
+                    this.setState({
+                        options: resJson.data,
+                        loaded: true
+                    });
+                }
+            })
+            .catch(err => console.log(err));
         getCities()
             .then(resJson => {
                 if (resJson) {
-                    // let result = Object.keys(resJson.data).map(function (key) {
-                    //     return [Number(key), resJson.data[key]];
-                    // });
                     this.setState({
                         cities: resJson.data,
                         loaded: true
@@ -59,72 +61,122 @@ export default class AdvanceSearch extends Component {
     }
     onSelectCity(idCity) {
         this.setState({ city: idCity });
-        getDistricts(idCity)
-            .then(resJson => {
-                if (resJson) {
-                    this.setState({
-                        districts: resJson.data,
-                        loaded: true
-                    });
-                }
-            })
-            .catch(err => console.log(err));
+        if (idCity)
+            getDistricts(idCity)
+                .then(responseJson => {
+                    if (responseJson.status === 200) {
+                        this.setState({
+                            // loaded: true,
+                            districts: responseJson.data,
+                            // district: '',
+                            // ward: '',
+                            // wards: [],
+                            // street: '',
+                            // streets: []
+                        });
+                    }
+                })
+                .catch(err => console.log(err));
     }
     onSelectDistrict(idDistrict) {
-        this.setState({ district: idDistrict });
-        getWards(idDistrict)
+        if (idDistrict) {
+            getWards(idDistrict)
+                .then(resJson => {
+                    if (resJson.status === 200) {
+                        this.setState({
+                            wards: resJson.data,
+                            loaded: true
+                        });
+                    }
+                    this.setState({ district: idDistrict });
+                })
+                .catch(err => console.log(err));
+            getStreets(idDistrict)
+                .then(resJson => {
+                    if (resJson) {
+                        this.setState({
+                            streets: resJson.data,
+                            loaded: true
+                        });
+                    }
+                })
+                .catch(err => console.log(err));
+        }
+    }
+    onSelectKind(kind) {
+        this.setState({ kind });
+    }
+    onSearch() {
+        const { text, city, district, ward, street, direction, kind, level } = this.state;
+
+        let query = '';
+        if (text !== '') {
+            query += `&text=${text}`;
+        }
+        if (city !== '') {
+            query += `&city_id=${city}`;
+        }
+        if (district !== '') {
+            query += `&district_id=${district}`;
+        }
+        if (ward !== '') {
+            query += `&ward=${ward}`;
+        }
+        if (street !== '') {
+            query += `&street=${street}`;
+        }
+        if (direction !== '') {
+            query += `&direction=${direction}`;
+        }
+        // if (kind !== '') {
+        //     query += `&kind=${kind}`;
+        // }
+        if (level !== '') {
+            query += `&level=${level}`;
+        }
+        // if (type !== '') {
+        //     query += `&type=${type}`;
+        // }
+        // if (min_price !== '') {
+        //     query += `&min_price=${min_price}`;
+        // }
+        // if (max_price !== '') {
+        //     query += `&max_price=${max_price}`;
+        // }
+        // if (page !== '') {
+        //     query += `&page=${page}`;
+        // }
+        getProject(query)
             .then(resJson => {
-                if (resJson) {
-                    this.setState({
-                        wards: resJson.data,
-                        loaded: true
-                    });
-                }
-            })
-            .catch(err => console.log(err));
-        getStreets(idDistrict)
-            .then(resJson => {
-                if (resJson) {
-                    this.setState({
-                        streets: resJson.data,
-                        loaded: true
-                    });
+                if (resJson.data) {
+                    this.props.toggleAdvanceSearch(this.props.bounceValue, true, resJson.data);
                 }
             })
             .catch(err => console.log(err));
     }
-    onSelectType(type) {
-        console.log(type);
-        this.setState({ type });
-    }
+    _keyExtractor = (item, index) => item.id;
     render() {
-        const { cities, districts, wards, streets } = this.state;
-        if (!this.state.loaded && !cities) {
-            return (
-                <Container>
-                    <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
-                    </Content>
-                </Container>
-            );
+        const { cities, districts, wards, streets, options } = this.state;
+        if (!this.state.loaded || !cities || !options.length === 0 || !options.project_types) {
+            return loading();
         }
         return (
             <View style={{ flex: 1 }}>
-                <Header navigation={this.props.navigation} title='Tìm kiếm nâng cao' />
+                <Header navigation={this.props.navigation} title='TÌM KIẾM NÂNG CAO' />
 
-                <ScrollView style={styles.wraper}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <ScrollView style={styles.content}>
+                    <View style={styles.list}>
                         <TouchableOpacity
-                            onPress={() => this.onSelectType('sell')}
-                            style={this.state.type === 'sell' ? styles.btnSellActive : styles.btnSellDeactive}
+                            onPress={() => this.onSelectKind('sell')}
+                            style={this.state.kind === 'sell' ? styles.btnSellActive : styles.btnSellDeactive}
                         >
-                            <Text style={this.state.type === 'sell' ? styles.textBtnActive : styles.textBtnDeactive}>BÁN</Text>
+                            <Text style={this.state.kind === 'sell' ? styles.textBtnActive : styles.textBtnDeactive}>BÁN</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => this.onSelectType('rent')}
-                            style={this.state.type === 'rent' ? styles.btnRentActive : styles.btnRentDeactive}
+                            onPress={() => this.onSelectKind('rent')}
+                            style={this.state.kind === 'rent' ? styles.btnRentActive : styles.btnRentDeactive}
                         >
-                            <Text style={this.state.type === 'rent' ? styles.textBtnActive : styles.textBtnDeactive}>CHO THUÊ</Text>
+                            <Text style={this.state.kind === 'rent' ? styles.textBtnActive : styles.textBtnDeactive}>CHO THUÊ</Text>
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.titleGroup}>Dự án</Text>
@@ -134,6 +186,8 @@ export default class AdvanceSearch extends Component {
                         underlineColorAndroid='transparent'
                         value={this.state.name}
                         onChangeText={text => this.setState({ name: text })}
+                        autoFocus
+                        ref={(input) => { this.nameProject = input; }} 
                     />
                     <Text style={styles.titleGroup}>Loại hình</Text>
                     <View style={styles.rowOption}>
@@ -145,10 +199,9 @@ export default class AdvanceSearch extends Component {
                                 onValueChange={(itemValue) => this.setState({ type: itemValue })}
                                 style={styles.picker}
                             >
-                                <Picker.Item label="Loại nhà đất" value="0" />
-                                <Picker.Item label="Biệt thự" value="1" />
-                                <Picker.Item label="Chung cư" value="1" />
-                                <Picker.Item label="Liền kề" value="1" />
+                                {Object.keys(options.project_types).map(function (key) {
+                                    return <Picker.Item key={key} label={options.project_types[key]} value={key} />
+                                })}
                             </Picker>
                         </View>
                     </View>
@@ -180,7 +233,7 @@ export default class AdvanceSearch extends Component {
                                     this.onSelectDistrict(itemValue)
                                 }
                             >
-                                <Picker.Item label="Quận / Huyện" value="0" />
+                                <Picker.Item label="Quận / Huyện" value="" />
                                 {Object.keys(districts).map(function (key) {
                                     return <Picker.Item key={key} label={districts[key]} value={key} />
                                 })}
@@ -196,7 +249,7 @@ export default class AdvanceSearch extends Component {
                                 selectedValue={this.state.ward}
                                 onValueChange={(itemValue) => this.setState({ ward: itemValue })}
                             >
-                                <Picker.Item label="Phường / Xã" value="0" />
+                                <Picker.Item label="Phường / Xã" value="" />
                                 {Object.keys(wards).map(function (key) {
                                     return <Picker.Item key={key} label={wards[key]} value={key} />
                                 })}
@@ -210,7 +263,7 @@ export default class AdvanceSearch extends Component {
                                 selectedValue={this.state.street}
                                 onValueChange={(itemValue) => this.setState({ street: itemValue })}
                             >
-                                <Picker.Item label="Đường / Phố" value="0" />
+                                <Picker.Item label="Đường / Phố" value="" />
                                 {Object.keys(streets).map(function (key) {
                                     return <Picker.Item key={key} label={streets[key]} value={key} />
                                 })}
@@ -224,12 +277,12 @@ export default class AdvanceSearch extends Component {
                         >
                             <Picker
                                 style={styles.picker}
-                                selectedValue={this.state.type}
-                                onValueChange={(itemValue) => this.setState({ type: itemValue })}
+                                selectedValue={this.state.level}
+                                onValueChange={(itemValue) => this.setState({ level: itemValue })}
                             >
-                                <Picker.Item label="Hạng A" value="0" />
-                                <Picker.Item label="Hạng B" value="2" />
-                                <Picker.Item label="Hạng C" value="3" />
+                                {Object.keys(options.project_levels).map(function (key) {
+                                    return <Picker.Item key={key} label={options.project_levels[key]} value={key} />
+                                })}
                             </Picker>
                         </View>
                     </View>
@@ -260,9 +313,8 @@ export default class AdvanceSearch extends Component {
                                 selectedValue={this.state.direction}
                                 onValueChange={(itemValue) => this.setState({ direction: itemValue })}
                             >
-                                <Picker.Item label="Hướng" value="0" />
-                                {Object.keys(DIRECTIONS).map(function (key) {
-                                    return <Picker.Item key={key} label={DIRECTIONS[key]} value={key} />
+                                {Object.keys(options.directions).map(function (key) {
+                                    return <Picker.Item key={key} label={options.directions[key]} value={key} />
                                 })}
                             </Picker>
                         </View>
@@ -351,9 +403,10 @@ export default class AdvanceSearch extends Component {
                     />
                     <TouchableOpacity
                         style={styles.btnSearch}
-                        onPress={() => {
-                            this.props.toggleAdvanceSearch(this.props.bounceValue, true);
-                        }}
+                        onPress={this.onSearch.bind(this)}
+                    // onPress={() => {
+                    //     this.props.toggleAdvanceSearch(this.props.bounceValue, true);
+                    // }}
                     >
                         <Text style={styles.textBtnSearch}>TÌM KIẾM</Text>
                     </TouchableOpacity>
@@ -362,71 +415,3 @@ export default class AdvanceSearch extends Component {
         );
     }
 }
-const styles = StyleSheet.create({
-    wraper: { paddingHorizontal: 15, flex: 1 },
-    iconStyle: { width: 15, height: 15 },
-    inputStyle: {
-        height: 40,
-        marginBottom: 10,
-        marginTop: 10,
-        borderWidth: 1,
-        borderColor: '#cecece',
-        backgroundColor: '#fff'
-    },
-    btnSellActive: {
-        width: (width - 50) / 2,
-        height: 30,
-        borderTopLeftRadius: 15,
-        borderBottomLeftRadius: 15,
-        backgroundColor: '#177dba',
-        marginTop: 15,
-    },
-    btnSellDeactive: {
-        width: (width - 50) / 2,
-        height: 30,
-        borderTopLeftRadius: 15,
-        borderBottomLeftRadius: 15,
-        backgroundColor: '#d7d7d7',
-        marginTop: 15,
-    },
-    btnRentActive: {
-        width: (width - 50) / 2,
-        height: 30,
-        borderTopRightRadius: 15,
-        borderBottomRightRadius: 15,
-        backgroundColor: '#177dba',
-        marginTop: 15
-    },
-    btnRentDeactive: {
-        width: (width - 50) / 2,
-        height: 30,
-        borderTopRightRadius: 15,
-        borderBottomRightRadius: 15,
-        backgroundColor: '#d7d7d7',
-        marginTop: 15
-    },
-    textBtnActive: { fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff', fontWeight: '600' },
-    textBtnDeactive: { fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#666', fontWeight: '600' },
-    titleGroup: { fontSize: 14, paddingTop: 5, color: '#000', fontWeight: '600' },
-    rowOption: { justifyContent: 'space-between', flexDirection: 'row', width: '100%', paddingTop: 5 },
-    option: {
-        borderWidth: 1,
-        borderColor: '#33563743',
-        width: '48%',
-        marginTop: 5,
-        borderRadius: 2,
-        backgroundColor: 'white',
-        height: 40
-    },
-    optionAlone: {
-        borderWidth: 1,
-        borderColor: '#33563743',
-        width: '100%',
-        borderRadius: 2,
-        backgroundColor: 'white',
-        height: 40
-    },
-    btnSearch: { backgroundColor: '#F58319', height: 40, borderRadius: 5, marginTop: 10, marginBottom: 10, justifyContent: 'center' },
-    textBtnSearch: { textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 16 },
-    picker: { height: 40 }
-});
