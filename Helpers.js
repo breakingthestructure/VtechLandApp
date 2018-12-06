@@ -1,4 +1,5 @@
 import React from 'react';
+import { Linking, Platform } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import styles from './styles';
 
@@ -70,4 +71,17 @@ export function loading() {
             </Content>
         </Container>
     );
+}
+
+export function callingPhone(phoneNumber) {
+    const url = `tel://+${phoneNumber}`;
+    return Linking.openURL(url);
+}
+
+export function openSmsUrl(phone: string, body: string): Promise<any> {
+    return Linking.openURL(`sms:${phone}${getSMSDivider()}body=${body}`);
+}
+
+function getSMSDivider(): string {
+    return Platform.OS === 'ios' ? '&' : '?';
 }

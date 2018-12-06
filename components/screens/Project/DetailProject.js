@@ -3,23 +3,15 @@ import {
     View,
     Text,
     Image,
-    Dimensions,
-    StyleSheet,
     ScrollView,
     Modal,
     TouchableOpacity
 } from 'react-native';
 import {
-    Container,
-    Content,
-    List,
     ListItem,
     Thumbnail,
     Left,
     Body,
-    Right,
-    Button,
-    Spinner,
     Icon,
     DeckSwiper,
     Card,
@@ -215,7 +207,7 @@ export default class DetailProject extends React.Component {
 
                         style={{ alignSelf: 'stretch', height: 300 }}
                     />
-                    
+
                     <View style={{ height: 450 }}>
                         <DeckSwiper
                             dataSource={project.data.images.feature}
@@ -259,7 +251,6 @@ export default class DetailProject extends React.Component {
                         </Text>
                     </TouchableOpacity>
                 </ScrollView>
-
             </View >
         );
     }

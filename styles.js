@@ -131,7 +131,7 @@ export default StyleSheet.create({
         borderRadius: 2,
         shadowColor: '#3B5458',
         shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.2
+        shadowOpacity: 0.2,
     },
     actionContainer: {
         justifyContent: 'flex-end',
@@ -210,9 +210,8 @@ export default StyleSheet.create({
     thumbProject: { width: 120, height: 120, marginRight: 5 },
     btnDetail: {
         height: 30,
-        // borderColor: '#959595',
         borderRadius: 5,
-        backgroundColor: '#F4AF47',
+        backgroundColor: '#F58319',
         width: '40%',
         marginRight: 1,
         flexDirection: 'row',
@@ -221,16 +220,15 @@ export default StyleSheet.create({
     },
     btnTable: {
         height: 30,
-        borderColor: '#959595',
         borderRadius: 5,
-        backgroundColor: '#F4AF47',
+        backgroundColor: '#F58319',
         justifyContent: 'center',
         width: '20%',
         alignItems: 'center',
         marginRight: 1,
     },
     icTitle: { width: 2, height: 13 },
-    title: { fontWeight: '600', fontSize: 16, paddingLeft: 5 },
+    title: { fontWeight: '600', fontSize: 16, paddingLeft: 5, color: '#053654' },
     txtDetail: { fontWeight: '500', marginHorizontal: 15, fontSize: 14, color: 'white', marginTop: 5 },
     iconBtn: { color: '#fff', fontSize: 14 },
     iconBigBtn: { color: '#fff', fontSize: 14, marginTop: 7, marginLeft: 0 },
@@ -477,12 +475,12 @@ export default StyleSheet.create({
     headerSection: {
         height: height / 13,
         backgroundColor: '#F58319',
-        padding: 10,
+        // padding: 10,
         justifyContent: 'space-around'
     },
     headerAction: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 5 },
     modalAction: { flexDirection: 'row', justifyContent: 'space-between', padding: 10 },
-    iconHeaderStyle: { width: 20, height: 20, marginTop: 5 },
+    iconHeaderStyle: { width: 20, height: 20, marginLeft: 10 },
     //menu
     menu: {
         flex: 1,

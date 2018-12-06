@@ -46,7 +46,7 @@ export default class Profile extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Header navigation={this.props.navigation} title='Thông tin cá nhân' />
+                <Header navigation={this.props.navigation} title='THÔNG TIN TÀI KHOẢN' back={'ok'} />
                 <View style={{ backgroundColor: '#fff', flex: 1 }}>
                     <View style={{ alignItems: 'center', padding: 20, flex: 1 }}>
                         <Image source={icAvatar} style={{ width: 120, height: 120, borderRadius: 60, borderWidth: 1, borderColor: '#cccccc' }} />

@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
-import { Image, View, ScrollView } from 'react-native';
-import { Container, Tab, Tabs, ScrollableTab, Content } from 'native-base';
+import { Image, View, ScrollView, BackHandler } from 'react-native';
+import {
+    Container,
+    Tab,
+    Tabs,
+    ScrollableTab,
+    Content,
+    // Icon, 
+    // Fab,
+    // Button 
+} from 'native-base';
 import Swiper from 'react-native-swiper';
 import ActionProject from './ActionProject';
 import SetCalendar from './SetCalendar';
@@ -22,7 +31,8 @@ export default class TabProject extends Component {
             initialPage: 0,
             activeTab: 0,
             project: null,
-            buildings: []
+            buildings: [],
+            showSlide: true,
         };
         this.onChangeTab = this.onChangeTab.bind(this);
     }
@@ -31,14 +41,13 @@ export default class TabProject extends Component {
         this.setState({ activeTab: page });
     }
     componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         const { navigation } = this.props;
         const projectId = navigation.getParam('projectId', null);
         const activeTab = navigation.getParam('activeTab', null);
         if (activeTab) {
             this.setState({ activeTab });
-            // this.onChangeTab(activeTab);
         }
-        console.log(projectId);
         if (projectId) {
             getDetailProject(projectId)
                 .then(resJson => {
@@ -61,6 +70,11 @@ export default class TabProject extends Component {
                 .catch(err => console.log(err));
         }
     }
+    handleBackPress = () => { //eslint-disable-line
+        // this.props.navigation.pop();
+        return true;
+    }
+
     render() {
         const { project } = this.state;
         if (!this.state.loaded || !project) {
@@ -68,7 +82,7 @@ export default class TabProject extends Component {
         }
         return (
             <Container>
-                <Header navigation={this.props.navigation} title={project.name} />
+                <Header navigation={this.props.navigation} title={project.name} back={'MapScreen'} />
                 <ScrollView ref='_scrollView'>
                     <View style={styles.slideProject}>
                         <Swiper showsButtons={true}>
@@ -84,7 +98,7 @@ export default class TabProject extends Component {
                             tabBarUnderlineStyle={{ backgroundColor: 'transparent' }}
                             // tabBarBackgroundColor={'#000'}
                             renderTabBar={() => <ScrollableTab style={styles.scrollTabProject} />}
-                            locked
+                            // locked
                             tabBarPosition='top'
                             initialPage={this.state.initialPage}
                             page={this.state.activeTab}

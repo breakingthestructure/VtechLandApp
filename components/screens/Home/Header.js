@@ -1,26 +1,44 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TouchableOpacity, Image, Dimensions, StyleSheet, StatusBar
+    View, Text, TouchableOpacity, Image, StatusBar
 } from 'react-native';
-import { Icon } from 'native-base';
+// import { Icon } from 'native-base';
 import icMenu from './../../../icons/menu.png';
-import icSearch from './../../../icons/icon_search.png';
-import icLogo from './../../../icons/logo_hpt.png';
-import icAvatar from './../../../icons/profile.png';
+import icBack from './../../../icons/back_white.png';
+// import icSearch from './../../../icons/icon_search.png';
+// import icLogo from './../../../icons/logo_hpt.png';
+// import icAvatar from './../../../icons/profile.png';
 import styles from './../../../styles';
-
-const { height } = Dimensions.get('window');
+import icAvatar from './../../../icons/customer.png';
 
 export default class Header extends Component {
     openMenu() {
         this.props.navigation.openDrawer();
     }
+    goBack() {
+        if (this.props.back !== 'MapScreen') {
+            console.log('ok');
+            this.props.navigation.navigate('MapScreen');
+        } else {
+            console.log('ok222');
+            this.props.navigation.pop();
+        }
+    }
     openRightMenu() {
-        console.log('okkkkkkk332aaababab2222', this.props.navigation.navigate('toggleInnerDrawer'));
-        // this.props.navigation.toggleDrawer();
+        this.props.navigation.toggleRightDrawer();
     }
     render() {
         const { headerSection, headerAction, iconHeaderStyle } = styles;
+        const goBackJSX = (
+            <TouchableOpacity onPress={this.goBack.bind(this)} style={{ width: 50, height: 45, justifyContent: 'center' }}>
+                <Image source={icBack} style={iconHeaderStyle} />
+            </TouchableOpacity>
+        );
+        const menuJSX = (
+            <TouchableOpacity onPress={this.openMenu.bind(this)} style={{ width: 50, height: 45, justifyContent: 'center' }}>
+                <Image source={icMenu} style={iconHeaderStyle} />
+            </TouchableOpacity>
+        );
         return (
             <View style={headerSection}>
                 <StatusBar
@@ -28,16 +46,21 @@ export default class Header extends Component {
                     barStyle="light-content"
                 />
                 <View style={headerAction}>
-                    <TouchableOpacity onPress={this.openMenu.bind(this)}>
-                        <Image source={icMenu} style={iconHeaderStyle} />
+                    {this.props.back ? goBackJSX : menuJSX}
+                    <View style={{ justifyContent: 'center' }}>
+                        <Text style={{ color: 'white', fontWeight: '500', fontSize: 16, textAlign: 'center' }}>{this.props.title ? this.props.title : 'VtechHome'}</Text>
+                    </View>
+                    <TouchableOpacity
+                        onPress={this.openRightMenu.bind(this)}
+                        style={{
+                            width: 50,
+                            height: 45,
+                            justifyContent: 'center',
+                            alignItems: 'flex-end'
+                        }}
+                    >
+                        <Image source={icAvatar} style={{ width: 30, height: 30, borderRadius: 15, borderWidth: 1, borderColor: 'white', marginRight: 10 }} />
                     </TouchableOpacity>
-                    <Text style={{ color: 'white', fontWeight: '500', fontSize: 16, marginTop: 5 }}>{this.props.title ? this.props.title : 'VtechHome'}</Text>
-                    <TouchableOpacity onPress={this.openRightMenu.bind(this)}>
-                        <Image source={icAvatar} style={{ width: 30, height: 30, marginTop: 5, borderRadius: 15, borderWidth: 1, borderColor: 'white' }} />
-                    </TouchableOpacity>
-                    {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileScreen')}>
-                        <Image source={icAvatar} style={{ width: 30, height: 30, marginTop: 5, borderRadius: 15, borderWidth: 1, borderColor: 'white' }} />
-                    </TouchableOpacity> */}
                 </View>
             </View>
         );

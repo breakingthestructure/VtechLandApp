@@ -1,31 +1,66 @@
 import React from 'react';
-import { StatusBar, Alert, ImageBackground, Dimensions, NetInfo } from 'react-native';
-import { createDrawerNavigator, DrawerActions } from 'react-navigation';
-import { Container, Content, Spinner } from 'native-base';
+import { Alert, ImageBackground, NetInfo, View, Easing, Animated, BackHandler } from 'react-native';
+import { createAppContainer, createDrawerNavigator, DrawerActions, createStackNavigator } from 'react-navigation';
 import firebase from 'react-native-firebase';
 import type { Notification, NotificationOpen } from 'react-native-firebase';
 import Login from './components/screens/Auth/Login';
 import Menu from './components/screens/Auth/Menu';
+import RightMenu from './components/screens/Auth/RightMenu';
 import Home from './components/screens/Home/Home';
 import MapProject from './components/screens/Project/MapProject';
 import ListNews from './components/screens/News/ListNews';
 import DetailNews from './components/screens/News/DetailNews';
-import SetCalendar from './components/screens/Project/SetCalendar';
 import TabProject from './components/screens/Project/TabProject';
 import Config from './components/screens/Auth/Config';
-import CalcDebt from './components/screens/Project/CalcDebt';
 import AdvanceSearch from './components/screens/Project/AdvanceSearch';
 import TablePackage from './components/screens/Project/TablePackage';
 import DetailApartment from './components/screens/Project/DetailApartment';
-import DetailProject from './components/screens/Project/DetailProject';
 import MyNotification from './components/screens/Auth/MyNotification';
 import Profile from './components/screens/Auth/Profile';
 import imgWelcome from './images/welcome.jpg';
 import OrderSubmit from './components/screens/Transaction/OrderSubmit';
+import MyCustomers from './components/screens/Auth/MyCustomers';
+import MyTransactions from './components/screens/Auth/MyTransactions';
+import DetailTransaction from './components/screens/Transaction/DetailTransaction';
+import MyProject from './components/screens/Auth/MyProject';
 
-const { width, height } = Dimensions.get('window');
+const ProjectStack = createStackNavigator(
+  {
+    Map: { screen: MapProject },
+    TabProjectScreen: { screen: TabProject },
+  },
+  {
+    headerMode: 'none',
+    // mode: 'modal',
+    navigationOptions: {
+      gesturesEnabled: false,
+    },
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 300,
+        easing: Easing.out(Easing.poly(4)),
+        timing: Animated.timing,
+      },
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps;
+        const { index } = scene;
 
-// StatusBar.setHidden(true);
+        const height = layout.initHeight;
+        const translateY = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [height, 0, 0],
+        });
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index - 0.99, index],
+          outputRange: [0, 1, 1],
+        });
+
+        return { opacity, transform: [{ translateY }] };
+      },
+    }),
+  }
+);
 
 const LeftDrawer = createDrawerNavigator(
   {
@@ -36,7 +71,7 @@ const LeftDrawer = createDrawerNavigator(
       screen: Login
     },
     MapScreen: {
-      screen: MapProject
+      screen: ProjectStack
     },
     NewsScreen: {
       screen: ListNews
@@ -44,26 +79,17 @@ const LeftDrawer = createDrawerNavigator(
     DetailNewsScreen: {
       screen: DetailNews
     },
-    TabProjectScreen: {
-      screen: TabProject
+    MyProjectScreen: {
+      screen: MyProject
     },
     ConfigScreen: {
       screen: Config
-    },
-    AdvanceSearchScreen: {
-      screen: AdvanceSearch
     },
     TablePackageScreen: {
       screen: TablePackage
     },
     DetailApartmentScreen: {
       screen: DetailApartment
-    },
-    NotificationScreen: {
-      screen: MyNotification
-    },
-    ProfileScreen: {
-      screen: Profile
     },
     OrderSubmitScreen: {
       screen: OrderSubmit
@@ -72,29 +98,76 @@ const LeftDrawer = createDrawerNavigator(
   {
     initialRouteName: 'MapScreen',
     contentComponent: Menu,
-    drawerOpenRoute: 'LeftSideMenu',
-    drawerCloseRoute: 'LeftSideMenuClose',
-    drawerToggleRoute: 'LeftSideMenuToggle',
+    getCustomActionCreators: (route, stateKey) => {
+      return {
+        toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }),
+      };
+    },
+  }
+);
+
+const UserStack = createStackNavigator(
+  {
+    MyCustomerScreen: { screen: MyCustomers },
+    NotificationScreen: { screen: MyNotification },
+    ProfileScreen: { screen: Profile },
+    MyTransactionScreen: { screen: MyTransactions },
+    DetailTransactionScreen: {
+      screen: DetailTransaction
+    },
+  },
+  {
+    headerMode: 'none',
+    // mode: 'modal',
+    navigationOptions: {
+      gesturesEnabled: false,
+    },
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 300,
+        easing: Easing.out(Easing.poly(4)),
+        timing: Animated.timing,
+      },
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps;
+        const { index } = scene;
+
+        const height = layout.initHeight;
+        const translateY = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [height, 0, 0],
+        });
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index - 0.99, index],
+          outputRange: [0, 1, 1],
+        });
+
+        return { opacity, transform: [{ translateY }] };
+      },
+    }),
   }
 );
 
 const RightDrawer = createDrawerNavigator({
-  Drafts: {
+  Left: {
     screen: LeftDrawer,
   },
+  User: {
+    screen: UserStack,
+  },
 }, {
+    contentComponent: RightMenu,
     drawerPosition: 'right',
-    drawerOpenRoute: 'RightSideMenu',
-    drawerCloseRoute: 'RightSideMenuClose',
-    drawerToggleRoute: 'RightSideMenuToggle',
     getCustomActionCreators: (route, stateKey) => {
-      console.log('inner: ' + stateKey);
       return {
-        toggleInnerDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }),
+        toggleRightDrawer: () => DrawerActions.toggleDrawer({ key: stateKey }),
       };
     },
-    // contentComponent: Menu,
-});
+  }
+);
+
+const AppContainer = createAppContainer(RightDrawer);
 
 export default class App extends React.Component {
   constructor() {
@@ -104,16 +177,13 @@ export default class App extends React.Component {
     };
   }
   async componentDidMount() {
-
     NetInfo.getConnectionInfo().then((connectionInfo) => {
       if (connectionInfo.type === 'none') {
         Alert.alert(
           'Thông báo',
           'Thiết bị của bạn không có kết nối internet. Vui lòng mở kết nối trước khi sử dụng',
           [
-            // {text: 'Ko đùa đâu', onPress: () => console.log('Ask me later pressed')},
-            // {text: 'Kệ mầy', onPress: () => console.log('Cancel Pressed')},
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
+            { text: 'OK', onPress: () => BackHandler.exitApp() },
           ],
           { cancelable: false }
         );
@@ -177,7 +247,6 @@ export default class App extends React.Component {
       );
       firebase.notifications().removeDeliveredNotification(notification.notificationId);
     });
-
   }
   componentWillUnmount() {
     this.notificationDisplayedListener();
@@ -187,16 +256,13 @@ export default class App extends React.Component {
   render() {
     if (this.state.loaded) {
       return (
-        <RightDrawer />
+        <AppContainer />
       );
     }
     return (
-      <Container>
+      <View>
         <ImageBackground source={imgWelcome} style={{ width: '100%', height: '100%' }} />
-        {/* <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-          <Spinner />
-        </Content> */}
-      </Container>
+      </View>
     );
   }
 }

@@ -162,7 +162,7 @@ export default class AdvanceSearch extends Component {
         }
         return (
             <View style={{ flex: 1 }}>
-                <Header navigation={this.props.navigation} title='TÌM KIẾM NÂNG CAO' />
+                <Header navigation={this.props.navigation} title='TÌM KIẾM NÂNG CAO' back={'MapScreen'} />
 
                 <ScrollView style={styles.content}>
                     <View style={styles.list}>

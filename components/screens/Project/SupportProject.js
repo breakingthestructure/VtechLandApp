@@ -16,6 +16,7 @@ import {
 } from 'native-base';
 
 import icSale from './../../../icons/sale.png';
+import { callingPhone } from '../../../Helpers';
 
 export default class SupportProject extends Component {
     constructor(props) {
@@ -42,9 +43,9 @@ export default class SupportProject extends Component {
         return (
             <Container>
                 <ScrollView>
-                    <ListItem thumbnail>
+                    <ListItem avatar>
                         <Left>
-                            <Thumbnail square source={icSale} />
+                            <Thumbnail source={icSale} />
                         </Left>
                         <Body>
                             <Text>James Bond</Text>
@@ -52,77 +53,77 @@ export default class SupportProject extends Component {
                             <Text note numberOfLines={1}>jamesbond@haiphatland.vn</Text>
                         </Body>
                         <Right>
-                            <Button transparent>
+                            <Button transparent onPress={() => callingPhone('091236587')}>
                                 <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
                             </Button>
                         </Right>
                     </ListItem>
-                    <ListItem thumbnail>
+                    <ListItem avatar>
                         <Left>
-                            <Thumbnail square source={icSale} />
+                            <Thumbnail source={icSale} />
                         </Left>
                         <Body>
                             <Text>James Bond</Text>
                             <Text note numberOfLines={1}>Phòng kinh doanh 2</Text>
                         </Body>
                         <Right>
-                            <Button transparent>
+                            <Button transparent onPress={() => callingPhone('091236587')} >
                                 <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
                             </Button>
                         </Right>
                     </ListItem>
-                    <ListItem thumbnail>
+                    <ListItem avatar>
                         <Left>
-                            <Thumbnail square source={icSale} />
+                            <Thumbnail source={icSale} />
                         </Left>
                         <Body>
                             <Text>James Bond</Text>
                             <Text note numberOfLines={1}>Phòng kinh doanh 2</Text>
                         </Body>
                         <Right>
-                            <Button transparent>
+                            <Button transparent onPress={() => callingPhone('091236587')} >
                                 <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
                             </Button>
                         </Right>
                     </ListItem>
-                    <ListItem thumbnail>
+                    <ListItem avatar>
                         <Left>
-                            <Thumbnail square source={icSale} />
+                            <Thumbnail source={icSale} />
                         </Left>
                         <Body>
                             <Text>James Bond</Text>
                             <Text note numberOfLines={1}>Phòng kinh doanh 2</Text>
                         </Body>
                         <Right>
-                            <Button transparent>
+                            <Button transparent onPress={() => callingPhone('091236587')} >
                                 <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
                             </Button>
                         </Right>
                     </ListItem>
-                    <ListItem thumbnail>
+                    <ListItem avatar>
                         <Left>
-                            <Thumbnail square source={icSale} />
+                            <Thumbnail source={icSale} />
                         </Left>
                         <Body>
                             <Text>James Bond</Text>
                             <Text note numberOfLines={1}>Phòng kinh doanh 2</Text>
                         </Body>
                         <Right>
-                            <Button transparent>
+                            <Button transparent onPress={() => callingPhone('091236587')} >
                                 <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
                             </Button>
                         </Right>
                     </ListItem>
-                    <ListItem thumbnail>
+                    <ListItem avatar>
                         <Left>
-                            <Thumbnail square source={icSale} />
+                            <Thumbnail source={icSale} />
                         </Left>
                         <Body>
                             <Text>James Bond</Text>
                             <Text note numberOfLines={1}>Phòng kinh doanh 2</Text>
                         </Body>
                         <Right>
-                            <Button transparent>
+                            <Button transparent onPress={() => callingPhone('091236587')} >
                                 <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
                             </Button>
                         </Right>

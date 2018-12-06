@@ -4,7 +4,6 @@ import {
     Text,
     Image,
     Dimensions,
-    StyleSheet,
     ScrollView,
     Modal,
     TouchableOpacity,
@@ -12,18 +11,16 @@ import {
     Alert
 } from 'react-native';
 
-import { Container, Content, Spinner } from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import LinearGradient from 'react-native-linear-gradient';
+import ModalRN from 'react-native-modal';
 
 // import icTitle from './../../../icons/ic_title.png';
 import Header from '../Home/Header';
 import getDetailApartment from './../../../api/getDetailApartment';
-import { BASE_URL, TYPE_ROOM, DIRECTIONS } from './../../../Globals';
-import ModalRN from "react-native-modal";
+import { BASE_URL, TYPE_ROOM } from './../../../Globals';
 import styles from './../../../styles';
 import { loading } from '../../../Helpers';
-
-const { width, height } = Dimensions.get('window');
 
 export default class DetailApartment extends React.Component {
     constructor(props) {
@@ -98,7 +95,7 @@ export default class DetailApartment extends React.Component {
         const { apartment } = this.state;
         return (
             <View style={styles.wrapper}>
-                <Header navigation={this.props.navigation} title='CHI TIẾT CĂN A0501' />
+                <Header navigation={this.props.navigation} title={`CĂN HỘ ${apartment.number} - ${apartment.building.name} - ${apartment.project.name}`} />
                 <ScrollView style={styles.content}>
                     <Text style={styles.titleScreen}>CĂN HỘ {apartment.number} - {apartment.building.name} - {apartment.project.name}</Text>
                     <Text style={styles.subTitleScreen}>({apartment.status.description})</Text>
@@ -110,17 +107,19 @@ export default class DetailApartment extends React.Component {
                         // style={{ width: (width - 50) / 2, height: 30, borderRadius: 15, backgroundColor: '#177dba', marginTop: 5, marginHorizontal: 5 }}
                         >
                             <Text
-                                // style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff' }}
                                 style={styles.textBtnActive}
                             >LOCK CĂN</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => this.props.navigation.navigate('OrderSubmitScreen')}
-                            // style={styles.btnCancel}
                             style={styles.btnSpecial}
                         >
+                            <LinearGradient
+                                colors={['rgba(255,255,255,0.9)', 'rgba(255,255,255,0.35)', 'rgba(255,255,255,0)']}
+                                locations={[0, 0.25, 1]}
+                                style={{ position: 'absolute', height: '100%', width: '100%' }}
+                            />
                             <Text
-                                // style={{ fontSize: 14, textAlign: 'center', paddingTop: 5, color: '#fff' }}
                                 style={styles.textBtnActive}
                             >ĐẶT CỌC (ĐẶT CHỖ)</Text>
                         </TouchableOpacity>

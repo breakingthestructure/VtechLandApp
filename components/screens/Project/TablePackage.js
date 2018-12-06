@@ -6,6 +6,7 @@ import Header from '../Home/Header';
 import styles from './../../../styles';
 import getTablePackage from './../../../api/getTablePackage';
 import { AVAIABLE, HOLDING, WAITING, SOLD, DISABLED, INCOMPLETE } from './../../../constants/app';
+import { loading } from '../../../Helpers';
 
 export default class TablePackage extends Component {
     constructor(props) {
@@ -22,7 +23,6 @@ export default class TablePackage extends Component {
         const { navigation } = this.props;
         const project = navigation.getParam('project', null);
         const buildingId = navigation.getParam('buildingId', null);
-        const buildingName = navigation.getParam('buildingName', null);
         if (project) {
             getTablePackage(project.id, buildingId)
                 .then(resJson => {
@@ -127,13 +127,7 @@ export default class TablePackage extends Component {
         const buildingName = navigation.getParam('buildingName', null);
         const project = navigation.getParam('project', null);
         if (!this.state.loaded) {
-            return (
-                <Container>
-                    <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
-                    </Content>
-                </Container>
-            );
+            return loading();
         }
         return (
             <View style={styles.container}>

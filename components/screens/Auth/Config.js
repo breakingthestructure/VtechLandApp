@@ -13,6 +13,7 @@ import {
     Spinner
 } from 'native-base';
 import Header from './../Home/Header';
+import { loading } from '../../../Helpers';
 
 export default class Config extends Component {
     constructor(props) {
@@ -28,14 +29,7 @@ export default class Config extends Component {
     }
     render() {
         if (!this.state.loaded) {
-            return (
-                <Container>
-                    <Header navigation={this.props.navigation} title='Cài đặt' />
-                    <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
-                    </Content>
-                </Container>
-            );
+            return loading();
         }
         return (
             <Container>

@@ -8,11 +8,19 @@ import {
     Text,
     Animated,
     ScrollView,
-    Keyboard,
     FlatList,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { Container, Content, Spinner, Item, Icon, Input } from 'native-base';
+import {
+    Container,
+    Content,
+    Spinner,
+    Item,
+    Icon,
+    Input,
+    Fab,
+    Button
+} from 'native-base';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import AdvanceSearch from './AdvanceSearch';
@@ -291,6 +299,7 @@ export default class MapProject extends React.Component {
                             </TouchableOpacity>
                         </View>
                     </View>
+
                 </View>
                 <Animated.View
                     style={[styles.subView,
