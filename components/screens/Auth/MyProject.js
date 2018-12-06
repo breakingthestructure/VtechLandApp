@@ -18,7 +18,21 @@ import styles from './../../../styles';
 const { width, height } = Dimensions.get('window');
 
 export default class MyProject extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loaded: false,
+        };
+    }
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true });
+        }, 1000);
+    }
     render() {
+        if (!this.state.loaded) {
+            return loading();
+        }
         return (
             <View style={styles.wrapper}>
                 <Header navigation={this.props.navigation} back='ok' title='DỰ ÁN QUAN TÂM' />

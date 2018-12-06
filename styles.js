@@ -231,7 +231,7 @@ export default StyleSheet.create({
     title: { fontWeight: '600', fontSize: 16, paddingLeft: 5, color: '#053654' },
     txtDetail: { fontWeight: '500', marginHorizontal: 15, fontSize: 14, color: 'white', marginTop: 5 },
     iconBtn: { color: '#fff', fontSize: 14 },
-    iconBigBtn: { color: '#fff', fontSize: 14, marginTop: 7, marginLeft: 0 },
+    // iconBigBtn: { color: '#fff', fontSize: 14, marginTop: 7, marginLeft: 0 },
     description: { flexDirection: 'row', paddingTop: 5 },
     //advancesearch
     inputStyle: {
@@ -578,10 +578,9 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginTop: 5,
         flexDirection: 'row',
-        justifyContent: 'center'
     },
-    textBtnIcon: { color: 'white', fontWeight: '400', fontSize: 14, textAlign: 'center', marginTop: 10 },
-    iconBigBtn: { fontSize: 14, color: 'white', marginTop: 10, marginRight: 5 },
+    textBtnIcon: { color: 'white', fontWeight: '600', fontSize: 14, textAlign: 'center', marginTop: 10 },
+    iconBigBtn: { fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 },
     //contact form
     textInput: {
         fontSize: 12,

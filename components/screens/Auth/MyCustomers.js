@@ -21,11 +21,15 @@ export default class MyCustomers extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loaded: true,
+            loaded: false,
             active: false
         };
     }
-
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true });
+        }, 1000);
+    }
     render() {
         if (!this.state.loaded) {
             return loading();
@@ -35,13 +39,15 @@ export default class MyCustomers extends Component {
                 <Header navigation={this.props.navigation} title='DANH SÁCH KHÁCH HÀNG' back={'ok'} />
                 <List>
                     <ListItem style={{ borderBottomWidth: 0 }}>
-                        <TextInput
-                            style={{ height: 40, width: '100%', borderRadius: 20, marginTop: 5, backgroundColor: '#dddddd' }}
-                            placeholder='Nhập tên khách hàng...'
-                            underlineColorAndroid='transparent'
-                            value={this.state.name}
-                            onChangeText={text => this.setState({ name: text })}
-                        />
+                        <View style={{ height: 40, width: '100%', borderRadius: 20, marginTop: 5, backgroundColor: '#dddddd' }}>
+                            <TextInput
+                                style={{ height: 40, width: '100%', marginLeft: 15 }}
+                                placeholder='Nhập tên khách hàng...'
+                                underlineColorAndroid='transparent'
+                                value={this.state.name}
+                                onChangeText={text => this.setState({ name: text })}
+                            />
+                        </View>
                     </ListItem>
                     <ListItem avatar style={{ borderBottomWidth: 1 }}>
                         <Left>

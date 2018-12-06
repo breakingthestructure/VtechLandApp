@@ -82,6 +82,10 @@ export function openSmsUrl(phone: string, body: string): Promise<any> {
     return Linking.openURL(`sms:${phone}${getSMSDivider()}body=${body}`);
 }
 
+export function openEmail(phone: string, body: string): Promise<any> {
+    return Linking.openURL('mailto:somethingemail@gmail.com&subject=abcdefg&body=body');
+}
+
 function getSMSDivider(): string {
     return Platform.OS === 'ios' ? '&' : '?';
 }

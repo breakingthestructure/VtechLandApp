@@ -23,6 +23,7 @@ import MyCustomers from './components/screens/Auth/MyCustomers';
 import MyTransactions from './components/screens/Auth/MyTransactions';
 import DetailTransaction from './components/screens/Transaction/DetailTransaction';
 import MyProject from './components/screens/Auth/MyProject';
+import DetailCustomer from './components/screens/Customer/DetailCustomer';
 
 const ProjectStack = createStackNavigator(
   {
@@ -93,10 +94,11 @@ const LeftDrawer = createDrawerNavigator(
     },
     OrderSubmitScreen: {
       screen: OrderSubmit
-    }
+    },
+    DetailCustomerScreen: { screen: DetailCustomer },
   },
   {
-    initialRouteName: 'MapScreen',
+    initialRouteName: 'DetailCustomerScreen',
     contentComponent: Menu,
     getCustomActionCreators: (route, stateKey) => {
       return {

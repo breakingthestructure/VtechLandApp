@@ -30,12 +30,12 @@ export default class Header extends Component {
     render() {
         const { headerSection, headerAction, iconHeaderStyle } = styles;
         const goBackJSX = (
-            <TouchableOpacity onPress={this.goBack.bind(this)} style={{ width: 50, height: 45, justifyContent: 'center' }}>
+            <TouchableOpacity onPress={this.goBack.bind(this)} style={{ width: 60, height: 45, justifyContent: 'center' }}>
                 <Image source={icBack} style={iconHeaderStyle} />
             </TouchableOpacity>
         );
         const menuJSX = (
-            <TouchableOpacity onPress={this.openMenu.bind(this)} style={{ width: 50, height: 45, justifyContent: 'center' }}>
+            <TouchableOpacity onPress={this.openMenu.bind(this)} style={{ width: 60, height: 45, justifyContent: 'center' }}>
                 <Image source={icMenu} style={iconHeaderStyle} />
             </TouchableOpacity>
         );

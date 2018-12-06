@@ -39,7 +39,6 @@ export default class CalcDebt extends React.Component {
             result: [],
             calculating: false
         };
-
     }
     handleChangeFromInput = (index, type, text) => {
         const newArray = this.state.arrayCondition;

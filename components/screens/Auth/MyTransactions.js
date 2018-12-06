@@ -22,8 +22,13 @@ export default class MyTransactions extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loaded: true,
+            loaded: false,
         };
+    }
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true });
+        }, 1000);
     }
     render() {
         if (!this.state.loaded) {

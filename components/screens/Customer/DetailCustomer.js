@@ -10,16 +10,16 @@ import {
     ScrollView,
     Keyboard
 } from 'react-native';
-import { Icon } from 'native-base';
+import { Icon, Button } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Header from '../Home/Header';
 import saveToken from './../../../api/saveToken';
 import GLOBAL from './../../../Globals';
 import avatar from './../../../images/avatar.jpg';
 import styles from './../../../styles';
-import { loading } from '../../../Helpers';
+import { loading, callingPhone, openSmsUrl, openEmail } from '../../../Helpers';
 
-export default class Profile extends React.Component {
+export default class DetailCustomer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -68,16 +68,25 @@ export default class Profile extends React.Component {
         }
         return (
             <View style={styles.container}>
-                <Header navigation={this.props.navigation} title='THÔNG TIN TÀI KHOẢN' back={'ok'} />
+                <Header navigation={this.props.navigation} title='THÔNG TIN KHÁCH HÀNG' back={'ok'} />
                 <ScrollView>
                     <View style={styles.content}>
                         <View style={{ alignItems: 'center', padding: 20 }}>
                             <Image source={avatar} style={{ width: 120, height: 120, borderRadius: 60, borderWidth: 5, borderColor: '#F58319' }} />
                             <View style={styles.sectionInputInline}>
-
-                                <Text style={{ fontSize: 18 }}>Xin chào </Text>
                                 <Text style={{ fontSize: 18, color: '#F58319', fontWeight: '600' }}>Cowboy!</Text>
                             </View>
+                        </View>
+                        <View style={styles.list}>
+                            <Button transparent onPress={() => callingPhone('0975151490')}>
+                                <Text><Icon type="Feather" name="phone-call" style={{ color: 'orange', fontSize: 30 }} /></Text>
+                            </Button>
+                            <Button transparent onPress={() => openSmsUrl('0975151490', 'xin chao')} style={{ paddingLeft: 10 }}>
+                                <Text><Icon type="MaterialCommunityIcons" name="message-text-outline" style={{ color: 'orange', fontSize: 30 }} /></Text>
+                            </Button>
+                            <Button transparent onPress={() => openEmail()} style={{ paddingLeft: 10 }}>
+                                <Text><Icon type="Octicons" name="mail" style={{ color: 'orange', fontSize: 30 }} /></Text>
+                            </Button>
                         </View>
                         <TextInput
                             style={styles.inputStyle}
