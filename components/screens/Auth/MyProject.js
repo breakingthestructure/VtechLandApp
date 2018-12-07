@@ -14,6 +14,7 @@ import Header from './../Home/Header';
 import imgDuan from './../../../images/duan.jpg';
 import icTitle from './../../../icons/ic_title.png';
 import styles from './../../../styles';
+import { loading } from '../../../Helpers';
 
 const { width, height } = Dimensions.get('window');
 

@@ -231,7 +231,6 @@ export default StyleSheet.create({
     title: { fontWeight: '600', fontSize: 16, paddingLeft: 5, color: '#053654' },
     txtDetail: { fontWeight: '500', marginHorizontal: 15, fontSize: 14, color: 'white', marginTop: 5 },
     iconBtn: { color: '#fff', fontSize: 14 },
-    // iconBigBtn: { color: '#fff', fontSize: 14, marginTop: 7, marginLeft: 0 },
     description: { flexDirection: 'row', paddingTop: 5 },
     //advancesearch
     inputStyle: {
@@ -618,4 +617,21 @@ export default StyleSheet.create({
     activeTab: { backgroundColor: '#F58319' },
     textActiveTab: { color: 'white', fontWeight: '600', fontSize: 12 },
     slideProject: { height: height / 4 },
+    btnSubmitSquareInline: {
+        width: '48%',
+        height: 40,
+        borderRadius: 5,
+        backgroundColor: '#177dba',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+    btnDeleteSquareInline: {
+        width: '48%',
+        height: 40,
+        borderRadius: 5,
+        backgroundColor: 'red',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+    groupBtn: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }
 });

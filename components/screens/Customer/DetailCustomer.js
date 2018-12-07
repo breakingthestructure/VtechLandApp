@@ -79,13 +79,13 @@ export default class DetailCustomer extends React.Component {
                         </View>
                         <View style={styles.list}>
                             <Button transparent onPress={() => callingPhone('0975151490')}>
-                                <Text><Icon type="Feather" name="phone-call" style={{ color: 'orange', fontSize: 30 }} /></Text>
+                                <Text><Icon type="Feather" name="phone-call" style={{ color: '#666666', fontSize: 30 }} /></Text>
                             </Button>
-                            <Button transparent onPress={() => openSmsUrl('0975151490', 'xin chao')} style={{ paddingLeft: 10 }}>
-                                <Text><Icon type="MaterialCommunityIcons" name="message-text-outline" style={{ color: 'orange', fontSize: 30 }} /></Text>
+                            <Button transparent onPress={() => openSmsUrl('0975151490', 'xin chao')} style={{ paddingLeft: 50 }}>
+                                <Text><Icon type="MaterialCommunityIcons" name="message-text-outline" style={{ color: '#666666', fontSize: 30 }} /></Text>
                             </Button>
-                            <Button transparent onPress={() => openEmail()} style={{ paddingLeft: 10 }}>
-                                <Text><Icon type="Octicons" name="mail" style={{ color: 'orange', fontSize: 30 }} /></Text>
+                            <Button transparent onPress={() => openEmail()} style={{ paddingLeft: 50 }}>
+                                <Text><Icon type="Octicons" name="mail" style={{ color: '#666666', fontSize: 34 }} /></Text>
                             </Button>
                         </View>
                         <TextInput
@@ -145,14 +145,16 @@ export default class DetailCustomer extends React.Component {
                                 onChangeText={text => this.setState({ identity: text })}
                             />
                         </View>
-                        <TouchableOpacity
-                            style={styles.bigBtnIcon}
-                        >
-                            <Icon type="FontAwesome" name='save' style={styles.iconBigBtn} />
-                            <Text style={styles.textBtnIcon}>
-                                Lưu
-                            </Text>
-                        </TouchableOpacity>
+                        <View style={styles.groupBtn}>
+                            <TouchableOpacity style={styles.btnSubmitSquareInline}>
+                                <Icon type="FontAwesome" name='save' style={styles.iconBigBtn} />
+                                <Text style={styles.textBtnIcon}>LƯU</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.btnDeleteSquareInline}>
+                                <Icon type="FontAwesome" name='trash-o' style={styles.iconBigBtn} />
+                                <Text style={styles.textBtnIcon}>XÓA</Text>
+                            </TouchableOpacity>
+                        </View>
                         <DateTimePicker
                             isVisible={this.state.isDatePickerVisible}
                             onConfirm={this.handleDatePicked}
