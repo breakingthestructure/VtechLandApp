@@ -40,7 +40,7 @@ export default class SetCalendar extends React.Component {
     showDatePicker = () => this.setState({ isDatePickerVisible: true });
 
     hideDatePicker = () => this.setState({ isDatePickerVisible: false });
-    
+
     handleDatePicked = (date) => { //eslint-disable-line
         let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
         this.setState({ txtDate: selected });
@@ -87,28 +87,33 @@ export default class SetCalendar extends React.Component {
                 <View style={styles.content}>
                     <Text style={styles.titleSection}>ĐẶT LỊCH THAM QUAN NHÀ MẪU</Text>
                     <Text style={styles.subTitle}>Nhà mẫu dự án mở cửa 8h00 - 18h00 tất cả các ngày trong tuần (kể cả thứ 7 & chủ nhật)</Text>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder='HỌ TÊN'
-                        underlineColorAndroid='transparent'
-                        onChangeText={(text) => this.setState({ txtName: text })}
-                        value={this.state.txtName}
-                    />
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder='ĐIỆN THOẠI'
-                        underlineColorAndroid='transparent'
-                        onChangeText={(text) => this.setState({ txtPhone: text })}
-                        value={this.state.txtPhone}
-                        keyboardType={'numeric'}
-                    />
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder='EMAIL'
-                        underlineColorAndroid='transparent'
-                        onChangeText={(text) => this.setState({ txtEmail: text })}
-                        value={this.state.txtEmail}
-                    />
+                    <View style={styles.viewInput}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Họ tên'
+                            underlineColorAndroid='transparent'
+                            value={this.state.name}
+                            onChangeText={text => this.setState({ name: text })}
+                        />
+                    </View>
+                    <View style={styles.viewInput}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Điện thoại'
+                            underlineColorAndroid='transparent'
+                            value={this.state.phone}
+                            onChangeText={text => this.setState({ phone: text })}
+                        />
+                    </View>
+                    <View style={styles.viewInput}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Email'
+                            underlineColorAndroid='transparent'
+                            value={this.state.email}
+                            onChangeText={text => this.setState({ email: text })}
+                        />
+                    </View>
                     <View
                         style={styles.item}
                     >
@@ -159,8 +164,14 @@ export default class SetCalendar extends React.Component {
                         bordered
                         placeholder="LƯU Ý DÀNH CHO NHÂN VIÊN KINH DOANH"
                     />
-                    <TouchableOpacity style={styles.bigBtn} onPress={this.onSubmit.bind(this)}>
-                        <Text style={styles.textBtnActive}>ĐĂNG KÝ</Text>
+                    <TouchableOpacity
+                        style={styles.bigBtnIcon}
+                        onPress={this.onSubmit.bind(this)}
+                    >
+                        <Icon name='ios-checkmark-circle-outline' style={styles.iconBigBtn} />
+                        <Text style={styles.textBtnIcon}>
+                            ĐĂNG KÝ
+                            </Text>
                     </TouchableOpacity>
                     <DateTimePicker
                         isVisible={this.state.isDatePickerVisible}

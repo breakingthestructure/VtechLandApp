@@ -10,13 +10,15 @@ import {
     TouchableOpacity,
     BackHandler,
     TextInput,
-    Switch
+    Switch,
+    Keyboard
 } from 'react-native';
 
-import { Container, Content, Spinner, Item, Input, ListItem, CheckBox, Body } from 'native-base';
+import { Container, Content, Spinner, Item, Input, ListItem, CheckBox, Body, Icon } from 'native-base';
 import { TextInputMask } from 'react-native-masked-text';
 import Header from '../Home/Header';
 import styles from './../../../styles';
+import { loading } from '../../../Helpers';
 
 const { width } = Dimensions.get('window');
 
@@ -46,17 +48,11 @@ export default class OrderSubmit extends React.Component {
     }
     render() {
         if (!this.state.loaded) {
-            return (
-                <Container>
-                    <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
-                    </Content>
-                </Container>
-            );
+            return loading();
         }
         return (
             <View style={styles.wrapper}>
-                <Header navigation={this.props.navigation} title='GIAO DỊCH CĂN A0501' />
+                <Header navigation={this.props.navigation} title='GIAO DỊCH CĂN A0501' back={'ok'} />
                 <ScrollView style={styles.content}>
                     <Text style={styles.titleScreen}>PHIẾU ĐẶT CỌC</Text>
                     <Text style={styles.txtHeader}>Thông tin sản phẩm</Text>
@@ -96,58 +92,80 @@ export default class OrderSubmit extends React.Component {
                         </View>
                     </View>
                     <Text style={styles.txtHeader}>Thông tin khách hàng</Text>
-                    <TextInput
-                        style={styles.inputStyle}
-                        placeholder='Họ tên'
-                        underlineColorAndroid='transparent'
-                        value={this.state.name}
-                        onChangeText={text => this.setState({ name: text })}
-                    />
-                    <TextInput
-                        style={styles.inputStyle}
-                        placeholder='Địa chỉ'
-                        underlineColorAndroid='transparent'
-                        value={this.state.address}
-                        onChangeText={text => this.setState({ address: text })}
-                    />
-                    <TextInput
-                        style={styles.inputStyle}
-                        placeholder='Điện thoại'
-                        underlineColorAndroid='transparent'
-                        value={this.state.phone}
-                        onChangeText={text => this.setState({ phone: text })}
-                        keyboardType={'numeric'}
-                    />
-                    <TextInput
-                        style={styles.inputStyle}
-                        placeholder='Email'
-                        underlineColorAndroid='transparent'
-                        value={this.state.email}
-                        onChangeText={text => this.setState({ email: text })}
-                    />
-                    <TextInput
-                        style={styles.inputStyle}
-                        placeholder='Số CMND'
-                        underlineColorAndroid='transparent'
-                        value={this.state.identity}
-                        onChangeText={text => this.setState({ identity: text })}
-                        keyboardType={'numeric'}
-                    />
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+                    <View style={styles.viewInput}>
                         <TextInput
-                            style={styles.inputInline}
-                            placeholder='Ngày cấp'
+                            style={styles.input}
+                            placeholder='Họ tên'
+                            underlineColorAndroid='transparent'
+                            value={this.state.name}
+                            onChangeText={text => this.setState({ name: text })}
+                        />
+                    </View>
+                    <View style={styles.viewInput}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Địa chỉ'
+                            underlineColorAndroid='transparent'
+                            value={this.state.address}
+                            onChangeText={text => this.setState({ address: text })}
+                        />
+                    </View>
+                    <View style={styles.viewInput}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Điện thoại'
+                            underlineColorAndroid='transparent'
+                            value={this.state.phone}
+                            onChangeText={text => this.setState({ phone: text })}
+                        />
+                    </View>
+                    <View style={styles.viewInput}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Email'
+                            underlineColorAndroid='transparent'
+                            value={this.state.email}
+                            onChangeText={text => this.setState({ email: text })}
+                        />
+                    </View>
+                    <View style={styles.viewInput}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Số CMND'
                             underlineColorAndroid='transparent'
                             value={this.state.identity}
                             onChangeText={text => this.setState({ identity: text })}
                         />
-                        <TextInput
-                            style={styles.inputInline}
-                            placeholder='Nơi cấp'
-                            underlineColorAndroid='transparent'
-                            value={this.state.identity}
-                            onChangeText={text => this.setState({ identity: text })}
-                        />
+                    </View>
+
+                    <View style={styles.rowOption}>
+                        <View
+                            style={styles.viewHalfInput}
+                        >
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Ngày cấp'
+                                underlineColorAndroid='transparent'
+                                value={this.state.identity}
+                                onChangeText={text => this.setState({ identity: text })}
+                                onFocus={() => {
+                                    Keyboard.dismiss();
+                                    this.showDatePicker();
+                                }}
+                            />
+                        </View>
+                        <View
+                            style={styles.viewHalfInput}
+                        >
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Nơi cấp'
+                                underlineColorAndroid='transparent'
+                                value={this.state.identity}
+                                onChangeText={text => this.setState({ identity: text })}
+                            />
+                        </View>
                     </View>
                     <Text style={styles.txtHeader}>
                         Số tiền và phương thức thanh toán tiền cọc
@@ -194,12 +212,14 @@ export default class OrderSubmit extends React.Component {
                             </Body>
                         </ListItem>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, marginBottom: 20 }}>
-                        <TouchableOpacity style={styles.btnSubmit}>
-                            <Text style={styles.textBtnActive}>ĐẶT CỌC</Text>
+                    <View style={styles.groupInline}>
+                        <TouchableOpacity style={styles.btnSubmitSquareInline}>
+                            <Icon type="FontAwesome" name='save' style={styles.iconBigBtn} />
+                            <Text style={styles.textBtnIcon}>ĐẶT CỌC</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.btnCancel}>
-                            <Text style={styles.textBtnActive}>HỦY</Text>
+                        <TouchableOpacity style={styles.btnDeleteSquareInline}>
+                            <Icon type="FontAwesome" name='trash-o' style={styles.iconBigBtn} />
+                            <Text style={styles.textBtnIcon}>HỦY</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>

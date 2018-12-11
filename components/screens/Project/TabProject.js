@@ -98,7 +98,7 @@ export default class TabProject extends Component {
                             tabBarUnderlineStyle={{ backgroundColor: 'transparent' }}
                             // tabBarBackgroundColor={'#000'}
                             renderTabBar={() => <ScrollableTab style={styles.scrollTabProject} />}
-                            // locked
+                            locked
                             tabBarPosition='top'
                             initialPage={this.state.initialPage}
                             page={this.state.activeTab}

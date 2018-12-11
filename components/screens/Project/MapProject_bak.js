@@ -9,8 +9,6 @@ import {
     Animated,
     ScrollView,
     FlatList,
-    Image,
-    TextInput
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import {
@@ -32,12 +30,6 @@ import getProject from './../../../api/getProject';
 import GLOBAL from './../../../Globals';
 import SearchResult from '../../Modal/SearchResult';
 import styles from './../../../styles';
-
-import icInvestor from './../../../icons/investor.png';
-import icHistory from './../../../icons/history.png';
-import icPartner from './../../../icons/partner.png';
-import icRest from './../../../icons/rest.png';
-import icInvest from './../../../icons/invest.png';
 
 const { width, height } = Dimensions.get('window');
 let isHidden = true;
@@ -264,64 +256,51 @@ export default class MapProject extends React.Component {
                             />
                         ))}
                     </MapView>
-                </View>
-                <View style={styles.actionContainer}>
-                    <View style={{ height: 40, width: '100%', borderRadius: 20, marginTop: 5, backgroundColor: '#dddddd', flexDirection: 'row' }}>
-                        <Icon name='ios-search' style={{ color: 'orange', fontSize: 20, textAlign: 'center', marginTop: 10, marginLeft: 15 }} />
-                        <TextInput
-                            style={{ height: 40, width: '100%', marginLeft: 15 }}
-                            placeholder='Nhập tên dự án...'
-                            underlineColorAndroid='transparent'
-                            value={this.state.name}
-                            onChangeText={text => this.setState({ name: text })}
-                        />
+                    <View style={styles.toolSearch}>
+                        <View style={styles.toolContent}>
+                            <View
+                                style={styles.sectionInput}>
+                                <Icon name='ios-search' style={styles.iconSearch} />
+                                <TouchableOpacity
+                                    style={styles.fakeInputSearch}
+                                    onPress={() => {
+                                        this.toggleAdvanceSearch();
+                                    }}
+                                >
+                                    <Text style={{ fontStyle: 'italic' }}>Nhập nội dung tìm kiếm</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <ScrollView horizontal style={{ marginLeft: 35 }}>
+                                <FlatList
+                                    horizontal
+                                    // contentContainerStyle={styles.wrapper}
+                                    data={this.state.listProject}
+                                    keyExtractor={this.keyExtractor}
+                                    renderItem={({ item }) => (
+                                        <TouchableOpacity
+                                            style={styles.btnProject}
+                                            onPress={() => {
+                                                this.togglePopup(false, item.id);
+                                                // this.toggleResult();
+                                            }}
+                                        >
+                                            <Text style={styles.txtBtnProject}>{item.name}</Text>
+                                        </TouchableOpacity>
+                                    )}
+                                />
+                            </ScrollView>
+                            <TouchableOpacity
+                                style={{ marginTop: 5 }}
+                                onPress={() => {
+                                    this.toggleAdvanceSearch();
+                                }}
+                            >
+                                <Text style={styles.txtAdvanceSearch}>Tìm kiếm nâng cao</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <TouchableOpacity
-                        style={{ marginTop: 5, flexDirection: 'row', justifyContent: 'center' }}
-                        onPress={() => {
-                            this.toggleAdvanceSearch();
-                        }}
-                    >
-                        <Text style={styles.txtAdvanceSearch}>Tìm kiếm nâng cao </Text>
-                        <Icon type='FontAwesome' name='caret-up' style={{ color: '#004a80', fontSize: 14 }} />
-                    </TouchableOpacity>
-                    <View style={{ flexDirection: 'row', paddingTop: 10, justifyContent: 'space-between', paddingHorizontal: 10 }}>
 
-                        <TouchableOpacity
-                            style={{ width: '25%', alignItems: 'center' }}
-                        >
-                            <View style={{ width: 50, height: 50, backgroundColor: '#F58319', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
-                                <Icon name='ios-home' style={{ color: '#fff' }} />
-                            </View>
-                            <Text style={{ fontSize: 8, textAlign: 'center' }}>Bất động sản để ở</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={{ width: '25%', alignItems: 'center' }}
-                        >
-                            <View style={{ width: 50, height: 50, backgroundColor: 'red', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
-                                <Image source={icInvest} style={{ width: 25, height: 25 }} />
-                            </View>
-                            <Text style={{ fontSize: 8, textAlign: 'center' }}>Bất động sản đầu tư</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={{ width: '25%', alignItems: 'center' }}
-                        >
-                            <View style={{ width: 50, height: 50, backgroundColor: 'green', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
-                                <Image source={icRest} style={{ width: 25, height: 25 }} />
-                            </View>
-                            <Text style={{ fontSize: 8, textAlign: 'center' }}>Bất động sản nghỉ dưỡng</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={{ width: '25%', alignItems: 'center' }}
-                        >
-                            <View style={{ width: 50, height: 50, backgroundColor: '#004a80', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
-                                <Icon type='MaterialCommunityIcons' name='earth' style={{ color: '#fff' }} />
-                            </View>
-                            <Text style={{ fontSize: 8, textAlign: 'center' }}>Bất động sản quốc tế</Text>
-                        </TouchableOpacity>
-                    </View>
                 </View>
-
                 <Animated.View
                     style={[styles.subView,
                     { transform: [{ translateY: this.state.bounceValue }] }]}

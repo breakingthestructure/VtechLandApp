@@ -23,12 +23,22 @@ import MyCustomers from './components/screens/Auth/MyCustomers';
 import MyTransactions from './components/screens/Auth/MyTransactions';
 import DetailTransaction from './components/screens/Transaction/DetailTransaction';
 import MyProject from './components/screens/Auth/MyProject';
+import ChangePassword from './components/screens/Auth/ChangePassword';
 import DetailCustomer from './components/screens/Customer/DetailCustomer';
 
 const ProjectStack = createStackNavigator(
   {
     Map: { screen: MapProject },
     TabProjectScreen: { screen: TabProject },
+    OrderSubmitScreen: {
+      screen: OrderSubmit
+    },
+    TablePackageScreen: {
+      screen: TablePackage
+    },
+    DetailApartmentScreen: {
+      screen: DetailApartment
+    },
   },
   {
     headerMode: 'none',
@@ -80,25 +90,10 @@ const LeftDrawer = createDrawerNavigator(
     DetailNewsScreen: {
       screen: DetailNews
     },
-    MyProjectScreen: {
-      screen: MyProject
-    },
-    ConfigScreen: {
-      screen: Config
-    },
-    TablePackageScreen: {
-      screen: TablePackage
-    },
-    DetailApartmentScreen: {
-      screen: DetailApartment
-    },
-    OrderSubmitScreen: {
-      screen: OrderSubmit
-    },
-    DetailCustomerScreen: { screen: DetailCustomer },
+    
   },
   {
-    initialRouteName: 'DetailCustomerScreen',
+    initialRouteName: 'MapScreen',
     contentComponent: Menu,
     getCustomActionCreators: (route, stateKey) => {
       return {
@@ -110,12 +105,20 @@ const LeftDrawer = createDrawerNavigator(
 
 const UserStack = createStackNavigator(
   {
-    MyCustomerScreen: { screen: MyCustomers },
-    NotificationScreen: { screen: MyNotification },
     ProfileScreen: { screen: Profile },
+    ChangePasswordScreen: { screen: ChangePassword },
+    MyCustomerScreen: { screen: MyCustomers },
+    DetailCustomerScreen: { screen: DetailCustomer },
+    NotificationScreen: { screen: MyNotification },
     MyTransactionScreen: { screen: MyTransactions },
     DetailTransactionScreen: {
       screen: DetailTransaction
+    },
+    MyProjectScreen: {
+      screen: MyProject
+    },
+    ConfigScreen: {
+      screen: Config
     },
   },
   {

@@ -6,7 +6,7 @@ export default class MyNotification extends Component {
     render() {
         return (
             <Container>
-                <Header navigation={this.props.navigation} title='Thông báo của tôi' />
+                <Header navigation={this.props.navigation} title='Thông báo của tôi' back='ok' />
                 <Content>
                     <List>
                         <ListItem avatar>
@@ -21,7 +21,7 @@ export default class MyNotification extends Component {
                                 <Text note>8:00 am</Text>
                             </Right>
                         </ListItem>
-                        
+
                         <ListItem avatar>
                             <Left style={{ marginTop: 10 }}>
                                 <Icon active name='ios-alert' style={{ color: 'orange', fontSize: 20 }} />
@@ -34,7 +34,7 @@ export default class MyNotification extends Component {
                                 <Text note>3:43 pm</Text>
                             </Right>
                         </ListItem>
-                        
+
                         <ListItem avatar>
                             <Left style={{ marginTop: 10 }}>
                                 <Icon active name='ios-alert' style={{ color: 'orange', fontSize: 20 }} />
@@ -47,7 +47,7 @@ export default class MyNotification extends Component {
                                 <Text note>2:00 pm</Text>
                             </Right>
                         </ListItem>
-                        
+
                         <ListItem avatar>
                             <Left style={{ marginTop: 10 }}>
                                 <Icon active name='ios-alert' style={{ color: 'orange', fontSize: 20 }} />

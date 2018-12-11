@@ -11,8 +11,8 @@ const login = (email, password) => (
             body: JSON.stringify({
                 username: email,
                 password,
-                client_id: 2,
-                client_secret: '3GfSREURwlYxIAg5yPDacPG0hvE0AtamUlc82na6',
+                client_id: GLOBAL.CLIENT_ID,
+                client_secret: GLOBAL.CLIENT_SECRET,
                 grant_type: 'password'
             })
         })

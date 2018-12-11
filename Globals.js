@@ -29,7 +29,9 @@ module.exports = {
         southeast: 'Đông Nam',
         southwest: 'Tây Nam',
         northeast: 'Đông bắc',
-        northeast: 'Tây Nam'
+        westeast: 'Tây Nam'
     },
-    YOUTUBE_APIKEY: 'AIzaSyByXMeeujrWpH517p7LkQrfBmTNIN1RTkQ'
+    YOUTUBE_APIKEY: 'AIzaSyByXMeeujrWpH517p7LkQrfBmTNIN1RTkQ',
+    CLIENT_SECRET: '3GfSREURwlYxIAg5yPDacPG0hvE0AtamUlc82na6',
+    CLIENT_ID: 2
 };

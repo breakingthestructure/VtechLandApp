@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { Icon, Button } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import SwitchSelector from 'react-native-switch-selector';
 import Header from '../Home/Header';
 import saveToken from './../../../api/saveToken';
 import GLOBAL from './../../../Globals';
@@ -88,64 +89,95 @@ export default class DetailCustomer extends React.Component {
                                 <Text><Icon type="Octicons" name="mail" style={{ color: '#666666', fontSize: 34 }} /></Text>
                             </Button>
                         </View>
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder='Họ tên'
-                            underlineColorAndroid='transparent'
-                            value={this.state.name}
-                            onChangeText={text => this.setState({ name: text })}
-                        />
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder='Địa chỉ'
-                            underlineColorAndroid='transparent'
-                            value={this.state.address}
-                            onChangeText={text => this.setState({ address: text })}
-                        />
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder='Điện thoại'
-                            underlineColorAndroid='transparent'
-                            value={this.state.phone}
-                            onChangeText={text => this.setState({ phone: text })}
-                            keyboardType={'numeric'}
-                        />
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder='Email'
-                            underlineColorAndroid='transparent'
-                            value={this.state.email}
-                            onChangeText={text => this.setState({ email: text })}
-                        />
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder='Số CMND'
-                            underlineColorAndroid='transparent'
-                            value={this.state.identity}
-                            onChangeText={text => this.setState({ identity: text })}
-                            keyboardType={'numeric'}
-                        />
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={styles.viewInput}>
                             <TextInput
-                                style={styles.inputInline}
-                                placeholder='Ngày cấp'
+                                style={styles.input}
+                                placeholder='Họ tên'
                                 underlineColorAndroid='transparent'
-                                value={this.state.identity}
-                                onChangeText={text => this.setState({ identity: text })}
-                                onFocus={() => {
-                                    Keyboard.dismiss();
-                                    this.showDatePicker();
-                                }}
+                                value={this.state.name}
+                                onChangeText={text => this.setState({ name: text })}
                             />
+                        </View>
+                        <SwitchSelector
+                            initial={0}
+                            onPress={value => this.setState({ gender: value })}
+                            textColor='#21a1fc' //'#7a44cf'
+                            selectedColor='white'
+                            buttonColor='#21a1fc'
+                            borderColor='#cecece'
+                            hasPadding
+                            options={[
+                                { label: 'Nam', value: 'm' },
+                                { label: 'Nữ', value: 'f' }
+                            ]}
+                            style={{ paddingTop: 10 }}
+                        />
+                        <View style={styles.viewInput}>
                             <TextInput
-                                style={styles.inputInline}
-                                placeholder='Nơi cấp'
+                                style={styles.input}
+                                placeholder='Địa chỉ'
+                                underlineColorAndroid='transparent'
+                                value={this.state.address}
+                                onChangeText={text => this.setState({ address: text })}
+                            />
+                        </View>
+                        <View style={styles.viewInput}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Điện thoại'
+                                underlineColorAndroid='transparent'
+                                value={this.state.phone}
+                                onChangeText={text => this.setState({ phone: text })}
+                            />
+                        </View>
+                        <View style={styles.viewInput}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Email'
+                                underlineColorAndroid='transparent'
+                                value={this.state.email}
+                                onChangeText={text => this.setState({ email: text })}
+                            />
+                        </View>
+                        <View style={styles.viewInput}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Số CMND'
                                 underlineColorAndroid='transparent'
                                 value={this.state.identity}
                                 onChangeText={text => this.setState({ identity: text })}
                             />
                         </View>
-                        <View style={styles.groupBtn}>
+
+                        <View style={styles.rowOption}>
+                            <View
+                                style={styles.viewHalfInput}
+                            >
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder='Ngày cấp'
+                                    underlineColorAndroid='transparent'
+                                    value={this.state.identity}
+                                    onChangeText={text => this.setState({ identity: text })}
+                                    onFocus={() => {
+                                        Keyboard.dismiss();
+                                        this.showDatePicker();
+                                    }}
+                                />
+                            </View>
+                            <View
+                                style={styles.viewHalfInput}
+                            >
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder='Nơi cấp'
+                                    underlineColorAndroid='transparent'
+                                    value={this.state.identity}
+                                    onChangeText={text => this.setState({ identity: text })}
+                                />
+                            </View>
+                        </View>
+                        <View style={styles.groupInline}>
                             <TouchableOpacity style={styles.btnSubmitSquareInline}>
                                 <Icon type="FontAwesome" name='save' style={styles.iconBigBtn} />
                                 <Text style={styles.textBtnIcon}>LƯU</Text>

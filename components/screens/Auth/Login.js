@@ -13,7 +13,7 @@ import login from './../../../api/login';
 import saveToken from './../../../api/saveToken';
 import saveUser from './../../../api/saveUser';
 import GLOBAL from './../../../Globals';
-
+import getProfile from './../../../api/getProfile';
 import bgImg from './../../../icons/bg.png';
 import icDevelop from './../../../icons/develop.png';
 import icLogo from './../../../icons/logo_new.png';
@@ -41,20 +41,27 @@ export default class Intro extends React.Component {
         const { email, password } = this.state;
         login(email, password)
             .then(resJson => {
-                console.log(resJson);
                 if (resJson.access_token) {
-                    GLOBAL.user = resJson;
-                    saveUser(resJson);
+                    console.log('resJson.access_token', resJson.access_token);
                     saveToken(resJson.access_token);
-                    this.setState({ loaded: true });
-                    Alert.alert(
-                        'Thông báo',
-                        'Đăng nhập thành công',
-                        [
-                            { text: 'OK', onPress: () => this.props.navigation.navigate('HomeScreen') },
-                        ],
-                        { cancelable: false }
-                    );
+                    getProfile(resJson.access_token)
+                        .then(response => {
+                            GLOBAL.user = response.data;
+                            saveUser(response.data)
+                            .then(res => console.log('res', res));
+                            this.setState({ loaded: true });
+                            Alert.alert(
+                                'Thông báo',
+                                'Đăng nhập thành công',
+                                [
+                                    { text: 'OK', onPress: () => this.props.navigation.navigate('MapScreen') },
+                                ],
+                                { cancelable: false }
+                            );
+                        })
+                        .catch(err => console.log(err));
+
+
                 } else {
                     Alert.alert(
                         'Thông báo',
@@ -155,14 +162,13 @@ export default class Intro extends React.Component {
                                 <Item
                                     style={{
                                         borderColor: '#33563743',
-                                        // borderWidth: 1,
-                                        height: 50,
-                                        // borderRadius: 2,
+                                        borderWidth: 1,
+                                        height: 40,
+                                        borderRadius: 20,
                                         marginLeft: 0,
                                         width: '100%',
-                                        borderTopLeftRadius: 5,
-                                        borderTopRightRadius: 5,
-                                        borderWidth: 1,
+                                        // borderTopLeftRadius: 20,
+                                        // borderTopRightRadius: 20,
                                     }}
                                     regular
                                 >
@@ -178,17 +184,18 @@ export default class Intro extends React.Component {
                                 </Item>
                             </Content>
                         </View>
-                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30 }}>
+                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30, paddingTop: 10 }}>
                             <Content>
                                 <Item
                                     style={{
                                         borderColor: '#33563743',
-                                        height: 50,
+                                        height: 40,
                                         marginLeft: 0,
                                         width: '100%',
-                                        borderBottomLeftRadius: 5,
-                                        borderBottomRightRadius: 5,
                                         borderWidth: 1,
+                                        borderRadius: 20,
+                                        borderBottomWidth: 1,
+                                        borderTopWidth: 1
                                     }}
                                     regular
                                 >
@@ -205,11 +212,29 @@ export default class Intro extends React.Component {
                                 </Item>
                             </Content>
                         </View>
-                        <View style={{ width: '100%', paddingTop: 10, paddingHorizontal: 30 }}>
+                        <TouchableOpacity
+                            style={{
+                                height: 40,
+                                width: '85%',
+                                borderRadius: 20,
+                                backgroundColor: '#F58319',
+                                justifyContent: 'center',
+                                flexDirection: 'row',
+                                marginVertical: 20,
+                            }}
+                            onPress={this.postLogin.bind(this)}
+                        >
+                            <Icon type="FontAwesome" name='sign-in' style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} />
+                            {/* <Icon name='ios-calculator' style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} /> */}
+                            <Text style={{ color: 'white', fontWeight: '600', fontSize: 14, textAlign: 'center', marginTop: 10 }}>
+                                ĐĂNG NHẬP
+                            </Text>
+                        </TouchableOpacity>
+                        {/* <View style={{ width: '100%', paddingTop: 10, paddingHorizontal: 30 }}>
                             <TouchableOpacity onPress={this.postLogin.bind(this)} style={styles.bigBtn}>
                                 <Text style={styles.btnText}>ĐĂNG NHẬP</Text>
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                         <View style={{ width: '100%', paddingHorizontal: 30 }}>
                             <View style={styles.labelAction}>
                                 <Text style={{ color: '#000', fontSize: 12 }}>ĐĂNG KÝ</Text>

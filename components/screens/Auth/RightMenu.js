@@ -10,30 +10,47 @@ import icShutdown from './../../../icons/shutdown.png';
 import saveToken from './../../../api/saveToken';
 import GLOBAL from './../../../Globals';
 
-const { width, height } = Dimensions.get('window');
-
 export default class RightMenu extends Component {
     onSignOut() {
         Alert.alert(
             'Thông báo',
-            'Bạn có chắc muốn xuất',
+            'Bạn muốn đăng xuất khỏi hệ thống',
             [
                 {
-                    text: 'Muốn',
+                    text: 'Đồng ý',
                     onPress: () => {
                         GLOBAL.user = null;
                         saveToken('');
                         this.props.navigation.navigate('LoginScreen');
                     }
                 },
-                { text: 'Đợi tí', onPress: () => console.log('Cancel Pressed') },
+                { text: 'Hủy', onPress: () => console.log('Cancel Pressed') },
             ],
             { cancelable: false }
         );
     }
 
     render() {
-        // console.log(GLOBAL.user);
+        console.log(GLOBAL.user);
+
+        if (!GLOBAL.user) {
+            return (
+                <View style={styles.wrapper}>
+                    {/* <View style={styles.headerInfo}>
+                        <Image source={icAvatar} style={styles.iconAvatar} />
+                        <View style={styles.infoUser}>
+                            <Text style={styles.textHeading}>{GLOBAL.user ? GLOBAL.user.fullname : 'Chưa đăng nhập '}</Text>
+                            <Text style={{ fontSize: 12 }}>Chuyên viên tư vấn</Text>
+                        </View>
+                    </View> */}
+                    <TouchableOpacity style={styles.btnAction} onPress={this.onSignOut.bind(this)}>
+                        {/* <Image source={icShutdown} style={styles.iconBtn} /> */}
+                        <Icon type="FontAwesome" name='sign-in' style={{ fontSize: 16, color: 'green' }} />
+                        <Text style={styles.textBtn}>Đăng nhập</Text>
+                    </TouchableOpacity>
+                </View>
+            );
+        }
         return (
             <View style={styles.wrapper}>
                 <View style={styles.headerInfo}>
@@ -53,6 +70,10 @@ export default class RightMenu extends Component {
                     <Image source={icProfile} style={styles.iconBtn} />
                     {/* <Icon type="FontAwesome" name='user' style={{ fontSize: 20, color: 'orange' }} /> */}
                     <Text style={styles.textBtn}>Thông tin tài khoản</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btnAction} onPress={() => this.props.navigation.navigate('ChangePasswordScreen')}>
+                    <Icon name='ios-key' style={{ fontSize: 16, color: 'orange' }} />
+                    <Text style={styles.textBtn}>Thay đổi mật khẩu</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnAction} onPress={() => this.props.navigation.navigate('NotificationScreen')}>
                     <Icon active name='ios-notifications-outline' style={{ fontSize: 20, color: 'orange' }} />

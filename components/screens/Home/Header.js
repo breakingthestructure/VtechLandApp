@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View, Text, TouchableOpacity, Image, StatusBar
 } from 'react-native';
-// import { Icon } from 'native-base';
+import { Icon } from 'native-base';
 import icMenu from './../../../icons/menu.png';
 import icBack from './../../../icons/back_white.png';
 // import icSearch from './../../../icons/icon_search.png';
@@ -59,7 +59,8 @@ export default class Header extends Component {
                             alignItems: 'flex-end'
                         }}
                     >
-                        <Image source={icAvatar} style={{ width: 30, height: 30, borderRadius: 15, borderWidth: 1, borderColor: 'white', marginRight: 10 }} />
+                        <Icon name='ios-contact' style={{ color: 'white', marginRight: 10 }} />
+                        {/* <Image source={icAvatar} style={{ width: 30, height: 30, borderRadius: 15, borderWidth: 1, borderColor: 'white', marginRight: 10 }} /> */}
                     </TouchableOpacity>
                 </View>
             </View>

@@ -3,16 +3,14 @@ import {
     View,
     Text,
     Image,
-    Dimensions,
     ScrollView,
     Modal,
     TouchableOpacity,
     BackHandler,
     Alert
 } from 'react-native';
-
+import { Icon } from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import LinearGradient from 'react-native-linear-gradient';
 import ModalRN from 'react-native-modal';
 
 // import icTitle from './../../../icons/ic_title.png';
@@ -99,29 +97,20 @@ export default class DetailApartment extends React.Component {
                 <ScrollView style={styles.content}>
                     <Text style={styles.titleScreen}>CĂN HỘ {apartment.number} - {apartment.building.name} - {apartment.project.name}</Text>
                     <Text style={styles.subTitleScreen}>({apartment.status.description})</Text>
-                    <View style={styles.sectionInputInline}>
+                    <View style={styles.groupInline}>
                         <TouchableOpacity
-                            // onPress={this.onLockApartment.bind(this)}
+                            style={styles.btnSubmitSquareInline}
                             onPress={this._toggleModal}
-                            style={styles.btnSubmit}
-                        // style={{ width: (width - 50) / 2, height: 30, borderRadius: 15, backgroundColor: '#177dba', marginTop: 5, marginHorizontal: 5 }}
                         >
-                            <Text
-                                style={styles.textBtnActive}
-                            >LOCK CĂN</Text>
+                            <Icon name='ios-lock' style={styles.iconBigBtn} />
+                            <Text style={styles.textBtnIcon}>LOCK CĂN</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('OrderSubmitScreen')}
                             style={styles.btnSpecial}
+                            onPress={() => this.props.navigation.navigate('OrderSubmitScreen')}
                         >
-                            <LinearGradient
-                                colors={['rgba(255,255,255,0.9)', 'rgba(255,255,255,0.35)', 'rgba(255,255,255,0)']}
-                                locations={[0, 0.25, 1]}
-                                style={{ position: 'absolute', height: '100%', width: '100%' }}
-                            />
-                            <Text
-                                style={styles.textBtnActive}
-                            >ĐẶT CỌC (ĐẶT CHỖ)</Text>
+                            <Icon name='ios-cart' style={styles.iconBigBtn} />
+                            <Text style={styles.textBtnIcon}>ĐẶT CỌC</Text>
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.titleDescription}>

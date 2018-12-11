@@ -41,7 +41,7 @@ export default class TablePackage extends Component {
                             'Thông báo',
                             'Tòa nhà này chưa có bảng hàng',
                             [
-                                { text: 'OK', onPress: () =>  this.props.navigation.navigate('MapScreen') },
+                                { text: 'OK', onPress: () => this.props.navigation.navigate('MapScreen') },
                             ],
                             { cancelable: false }
                         );
@@ -131,7 +131,7 @@ export default class TablePackage extends Component {
         }
         return (
             <View style={styles.container}>
-                <Header navigation={this.props.navigation} title={`${buildingName} - ${project.name}`} />
+                <Header navigation={this.props.navigation} title={`${buildingName} - ${project.name}`} back={'MapScreen'} />
                 <View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>

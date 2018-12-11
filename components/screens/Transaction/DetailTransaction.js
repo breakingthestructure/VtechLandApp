@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     BackHandler,
 } from 'react-native';
+import { Icon } from 'native-base';
 import Header from '../Home/Header';
 import styles from './../../../styles';
 import { loading } from '../../../Helpers';
@@ -89,12 +90,21 @@ export default class DetailTransaction extends React.Component {
                         </View>
                     </View>
                     <TouchableOpacity
+                        style={styles.bigBtnBackIcon}
+                        onPress={() => this.props.navigation.pop()}
+                    >
+                        <Icon type="FontAwesome" name='mail-reply' style={styles.iconBigBtn} />
+                        <Text style={styles.textBtnIcon}>
+                        QUAY LẠI
+                            </Text>
+                    </TouchableOpacity>
+                    {/* <TouchableOpacity
                         style={styles.bigBtn}
                     >
                         <Text style={styles.textBtnActive}>
-                            ĐÓNG LẠI
+                            QUAY LẠI
                         </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </ScrollView>
             </View >
         );

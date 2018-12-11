@@ -131,22 +131,39 @@ export default class AdvanceSearch extends Component {
                         enablePreload
                     />
                 </Modal>
-                <View style={styles.description}>
+                <View style={styles.actionPreview}>
                     <TouchableOpacity
-                        style={styles.btnDetail}
+                        style={{
+                            height: 40,
+                            // borderRadius: 5,
+                            backgroundColor: '#F58319',
+                            width: '40%',
+                            marginRight: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            borderBottomLeftRadius: 20,
+                            borderTopLeftRadius: 20
+                        }}
                         onPress={() => {
                             this.props.navigation.navigate('TabProjectScreen', {
                                 projectId: project.id
                             });
                         }}
                     >
-                        <Text style={styles.txtDetail}>
-                            XEM CHI TIẾT
+                        <Text style={styles.textBtnIcon}>
+                            XEM CHI TIẾT  
                         </Text>
-                        <Icon active name='ios-arrow-forward' style={styles.iconBigBtn} />
+                        <Icon type="FontAwesome" name='caret-right' style={{ fontSize: 14, color: 'white', marginTop: 13 }} />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.btnTable}
+                        style={{
+                            height: 40,
+                            backgroundColor: '#F58319',
+                            justifyContent: 'center',
+                            width: '20%',
+                            alignItems: 'center',
+                            marginRight: 1,
+                        }}
                         onPress={() => {
                             this.props.navigation.navigate('TabProjectScreen', {
                                 projectId: project.id,
@@ -157,20 +174,38 @@ export default class AdvanceSearch extends Component {
                         <Icon active name='ios-cart' style={styles.iconBtn} />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.btnTable}
+                        style={{
+                            height: 40,
+                            backgroundColor: '#F58319',
+                            justifyContent: 'center',
+                            width: '20%',
+                            alignItems: 'center',
+                            marginRight: 1,
+                        }}
                         onPress={() => {
-                            this.props.navigation.navigate('TablePackageScreen', {
-                                projectId: project.id
+                            this.props.navigation.navigate('TabProjectScreen', {
+                                projectId: project.id,
+                                activeTab: 3
                             });
                         }}
                     >
                         <Icon type="FontAwesome" name='dollar' style={styles.iconBtn} />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.btnTable}
+                        style={{
+                            height: 40,
+                            backgroundColor: '#F58319',
+                            justifyContent: 'center',
+                            width: '20%',
+                            alignItems: 'center',
+                            marginRight: 1,
+                            borderBottomRightRadius: 20,
+                            borderTopRightRadius: 20
+                        }}
                         onPress={() => {
-                            this.props.navigation.navigate('TablePackageScreen', {
-                                projectId: project.id
+                            this.props.navigation.navigate('TabProjectScreen', {
+                                projectId: project.id,
+                                activeTab: 3
                             });
                         }}
                     >

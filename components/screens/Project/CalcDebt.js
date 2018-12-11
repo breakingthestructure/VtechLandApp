@@ -96,7 +96,6 @@ export default class CalcDebt extends React.Component {
         this.setState({ calculating: true });
         const { modeDebt, txtMoney, txtMonth, graceDebt, arrayCondition, txtTimeGrace, date } = this.state;
         var moneyDebt = txtMoney.split('.').join('');
-        let payRootMonthly = moneyDebt / txtMonth;
         let interestRateMonthly = 0;
         let totalMonthly = 0;
         if (graceDebt) {
@@ -133,6 +132,7 @@ export default class CalcDebt extends React.Component {
             return false;
         }
         var totalMonthCondition = 0;
+        var percent = 0;
         arrayCondition.map((condition, index) => {
             if (index === 0 && parseInt(condition.from) !== 1) {
                 Alert.alert(
@@ -160,22 +160,20 @@ export default class CalcDebt extends React.Component {
                 );
                 return false;
             }
-        })
-        var percent = 0;
-        for (i = 1; i <= txtMonth; i++) {
+        });
+        let payRootMonthly = 0;
+        for (var i = 1; i <= txtMonth; i++) {
             arrayCondition.map(condition => {
                 if (condition.from === '' || condition.to === '' || condition.percent === '') {
                     return;
                 }
-                if (graceDebt && i <= txtTimeGrace) {
-                    return percent = 0;
-                }
                 if (i >= condition.from && i <= condition.to) {
                     return percent = condition.percent;
                 }
-            })
-            if (!percent) {
-                return;
+            });
+            payRootMonthly = moneyDebt / txtMonth;
+            if (graceDebt && i <= parseInt(txtTimeGrace)) {
+                payRootMonthly = 0;
             }
             if (parseInt(modeDebt) === 1) {
                 interestRateMonthly = rootHavePay / 12 * percent / 100;
@@ -195,7 +193,7 @@ export default class CalcDebt extends React.Component {
         }
         this.setState({ result, calculating: false });
     }
-    
+
     state = {
         isDatePickerVisible: false,
     };
@@ -326,30 +324,15 @@ export default class CalcDebt extends React.Component {
                         </View>
                     </View>
                     <View
-                        style={{
-                            width: '100%',
-                            flexDirection: 'row',
-                            justifyContent: 'flex-end',
-                            marginTop: 5,
-                            height: 30
-                        }}
+                        style={styles.groupPickerIcon}
                     >
                         <Content
-                            style={{
-                                height: 30,
-                                borderTopLeftRadius: 2,
-                                borderBottomLeftRadius: 2,
-                                borderLeftWidth: 1,
-                                borderTopWidth: 1,
-                                borderBottomWidth: 1,
-                                borderColor: '#808080',
-                                overflow: 'hidden'
-                            }}
+                            style={styles.sectionPickerIcon}
                         >
                             <Form>
                                 <Picker
                                     style={{
-                                        height: 30,
+                                        height: 40,
                                     }}
                                     selectedValue={this.state.modeDebt}
                                     onValueChange={this.onSelectMode.bind(this)}
@@ -370,11 +353,7 @@ export default class CalcDebt extends React.Component {
                     {this.state.arrayCondition.map((rowData, index) => (
                         <View
                             key={index}
-                            style={{
-                                flexDirection: 'row',
-                                width: '100%',
-                                paddingTop: 5
-                            }}
+                            style={styles.calcCondition}
                         >
                             <Content>
                                 <Item
@@ -425,7 +404,7 @@ export default class CalcDebt extends React.Component {
                                 <Text style={styles.txtBtn}>%</Text>
                             </View>
                             <TouchableOpacity
-                                style={styles.btnClose}
+                                style={styles.closeCondition}
                                 onPress={this.subCondition.bind(this, index)}
                             >
                                 <Text style={styles.txtBtn}>x</Text>
@@ -465,13 +444,13 @@ export default class CalcDebt extends React.Component {
                         </View>
                     </View>
                     <TouchableOpacity
-                        style={styles.bigBtn}
+                        style={styles.bigBtnIcon}
                         onPress={this.onCalcDebt.bind(this)}
                     >
-                        <Text style={{ color: 'white', fontWeight: '500', fontSize: 12, textAlign: 'center' }}>
+                        <Icon name='ios-calculator' style={styles.iconBigBtn} />
+                        <Text style={styles.textBtnIcon}>
                             TÍNH BÀI TOÁN TÀI CHÍNH
-                            {/* { this.state.calculating ? <Container><Content ><Spinner /></Content></Container> : 'TÍNH BÀI TOÁN TÀI CHÍNH'} */}
-                        </Text>
+                            </Text>
                     </TouchableOpacity>
                     <FlatList
                         horizontal={false}

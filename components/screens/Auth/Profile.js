@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    StyleSheet,
     View,
     Text,
     Image,
@@ -18,12 +17,20 @@ import GLOBAL from './../../../Globals';
 import avatar from './../../../images/avatar.jpg';
 import styles from './../../../styles';
 import { loading } from '../../../Helpers';
+import getToken from './../../../api/getToken';
+import getUser from './../../../api/getUser';
 
 export default class Profile extends React.Component {
     constructor(props) {
         super(props);
+        const { user } = GLOBAL;
         this.state = {
-            loaded: false
+            loaded: false,
+            fullname: user ? user.fullname : '',
+            phone: user ? user.phone : '',
+            address: user ? user.address : '',
+            email: user ? user.email : '',
+            identity: user ? user.identity : ''
         };
     }
     componentDidMount() {
@@ -63,9 +70,14 @@ export default class Profile extends React.Component {
         this.hideDatePicker();
     }
     render() {
+        const { user } = GLOBAL;
+        console.log(user);
         if (!this.state.loaded) {
             return loading();
         }
+        // if (!user) {
+        //     return this.props.navigation.navigate('MapsScreen');
+        // }
         return (
             <View style={styles.container}>
                 <Header navigation={this.props.navigation} title='THÔNG TIN TÀI KHOẢN' back={'ok'} />
@@ -76,65 +88,82 @@ export default class Profile extends React.Component {
                             <View style={styles.sectionInputInline}>
 
                                 <Text style={{ fontSize: 18 }}>Xin chào </Text>
-                                <Text style={{ fontSize: 18, color: '#F58319', fontWeight: '600' }}>Cowboy!</Text>
+                                <Text style={{ fontSize: 18, color: '#F58319', fontWeight: '600' }}>{this.state.fullname ? this.state.fullname : ''}!</Text>
                             </View>
                         </View>
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder='Họ tên'
-                            underlineColorAndroid='transparent'
-                            value={this.state.name}
-                            onChangeText={text => this.setState({ name: text })}
-                        />
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder='Địa chỉ'
-                            underlineColorAndroid='transparent'
-                            value={this.state.address}
-                            onChangeText={text => this.setState({ address: text })}
-                        />
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder='Điện thoại'
-                            underlineColorAndroid='transparent'
-                            value={this.state.phone}
-                            onChangeText={text => this.setState({ phone: text })}
-                            keyboardType={'numeric'}
-                        />
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder='Email'
-                            underlineColorAndroid='transparent'
-                            value={this.state.email}
-                            onChangeText={text => this.setState({ email: text })}
-                        />
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder='Số CMND'
-                            underlineColorAndroid='transparent'
-                            value={this.state.identity}
-                            onChangeText={text => this.setState({ identity: text })}
-                            keyboardType={'numeric'}
-                        />
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={styles.viewInput}>
                             <TextInput
-                                style={styles.inputInline}
-                                placeholder='Ngày cấp'
+                                style={styles.input}
+                                placeholder='Họ tên'
                                 underlineColorAndroid='transparent'
-                                value={this.state.identity}
-                                onChangeText={text => this.setState({ identity: text })}
-                                onFocus={() => {
-                                    Keyboard.dismiss();
-                                    this.showDatePicker();
-                                }}
+                                value={this.state.fullname}
+                                onChangeText={text => this.setState({ fullname: text })}
                             />
+                        </View>
+                        <View style={styles.viewInput}>
                             <TextInput
-                                style={styles.inputInline}
-                                placeholder='Nơi cấp'
+                                style={styles.input}
+                                placeholder='Địa chỉ'
+                                underlineColorAndroid='transparent'
+                                value={this.state.address}
+                                onChangeText={text => this.setState({ address: text })}
+                            />
+                        </View>
+                        <View style={styles.viewInput}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Điện thoại'
+                                underlineColorAndroid='transparent'
+                                value={this.state.phone}
+                                onChangeText={text => this.setState({ phone: text })}
+                            />
+                        </View>
+                        <View style={styles.viewInput}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Email'
+                                underlineColorAndroid='transparent'
+                                value={this.state.email}
+                                onChangeText={text => this.setState({ email: text })}
+                            />
+                        </View>
+                        <View style={styles.viewInput}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Số CMND'
                                 underlineColorAndroid='transparent'
                                 value={this.state.identity}
                                 onChangeText={text => this.setState({ identity: text })}
                             />
+                        </View>
+
+                        <View style={styles.rowOption}>
+                            <View
+                                style={styles.viewHalfInput}
+                            >
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder='Ngày cấp'
+                                    underlineColorAndroid='transparent'
+                                    value={this.state.identity}
+                                    onChangeText={text => this.setState({ identity: text })}
+                                    onFocus={() => {
+                                        Keyboard.dismiss();
+                                        this.showDatePicker();
+                                    }}
+                                />
+                            </View>
+                            <View
+                                style={styles.viewHalfInput}
+                            >
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder='Nơi cấp'
+                                    underlineColorAndroid='transparent'
+                                    value={this.state.identity}
+                                    onChangeText={text => this.setState({ identity: text })}
+                                />
+                            </View>
                         </View>
                         <TouchableOpacity
                             style={styles.bigBtnIcon}

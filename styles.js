@@ -14,23 +14,21 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         padding: 10,
-        // marginBottom: 15
-        // paddingHorizontal: 15
     },
-    txtHeader: { fontWeight: '600', fontSize: 14, color: '#333333', paddingBottom: 5 },
+    txtHeader: { fontWeight: '600', fontSize: 14, color: '#053654', paddingBottom: 5 },
     item: {
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        paddingTop: 5
+        paddingTop: 10
     },
     inputItem: {
         borderColor: '#808080',
-        height: 30,
+        height: 40,
         marginLeft: 0,
         width: '100%',
-        borderTopLeftRadius: 2,
-        borderBottomLeftRadius: 2,
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20,
         borderLeftWidth: 1,
         borderTopWidth: 1,
         borderBottomWidth: 1
@@ -39,52 +37,55 @@ export default StyleSheet.create({
         backgroundColor: '#F58319',
         justifyContent: 'center',
         width: '15%',
-        borderTopRightRadius: 2,
-        borderBottomRightRadius: 2
+        borderTopRightRadius: 20,
+        borderBottomRightRadius: 20
+    },
+    calcCondition: {
+        flexDirection: 'row',
+        width: '100%',
+        paddingTop: 5
     },
     inputLeft: {
         borderColor: '#808080',
         borderWidth: 1,
-        height: 30,
-        borderRadius: 2,
+        height: 40,
         width: width / 4.2,
-        marginLeft: 0
+        marginLeft: 0,
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20
     },
     inputCenter: {
         borderColor: '#808080',
         borderWidth: 1,
-        height: 30,
-        borderRadius: 2,
+        height: 40,
         width: width / 4.2,
-        marginLeft: 5
     },
     inputRight: {
         borderColor: '#808080',
         borderWidth: 1,
-        height: 30,
-        borderRadius: 2,
+        height: 40,
         width: width / 4.2,
-        marginLeft: 10
     },
     labelBtn: {
         backgroundColor: '#F58319',
         justifyContent: 'center',
         width: '10%',
-        borderTopRightRadius: 2,
-        borderBottomRightRadius: 2,
+        // borderTopRightRadius: 2,
+        // borderBottomRightRadius: 2,
         marginRight: 5,
         marginLeft: 0
     },
-    btnClose: {
+    closeCondition: {
         backgroundColor: 'gray',
         justifyContent: 'center',
         width: '5%',
-        borderRadius: 2
+        borderTopRightRadius: 20,
+        borderBottomRightRadius: 20
     },
     btnAdd: {
         width: '100%',
-        height: 30,
-        borderRadius: 2,
+        height: 40,
+        borderRadius: 20,
         backgroundColor: 'gray',
         justifyContent: 'center',
         padding: 10,
@@ -119,6 +120,23 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         justifyContent: 'center',
         borderColor: '#dee2e6'
+    },
+    groupPickerIcon: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: 5,
+        height: 40
+    },
+    sectionPickerIcon: {
+        height: 40,
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: '#808080',
+        overflow: 'hidden'
     },
     //mapscreen
     wrapper: { flex: 1, backgroundColor: '#F6F6F6' },
@@ -204,7 +222,7 @@ export default StyleSheet.create({
         flexDirection: 'row'
     },
     fakeInputSearch: { marginTop: 5, borderBottomWidth: 1, borderColor: '#cecece', marginLeft: 15, width: width / 1.4 },
-    iconSearch: { color: '#F58319', marginLeft: 5, fontSize: 20 },
+    iconSearch: { color: '#F58319', marginLeft: 10, fontSize: 20, marginTop: 5 },
     txtAdvanceSearch: { textAlign: 'center', fontSize: 12, color: '#053654' },
     //previewproject
     thumbProject: { width: 120, height: 120, marginRight: 5 },
@@ -231,7 +249,7 @@ export default StyleSheet.create({
     title: { fontWeight: '600', fontSize: 16, paddingLeft: 5, color: '#053654' },
     txtDetail: { fontWeight: '500', marginHorizontal: 15, fontSize: 14, color: 'white', marginTop: 5 },
     iconBtn: { color: '#fff', fontSize: 14 },
-    description: { flexDirection: 'row', paddingTop: 5 },
+    actionPreview: { flexDirection: 'row', paddingTop: 5 },
     //advancesearch
     inputStyle: {
         height: 40,
@@ -239,7 +257,8 @@ export default StyleSheet.create({
         marginTop: 10,
         borderWidth: 1,
         borderColor: '#cecece',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        borderRadius: 20
     },
     btnSellActive: {
         width: (width - 50) / 2,
@@ -286,15 +305,15 @@ export default StyleSheet.create({
         borderColor: '#33563743',
         width: '48%',
         marginTop: 5,
-        borderRadius: 2,
+        borderRadius: 20,
         backgroundColor: 'white',
-        height: 40
+        height: 40,
     },
     optionAlone: {
         borderWidth: 1,
         borderColor: '#33563743',
         width: '100%',
-        borderRadius: 2,
+        borderRadius: 20,
         backgroundColor: 'white',
         height: 40
     },
@@ -447,19 +466,20 @@ export default StyleSheet.create({
         marginTop: 5,
         height: 40,
     },
-    btnSubmit: { width: (width - 50) / 2, height: 30, borderRadius: 15, backgroundColor: '#177dba', marginTop: 5, justifyContent: 'center' },
-    btnCancel: { width: (width - 50) / 2, height: 30, borderRadius: 15, backgroundColor: '#464646', marginTop: 5, justifyContent: 'center' },
+    btnSubmit: { width: (width - 50) / 2, height: 40, borderRadius: 20, backgroundColor: '#177dba', marginTop: 5, justifyContent: 'center' },
+    btnCancel: { width: (width - 50) / 2, height: 40, borderRadius: 20, backgroundColor: '#464646', marginTop: 5, justifyContent: 'center' },
     textSuggest: { fontSize: 12, color: '#555', paddingTop: 10, fontStyle: 'italic' },
     inputMoney: { fontSize: 12, width: '45%', borderWidth: 1, borderColor: '#cecece' },
     labelMoney: { color: '#fff', textAlign: 'center' },
-    sectionInputMoney: { backgroundColor: '#1f7eb8', height: '100%', width: '40%', justifyContent: 'center', borderTopLeftRadius: 2, borderBottomLeftRadius: 2 },
+    sectionInputMoney: { backgroundColor: '#1f7eb8', height: '100%', width: '40%', justifyContent: 'center', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 },
     inputInline: {
         height: 40,
         marginBottom: 10,
         marginTop: 10,
         borderWidth: 1,
         borderColor: '#cecece',
-        width: '48%'
+        width: '48%',
+        borderRadius: 20
     },
     lineInfo: {
         justifyContent: 'space-between',
@@ -519,19 +539,10 @@ export default StyleSheet.create({
         fontSize: 16, paddingLeft: 10
     },
     logoMenu: { width: width / 2, height: ((width / 2) / 492) * 79 },
-    btnSpecial: {
-        width: (width - 50) / 2,
-        height: 30,
-        borderRadius: 15,
-        backgroundColor: '#f48120',
-        marginTop: 5,
-        marginHorizontal: 5,
-        justifyContent: 'center'
-    },
     subTitleScreen: { fontWeight: '300', fontSize: 14, textAlign: 'center', color: '#f48120', paddingTop: 5 },
     sectionInputInline: { flexDirection: 'row', justifyContent: 'center' },
     titleDescription: { fontWeight: '100', fontSize: 14, textAlign: 'center', color: '#005b92', paddingTop: 5, fontStyle: 'italic' },
-    contentWrapper: { paddingTop: 10, paddingHorizontal: 20 },
+    contentWrapper: { paddingTop: 10, paddingHorizontal: 10 },
     subLabel: { fontSize: 14, fontStyle: 'italic', fontWeight: '600' },
     imageApartment: { width: width - 50, height: ((width - 50) / 337) * 367 },
     titleModal: { backgroundColor: '#F58319', height: 50, borderTopLeftRadius: 15, borderTopRightRadius: 15, justifyContent: 'center' },
@@ -572,11 +583,20 @@ export default StyleSheet.create({
     bigBtnIcon: {
         height: 40,
         width: '100%',
-        borderRadius: 5,
+        borderRadius: 20,
         backgroundColor: '#187EB9',
         justifyContent: 'center',
-        marginTop: 5,
         flexDirection: 'row',
+        marginVertical: 20,
+    },
+    bigBtnBackIcon: {
+        height: 40,
+        width: '100%',
+        borderRadius: 20,
+        backgroundColor: 'gray',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginVertical: 20,
     },
     textBtnIcon: { color: 'white', fontWeight: '600', fontSize: 14, textAlign: 'center', marginTop: 10 },
     iconBigBtn: { fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 },
@@ -595,20 +615,20 @@ export default StyleSheet.create({
         borderColor: '#cecece',
         borderWidth: 1,
         height: 40,
-        borderRadius: 2,
-        width: width / 2.3,
+        borderRadius: 20,
+        width: width / 2.2,
         marginLeft: 0
     },
     rightInputContact: {
         borderColor: '#cecece',
         borderWidth: 1,
         height: 40,
-        borderRadius: 2,
-        width: width / 2.3,
+        borderRadius: 20,
+        width: width / 2.2,
         right: 0
     },
-    rightSectionInputContact: { position: 'absolute', right: 0, marginTop: 5 },
-    textAreaContact: { borderColor: '#cecece', borderRadius: 2, fontSize: 10 },
+    rightSectionInputContact: { position: 'absolute', right: 0, marginTop: 10 },
+    textAreaContact: { borderColor: '#cecece', borderRadius: 20, fontSize: 10 },
     subTitle: { fontSize: 14, fontStyle: 'italic' },
     //tab project
     scrollTabProject: { backgroundColor: '#cacaca', height: 40 },
@@ -620,7 +640,7 @@ export default StyleSheet.create({
     btnSubmitSquareInline: {
         width: '48%',
         height: 40,
-        borderRadius: 5,
+        borderRadius: 20,
         backgroundColor: '#177dba',
         justifyContent: 'center',
         flexDirection: 'row',
@@ -628,10 +648,55 @@ export default StyleSheet.create({
     btnDeleteSquareInline: {
         width: '48%',
         height: 40,
-        borderRadius: 5,
+        borderRadius: 20,
         backgroundColor: 'red',
         justifyContent: 'center',
         flexDirection: 'row',
     },
-    groupBtn: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }
+    btnBackSquareInline: {
+        width: '48%',
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'gray',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+    btnSpecial: {
+        width: '48%',
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: '#f48120',
+        marginHorizontal: 5,
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+    groupInline: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 },
+    viewInput: {
+        height: 40,
+        width: '100%',
+        borderRadius: 20,
+        marginTop: 10,
+        backgroundColor: '#fff',
+        borderColor: '#cecece',
+        borderWidth: 1
+    },
+    input: { height: 40, width: '100%', marginLeft: 15 },
+    viewHalfInput: {
+        height: 40,
+        width: '48%',
+        borderRadius: 20,
+        marginTop: 10,
+        backgroundColor: '#fff',
+        borderColor: '#cecece',
+        borderWidth: 1
+    },
+    bigBtnIcon: {
+        height: 40,
+        width: '100%',
+        borderRadius: 20,
+        backgroundColor: '#187EB9',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginVertical: 20,
+    },
 });

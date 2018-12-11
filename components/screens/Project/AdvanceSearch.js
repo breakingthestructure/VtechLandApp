@@ -7,6 +7,8 @@ import {
     Picker,
     TextInput,
 } from 'react-native';
+import { Icon } from 'native-base';
+import SwitchSelector from 'react-native-switch-selector';
 import Header from './../Home/Header';
 import getCities from './../../../api/getCities';
 import getDistricts from './../../../api/getDistricts';
@@ -61,7 +63,7 @@ export default class AdvanceSearch extends Component {
     }
     onSelectCity(idCity) {
         this.setState({ city: idCity });
-        if (idCity)
+        if (idCity) {
             getDistricts(idCity)
                 .then(responseJson => {
                     if (responseJson.status === 200) {
@@ -77,6 +79,7 @@ export default class AdvanceSearch extends Component {
                     }
                 })
                 .catch(err => console.log(err));
+        }
     }
     onSelectDistrict(idDistrict) {
         if (idDistrict) {
@@ -165,7 +168,34 @@ export default class AdvanceSearch extends Component {
                 <Header navigation={this.props.navigation} title='TÌM KIẾM NÂNG CAO' back={'MapScreen'} />
 
                 <ScrollView style={styles.content}>
-                    <View style={styles.list}>
+                    <View style={styles.viewInput}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Nhập tên dự án...'
+                            underlineColorAndroid='transparent'
+                            value={this.state.name}
+                            onChangeText={text => this.setState({ name: text })}
+                            autoFocus
+                            ref={(input) => { this.nameProject = input; }}
+                        />
+                    </View>
+                    <Text style={styles.titleScreen}>Tìm kiếm nâng cao</Text>
+                    <View style={{ paddingTop: 10 }}>
+                        <SwitchSelector
+                            initial={0}
+                            onPress={value => this.setState({ kind: value })}
+                            textColor='#21a1fc' //'#7a44cf'
+                            selectedColor='white'
+                            buttonColor='#21a1fc'
+                            borderColor='#cecece'
+                            hasPadding
+                            options={[
+                                { label: 'Bán', value: 'sell' },
+                                { label: 'Cho thuê', value: 'rent' }
+                            ]}
+                        />
+                    </View>
+                    {/* <View style={styles.list}>
                         <TouchableOpacity
                             onPress={() => this.onSelectKind('sell')}
                             style={this.state.kind === 'sell' ? styles.btnSellActive : styles.btnSellDeactive}
@@ -178,18 +208,8 @@ export default class AdvanceSearch extends Component {
                         >
                             <Text style={this.state.kind === 'rent' ? styles.textBtnActive : styles.textBtnDeactive}>CHO THUÊ</Text>
                         </TouchableOpacity>
-                    </View>
-                    <Text style={styles.titleGroup}>Dự án</Text>
-                    <TextInput
-                        style={styles.inputStyle}
-                        placeholder='Nhập tên dự án...'
-                        underlineColorAndroid='transparent'
-                        value={this.state.name}
-                        onChangeText={text => this.setState({ name: text })}
-                        autoFocus
-                        ref={(input) => { this.nameProject = input; }} 
-                    />
-                    <Text style={styles.titleGroup}>Loại hình</Text>
+                    </View> */}
+                    <Text style={styles.titleSection}>Loại hình</Text>
                     <View style={styles.rowOption}>
                         <View
                             style={styles.optionAlone}
@@ -205,7 +225,7 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <Text style={styles.titleGroup}>Vị trí</Text>
+                    <Text style={styles.titleSection}>Vị trí</Text>
                     <View style={styles.rowOption}>
                         <View
                             style={styles.option}
@@ -270,7 +290,7 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <Text style={styles.titleGroup}>Phân khúc</Text>
+                    <Text style={styles.titleSection}>Phân khúc</Text>
                     <View style={styles.rowOption}>
                         <View
                             style={styles.optionAlone}
@@ -286,7 +306,7 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <Text style={styles.titleGroup}>Tầm tài chính</Text>
+                    <Text style={styles.titleSection}>Tầm tài chính</Text>
                     <View style={styles.rowOption}>
                         <View
                             style={styles.optionAlone}
@@ -303,7 +323,7 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <Text style={styles.titleGroup}>Tính chất sản phẩm</Text>
+                    <Text style={styles.titleSection}>Tính chất sản phẩm</Text>
                     <View style={styles.rowOption}>
                         <View
                             style={styles.option}
@@ -393,22 +413,25 @@ export default class AdvanceSearch extends Component {
                             </Picker>
                         </View>
                     </View>
-                    <Text style={styles.titleGroup}>Tiện ích</Text>
-                    <TextInput
-                        style={styles.inputStyle}
-                        placeholder='Hồ điều hòa, công viên nội khu...'
-                        underlineColorAndroid='transparent'
-                        value={this.state.name}
-                        onChangeText={text => this.setState({ name: text })}
-                    />
+                    <Text style={styles.titleSection}>Tiện ích</Text>
+                    <View style={styles.viewInput}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Hồ điều hòa, công viên nội khu...'
+                            underlineColorAndroid='transparent'
+                            value={this.state.name}
+                            onChangeText={text => this.setState({ name: text })}
+                        />
+                    </View>
                     <TouchableOpacity
-                        style={styles.btnSearch}
+                        style={styles.bigBtnIcon}
                         onPress={this.onSearch.bind(this)}
                     // onPress={() => {
                     //     this.props.toggleAdvanceSearch(this.props.bounceValue, true);
                     // }}
                     >
-                        <Text style={styles.textBtnSearch}>TÌM KIẾM</Text>
+                        <Icon name='ios-search' style={styles.iconBigBtn} />
+                        <Text style={styles.textBtnIcon}>TÌM KIẾM</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </View >

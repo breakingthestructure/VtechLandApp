@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TextInput } from 'react-native';
+import { Text, View, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import {
     Container,
     Content,
@@ -51,10 +51,22 @@ export default class MyCustomers extends Component {
                     </ListItem>
                     <ListItem avatar style={{ borderBottomWidth: 1 }}>
                         <Left>
-                            <Thumbnail source={icSale} style={{ width: 50, height: 50 }} />
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.navigate('DetailCustomerScreen');
+                                }}
+                            >
+                                <Thumbnail source={icSale} style={{ width: 50, height: 50 }} />
+                            </TouchableOpacity>
                         </Left>
                         <Body style={{ borderBottomWidth: 0 }}>
-                            <Text>James Bond</Text>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.navigate('DetailCustomerScreen');
+                                }}
+                            >
+                                <Text>James Bond</Text>
+                            </TouchableOpacity>
                         </Body>
                         <Right style={{ flexDirection: 'row', borderBottomWidth: 0 }}>
                             <Button transparent onPress={() => callingPhone('0975151490')}>
