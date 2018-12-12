@@ -231,13 +231,22 @@ export default class DetailProject extends React.Component {
                         />
                     </View>
                     <TouchableOpacity
+                        style={styles.btnBtnIconSpecial}
+                        onPress={() => this.props.onChangeTab(4)}
+                    >
+                        <Icon type="FontAwesome" name='calendar' style={styles.iconBigBtn} />
+                        <Text style={styles.textBtnIcon}>
+                        Đặt lịch thăm quan dự án & Nhà mẫu
+                        </Text>
+                    </TouchableOpacity>
+                    {/* <TouchableOpacity
                         style={styles.bigBtn}
                         onPress={() => this.props.onChangeTab(4)}
                     >
                         <Text style={styles.textBtnActive}>
                             Đặt lịch thăm quan dự án & Nhà mẫu
                         </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <TouchableOpacity
                         style={styles.bigBtnIcon}
                         onPress={() => this.props.onChangeTab(5)}

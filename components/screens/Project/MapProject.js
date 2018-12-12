@@ -38,6 +38,7 @@ import icHistory from './../../../icons/history.png';
 import icPartner from './../../../icons/partner.png';
 import icRest from './../../../icons/rest.png';
 import icInvest from './../../../icons/invest.png';
+import { loading } from '../../../Helpers';
 
 const { width, height } = Dimensions.get('window');
 let isHidden = true;
@@ -130,14 +131,12 @@ export default class MapProject extends React.Component {
             toValue = 0;
             this.setState({ modalAdvanceSearch: true });
         }
-        // if (dataSearch) {
-        //     console.log('tes22', dataSearch);
-        //     this.setState({ dataSearch });
-        // }
         let value = '';
         if (wantHide) {
             toValue = heightSearch;
             value = val;
+        }
+        if (wantHide && dataSearch) {
             this.toggleResult(true, dataSearch);
         }
         if (!wantHide) {
@@ -188,10 +187,6 @@ export default class MapProject extends React.Component {
         ).start();
         isHiddenPopup = !isHiddenPopup;
     }
-    // setDataResult(dataSearch) {
-    //     this.setState({ dataSearch, modalResult: true });
-    //     console.log('dataSearch', this.state.dataSearch);
-    // }
     toggleResult(isHiddenResult, dataSearch) {
         if (dataSearch) {
             this.setState({ dataSearch, modalResult: true });
@@ -214,14 +209,7 @@ export default class MapProject extends React.Component {
     keyExtractor = (item) => item.id.toString(); //eslint-disable-line
     render() {
         if (!this.state.loaded) {
-            return (
-                <Container>
-                    <Header navigation={this.props.navigation} title='BẢN ĐỒ DỰ ÁN' />
-                    <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
-                    </Content>
-                </Container>
-            );
+            return loading();
         }
         return (
             <View style={styles.wrapper}>
@@ -268,13 +256,21 @@ export default class MapProject extends React.Component {
                 <View style={styles.actionContainer}>
                     <View style={{ height: 40, width: '100%', borderRadius: 20, marginTop: 5, backgroundColor: '#dddddd', flexDirection: 'row' }}>
                         <Icon name='ios-search' style={{ color: 'orange', fontSize: 20, textAlign: 'center', marginTop: 10, marginLeft: 15 }} />
-                        <TextInput
+                        {/* <TextInput
                             style={{ height: 40, width: '100%', marginLeft: 15 }}
                             placeholder='Nhập tên dự án...'
                             underlineColorAndroid='transparent'
                             value={this.state.name}
                             onChangeText={text => this.setState({ name: text })}
-                        />
+                        /> */}
+                        <TouchableOpacity
+                            style={styles.fakeInputSearch}
+                            onPress={() => {
+                                this.toggleAdvanceSearch();
+                            }}
+                        >
+                            <Text style={{ fontStyle: 'italic' }}>Nhập tên dự án...</Text>
+                        </TouchableOpacity>
                     </View>
                     <TouchableOpacity
                         style={{ marginTop: 5, flexDirection: 'row', justifyContent: 'center' }}
@@ -288,36 +284,39 @@ export default class MapProject extends React.Component {
                     <View style={{ flexDirection: 'row', paddingTop: 10, justifyContent: 'space-between', paddingHorizontal: 10 }}>
 
                         <TouchableOpacity
-                            style={{ width: '25%', alignItems: 'center' }}
+                            style={styles.mapQuickAction}
+                            onPress={() => {
+                                this.toggleResult(true, true);
+                            }}
                         >
                             <View style={{ width: 50, height: 50, backgroundColor: '#F58319', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
                                 <Icon name='ios-home' style={{ color: '#fff' }} />
                             </View>
-                            <Text style={{ fontSize: 8, textAlign: 'center' }}>Bất động sản để ở</Text>
+                            <Text style={styles.textQuickAction}>Bất động sản để ở</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={{ width: '25%', alignItems: 'center' }}
+                            style={styles.mapQuickAction}
                         >
                             <View style={{ width: 50, height: 50, backgroundColor: 'red', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
                                 <Image source={icInvest} style={{ width: 25, height: 25 }} />
                             </View>
-                            <Text style={{ fontSize: 8, textAlign: 'center' }}>Bất động sản đầu tư</Text>
+                            <Text style={styles.textQuickAction}>Bất động sản đầu tư</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={{ width: '25%', alignItems: 'center' }}
+                            style={styles.mapQuickAction}
                         >
                             <View style={{ width: 50, height: 50, backgroundColor: 'green', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
                                 <Image source={icRest} style={{ width: 25, height: 25 }} />
                             </View>
-                            <Text style={{ fontSize: 8, textAlign: 'center' }}>Bất động sản nghỉ dưỡng</Text>
+                            <Text style={styles.textQuickAction}>Bất động sản nghỉ dưỡng</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={{ width: '25%', alignItems: 'center' }}
+                            style={styles.mapQuickAction}
                         >
                             <View style={{ width: 50, height: 50, backgroundColor: '#004a80', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
                                 <Icon type='MaterialCommunityIcons' name='earth' style={{ color: '#fff' }} />
                             </View>
-                            <Text style={{ fontSize: 8, textAlign: 'center' }}>Bất động sản quốc tế</Text>
+                            <Text style={styles.textQuickAction}>Bất động sản quốc tế</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -339,7 +338,6 @@ export default class MapProject extends React.Component {
                     { transform: [{ translateY: this.state.resultValue }] }]}
                 >
                     {this.state.modalResult && <SearchResult navigation={this.props.navigation} toggleResult={this.toggleResult} state={this.state} />}
-                    {/* <SearchResult project={this.state.detailProject} navigation={this.props.navigation} toggleResult={this.toggleResult} state={this.state} /> */}
                 </Animated.View>
             </View >
         );

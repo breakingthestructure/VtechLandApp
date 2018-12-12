@@ -96,9 +96,9 @@ export default class AdvanceSearch extends Component {
                         <Image source={icTitle} style={styles.icTitle} />
                     </View>
 
-                    <Text style={styles.title}>{project.name}</Text>
+                    <Text style={styles.title} note numberOfLines={1}>{project.name}</Text>
                 </View>
-                <Text>{project.address}</Text>
+                <Text note numberOfLines={1}>{project.address}</Text>
                 {/* <Text>{project.description}</Text> */}
                 <FlatList
                     horizontal

@@ -16,11 +16,12 @@ export default class Header extends Component {
         this.props.navigation.openDrawer();
     }
     goBack() {
+        if (this.props.back === 'AnimateView') {
+            this.props.toggleAdvanceSearch(this.props.bounceValue, true);
+        }
         if (this.props.back !== 'MapScreen') {
-            console.log('ok');
             this.props.navigation.navigate('MapScreen');
         } else {
-            console.log('ok222');
             this.props.navigation.pop();
         }
     }
@@ -48,7 +49,7 @@ export default class Header extends Component {
                 <View style={headerAction}>
                     {this.props.back ? goBackJSX : menuJSX}
                     <View style={{ justifyContent: 'center' }}>
-                        <Text style={{ color: 'white', fontWeight: '500', fontSize: 16, textAlign: 'center' }}>{this.props.title ? this.props.title : 'VtechHome'}</Text>
+                        <Text style={{ color: 'white', fontWeight: '500', fontSize: 16, textAlign: 'center' }} note numberOfLines={1}>{this.props.title ? this.props.title : 'VtechHome'}</Text>
                     </View>
                     <TouchableOpacity
                         onPress={this.openRightMenu.bind(this)}

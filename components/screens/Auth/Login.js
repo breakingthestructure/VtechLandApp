@@ -21,6 +21,7 @@ import icPartner from './../../../icons/partner.png';
 import icSale from './../../../icons/sale.png';
 import icInvestor from './../../../icons/investor.png';
 import icCustomer from './../../../icons/customer.png';
+import { loading } from '../../../Helpers';
 
 const { width } = Dimensions.get('window');
 
@@ -28,7 +29,8 @@ export default class Intro extends React.Component {
     constructor() {
         super();
         this.state = {
-            loaded: false
+            loaded: false,
+            txtSubmit: 'ĐĂNG NHẬP'
         };
     }
     componentDidMount() {
@@ -37,32 +39,25 @@ export default class Intro extends React.Component {
         }, 200);
     }
     postLogin() {
-        this.setState({ loaded: false });
+        this.setState({ txtSubmit: 'Đang xử lý' });
         const { email, password } = this.state;
         login(email, password)
             .then(resJson => {
                 if (resJson.access_token) {
-                    console.log('resJson.access_token', resJson.access_token);
                     saveToken(resJson.access_token);
                     getProfile(resJson.access_token)
                         .then(response => {
-                            GLOBAL.user = response.data;
                             saveUser(response.data)
-                            .then(res => console.log('res', res));
-                            this.setState({ loaded: true });
-                            Alert.alert(
-                                'Thông báo',
-                                'Đăng nhập thành công',
-                                [
-                                    { text: 'OK', onPress: () => this.props.navigation.navigate('MapScreen') },
-                                ],
-                                { cancelable: false }
-                            );
+                            .then(res => console.log(res))
+                            .catch(err => console.log(err));
+                            GLOBAL.user = response.data;
+                            this.props.navigation.navigate('MapScreen')
                         })
                         .catch(err => console.log(err));
 
 
                 } else {
+                    this.setState({ txtSubmit: 'ĐĂNG NHẬP' });
                     Alert.alert(
                         'Thông báo',
                         'Đăng nhập thất bại',
@@ -227,7 +222,7 @@ export default class Intro extends React.Component {
                             <Icon type="FontAwesome" name='sign-in' style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} />
                             {/* <Icon name='ios-calculator' style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} /> */}
                             <Text style={{ color: 'white', fontWeight: '600', fontSize: 14, textAlign: 'center', marginTop: 10 }}>
-                                ĐĂNG NHẬP
+                                {this.state.txtSubmit}
                             </Text>
                         </TouchableOpacity>
                         {/* <View style={{ width: '100%', paddingTop: 10, paddingHorizontal: 30 }}>
@@ -249,19 +244,13 @@ export default class Intro extends React.Component {
 
             );
         }
-        return (
-            <Container>
-                <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                    <Spinner />
-                </Content>
-            </Container>
-        );
+        return loading();
     }
 }
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        width
+        backgroundColor: '#fff'
     },
     btnAction: {
         width: '18%',

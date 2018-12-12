@@ -17,8 +17,6 @@ import GLOBAL from './../../../Globals';
 import avatar from './../../../images/avatar.jpg';
 import styles from './../../../styles';
 import { loading } from '../../../Helpers';
-import getToken from './../../../api/getToken';
-import getUser from './../../../api/getUser';
 
 export default class Profile extends React.Component {
     constructor(props) {
@@ -71,13 +69,9 @@ export default class Profile extends React.Component {
     }
     render() {
         const { user } = GLOBAL;
-        console.log(user);
         if (!this.state.loaded) {
             return loading();
         }
-        // if (!user) {
-        //     return this.props.navigation.navigate('MapsScreen');
-        // }
         return (
             <View style={styles.container}>
                 <Header navigation={this.props.navigation} title='THÔNG TIN TÀI KHOẢN' back={'ok'} />

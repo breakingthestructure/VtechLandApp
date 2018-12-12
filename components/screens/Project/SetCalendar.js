@@ -24,7 +24,8 @@ export default class SetCalendar extends React.Component {
             txtDate: '',
             txtTime: '',
             txtNote: '',
-            loaded: false
+            loaded: false,
+            txtSubmit: 'ĐĂNG KÝ'
         };
     }
     state = { //eslint-disable-line
@@ -56,11 +57,11 @@ export default class SetCalendar extends React.Component {
         this.hideTimePicker();
     };
     onSubmit() {
-        this.setState({ loaded: false });
+        this.setState({ loaded: false, txtSubmit: 'Đang xử lý' });
         const { txtEmail, txtName, txtAddress, txtPhone, txtDate, txtTime, txtNote } = this.state;
         postContact(txtEmail, txtName, txtAddress, txtPhone, txtDate, txtTime, txtNote)
             .then(resJson => {
-                this.setState({ loaded: true });
+                this.setState({ loaded: true, txtSubmit: 'ĐĂNG KÝ' });
                 if (resJson.status) {
                     GLOBAL.user = resJson;
                     Alert.alert(
@@ -170,8 +171,8 @@ export default class SetCalendar extends React.Component {
                     >
                         <Icon name='ios-checkmark-circle-outline' style={styles.iconBigBtn} />
                         <Text style={styles.textBtnIcon}>
-                            ĐĂNG KÝ
-                            </Text>
+                            {this.state.txtSubmit}
+                        </Text>
                     </TouchableOpacity>
                     <DateTimePicker
                         isVisible={this.state.isDatePickerVisible}

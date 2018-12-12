@@ -1,6 +1,6 @@
 module.exports = {
-    API_URL: 'http://techland.cf/api',
-    BASE_URL: 'http://techland.cf/',
+    API_URL: 'http://nghetuvan.tk/api',
+    BASE_URL: 'http://nghetuvan.tk/',
     COLOR: {
         ORANGE: '#C50',
         DARKBLUE: '#0F3274',
@@ -14,7 +14,7 @@ module.exports = {
     HOLDING: 3,
     AVAIABLE: 1,
     user: null,
-    NO_IMAGE: 'http://techland.cf/img/nophoto.png',
+    NO_IMAGE: 'http://nghetuvan.tk/img/nophoto.png',
     GOOGLE_API: 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyByXMeeujrWpH517p7LkQrfBmTNIN1RTkQ&address=',
     TYPE_ROOM: {
         bedroom: 'Phòng ngủ',

@@ -44,9 +44,6 @@ export default class SearchResult extends Component {
         };
         this.arrayProject = [];
     }
-    componentDidMount() {
-        console.log('haha', this.props.state.dataSearch);
-    }
     onLikeProject() {
         Alert.alert(
             'Bạn quan tâm dự án này',

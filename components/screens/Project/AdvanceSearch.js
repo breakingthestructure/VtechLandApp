@@ -37,6 +37,7 @@ export default class AdvanceSearch extends Component {
             kind: 'sell',
             options: [],
             level: '',
+            txtSubmit: 'TÌM KIẾM'
         };
     }
     componentDidMount() {
@@ -110,6 +111,7 @@ export default class AdvanceSearch extends Component {
         this.setState({ kind });
     }
     onSearch() {
+        this.setState({ txtSubmit: 'Đang xử lý'})
         const { text, city, district, ward, street, direction, kind, level } = this.state;
 
         let query = '';
@@ -165,7 +167,7 @@ export default class AdvanceSearch extends Component {
         }
         return (
             <View style={{ flex: 1 }}>
-                <Header navigation={this.props.navigation} title='TÌM KIẾM NÂNG CAO' back={'MapScreen'} />
+                <Header navigation={this.props.navigation} title='TÌM KIẾM NÂNG CAO' back={'AnimateView'} toggleAdvanceSearch={this.props.toggleAdvanceSearch} bounceValue={this.props.bounceValue} />
 
                 <ScrollView style={styles.content}>
                     <View style={styles.viewInput}>
@@ -195,20 +197,6 @@ export default class AdvanceSearch extends Component {
                             ]}
                         />
                     </View>
-                    {/* <View style={styles.list}>
-                        <TouchableOpacity
-                            onPress={() => this.onSelectKind('sell')}
-                            style={this.state.kind === 'sell' ? styles.btnSellActive : styles.btnSellDeactive}
-                        >
-                            <Text style={this.state.kind === 'sell' ? styles.textBtnActive : styles.textBtnDeactive}>BÁN</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => this.onSelectKind('rent')}
-                            style={this.state.kind === 'rent' ? styles.btnRentActive : styles.btnRentDeactive}
-                        >
-                            <Text style={this.state.kind === 'rent' ? styles.textBtnActive : styles.textBtnDeactive}>CHO THUÊ</Text>
-                        </TouchableOpacity>
-                    </View> */}
                     <Text style={styles.titleSection}>Loại hình</Text>
                     <View style={styles.rowOption}>
                         <View
@@ -431,7 +419,7 @@ export default class AdvanceSearch extends Component {
                     // }}
                     >
                         <Icon name='ios-search' style={styles.iconBigBtn} />
-                        <Text style={styles.textBtnIcon}>TÌM KIẾM</Text>
+                        <Text style={styles.textBtnIcon}>{this.state.txtSubmit}</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </View >

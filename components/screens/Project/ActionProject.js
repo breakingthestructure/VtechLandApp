@@ -51,8 +51,6 @@ export default class ActionProject extends React.Component {
         const arrBuilding = Object.keys(buildings).map((item, index) => {
             return { key: item, value: buildings[item] };
         })
-        console.log(arrBuilding);
-        console.log(buildings);
         return (
             <View style={{ backgroundColor: '#f2f2f2', flex: 1 }}>
                 <View style={styles.wrapper}>
@@ -72,8 +70,8 @@ export default class ActionProject extends React.Component {
                                     style={styles.btnAction}
                                     onPress={() => navigation.navigate('TablePackageScreen', {
                                         project: project,
-                                        buildingId: item,
-                                        buildingName: item.key
+                                        buildingId: item.key,
+                                        buildingName: item.value
                                     })}
                                 >
                                     <View style={{ paddingVertical: 5 }}>

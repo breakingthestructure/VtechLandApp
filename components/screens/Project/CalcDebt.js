@@ -37,7 +37,8 @@ export default class CalcDebt extends React.Component {
                 percent: ''
             }],
             result: [],
-            calculating: false
+            calculating: false,
+            txtSubmit: 'TÍNH BÀI TOÁN TÀI CHÍNH'
         };
     }
     handleChangeFromInput = (index, type, text) => {
@@ -93,7 +94,7 @@ export default class CalcDebt extends React.Component {
         }
     }
     onCalcDebt() {
-        this.setState({ calculating: true });
+        this.setState({ calculating: true, txtSubmit: 'Đang xử lý' });
         const { modeDebt, txtMoney, txtMonth, graceDebt, arrayCondition, txtTimeGrace, date } = this.state;
         var moneyDebt = txtMoney.split('.').join('');
         let interestRateMonthly = 0;
@@ -191,7 +192,7 @@ export default class CalcDebt extends React.Component {
                 { key: formatMoney(rootHavePay, 0) }
             );
         }
-        this.setState({ result, calculating: false });
+        this.setState({ result, calculating: false, txtSubmit: 'TÍNH BÀI TOÁN TÀI CHÍNH' });
     }
 
     state = {
@@ -449,8 +450,8 @@ export default class CalcDebt extends React.Component {
                     >
                         <Icon name='ios-calculator' style={styles.iconBigBtn} />
                         <Text style={styles.textBtnIcon}>
-                            TÍNH BÀI TOÁN TÀI CHÍNH
-                            </Text>
+                            {this.state.txtSubmit}
+                        </Text>
                     </TouchableOpacity>
                     <FlatList
                         horizontal={false}

@@ -11,7 +11,9 @@ import {
 } from 'react-native';
 import { Icon } from 'native-base';
 import Header from '../Home/Header';
-import saveToken from './../../../api/saveToken';
+import getUser from './../../../api/getUser';
+import getToken from './../../../api/getToken';
+import postChangePassword from './../../../api/postChangePassword';
 import GLOBAL from './../../../Globals';
 import avatar from './../../../images/avatar.jpg';
 import styles from './../../../styles';
@@ -21,13 +23,58 @@ export default class ChangePassword extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loaded: false
+            loaded: false,
+            currentPassword: '',
+            newPassword: '',
+            confirmPassword: '',
+            txtSubmit: 'LƯU'
         };
     }
     componentDidMount() {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 1000);
+    }
+    onSubmit() {
+        const { currentPassword, newPassword, confirmPassword } = this.state;
+        this.setState({ txtSubmit: 'Đang xử lý' });
+        getToken()
+            .then(token => {
+                getUser()
+                    .then(user => {
+                        postChangePassword(token, user.email, currentPassword, newPassword, confirmPassword)
+                            .then(resJson => {
+                                this.setState({ txtSubmit: 'LƯU' });
+                                if (resJson.status) {
+                                    GLOBAL.user = resJson;
+                                    Alert.alert(
+                                        'Thông báo',
+                                        resJson.message,
+                                        [
+                                            {
+                                                text: 'Xác nhận',
+                                                onPress: () => {
+                                                    this.props.navigation.navigate('MapScreen');
+                                                }
+                                            },
+                                        ],
+                                        { cancelable: false }
+                                    );
+                                } else {
+                                    // let message = resJson.data.errors.map((val, key)=> {
+                                    //     return val;
+                                    // });
+                                    Alert.alert(
+                                        'Thông báo',
+                                        resJson.message,
+                                    );
+                                }
+                            })
+                            .catch(err => console.error(err));
+                    });
+            });
+
+
     }
     render() {
         if (!this.state.loaded) {
@@ -77,13 +124,13 @@ export default class ChangePassword extends React.Component {
                             />
                         </View>
                         <View style={styles.groupInline}>
-                            <TouchableOpacity style={styles.btnSubmitSquareInline}>
+                            <TouchableOpacity style={styles.btnSubmitSquareInline} onPress={this.onSubmit.bind(this)}>
                                 <Icon type="FontAwesome" name='save' style={styles.iconBigBtn} />
-                                <Text style={styles.textBtnIcon}>LƯU</Text>
+                                <Text style={styles.textBtnIcon}>{this.state.txtSubmit}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity 
-                            style={styles.btnBackSquareInline} 
-                            onPress={() => this.props.navigation.navigate('MapScreen')}
+                            <TouchableOpacity
+                                style={styles.btnBackSquareInline}
+                                onPress={() => this.props.navigation.navigate('MapScreen')}
                             >
                                 <Icon type="FontAwesome" name='mail-reply' style={styles.iconBigBtn} />
                                 <Text style={styles.textBtnIcon}>QUAY LẠI</Text>

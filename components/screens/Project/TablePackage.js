@@ -37,6 +37,7 @@ export default class TablePackage extends Component {
                             loaded: true
                         });
                     } else {
+                        this.setState({ loaded: true });
                         Alert.alert(
                             'Thông báo',
                             'Tòa nhà này chưa có bảng hàng',

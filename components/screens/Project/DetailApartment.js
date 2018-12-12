@@ -62,7 +62,6 @@ export default class DetailApartment extends React.Component {
         }
     }
     handleBackPress = () => { //eslint-disable-line
-        console.log('ok');
         this.props.navigation.navigate('TablePackageScreen');
         return true;
     }

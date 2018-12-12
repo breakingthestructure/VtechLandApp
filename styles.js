@@ -95,7 +95,7 @@ export default StyleSheet.create({
     bigBtn: {
         height: 40,
         width: '100%',
-        borderRadius: 2,
+        borderRadius: 20,
         backgroundColor: '#F58319',
         justifyContent: 'center',
         marginTop: 5,
@@ -140,6 +140,8 @@ export default StyleSheet.create({
     },
     //mapscreen
     wrapper: { flex: 1, backgroundColor: '#F6F6F6' },
+    mapQuickAction: { width: '25%', alignItems: 'center' },
+    textQuickAction: { fontSize: 8, textAlign: 'center' },
     mapContainer: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -221,7 +223,7 @@ export default StyleSheet.create({
         borderColor: '#33563743',
         flexDirection: 'row'
     },
-    fakeInputSearch: { marginTop: 5, borderBottomWidth: 1, borderColor: '#cecece', marginLeft: 15, width: width / 1.4 },
+    fakeInputSearch: { marginTop: 10, borderBottomWidth: 1, borderColor: '#cecece', marginLeft: 15, width: width / 1.4 },
     iconSearch: { color: '#F58319', marginLeft: 10, fontSize: 20, marginTop: 5 },
     txtAdvanceSearch: { textAlign: 'center', fontSize: 12, color: '#053654' },
     //previewproject
@@ -509,18 +511,19 @@ export default StyleSheet.create({
         paddingLeft: 20,
         paddingTop: 20
     },
-    // headerInfo: {
-    //     flexDirection: 'row'
-    // },
-    // iconAvatar: {
-    //     width: 50, height: 50
-    // },
-    // infoUser: {
-    //     paddingLeft: 15, paddingTop: 10
-    // },
-    // textHeading: {
-    //     fontSize: 16, fontWeight: '500'
-    // },
+    headerInfo: {
+        flexDirection: 'row',
+        height: height / 10
+    },
+    iconAvatar: {
+        width: 50, height: 50
+    },
+    infoUser: {
+        paddingLeft: 15, paddingTop: 10
+    },
+    textHeading: {
+        fontSize: 16, fontWeight: '500', color: '#f48120'
+    },
     underLine: {
         borderBottomColor: '#cccccc',
         borderBottomWidth: 1,
@@ -533,12 +536,12 @@ export default StyleSheet.create({
         height: 45
     },
     iconMenu: {
-        width: 20, height: 20, marginTop: 2
+        width: 20, height: 20
     },
     textMenu: {
-        fontSize: 16, paddingLeft: 10
+        fontSize: 14, paddingLeft: 10
     },
-    logoMenu: { width: width / 2, height: ((width / 2) / 492) * 79 },
+    logoMenu: { width: width / 2, height: ((width / 2) / 492) * 79, marginVertical: 10 },
     subTitleScreen: { fontWeight: '300', fontSize: 14, textAlign: 'center', color: '#f48120', paddingTop: 5 },
     sectionInputInline: { flexDirection: 'row', justifyContent: 'center' },
     titleDescription: { fontWeight: '100', fontSize: 14, textAlign: 'center', color: '#005b92', paddingTop: 5, fontStyle: 'italic' },
@@ -587,7 +590,7 @@ export default StyleSheet.create({
         backgroundColor: '#187EB9',
         justifyContent: 'center',
         flexDirection: 'row',
-        marginVertical: 20,
+        marginVertical: 10,
     },
     bigBtnBackIcon: {
         height: 40,
@@ -596,7 +599,7 @@ export default StyleSheet.create({
         backgroundColor: 'gray',
         justifyContent: 'center',
         flexDirection: 'row',
-        marginVertical: 20,
+        marginVertical: 10,
     },
     textBtnIcon: { color: 'white', fontWeight: '600', fontSize: 14, textAlign: 'center', marginTop: 10 },
     iconBigBtn: { fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 },
@@ -670,7 +673,16 @@ export default StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
     },
+    btnGrayInline: {
+        width: '48%',
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: '#d7d7d7',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
     groupInline: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 },
+    groupBoCongThuong: { flexDirection: 'row', justifyContent: 'space-between', marginRight: 20 },
     viewInput: {
         height: 40,
         width: '100%',
@@ -697,6 +709,23 @@ export default StyleSheet.create({
         backgroundColor: '#187EB9',
         justifyContent: 'center',
         flexDirection: 'row',
-        marginVertical: 20,
+        marginVertical: 10,
     },
+    btnBtnIconSpecial: {
+        height: 40,
+        width: '100%',
+        borderRadius: 20,
+        backgroundColor: '#f48120',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginVertical: 10,
+    },
+    loginContainer: {
+        padding: 20,
+        flex: 1
+    },
+    textBtnIconFacebook: { color: '#4e64ad', fontWeight: '300', fontSize: 12, textAlign: 'center', marginTop: 10 },
+    textBtnIconGoogle: { color: '#dd4b39', fontWeight: '300', fontSize: 12, textAlign: 'center', marginTop: 10 },
+    iconBigBtnFacebook: { fontSize: 12, color: '#4e64ad', marginTop: 13, marginRight: 5 },
+    iconBigBtnGoogle: { fontSize: 12, color: '#dd4b39', marginTop: 13, marginRight: 5 },
 });

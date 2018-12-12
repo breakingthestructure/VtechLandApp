@@ -122,10 +122,6 @@ export default class MapProject extends React.Component {
             toValue = 0;
             this.setState({ modalAdvanceSearch: true });
         }
-        // if (dataSearch) {
-        //     console.log('tes22', dataSearch);
-        //     this.setState({ dataSearch });
-        // }
         let value = '';
         if (wantHide) {
             toValue = heightSearch;
@@ -180,10 +176,6 @@ export default class MapProject extends React.Component {
         ).start();
         isHiddenPopup = !isHiddenPopup;
     }
-    // setDataResult(dataSearch) {
-    //     this.setState({ dataSearch, modalResult: true });
-    //     console.log('dataSearch', this.state.dataSearch);
-    // }
     toggleResult(isHiddenResult, dataSearch) {
         if (dataSearch) {
             this.setState({ dataSearch, modalResult: true });
