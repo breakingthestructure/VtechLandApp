@@ -45,9 +45,6 @@ export default class TabProject extends Component {
         const { navigation } = this.props;
         const projectId = navigation.getParam('projectId', null);
         const activeTab = navigation.getParam('activeTab', null);
-        if (activeTab) {
-            this.setState({ activeTab });
-        }
         if (projectId) {
             getDetailProject(projectId)
                 .then(resJson => {
@@ -57,6 +54,11 @@ export default class TabProject extends Component {
                             loaded: true
                         });
                     }
+                    console.log(activeTab);
+                    if (activeTab) {
+                        this.onChangeTab(activeTab);
+                    }
+                    console.log(this.state.activeTab);
                 })
                 .catch(err => console.log(err));
             getBuildings(projectId)
@@ -98,7 +100,7 @@ export default class TabProject extends Component {
                             tabBarUnderlineStyle={{ backgroundColor: 'transparent' }}
                             // tabBarBackgroundColor={'#000'}
                             renderTabBar={() => <ScrollableTab style={styles.scrollTabProject} />}
-                            locked
+                            // locked
                             tabBarPosition='top'
                             initialPage={this.state.initialPage}
                             page={this.state.activeTab}

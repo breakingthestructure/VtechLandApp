@@ -11,9 +11,12 @@ import {
 } from 'react-native';
 import { Icon } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import ImageResizer from 'react-native-image-resizer';
+import ImagePicker from 'react-native-image-crop-picker';
 import Header from '../Home/Header';
 import saveToken from './../../../api/saveToken';
 import GLOBAL from './../../../Globals';
+import getUser from './../../../api/getUser';
 import avatar from './../../../images/avatar.jpg';
 import styles from './../../../styles';
 import { loading } from '../../../Helpers';
@@ -28,13 +31,16 @@ export default class Profile extends React.Component {
             phone: user ? user.phone : '',
             address: user ? user.address : '',
             email: user ? user.email : '',
-            identity: user ? user.identity : ''
+            identity: user ? user.identity : '',
+            image: null,
         };
     }
-    componentDidMount() {
-        setTimeout(() => {
-            this.setState({ loaded: true });
-        }, 1000);
+    async componentDidMount() {
+        getUser()
+            .then(user => {
+                GLOBAL.user = user;
+                this.setState({ loaded: true });
+            });
     }
     onSignOut() {
         Alert.alert(
@@ -67,18 +73,68 @@ export default class Profile extends React.Component {
         this.setState({ txtDate: selected, date });
         this.hideDatePicker();
     }
+    pickSingle(cropit, circular = false) {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 300,
+            cropping: cropit,
+            cropperCircleOverlay: circular,
+            compressImageMaxWidth: 640,
+            compressImageMaxHeight: 480,
+            compressImageQuality: 0.5,
+            compressVideoPreset: 'MediumQuality',
+            includeExif: true,
+            cropperActiveWidgetColor: '#F58319',
+            cropperStatusBarColor: '#F58319',
+            cropperToolbarColor: '#F58319'
+        }).then(image => {
+            console.log('received image', image);
+            this.setState({
+                image: { uri: image.path, width: image.width, height: image.height, mime: image.mime }
+            });
+        }).catch(e => {
+            console.log(e);
+            Alert.alert(e.message ? e.message : e);
+        });
+    }
+    resize(image) {
+        ImageResizer.createResizedImage(image, 8, 6, 'JPEG', 80)
+            .then(({ uri }) => {
+                this.setState({
+                    resizedImageUri: uri,
+                });
+                console.log(uri);
+            })
+            .catch(err => {
+                console.log(err);
+                return Alert.alert('Unable to resize the photo', 'Check the console for full the error message');
+            });
+    }
+    renderImage(image) {
+        return (<Image
+            style={{ width: 120, height: 120, borderRadius: 60, borderWidth: 5, borderColor: '#F58319' }}
+            source={image}
+        />);
+    }
+    renderAsset(image) {
+        return this.renderImage(image);
+    }
     render() {
-        const { user } = GLOBAL;
         if (!this.state.loaded) {
             return loading();
         }
         return (
             <View style={styles.container}>
                 <Header navigation={this.props.navigation} title='THÔNG TIN TÀI KHOẢN' back={'ok'} />
+                {/* {this.state.image ? this.renderAsset(this.state.image) : null} */}
                 <ScrollView>
                     <View style={styles.content}>
                         <View style={{ alignItems: 'center', padding: 20 }}>
-                            <Image source={avatar} style={{ width: 120, height: 120, borderRadius: 60, borderWidth: 5, borderColor: '#F58319' }} />
+                            <TouchableOpacity onPress={() => this.pickSingle(true, true)}>
+
+                                {this.state.image ? this.renderAsset(this.state.image) : <Image source={avatar} style={{ width: 120, height: 120, borderRadius: 60, borderWidth: 5, borderColor: '#F58319' }} />}
+                                {/* <Image source={avatar} style={{ width: 120, height: 120, borderRadius: 60, borderWidth: 5, borderColor: '#F58319' }} /> */}
+                            </TouchableOpacity>
                             <View style={styles.sectionInputInline}>
 
                                 <Text style={{ fontSize: 18 }}>Xin chào </Text>

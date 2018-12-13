@@ -24,6 +24,10 @@ import DetailTransaction from './components/screens/Transaction/DetailTransactio
 import MyProject from './components/screens/Auth/MyProject';
 import ChangePassword from './components/screens/Auth/ChangePassword';
 import DetailCustomer from './components/screens/Customer/DetailCustomer';
+import Register from './components/screens/Auth/Register';
+import ForgotPassword from './components/screens/Auth/ForgotPassword';
+import ResetPassword from './components/screens/Auth/ResetPassword';
+import Test from './components/screens/Auth/Test';
 
 const ProjectStack = createStackNavigator(
   {
@@ -77,9 +81,6 @@ const LeftDrawer = createDrawerNavigator(
     HomeScreen: {
       screen: Home
     },
-    LoginScreen: {
-      screen: Login
-    },
     MapScreen: {
       screen: ProjectStack
     },
@@ -89,7 +90,9 @@ const LeftDrawer = createDrawerNavigator(
     DetailNewsScreen: {
       screen: DetailNews
     },
-    
+    TestScreen: {
+      screen: Test
+    },
   },
   {
     initialRouteName: 'MapScreen',
@@ -104,12 +107,24 @@ const LeftDrawer = createDrawerNavigator(
 
 const UserStack = createStackNavigator(
   {
-    ProfileScreen: { screen: Profile },
-    ChangePasswordScreen: { screen: ChangePassword },
-    MyCustomerScreen: { screen: MyCustomers },
-    DetailCustomerScreen: { screen: DetailCustomer },
-    NotificationScreen: { screen: MyNotification },
-    MyTransactionScreen: { screen: MyTransactions },
+    ProfileScreen: {
+      screen: Profile
+    },
+    ChangePasswordScreen: {
+      screen: ChangePassword
+    },
+    MyCustomerScreen: {
+      screen: MyCustomers
+    },
+    DetailCustomerScreen: {
+      screen: DetailCustomer
+    },
+    NotificationScreen: {
+      screen: MyNotification
+    },
+    MyTransactionScreen: {
+      screen: MyTransactions
+    },
     DetailTransactionScreen: {
       screen: DetailTransaction
     },
@@ -118,6 +133,18 @@ const UserStack = createStackNavigator(
     },
     ConfigScreen: {
       screen: Config
+    },
+    LoginScreen: {
+      screen: Login
+    },
+    RegisterScreen: {
+      screen: Register
+    },
+    ForgotPasswordScreen: {
+      screen: ForgotPassword
+    },
+    ResetPasswordScreen: {
+      screen: ResetPassword
     },
   },
   {

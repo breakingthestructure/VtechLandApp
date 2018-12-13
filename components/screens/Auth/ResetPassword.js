@@ -25,12 +25,12 @@ import { loading } from '../../../Helpers';
 
 const { width } = Dimensions.get('window');
 
-export default class Login extends React.Component {
+export default class ResetPassword extends React.Component {
     constructor() {
         super();
         this.state = {
             loaded: false,
-            txtSubmit: 'ĐĂNG NHẬP'
+            txtSubmit: 'KHÔI PHỤC MẬT KHẨU'
         };
     }
     componentDidMount() {
@@ -38,37 +38,8 @@ export default class Login extends React.Component {
             this.setState({ loaded: true });
         }, 200);
     }
-    postLogin() {
-        this.setState({ txtSubmit: 'Đang xử lý' });
-        const { email, password } = this.state;
-        login(email, password)
-            .then(resJson => {
-                if (resJson.access_token) {
-                    saveToken(resJson.access_token);
-                    getProfile(resJson.access_token)
-                        .then(response => {
-                            saveUser(response.data)
-                                .then(res => console.log(res))
-                                .catch(err => console.log(err));
-                            GLOBAL.user = response.data;
-                            this.props.navigation.navigate('MapScreen')
-                        })
-                        .catch(err => console.log(err));
-
-
-                } else {
-                    this.setState({ txtSubmit: 'ĐĂNG NHẬP' });
-                    Alert.alert(
-                        'Thông báo',
-                        'Đăng nhập thất bại',
-                        [
-                            { text: 'OK', onPress: () => console.log(password) },
-                        ],
-                        { cancelable: false }
-                    );
-                }
-            })
-            .catch(err => console.log(err));
+    postForgotPassword() {
+        // this.setState({ txtSubmit: 'Đang xử lý' });
     }
     render() {
         if (this.state.loaded) {
@@ -88,71 +59,10 @@ export default class Login extends React.Component {
                                 paddingTop: 20
                             }}
                         />
-                        <View style={{ paddingTop: 20, paddingBottom: 20 }}>
-                            <Text style={{ fontSize: 18, fontWeight: '500' }}>TRUY CẬP NHANH</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', paddingHorizontal: 30, width: '100%', justifyContent: 'center' }}>
-                            <TouchableOpacity
-                                style={styles.btnAction}
-                            >
-                                <View style={{ paddingVertical: 5 }}>
-                                    <Image source={icDevelop} style={{ width: 30, height: 30 }} />
-
-                                </View>
-                                <View style={{ justifyContent: 'center', padding: 2 }}>
-                                    <Text style={styles.btnTextAction}>ĐƠN VỊ PHÁT TRIỂN</Text>
-                                </View>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity
-                                style={styles.btnAction}
-                            >
-                                <View style={{ paddingVertical: 5 }}>
-                                    <Image source={icPartner} style={{ width: 30, height: 30 }} />
-
-                                </View>
-                                <View style={{ justifyContent: 'center' }}>
-                                    <Text style={styles.btnTextAction}>ĐỐI TÁC HỢP TÁC</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.btnAction}
-                            >
-                                <View style={{ paddingVertical: 5 }}>
-                                    <Image source={icCustomer} style={{ width: 30, height: 30 }} />
-
-                                </View>
-                                <View style={{ justifyContent: 'center' }}>
-                                    <Text style={styles.btnTextAction}>KHÁCH HÀNG BẤT ĐỘNG SẢN</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.btnAction}
-                            >
-                                <View style={{ paddingVertical: 5 }}>
-                                    <Image source={icSale} style={{ width: 30, height: 30 }} />
-
-                                </View>
-                                <View style={{ justifyContent: 'center' }}>
-                                    <Text style={styles.btnTextAction}>CHUYÊN VIÊN TƯ VẤN</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.btnAction}
-                            >
-                                <View style={{ paddingVertical: 5 }}>
-                                    <Image source={icInvestor} style={{ width: 30, height: 30 }} />
-
-                                </View>
-                                <View style={{ justifyContent: 'center' }}>
-                                    <Text style={styles.btnTextAction}>NHÀ ĐẦU TƯ</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
                         <View style={{ paddingTop: 20, paddingBottom: 10 }}>
-                            <Text style={{ fontSize: 18, fontWeight: '600', color: '#333333' }}>ĐĂNG NHẬP NGAY</Text>
+                            <Text style={{ fontSize: 18, fontWeight: '600', color: '#333333' }}>KHÔI PHỤC MẬT KHẨU</Text>
                         </View>
-                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30 }}>
+                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30, paddingTop: 10 }}>
                             <Content>
                                 <Item
                                     style={{
@@ -196,11 +106,39 @@ export default class Login extends React.Component {
                                 >
                                     <Input
                                         style={{ fontSize: 12, paddingLeft: 30 }}
-                                        placeholder='Mật khẩu'
+                                        placeholder='Mật khẩu mới'
                                         placeholderTextColor='#999999'
                                         underlineColorAndroid='transparent'
                                         onChangeText={(text) => this.setState({ password: text })}
                                         value={this.state.password}
+                                        secureTextEntry
+                                    />
+                                    <Icon active name='ios-lock' style={{ color: 'gray', marginRight: 15 }} />
+                                </Item>
+                            </Content>
+                        </View>
+                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30, paddingTop: 10 }}>
+                            <Content>
+                                <Item
+                                    style={{
+                                        borderColor: '#33563743',
+                                        height: 40,
+                                        marginLeft: 0,
+                                        width: '100%',
+                                        borderWidth: 1,
+                                        borderRadius: 20,
+                                        borderBottomWidth: 1,
+                                        borderTopWidth: 1
+                                    }}
+                                    regular
+                                >
+                                    <Input
+                                        style={{ fontSize: 12, paddingLeft: 30 }}
+                                        placeholder='Nhập lại mật khẩu'
+                                        placeholderTextColor='#999999'
+                                        underlineColorAndroid='transparent'
+                                        onChangeText={(text) => this.setState({ passwordConfirm: text })}
+                                        value={this.state.passwordConfirm}
                                         secureTextEntry
                                     />
                                     <Icon active name='ios-lock' style={{ color: 'gray', marginRight: 15 }} />
@@ -217,7 +155,7 @@ export default class Login extends React.Component {
                                 flexDirection: 'row',
                                 marginVertical: 20,
                             }}
-                            onPress={this.postLogin.bind(this)}
+                            onPress={this.postForgotPassword.bind(this)}
                         >
                             <Icon type="FontAwesome" name='sign-in' style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} />
                             {/* <Icon name='ios-calculator' style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} /> */}
@@ -225,21 +163,6 @@ export default class Login extends React.Component {
                                 {this.state.txtSubmit}
                             </Text>
                         </TouchableOpacity>
-                        {/* <View style={{ width: '100%', paddingTop: 10, paddingHorizontal: 30 }}>
-                            <TouchableOpacity onPress={this.postLogin.bind(this)} style={styles.bigBtn}>
-                                <Text style={styles.btnText}>ĐĂNG NHẬP</Text>
-                            </TouchableOpacity>
-                        </View> */}
-                        <View style={{ width: '100%', paddingHorizontal: 30 }}>
-                            <View style={styles.labelAction}>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('RegisterScreen')}>
-                                    <Text style={{ color: '#000', fontSize: 12 }}>ĐĂNG KÝ</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}>
-                                    <Text style={{ color: '#000', fontSize: 12 }}>QUÊN MẬT KHẨU ?</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
                     </View>
                     <View style={styles.bottomView}>
                         <Image source={bgImg} style={{ width, height: (width / 1440) * 550 }} />

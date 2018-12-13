@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatList, Alert } from 'react-native';
-import { Container, Content, Spinner } from 'native-base';
-
+import { View, Text, ScrollView, TouchableOpacity, FlatList, Alert } from 'react-native';
 import Header from '../Home/Header';
 import styles from './../../../styles';
 import getTablePackage from './../../../api/getTablePackage';
@@ -26,14 +24,13 @@ export default class TablePackage extends Component {
         if (project) {
             getTablePackage(project.id, buildingId)
                 .then(resJson => {
+                    console.log(resJson.status);
                     if (resJson.status) {
                         this.setState({
                             column: resJson.data.config.column,
                             row: resJson.data.config.row,
-                            listApartmentId: Object.keys(resJson.data.listApartment.id).map(item => {
-                                return { key: item };
-                            }),
-                            listApartmentStatus: resJson.data.listApartment.status,
+                            listApartment: resJson.data.apartment,
+                            // listApartmentStatus: resJson.data.listApartment.status,
                             loaded: true
                         });
                     } else {
@@ -48,29 +45,30 @@ export default class TablePackage extends Component {
                         );
                         return false;
                     }
+                    console.log('resJson.status');
                 })
-                .catch(err => console.log(err));
+                .catch(err => console.error(err));
         }
     }
 
     getClassName(type) {
         let className = '';
-        if (this.state.listApartmentStatus[type] === AVAIABLE) {
+        if (type === AVAIABLE) {
             className = styles.avaiable;
         }
-        if (this.state.listApartmentStatus[type] === HOLDING) {
+        if (type === HOLDING) {
             className = styles.holding;
         }
-        if (this.state.listApartmentStatus[type] === DISABLED) {
+        if (type === DISABLED) {
             className = styles.disabled;
         }
-        if (this.state.listApartmentStatus[type] === WAITING) {
+        if (type === WAITING) {
             className = styles.waiting;
         }
-        if (this.state.listApartmentStatus[type] === SOLD) {
+        if (type === SOLD) {
             className = styles.sold;
         }
-        if (this.state.listApartmentStatus[type] === INCOMPLETE) {
+        if (type === INCOMPLETE) {
             className = styles.incomplete;
         }
         return className;
@@ -123,6 +121,7 @@ export default class TablePackage extends Component {
             </View>
         );
     }
+    _keyExtractor = (item, index) => item.id;
     render() {
         const { navigation } = this.props;
         const buildingName = navigation.getParam('buildingName', null);
@@ -165,27 +164,28 @@ export default class TablePackage extends Component {
                         </View>
                     </View>
                 </View>
-                <ScrollView horizontal={true}>
+                <ScrollView horizontal>
                     <FlatList
                         horizontal={false}
+                        keyExtractor={this._keyExtractor}
                         ListHeaderComponent={this.renderHeader}
                         numColumns={this.state.column}
                         // contentContainerStyle={{ flexDirection: 'row' }}
-                        data={this.state.listApartmentId}
+                        data={this.state.listApartment}
                         // renderItem={this.renderTable}
                         renderItem={obj => {
-                            let className = this.getClassName(obj.item.key);
+                            let className = this.getClassName(obj.item.status);
                             return (
                                 <TouchableOpacity
                                     style={className}
                                     onPress={() => {
                                         this.props.navigation.navigate('DetailApartmentScreen', {
-                                            apartmentId: obj.item.key
+                                            apartmentId: obj.item.id
                                         });
                                     }}
                                 >
                                     <Text style={styles.textCell}>
-                                        {obj.item.key}
+                                        {obj.item.number}
                                     </Text>
                                 </TouchableOpacity>
                             );

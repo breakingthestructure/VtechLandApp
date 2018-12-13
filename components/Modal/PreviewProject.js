@@ -4,38 +4,14 @@ import {
     Text,
     FlatList,
     View,
-    StyleSheet,
-    ScrollView,
     TouchableOpacity,
     Image,
     Modal,
-    Dimensions
 } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import imgDuan from './../../images/duan.jpg';
 import icTitle from './../../icons/ic_title.png';
 import { BASE_URL, NO_IMAGE } from './../../Globals';
 import styles from './../../styles';
-
-const images = [{
-    // url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
-    // width: number
-    // height: number
-    // You can pass props to <Image />.
-    props: {
-        // headers: ...
-        source: imgDuan
-    },
-    freeHeight: true
-}, {
-    props: {
-        // Or you can set source directory.
-        source: imgDuan
-    },
-    freeHeight: true
-}];
-
-// const { width, height } = Dimensions.get('window');
 
 export default class AdvanceSearch extends Component {
     constructor(props) {
@@ -151,7 +127,7 @@ export default class AdvanceSearch extends Component {
                         }}
                     >
                         <Text style={styles.textBtnIcon}>
-                            XEM CHI TIẾT  
+                            XEM CHI TIẾT
                         </Text>
                         <Icon type="FontAwesome" name='caret-right' style={{ fontSize: 14, color: 'white', marginTop: 13 }} />
                     </TouchableOpacity>

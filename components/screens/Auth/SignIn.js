@@ -12,6 +12,9 @@ export default class SignIn extends Component {
     onGoToSignIn() {
         this.props.navigation.navigate('LoginScreen');
     }
+    onGoToSignUp() {
+        this.props.navigation.navigate('RegisterScreen');
+    }
     render() {
         return (
             <View>
@@ -29,6 +32,7 @@ export default class SignIn extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.bigBtnIcon}
+                        onPress={this.onGoToSignUp.bind(this)}
                     >
                         <Icon type="FontAwesome" name='sign-in' style={styles.iconBigBtn} />
                         <Text style={styles.textBtnIcon}>
