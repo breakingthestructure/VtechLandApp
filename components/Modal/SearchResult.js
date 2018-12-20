@@ -1,35 +1,10 @@
 import React, { Component } from 'react';
-import {
-    Text,
-    FlatList,
-    View,
-    StyleSheet,
-    ScrollView,
-    TouchableOpacity,
-    Animated,
-    Image,
-    Modal,
-    Alert
-} from 'react-native';
-import {
-    Container,
-    Header,
-    Content,
-    List,
-    ListItem,
-    Thumbnail,
-    Left,
-    Body,
-    Right,
-    Button,
-    Spinner,
-    Icon
-} from 'native-base';
-import ImageViewer from 'react-native-image-zoom-viewer';
-import imgDuan from './../../images/duan.jpg';
-import icTitle from './../../icons/ic_title.png';
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Body, Button, Container, Content, Icon, Left, ListItem, Right, Thumbnail } from 'native-base';
 import { BASE_URL, NO_IMAGE } from './../../Globals';
 import { loading } from '../../Helpers';
+import getToken from '../../api/getToken';
+import postLikeProject from '../../api/postLikeProject';
 
 // const { width, height } = Dimensions.get('window');
 
@@ -44,12 +19,22 @@ export default class SearchResult extends Component {
         };
         this.arrayProject = [];
     }
-    onLikeProject() {
+    onLikeProject(id) {
         Alert.alert(
             'Bạn quan tâm dự án này',
             '',
             [
-                { text: 'OK', onPress: () => this.props.navigation.navigate('HomeScreen') },
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        getToken()
+                            .then(token => {
+                                postLikeProject(token, id)
+                                    .then(res => {
+                                    });
+                            });
+                    }
+                },
                 { text: 'Hủy', onPress: () => console.log('ok') },
             ],
             { cancelable: false }
@@ -100,7 +85,7 @@ export default class SearchResult extends Component {
                                     </TouchableOpacity>
                                 </Body>
                                 <Right>
-                                    <Button transparent onPress={this.onLikeProject.bind(this)}>
+                                    <Button transparent onPress={this.onLikeProject.bind(this, value.id)}>
                                         <Icon active name='ios-heart' style={{ color: 'orange' }} />
                                     </Button>
                                 </Right>

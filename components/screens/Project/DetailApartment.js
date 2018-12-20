@@ -12,13 +12,14 @@ import {
 import { Icon } from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import ModalRN from 'react-native-modal';
-
-// import icTitle from './../../../icons/ic_title.png';
 import Header from '../Home/Header';
 import getDetailApartment from './../../../api/getDetailApartment';
 import { BASE_URL, TYPE_ROOM } from './../../../Globals';
 import styles from './../../../styles';
 import { loading } from '../../../Helpers';
+import createTokenTransaction from './../../../api/createTokenTransaction';
+import getToken from '../../../api/getToken';
+import postLockApartment from './../../../api/postLockApartment';
 
 export default class DetailApartment extends React.Component {
     constructor(props) {
@@ -30,20 +31,21 @@ export default class DetailApartment extends React.Component {
             modal3D: false,
             modalPosition: false,
             apartment: null,
-            image3d: null
+            image3d: null,
+            txtSubmit: 'XÁC NHẬN'
         };
     }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         const { navigation } = this.props;
         const apartmentId = navigation.getParam('apartmentId', null);
-        if (apartmentId) {
-            getDetailApartment(apartmentId)
+        // if (apartmentId) {
+            getDetailApartment(589)
                 .then(resJson => {
                     if (resJson) {
                         this.setState({
                             apartment: resJson,
-                            image3d: resJson.image_3d.map((item, index) => {
+                            image3d: resJson.image_3d.map((item) => {
                                 return { url: `${BASE_URL}${item}` };
                             }),
                             loaded: true
@@ -51,7 +53,7 @@ export default class DetailApartment extends React.Component {
                     }
                 })
                 .catch(err => console.log(err));
-        }
+        // }
     }
     onDisplayImage(type) {
         if (type === '3d') {
@@ -62,16 +64,51 @@ export default class DetailApartment extends React.Component {
         }
     }
     handleBackPress = () => { //eslint-disable-line
-        this.props.navigation.navigate('TablePackageScreen');
-        return true;
+        return this.props.navigation.navigate('TablePackageScreen');
     }
     onLockApartment() {
-        // this._toggleModal();
+        this.setState({ loaded: false, txtSubmit: 'Đang xử lý' });
+        getToken()
+            .then(token => {
+                postLockApartment(token, this.state.apartment.id)
+                    .then(res => {
+                        Alert.alert(
+                            'Thông báo',
+                            res.message,
+                        );
+                        this.setState({ loaded: true, txtSubmit: 'XÁC NHẬN' });
+                        this._toggleModal();
+                    });
+            });
+    }
+    onOrderApartment() {
         Alert.alert(
             'Thông báo',
-            'Bạn có chắc muốn lock căn này',
+            'Bạn có chắc muốn đặt cọc căn này',
             [
-                { text: 'OK', onPress: () => this.props.navigation.navigate('HomeScreen') },
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        this.setState({ loaded: false });
+                        getToken()
+                            .then(token => {
+                                createTokenTransaction(token, this.state.apartment.id)
+                                    .then(res => {
+                                        if (res.status === 200) {
+                                            this.props.navigation.navigate('OrderSubmitScreen', {
+                                                apartment: this.state.apartment,
+                                                transactionCode: res.data
+                                            });
+                                        } else {
+                                            Alert.alert(
+                                                'Thông báo',
+                                                res.message,
+                                            );
+                                        }
+                                    });
+                            });
+                    }
+                },
                 { text: 'Hủy', onPress: () => console.log('ok') },
             ],
             { cancelable: false }
@@ -81,8 +118,7 @@ export default class DetailApartment extends React.Component {
     state = {
         isModalVisible: false
     };
-
-    _toggleModal = () =>
+    _toggleModal = () => //eslint-disable-line
         this.setState({ isModalVisible: !this.state.isModalVisible });
 
     render() {
@@ -92,9 +128,10 @@ export default class DetailApartment extends React.Component {
         const { apartment } = this.state;
         return (
             <View style={styles.wrapper}>
-                <Header navigation={this.props.navigation} title={`CĂN HỘ ${apartment.number} - ${apartment.building.name} - ${apartment.project.name}`} />
+                <Header navigation={this.props.navigation} title={`CĂN HỘ ${apartment.number}`} />
                 <ScrollView style={styles.content}>
-                    <Text style={styles.titleScreen}>CĂN HỘ {apartment.number} - {apartment.building.name} - {apartment.project.name}</Text>
+                    <Text style={styles.titleScreen}>CĂN
+                        HỘ {apartment.number} - {apartment.building.name} - {apartment.project.name}</Text>
                     <Text style={styles.subTitleScreen}>({apartment.status.description})</Text>
                     <View style={styles.groupInline}>
                         <TouchableOpacity
@@ -106,14 +143,14 @@ export default class DetailApartment extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.btnSpecial}
-                            onPress={() => this.props.navigation.navigate('OrderSubmitScreen')}
+                            onPress={this.onOrderApartment.bind(this)}
                         >
                             <Icon name='ios-cart' style={styles.iconBigBtn} />
                             <Text style={styles.textBtnIcon}>ĐẶT CỌC</Text>
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.titleDescription}>
-                        Diện tích sàn 85.91 m2 (diện tích thông thủy)
+                        Diện tích sàn {apartment.live_area} m2 (diện tích thông thủy)
                     </Text>
                     <View style={styles.contentWrapper}>
                         <View
@@ -156,15 +193,27 @@ export default class DetailApartment extends React.Component {
                         <Text style={styles.txtHeader}>Phối cảnh 3D</Text>
                         <ScrollView horizontal style={{ flexDirection: 'row' }}>
                             {apartment.image_3d.map(image => (
-                                <TouchableOpacity key={image} onPress={this.onDisplayImage.bind(this, '3d')}>
-                                    <Image source={{ uri: `${BASE_URL}${image}` }} style={styles.imageApartment} />
+                                <TouchableOpacity
+                                    key={image}
+                                    onPress={this.onDisplayImage.bind(this, '3d')}
+                                >
+                                    <Image
+                                        source={{ uri: `${BASE_URL}${image}` }}
+                                        style={styles.imageApartment}
+                                    />
                                 </TouchableOpacity>
                             ))}
                         </ScrollView>
 
                         <Text style={styles.txtHeader}>Vị trí căn hộ</Text>
-                        <TouchableOpacity onPress={this.onDisplayImage.bind(this, 'position')} style={{ justifyContent: 'center' }}>
-                            <Image source={{ uri: `${BASE_URL}${apartment.position_apartment}` }} style={styles.imageApartment} />
+                        <TouchableOpacity
+                            onPress={this.onDisplayImage.bind(this, 'position')}
+                            style={{ justifyContent: 'center' }}
+                        >
+                            <Image
+                                source={{ uri: `${BASE_URL}${apartment.position_apartment}` }}
+                                style={styles.imageApartment}
+                            />
                         </TouchableOpacity>
                         <Modal
                             visible={this.state.modalPosition}
@@ -215,16 +264,16 @@ export default class DetailApartment extends React.Component {
                             <Text style={styles.textTitleModal}>LOCK CĂN HỘ</Text>
                         </View>
                         <View style={styles.contentModal}>
-                            <Text style={{ color: '#666' }}>Căn hộ sẽ được khóa trong 120 phút và thông báo với giám đốc dự án.
-                        Căn hộ sẽ được mở sau thời gian trên nếu không hoàn tất thủ tục thanh toán.</Text>
+                            <Text style={{ color: '#666' }}>Căn hộ sẽ được khóa trong 120 phút và thông báo với giám đốc
+                                dự án.
+                                Căn hộ sẽ được mở sau thời gian trên nếu không hoàn tất thủ tục thanh toán.</Text>
                             <Text style={{ color: '#666' }}>Bạn có chắc muốn khóa căn hộ này không?</Text>
                             <View style={styles.modalAction}>
                                 <TouchableOpacity
-                                    // onPress={this.onLockApartment.bind(this)}
-                                    onPress={this._toggleModal}
+                                    onPress={this.onLockApartment.bind(this)}
                                     style={styles.btnSubmitModal}
                                 >
-                                    <Text style={styles.textBtnActive}>XÁC NHẬN</Text>
+                                    <Text style={styles.textBtnActive}>{this.state.txtSubmit}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={this._toggleModal}
@@ -236,7 +285,7 @@ export default class DetailApartment extends React.Component {
                         </View>
                     </View>
                 </ModalRN>
-            </View >
+            </View>
         );
     }
 }

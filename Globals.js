@@ -1,6 +1,6 @@
 module.exports = {
-    API_URL: 'http://nghetuvan.tk/api',
-    BASE_URL: 'http://nghetuvan.tk/',
+    API_URL: 'https://nghetuvan.tk/api',
+    BASE_URL: 'https://nghetuvan.tk/',
     COLOR: {
         ORANGE: '#C50',
         DARKBLUE: '#0F3274',
@@ -33,5 +33,11 @@ module.exports = {
     },
     YOUTUBE_APIKEY: 'AIzaSyByXMeeujrWpH517p7LkQrfBmTNIN1RTkQ',
     CLIENT_SECRET: '3GfSREURwlYxIAg5yPDacPG0hvE0AtamUlc82na6',
-    CLIENT_ID: 2
+    CLIENT_ID: 2,
+    REAL_ESTATE: {
+        TO_LIVE: 1,
+        TO_SELL: 2,
+        TO_REST: 3,
+        TO_INTERNATIONAL: 4
+    }
 };

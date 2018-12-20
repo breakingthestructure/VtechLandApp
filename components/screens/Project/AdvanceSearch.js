@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-    Text,
-    View,
-    ScrollView,
-    TouchableOpacity,
-    Picker,
-    TextInput,
-} from 'react-native';
+import { FlatList, Picker, ScrollView, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Icon } from 'native-base';
 import SwitchSelector from 'react-native-switch-selector';
 import Header from './../Home/Header';
@@ -34,19 +27,30 @@ export default class AdvanceSearch extends Component {
             streets: [],
             street: '',
             direction: '',
-            kind: 'sell',
+            kind: 1,
             options: [],
             level: '',
-            txtSubmit: 'TÌM KIẾM'
+            txtSubmit: 'TÌM KIẾM',
+            feature: {},
+            arrFeature: [],
+            type: 1,
+            area: '',
+            minPrice: '',
+            maxPrice: ''
         };
     }
     componentDidMount() {
         getOptionProjects()
             .then(resJson => {
                 if (resJson) {
+                    const arrFeature = Object.keys(resJson.data.project_features).map((item, index) => {
+                        return { key: item, value: resJson.data.project_features[item] };
+                    });
                     this.setState({
                         options: resJson.data,
-                        loaded: true
+                        loaded: true,
+                        arrFeature,
+                        feature: resJson.data.project_features
                     });
                 }
             })
@@ -69,13 +73,7 @@ export default class AdvanceSearch extends Component {
                 .then(responseJson => {
                     if (responseJson.status === 200) {
                         this.setState({
-                            // loaded: true,
                             districts: responseJson.data,
-                            // district: '',
-                            // ward: '',
-                            // wards: [],
-                            // street: '',
-                            // streets: []
                         });
                     }
                 })
@@ -107,16 +105,12 @@ export default class AdvanceSearch extends Component {
                 .catch(err => console.log(err));
         }
     }
-    onSelectKind(kind) {
-        this.setState({ kind });
-    }
     onSearch() {
-        this.setState({ txtSubmit: 'Đang xử lý'})
-        const { text, city, district, ward, street, direction, kind, level } = this.state;
-
+        this.setState({ txtSubmit: 'Đang xử lý' });
+        const { text, city, district, ward, street, direction, kind, level, type, area, minPrice, maxPrice } = this.state;
         let query = '';
         if (text !== '') {
-            query += `&text=${text}`;
+            query += `&key_word=${text}`;
         }
         if (city !== '') {
             query += `&city_id=${city}`;
@@ -125,41 +119,53 @@ export default class AdvanceSearch extends Component {
             query += `&district_id=${district}`;
         }
         if (ward !== '') {
-            query += `&ward=${ward}`;
+            query += `&ward_id=${ward}`;
         }
         if (street !== '') {
-            query += `&street=${street}`;
+            query += `&street_id=${street}`;
         }
         if (direction !== '') {
             query += `&direction=${direction}`;
         }
-        // if (kind !== '') {
-        //     query += `&kind=${kind}`;
-        // }
+        if (kind !== '') {
+            query += `&kind=${kind}`;
+        }
         if (level !== '') {
             query += `&level=${level}`;
         }
-        // if (type !== '') {
-        //     query += `&type=${type}`;
-        // }
-        // if (min_price !== '') {
-        //     query += `&min_price=${min_price}`;
-        // }
-        // if (max_price !== '') {
-        //     query += `&max_price=${max_price}`;
-        // }
+        if (type !== '') {
+            query += `&type=${type}`;
+        }
+        if (area !== '') {
+            query += `&area=${area}`;
+        }
+        if (minPrice !== '') {
+            query += `&min_price=${minPrice}`;
+        }
+        if (maxPrice !== '') {
+            query += `&max_price=${maxPrice}`;
+        }
+        Object.keys(this.state.feature).filter(e => {
+            if (this.state.feature[e] === '1') {
+                query += `&features[]=${e}`;
+            }
+            return query;
+        });
         // if (page !== '') {
         //     query += `&page=${page}`;
         // }
+        console.log(query);
         getProject(query)
             .then(resJson => {
                 if (resJson.data) {
+                    this.setState({ txtSubmit: 'TÌM KIẾM' });
                     this.props.toggleAdvanceSearch(this.props.bounceValue, true, resJson.data);
                 }
             })
             .catch(err => console.log(err));
     }
-    _keyExtractor = (item, index) => item.id;
+
+    _keyExtractor = (item, index) => index.toString(); //eslint-disable-line
     render() {
         const { cities, districts, wards, streets, options } = this.state;
         if (!this.state.loaded || !cities || !options.length === 0 || !options.project_types) {
@@ -167,7 +173,13 @@ export default class AdvanceSearch extends Component {
         }
         return (
             <View style={{ flex: 1 }}>
-                <Header navigation={this.props.navigation} title='TÌM KIẾM NÂNG CAO' back={'AnimateView'} toggleAdvanceSearch={this.props.toggleAdvanceSearch} bounceValue={this.props.bounceValue} />
+                <Header
+                    navigation={this.props.navigation}
+                    title='TÌM KIẾM NÂNG CAO'
+                    back={'AnimateView'}
+                    toggleAdvanceSearch={this.props.toggleAdvanceSearch}
+                    bounceValue={this.props.bounceValue}
+                />
 
                 <ScrollView style={styles.content}>
                     <View style={styles.viewInput}>
@@ -188,12 +200,12 @@ export default class AdvanceSearch extends Component {
                             onPress={value => this.setState({ kind: value })}
                             textColor='#21a1fc' //'#7a44cf'
                             selectedColor='white'
-                            buttonColor='#21a1fc'
+                            buttonColor='#F58319'
                             borderColor='#cecece'
                             hasPadding
                             options={[
-                                { label: 'Bán', value: 'sell' },
-                                { label: 'Cho thuê', value: 'rent' }
+                                { label: 'Bán', value: 1 },
+                                { label: 'Cho thuê', value: 2 }
                             ]}
                         />
                     </View>
@@ -208,7 +220,13 @@ export default class AdvanceSearch extends Component {
                                 style={styles.picker}
                             >
                                 {Object.keys(options.project_types).map(function (key) {
-                                    return <Picker.Item key={key} label={options.project_types[key]} value={key} />
+                                    return (
+                                        <Picker.Item
+                                            key={key}
+                                            label={options.project_types[key]}
+                                            value={key}
+                                        />
+                                    );
                                 })}
                             </Picker>
                         </View>
@@ -221,7 +239,7 @@ export default class AdvanceSearch extends Component {
                             <Picker
                                 style={styles.picker}
                                 selectedValue={this.state.city}
-                                onValueChange={(itemValue, itemPosition) =>
+                                onValueChange={(itemValue) =>
                                     this.onSelectCity(itemValue)
                                 }
                             >
@@ -237,7 +255,7 @@ export default class AdvanceSearch extends Component {
                             <Picker
                                 style={styles.picker}
                                 selectedValue={this.state.district}
-                                onValueChange={(itemValue, itemPosition) =>
+                                onValueChange={(itemValue) =>
                                     this.onSelectDistrict(itemValue)
                                 }
                             >
@@ -297,18 +315,28 @@ export default class AdvanceSearch extends Component {
                     <Text style={styles.titleSection}>Tầm tài chính</Text>
                     <View style={styles.rowOption}>
                         <View
-                            style={styles.optionAlone}
+                            style={styles.option}
                         >
-                            <Picker
-                                style={styles.picker}
-                                selectedValue={this.state.type}
-                                onValueChange={(itemValue) => this.setState({ type: itemValue })}
-                            >
-                                <Picker.Item label="20 Triệu / m2 Đến 30 Triệu / m2" value="0" />
-                                <Picker.Item label="Dưới 1 tỉ" value="2" />
-                                <Picker.Item label="1 đến 3 tỉ" value="3" />
-                                <Picker.Item label="Trên 3 tỉ" value="3" />
-                            </Picker>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Từ'
+                                underlineColorAndroid='transparent'
+                                value={this.state.minPrice}
+                                onChangeText={text => this.setState({ minPrice: text })}
+                                keyboardType={'numeric'}
+                            />
+                        </View>
+                        <View
+                            style={styles.option}
+                        >
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Đến'
+                                underlineColorAndroid='transparent'
+                                value={this.state.maxPrice}
+                                onChangeText={text => this.setState({ maxPrice: text })}
+                                keyboardType={'numeric'}
+                            />
                         </View>
                     </View>
                     <Text style={styles.titleSection}>Tính chất sản phẩm</Text>
@@ -329,94 +357,101 @@ export default class AdvanceSearch extends Component {
                         <View
                             style={styles.option}
                         >
-                            <Picker
-                                style={styles.picker}
-                                selectedValue={this.state.kind}
-                                onValueChange={(itemValue) => this.setState({ kind: itemValue })}
-                            >
-                                <Picker.Item label="Diện tích" value="0" />
-                                <Picker.Item label="40 - 60 m2" value="2" />
-                                <Picker.Item label="60 - 80 m2" value="3" />
-                            </Picker>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Diện tích'
+                                underlineColorAndroid='transparent'
+                                value={this.state.area}
+                                onChangeText={text => this.setState({ area: text })}
+                                keyboardType={'numeric'}
+                            />
                         </View>
                     </View>
                     <View style={styles.rowOption}>
                         <View
                             style={styles.option}
                         >
-                            <Picker
-                                style={styles.picker}
-                                selectedValue={this.state.type}
-                                onValueChange={(itemValue) => this.setState({ type: itemValue })}
-                            >
-                                <Picker.Item label="Mặt tiền" value="0" />
-                                <Picker.Item label="Dưới 1 tỉ" value="2" />
-                                <Picker.Item label="1 đến 3 tỉ" value="3" />
-                                <Picker.Item label="Trên 3 tỉ" value="3" />
-                            </Picker>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Mặt tiền'
+                                underlineColorAndroid='transparent'
+                                value={this.state.facade}
+                                onChangeText={text => this.setState({ facade: text })}
+                                keyboardType={'numeric'}
+                            />
                         </View>
                         <View
                             style={styles.option}
                         >
-                            <Picker
-                                style={styles.picker}
-                                selectedValue={this.state.kind}
-                                onValueChange={(itemValue) => this.setState({ kind: itemValue })}
-                            >
-                                <Picker.Item label="Xây dựng" value="0" />
-                                <Picker.Item label="40 - 60 m2" value="2" />
-                                <Picker.Item label="60 - 80 m2" value="3" />
-                            </Picker>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Diện tích xây dựng'
+                                underlineColorAndroid='transparent'
+                                value={this.state.buildArea}
+                                onChangeText={text => this.setState({ buildArea: text })}
+                                keyboardType={'numeric'}
+                            />
                         </View>
                     </View>
                     <View style={styles.rowOption}>
                         <View
                             style={styles.option}
                         >
-                            <Picker
-                                style={styles.picker}
-                                selectedValue={this.state.bedroom}
-                                onValueChange={(itemValue) => this.setState({ bedroom: itemValue })}
-                            >
-                                <Picker.Item label="Số phòng ngủ" value="0" />
-                                <Picker.Item label="1" value="2" />
-                                <Picker.Item label="2" value="3" />
-                                <Picker.Item label="3" value="3" />
-                                <Picker.Item label="4" value="3" />
-                            </Picker>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Số phòng ngủ'
+                                underlineColorAndroid='transparent'
+                                value={this.state.bedroom}
+                                onChangeText={text => this.setState({ bedroom: text })}
+                                keyboardType={'numeric'}
+                            />
                         </View>
                         <View
                             style={styles.option}
                         >
-                            <Picker
-                                style={styles.picker}
-                                selectedValue={this.state.livingroom}
-                                onValueChange={(itemValue) => this.setState({ livingroom: itemValue })}
-                            >
-                                <Picker.Item label="Số phòng khách" value="0" />
-                                <Picker.Item label="1" value="2" />
-                                <Picker.Item label="2" value="3" />
-                                <Picker.Item label="3" value="3" />
-                                <Picker.Item label="4" value="3" />
-                            </Picker>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Số phòng khách'
+                                underlineColorAndroid='transparent'
+                                value={this.state.livingroom}
+                                onChangeText={text => this.setState({ livingroom: text })}
+                                keyboardType={'numeric'}
+                            />
                         </View>
                     </View>
                     <Text style={styles.titleSection}>Tiện ích</Text>
-                    <View style={styles.viewInput}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Hồ điều hòa, công viên nội khu...'
-                            underlineColorAndroid='transparent'
-                            value={this.state.name}
-                            onChangeText={text => this.setState({ name: text })}
-                        />
-                    </View>
+                    <FlatList
+                        keyExtractor={this._keyExtractor}
+                        numColumns={2}
+                        data={this.state.arrFeature}
+                        contentContainerStyle={{ width: '100%' }}
+                        renderItem={({ item }) => (
+                            <View
+                                key={item.key}
+                                style={{
+                                    marginLeft: 0,
+                                    width: '50%',
+                                    flexDirection: 'row',
+                                    marginBottom: 5,
+                                    left: 0
+                                }}
+                            >
+                                <Switch
+                                    color="#177dba"
+                                    onValueChange={() => {
+                                        const arr = this.state.feature;
+                                        arr[item.key] = '1';
+                                        this.setState({ feature: arr });
+                                    }}
+                                    value={this.state.feature[item.key] === '1'}
+                                />
+                                <Text style={{ marginLeft: 10 }}> {item.value}</Text>
+                            </View>
+                        )}
+                    />
                     <TouchableOpacity
                         style={styles.bigBtnIcon}
                         onPress={this.onSearch.bind(this)}
-                    // onPress={() => {
-                    //     this.props.toggleAdvanceSearch(this.props.bounceValue, true);
-                    // }}
                     >
                         <Icon name='ios-search' style={styles.iconBigBtn} />
                         <Text style={styles.textBtnIcon}>{this.state.txtSubmit}</Text>

@@ -1,64 +1,128 @@
 import React from 'react';
-import {
-    StyleSheet,
-    View,
-    Text,
-    Image,
-    Alert,
-    TextInput,
-    TouchableOpacity,
-    ScrollView,
-    Keyboard
-} from 'react-native';
-import { Icon, Button } from 'native-base';
+import { Alert, Image, Keyboard, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, Icon } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import SwitchSelector from 'react-native-switch-selector';
 import Header from '../Home/Header';
-import saveToken from './../../../api/saveToken';
-import GLOBAL from './../../../Globals';
-import avatar from './../../../images/avatar.jpg';
 import styles from './../../../styles';
-import { loading, callingPhone, openSmsUrl, openEmail } from '../../../Helpers';
+import { callingPhone, loading, openEmail, openSmsUrl } from '../../../Helpers';
+import getToken from '../../../api/getToken';
+import postCreateCustomer from '../../../api/postCreateCustomer';
+import postUpdateCustomer from '../../../api/postUpdateCustomer';
+import postDeleteCustomer from '../../../api/postDeleteCustomer';
+import icSale from './../../../icons/customer.png';
 
 export default class DetailCustomer extends React.Component {
     constructor(props) {
         super(props);
+        const { navigation } = this.props;
+        const customer = navigation.getParam('customer', null);
         this.state = {
-            loaded: false
+            loaded: false,
+            customer: customer ? customer : '',
+            fullname: customer ? customer.full_name : '',
+            phone: customer ? customer.phone : '',
+            address: customer ? customer.address : '',
+            email: customer ? customer.email : '',
+            identity: customer ? customer.identity : '',
+            txtSubmit: 'Lưu',
+            identity_day: '',
+            birthday: customer ? customer.birth_day : '',
         };
-    }
-    componentDidMount() {
-        setTimeout(() => {
-            this.setState({ loaded: true });
-        }, 1000);
-    }
-    onSignOut() {
-        Alert.alert(
-            'Thông báo',
-            'Bạn có chắc muốn thoát tài khoản',
-            [
-                {
-                    text: 'Đồng ý',
-                    onPress: () => {
-                        GLOBAL.user = null;
-                        saveToken('');
-                        this.props.navigation.navigate('LoginScreen');
-                    }
-                },
-                { text: 'Hủy bỏ', onPress: () => console.log('Cancel Pressed') },
-            ],
-            { cancelable: false }
-        );
     }
     state = {
         isDatePickerVisible: false,
     };
 
-    showDatePicker = () => this.setState({ isDatePickerVisible: true });
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ loaded: true });
+        }, 200);
+    }
 
-    hideDatePicker = () => this.setState({ isDatePickerVisible: false });
+    onSubmit() {
+        getToken()
+            .then(token => {
+                const { fullname, phone, address, customer, birthday, identity, gender, email } = this.state;
+                if (customer) {
+                    postUpdateCustomer(token, customer.id, fullname, phone, address, birthday, identity, gender, email)
+                        .then(res => {
+                            Alert.alert(
+                                'Thông báo',
+                                res.message,
+                                [
+                                    {
+                                        text: 'OK',
+                                        onPress: () => {
+                                            this.props.navigation.navigate('MapScreen');
+                                        }
+                                    },
+                                ],
+                                { cancelable: false }
+                            );
+                        });
+                } else {
+                    postCreateCustomer(token, fullname, phone, address, birthday, identity, gender, email)
+                        .then(res => {
+                            Alert.alert(
+                                'Thông báo',
+                                res.message,
+                                [
+                                    {
+                                        text: 'OK',
+                                        onPress: () => {
+                                            this.props.navigation.navigate('MapScreen');
+                                        }
+                                    },
+                                ],
+                                { cancelable: false }
+                            );
+                        });
+                }
+            });
+    }
 
-    handleDatePicked = (date) => {
+    onDelete() {
+        Alert.alert(
+            'Thông báo',
+            'Bạn có chắc muốn xóa khách hàng này',
+            [
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        getToken()
+                            .then(token => {
+                                const { customer } = this.state;
+                                if (customer) {
+                                    postDeleteCustomer(token, customer.id)
+                                        .then(res => {
+                                            Alert.alert(
+                                                'Thông báo',
+                                                res.message,
+                                                [
+                                                    {
+                                                        text: 'OK',
+                                                        onPress: () => {
+                                                            this.props.navigation.navigate('MapScreen');
+                                                        }
+                                                    },
+                                                ],
+                                                { cancelable: false }
+                                            );
+                                        });
+                                }
+                            });
+                    }
+                },
+            ],
+            { cancelable: false }
+        );
+    }
+    showDatePicker = () => this.setState({ isDatePickerVisible: true }); //eslint-disable-line
+
+    hideDatePicker = () => this.setState({ isDatePickerVisible: false }); //eslint-disable-line
+
+    handleDatePicked = (date) => { //eslint-disable-line
         let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
         this.setState({ txtDate: selected, date });
         this.hideDatePicker();
@@ -73,16 +137,27 @@ export default class DetailCustomer extends React.Component {
                 <ScrollView>
                     <View style={styles.content}>
                         <View style={{ alignItems: 'center', padding: 20 }}>
-                            <Image source={avatar} style={{ width: 120, height: 120, borderRadius: 60, borderWidth: 5, borderColor: '#F58319' }} />
+                            <Image source={icSale} style={{
+                                width: 120,
+                                height: 120,
+                                borderRadius: 60,
+                                borderWidth: 5,
+                                borderColor: '#F58319'
+                            }} />
                             <View style={styles.sectionInputInline}>
-                                <Text style={{ fontSize: 18, color: '#F58319', fontWeight: '600' }}>Cowboy!</Text>
+                                <Text style={{
+                                    fontSize: 18,
+                                    color: '#F58319',
+                                    fontWeight: '600'
+                                }}>{this.state.fullname}!</Text>
                             </View>
                         </View>
                         <View style={styles.list}>
-                            <Button transparent onPress={() => callingPhone('0975151490')}>
+                            <Button transparent onPress={() => callingPhone(this.state.phone)}>
                                 <Text><Icon type="Feather" name="phone-call" style={{ color: '#666666', fontSize: 30 }} /></Text>
                             </Button>
-                            <Button transparent onPress={() => openSmsUrl('0975151490', 'xin chao')} style={{ paddingLeft: 50 }}>
+                            <Button transparent onPress={() => openSmsUrl(this.state.phone, '')}
+                                    style={{ paddingLeft: 50 }}>
                                 <Text><Icon type="MaterialCommunityIcons" name="message-text-outline" style={{ color: '#666666', fontSize: 30 }} /></Text>
                             </Button>
                             <Button transparent onPress={() => openEmail()} style={{ paddingLeft: 50 }}>
@@ -94,8 +169,8 @@ export default class DetailCustomer extends React.Component {
                                 style={styles.input}
                                 placeholder='Họ tên'
                                 underlineColorAndroid='transparent'
-                                value={this.state.name}
-                                onChangeText={text => this.setState({ name: text })}
+                                value={this.state.fullname}
+                                onChangeText={text => this.setState({ fullname: text })}
                             />
                         </View>
                         <SwitchSelector
@@ -128,6 +203,7 @@ export default class DetailCustomer extends React.Component {
                                 underlineColorAndroid='transparent'
                                 value={this.state.phone}
                                 onChangeText={text => this.setState({ phone: text })}
+                                keyboardType={'numeric'}
                             />
                         </View>
                         <View style={styles.viewInput}>
@@ -146,6 +222,7 @@ export default class DetailCustomer extends React.Component {
                                 underlineColorAndroid='transparent'
                                 value={this.state.identity}
                                 onChangeText={text => this.setState({ identity: text })}
+                                keyboardType={'numeric'}
                             />
                         </View>
 
@@ -155,10 +232,10 @@ export default class DetailCustomer extends React.Component {
                             >
                                 <TextInput
                                     style={styles.input}
-                                    placeholder='Ngày cấp'
+                                    placeholder='Ngày sinh'
                                     underlineColorAndroid='transparent'
-                                    value={this.state.identity}
-                                    onChangeText={text => this.setState({ identity: text })}
+                                    value={this.state.birthday}
+                                    onChangeText={text => this.setState({ birthday: text })}
                                     onFocus={() => {
                                         Keyboard.dismiss();
                                         this.showDatePicker();
@@ -172,17 +249,23 @@ export default class DetailCustomer extends React.Component {
                                     style={styles.input}
                                     placeholder='Nơi cấp'
                                     underlineColorAndroid='transparent'
-                                    value={this.state.identity}
-                                    onChangeText={text => this.setState({ identity: text })}
+                                    value={this.state.identity_where}
+                                    onChangeText={text => this.setState({ identity_where: text })}
                                 />
                             </View>
                         </View>
                         <View style={styles.groupInline}>
-                            <TouchableOpacity style={styles.btnSubmitSquareInline}>
+                            <TouchableOpacity
+                                style={styles.btnSubmitSquareInline}
+                                onPress={this.onSubmit.bind(this)}
+                            >
                                 <Icon type="FontAwesome" name='save' style={styles.iconBigBtn} />
                                 <Text style={styles.textBtnIcon}>LƯU</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.btnDeleteSquareInline}>
+                            <TouchableOpacity
+                                style={styles.btnDeleteSquareInline}
+                                onPress={this.onDelete.bind(this)}
+                            >
                                 <Icon type="FontAwesome" name='trash-o' style={styles.iconBigBtn} />
                                 <Text style={styles.textBtnIcon}>XÓA</Text>
                             </TouchableOpacity>

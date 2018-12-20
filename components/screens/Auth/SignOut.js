@@ -16,9 +16,6 @@ import saveUser from './../../../api/saveUser';
 const { width, height } = Dimensions.get('window');
 
 export default class SignOut extends Component {
-    constructor(props) {
-        super(props)
-    }
     onSignOut() {
         Alert.alert(
             'Thông báo',
@@ -38,9 +35,11 @@ export default class SignOut extends Component {
             { cancelable: false }
         );
     }
+
     onGoToSignIn() {
-        this.props.navigation.navigate('LoginScreen');
+        return this.props.navigation.navigate('LoginScreen');
     }
+
     render() {
         return (
             <View>
@@ -58,41 +57,62 @@ export default class SignOut extends Component {
                     <View
                         style={styles.underLine}
                     />
-                    <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('ProfileScreen')}>
-                        <Image source={icProfile} style={styles.iconMenu} />
-                        {/* <Icon type="FontAwesome" name='user' style={{ fontSize: 20, color: 'orange' }} /> */}
+                    <TouchableOpacity
+                        style={styles.btnMenu}
+                        onPress={() => this.props.navigation.navigate('ProfileScreen')}
+                    >
+                        {/*<Image source={icProfile} style={styles.iconMenu} />*/}
+                         <Icon type="FontAwesome" name='user' style={{ fontSize: 20, color: 'orange' }} />
                         <Text style={styles.textMenu}>Thông tin tài khoản</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('ChangePasswordScreen')}>
+                    <TouchableOpacity
+                        style={styles.btnMenu}
+                        onPress={() => this.props.navigation.navigate('ChangePasswordScreen')}
+                    >
                         <Icon name='ios-key' style={{ fontSize: 18, color: 'orange' }} />
                         <Text style={styles.textMenu}>Thay đổi mật khẩu</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('NotificationScreen')}>
-                        <Icon active name='ios-notifications-outline' style={{ fontSize: 20, color: 'orange' }} />
-                        <Text style={styles.textMenu}>Thông báo của tôi</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('MyTransactionScreen')}>
-                        <Image source={icHistory} style={styles.iconMenu} />
-                        {/* <Icon name='ios-list' style={{ fontSize: 20, color: 'orange' }} /> */}
+                    {/*<TouchableOpacity*/}
+                        {/*style={styles.btnMenu}*/}
+                        {/*onPress={() => this.props.navigation.navigate('NotificationScreen')}*/}
+                    {/*>*/}
+                        {/*<Icon active name='ios-notifications-outline' style={{ fontSize: 20, color: 'orange' }} />*/}
+                        {/*<Text style={styles.textMenu}>Thông báo của tôi</Text>*/}
+                    {/*</TouchableOpacity>*/}
+                    <TouchableOpacity
+                        style={styles.btnMenu}
+                        onPress={() => this.props.navigation.navigate('MyTransactionScreen')}
+                    >
+                        {/*<Image source={icHistory} style={styles.iconMenu} />*/}
+                         <Icon name='ios-list-box' style={{ fontSize: 20, color: 'orange' }} />
                         <Text style={styles.textMenu}>Lịch sử giao dịch</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('MyProjectScreen')}>
-                        <Image source={icList} style={styles.iconMenu} />
-                        {/* <Icon name='ios-albums' style={{ fontSize: 20, color: 'orange' }} /> */}
+                    <TouchableOpacity
+                        style={styles.btnMenu}
+                        onPress={() => this.props.navigation.navigate('MyProjectScreen')}
+                    >
+                        {/*<Image source={icList} style={styles.iconMenu} />*/}
+                         <Icon name='ios-heart' style={{ fontSize: 18, color: 'orange' }} />
                         <Text style={styles.textMenu}>Dự án quan tâm</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('MyCustomerScreen')}>
+                    <TouchableOpacity
+                        style={styles.btnMenu}
+                        onPress={() => this.props.navigation.navigate('MyCustomerScreen')}
+                    >
                         {/* <Image source={icHistory} style={styles.iconMenu} /> */}
-                        <Icon type="FontAwesome" name='group' style={{ fontSize: 18, color: 'orange' }} />
+                        <Icon name='ios-people' style={{ fontSize: 18, color: 'orange' }} />
                         <Text style={styles.textMenu}>Danh sách khách hàng</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnMenu} onPress={this.onSignOut.bind(this)}>
+                    <TouchableOpacity
+                        style={styles.btnMenu}
+                        onPress={this.onSignOut.bind(this)}
+                    >
                         {/* <Image source={icShutdown} style={styles.iconMenu} /> */}
-                        <Icon type="FontAwesome" name='sign-out' style={{ fontSize: 20, color: 'red' }} />
+                        <Icon type="FontAwesome" name='sign-out' style={{ fontSize: 18, color: 'red' }} />
                         <Text style={styles.textMenu}>Đăng xuất</Text>
                     </TouchableOpacity>
                 </View>
-            </View >
+            </View>
         );
     }
 }

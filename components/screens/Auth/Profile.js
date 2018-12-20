@@ -20,6 +20,10 @@ import getUser from './../../../api/getUser';
 import avatar from './../../../images/avatar.jpg';
 import styles from './../../../styles';
 import { loading } from '../../../Helpers';
+import postUploadAvatar from './../../../api/postUploadAvatar';
+import getToken from '../../../api/getToken';
+import postUpdateInfomation from './../../../api/postUpdateInfomation';
+import saveUser from '../../../api/saveUser';
 
 export default class Profile extends React.Component {
     constructor(props) {
@@ -33,8 +37,13 @@ export default class Profile extends React.Component {
             email: user ? user.email : '',
             identity: user ? user.identity : '',
             image: null,
+            resizedImageUri: null,
+            txtSubmit: 'Lưu'
         };
     }
+    state = {
+        isDatePickerVisible: false,
+    };
     async componentDidMount() {
         getUser()
             .then(user => {
@@ -42,33 +51,11 @@ export default class Profile extends React.Component {
                 this.setState({ loaded: true });
             });
     }
-    onSignOut() {
-        Alert.alert(
-            'Thông báo',
-            'Bạn có chắc muốn thoát tài khoản',
-            [
-                {
-                    text: 'Đồng ý',
-                    onPress: () => {
-                        GLOBAL.user = null;
-                        saveToken('');
-                        this.props.navigation.navigate('LoginScreen');
-                    }
-                },
-                { text: 'Hủy bỏ', onPress: () => console.log('Cancel Pressed') },
-            ],
-            { cancelable: false }
-        );
-    }
-    state = {
-        isDatePickerVisible: false,
-    };
+    showDatePicker = () => this.setState({ isDatePickerVisible: true });//eslint-disable-line
 
-    showDatePicker = () => this.setState({ isDatePickerVisible: true });
+    hideDatePicker = () => this.setState({ isDatePickerVisible: false });//eslint-disable-line
 
-    hideDatePicker = () => this.setState({ isDatePickerVisible: false });
-
-    handleDatePicked = (date) => {
+    handleDatePicked = (date) => {//eslint-disable-line
         let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
         this.setState({ txtDate: selected, date });
         this.hideDatePicker();
@@ -86,16 +73,51 @@ export default class Profile extends React.Component {
             includeExif: true,
             cropperActiveWidgetColor: '#F58319',
             cropperStatusBarColor: '#F58319',
-            cropperToolbarColor: '#F58319'
+            cropperToolbarColor: '#F58319',
+            hideBottomControls: true
         }).then(image => {
-            console.log('received image', image);
             this.setState({
-                image: { uri: image.path, width: image.width, height: image.height, mime: image.mime }
+                image: {
+                    uri: image.path,
+                    width: image.width,
+                    height: image.height,
+                    mime: image.mime,
+                    type: image.mime,
+                    name: 'avatar'
+                }
             });
+            getToken()
+                .then(token => {
+                    let body = new FormData();
+                    body.append('avatar', this.state.image);
+                    postUploadAvatar(token, body)
+                        .then(res => {
+                            Alert.alert(
+                                'Thông báo',
+                                res.message,
+                            );
+                        })
+                        .catch(err => console.error(err));
+                });
         }).catch(e => {
             console.log(e);
             Alert.alert(e.message ? e.message : e);
         });
+    }
+    onSubmit() {
+        getToken()
+            .then(token => {
+                const { fullname, phone, address } = this.state;
+                postUpdateInfomation(token, GLOBAL.user.id, fullname, phone, address)
+                    .then(res => {
+                        Alert.alert(
+                            'Thông báo',
+                            res.message,
+                        );
+                        saveUser(res.data);
+                        GLOBAL.user = res.data;
+                    });
+            });
     }
     resize(image) {
         ImageResizer.createResizedImage(image, 8, 6, 'JPEG', 80)
@@ -107,7 +129,10 @@ export default class Profile extends React.Component {
             })
             .catch(err => {
                 console.log(err);
-                return Alert.alert('Unable to resize the photo', 'Check the console for full the error message');
+                return Alert.alert(
+                    'Unable to resize the photo',
+                    'Check the console for full the error message'
+                );
             });
     }
     renderImage(image) {
@@ -125,20 +150,31 @@ export default class Profile extends React.Component {
         }
         return (
             <View style={styles.container}>
-                <Header navigation={this.props.navigation} title='THÔNG TIN TÀI KHOẢN' back={'ok'} />
-                {/* {this.state.image ? this.renderAsset(this.state.image) : null} */}
+                <Header navigation={this.props.navigation} title='THÔNG TIN TÀI KHOẢN' back={'ok'}/>
                 <ScrollView>
                     <View style={styles.content}>
                         <View style={{ alignItems: 'center', padding: 20 }}>
                             <TouchableOpacity onPress={() => this.pickSingle(true, true)}>
-
-                                {this.state.image ? this.renderAsset(this.state.image) : <Image source={avatar} style={{ width: 120, height: 120, borderRadius: 60, borderWidth: 5, borderColor: '#F58319' }} />}
-                                {/* <Image source={avatar} style={{ width: 120, height: 120, borderRadius: 60, borderWidth: 5, borderColor: '#F58319' }} /> */}
+                                {this.state.image ? this.renderAsset(this.state.image) : <Image
+                                    source={avatar}
+                                    style={{
+                                        width: 120,
+                                        height: 120,
+                                        borderRadius: 60,
+                                        borderWidth: 5,
+                                        borderColor: '#F58319'
+                                    }}
+                                />}
                             </TouchableOpacity>
                             <View style={styles.sectionInputInline}>
-
                                 <Text style={{ fontSize: 18 }}>Xin chào </Text>
-                                <Text style={{ fontSize: 18, color: '#F58319', fontWeight: '600' }}>{this.state.fullname ? this.state.fullname : ''}!</Text>
+                                <Text
+                                    style={{
+                                        fontSize: 18,
+                                        color: '#F58319',
+                                        fontWeight: '600'
+                                    }}
+                                >{this.state.fullname ? this.state.fullname : ''}!</Text>
                             </View>
                         </View>
                         <View style={styles.viewInput}>
@@ -166,6 +202,7 @@ export default class Profile extends React.Component {
                                 underlineColorAndroid='transparent'
                                 value={this.state.phone}
                                 onChangeText={text => this.setState({ phone: text })}
+                                keyboardType={'numeric'}
                             />
                         </View>
                         <View style={styles.viewInput}>
@@ -184,6 +221,7 @@ export default class Profile extends React.Component {
                                 underlineColorAndroid='transparent'
                                 value={this.state.identity}
                                 onChangeText={text => this.setState({ identity: text })}
+                                keyboardType={'numeric'}
                             />
                         </View>
 
@@ -217,10 +255,12 @@ export default class Profile extends React.Component {
                         </View>
                         <TouchableOpacity
                             style={styles.bigBtnIcon}
+                            onPress={this.onSubmit.bind(this)}
                         >
-                            <Icon type="FontAwesome" name='save' style={styles.iconBigBtn} />
+                            <Icon type="FontAwesome" name='save' style={styles.iconBigBtn}
+                            />
                             <Text style={styles.textBtnIcon}>
-                                Lưu
+                                {this.state.txtSubmit}
                             </Text>
                         </TouchableOpacity>
                         <DateTimePicker
@@ -231,7 +271,7 @@ export default class Profile extends React.Component {
                         />
                     </View>
                 </ScrollView>
-            </View >
+            </View>
         );
     }
 }

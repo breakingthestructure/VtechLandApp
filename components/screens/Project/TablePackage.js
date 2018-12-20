@@ -24,7 +24,6 @@ export default class TablePackage extends Component {
         if (project) {
             getTablePackage(project.id, buildingId)
                 .then(resJson => {
-                    console.log(resJson.status);
                     if (resJson.status) {
                         this.setState({
                             column: resJson.data.config.column,
@@ -45,14 +44,13 @@ export default class TablePackage extends Component {
                         );
                         return false;
                     }
-                    console.log('resJson.status');
                 })
                 .catch(err => console.error(err));
         }
     }
 
     getClassName(type) {
-        let className = '';
+        let className = styles.avaiable;
         if (type === AVAIABLE) {
             className = styles.avaiable;
         }
@@ -139,28 +137,28 @@ export default class TablePackage extends Component {
                             <Text style={{ fontSize: 12 }}> Còn trống</Text>
                         </View>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: 'yellow' }} />
+                            <View style={{ width: 20, height: 20, backgroundColor: '#FFDA23' }} />
                             <Text style={{ fontSize: 12 }}>Chờ thanh toán</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: 'green' }} />
+                            <View style={{ width: 20, height: 20, backgroundColor: '#FF9323' }} />
                             <Text style={{ fontSize: 12 }}> Đang giữ chỗ</Text>
                         </View>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: 'red' }} />
+                            <View style={{ width: 20, height: 20, backgroundColor: '#F68121' }} />
                             <Text style={{ fontSize: 12 }}> Đã bán</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: 'gray' }} />
+                            <View style={{ width: 20, height: 20, backgroundColor: '#c2c2c2' }} />
                             <Text style={{ fontSize: 12 }}> Chưa mở bán</Text>
                         </View>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: 'yellow' }} />
-                            <Text style={{ fontSize: 12 }}> Chờ thanh toán</Text>
+                            <View style={{ width: 20, height: 20, backgroundColor: 'gray' }} />
+                            <Text style={{ fontSize: 12 }}> Không thể giao dịch</Text>
                         </View>
                     </View>
                 </View>

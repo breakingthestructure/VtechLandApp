@@ -18,6 +18,7 @@ import icCalendar from './../../../icons/calendar.png';
 import icList from './../../../icons/list.png';
 import icMoneyBag from './../../../icons/money_bag.png';
 import icLadder from './../../../icons/ladder.png';
+import { loading } from '../../../Helpers';
 // import SetCalendar from './SetCalendar';
 
 
@@ -36,21 +37,15 @@ export default class ActionProject extends React.Component {
             this.setState({ loaded: true });
         }, 200);
     }
-    _keyExtractor = (item, index) => index;
+    _keyExtractor = (item, index) => index; //eslint-disable-line
     render() {
         const { buildings, navigation, project } = this.props;
         if (!this.state.loaded || !this.props.navigation) {
-            return (
-                <Container>
-                    <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
-                    </Content>
-                </Container>
-            );
+            return loading();
         }
         const arrBuilding = Object.keys(buildings).map((item, index) => {
             return { key: item, value: buildings[item] };
-        })
+        });
         return (
             <View style={{ backgroundColor: '#f2f2f2', flex: 1 }}>
                 <View style={styles.wrapper}>

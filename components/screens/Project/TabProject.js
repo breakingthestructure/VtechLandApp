@@ -36,10 +36,6 @@ export default class TabProject extends Component {
         };
         this.onChangeTab = this.onChangeTab.bind(this);
     }
-    onChangeTab(page) {
-        this.refs._scrollView.scrollTo({ x: 0, y: 0, animated: true });
-        this.setState({ activeTab: page });
-    }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         const { navigation } = this.props;
@@ -54,11 +50,9 @@ export default class TabProject extends Component {
                             loaded: true
                         });
                     }
-                    console.log(activeTab);
                     if (activeTab) {
                         this.onChangeTab(activeTab);
                     }
-                    console.log(this.state.activeTab);
                 })
                 .catch(err => console.log(err));
             getBuildings(projectId)
@@ -72,11 +66,14 @@ export default class TabProject extends Component {
                 .catch(err => console.log(err));
         }
     }
+    onChangeTab(page) {
+        this.refs._scrollView.scrollTo({ x: 0, y: 0, animated: true });
+        this.setState({ activeTab: page });
+    }
     handleBackPress = () => { //eslint-disable-line
         // this.props.navigation.pop();
         return true;
     }
-
     render() {
         const { project } = this.state;
         if (!this.state.loaded || !project) {
@@ -163,7 +160,7 @@ export default class TabProject extends Component {
                                 activeTabStyle={styles.activeTab}
                                 activeTextStyle={styles.textActiveTab}
                             >
-                                <SupportProject navigation={this.props.navigation} />
+                                <SupportProject navigation={this.props.navigation} directors={project.data.project_directors}/>
                             </Tab>
                         </Tabs>
                     </Content>

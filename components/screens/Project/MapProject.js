@@ -3,47 +3,31 @@ import {
     View,
     BackHandler,
     Dimensions,
-    StyleSheet,
     TouchableOpacity,
     Text,
     Animated,
-    ScrollView,
-    FlatList,
-    Image,
-    TextInput
+    Image, FlatList,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import {
-    Container,
-    Content,
-    Spinner,
-    Item,
-    Icon,
-    Input,
-    Fab,
-    Button
+    Icon
 } from 'native-base';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import AdvanceSearch from './AdvanceSearch';
-
 import icPin from './../../../icons/pin-building.png';
 import getProject from './../../../api/getProject';
 import GLOBAL from './../../../Globals';
 import SearchResult from '../../Modal/SearchResult';
 import styles from './../../../styles';
-
-import icInvestor from './../../../icons/investor.png';
-import icHistory from './../../../icons/history.png';
-import icPartner from './../../../icons/partner.png';
 import icRest from './../../../icons/rest.png';
 import icInvest from './../../../icons/invest.png';
 import { loading } from '../../../Helpers';
+import KindProject from '../../Modal/KindProject';
 
 const { width, height } = Dimensions.get('window');
 let isHidden = true;
 let isHiddenPopup = true;
-// let isHiddenResult = true;
 const heightPopup = 220;
 const heightResult = 300;
 const heightSearch = height - 5;
@@ -64,21 +48,22 @@ export default class MapProject extends React.Component {
             },
             text: '',
             listProject: null,
-            modalProject: false,
+            modalKind: false,
             modalPreview: false,
             modalAdvanceSearch: false,
             detailProject: null,
             modalResult: false,
-            bounceValue: new Animated.Value(heightSearch), //This is the initial position of the subview
+            bounceValue: new Animated.Value(heightSearch),
             popupValue: new Animated.Value(heightPopup),
             resultValue: new Animated.Value(heightResult),
+            kindValue: new Animated.Value(heightResult),
             dataSearch: []
         };
         this.arrayProject = [];
         this.test = [];
-        // this.setDataResult = this.setDataResult.bind(this);
         this.toggleResult = this.toggleResult.bind(this);
     }
+
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         getProject()
@@ -93,39 +78,37 @@ export default class MapProject extends React.Component {
             })
             .catch(err => console.log(err));
     }
-    onSearch() {
-        fetch(GLOBAL.GOOGLE_API + this.state.txtAddress, //eslint-disable-line
-            {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json'
-                },
-            })
-            .then(res => res.json())
-            .then(resJson => {
-                if (resJson.results.length > 0) {
-                    this.setState({
-                        currentLocation: {
-                            latitude: resJson.results[0].geometry.location.lat,
-                            longitude: resJson.results[0].geometry.location.lng
-                        }
-                    });
-                }
-            })
-            .catch(err => console.log(err));
-    }
+
+    // onSearch() {
+    //     fetch(GLOBAL.GOOGLE_API + this.state.txtAddress, //eslint-disable-line
+    //         {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 Accept: 'application/json'
+    //             },
+    //         })
+    //         .then(res => res.json())
+    //         .then(resJson => {
+    //             if (resJson.results.length > 0) {
+    //                 this.setState({
+    //                     currentLocation: {
+    //                         latitude: resJson.results[0].geometry.location.lat,
+    //                         longitude: resJson.results[0].geometry.location.lng
+    //                     }
+    //                 });
+    //             }
+    //         })
+    //         .catch(err => console.log(err));
+    // }
 
     handleBackPress = () => { //eslint-disable-line
         if (!isHidden) {
-            this.toggleAdvanceSearch();
-        } else {
-            this.props.navigation.navigate('MapScreen');
+            return this.toggleAdvanceSearch();
         }
-        return true;
+        return this.props.navigation.navigate('MapScreen');
     }
     toggleAdvanceSearch(val, wantHide, dataSearch) {
-        // Keyboard.dismiss();
         let toValue = heightSearch;
         if (isHidden) {
             toValue = 0;
@@ -142,8 +125,6 @@ export default class MapProject extends React.Component {
         if (!wantHide) {
             value = this.state.bounceValue;
         }
-        //This will animate the transalteY of the subview between 0 & 100 depending on its current state//eslint-disable-line
-        //100 comes from the style below, which is the height of the subview.
         Animated.spring(
             value,
             {
@@ -204,7 +185,22 @@ export default class MapProject extends React.Component {
                 friction: 8,
             }
         ).start();
-        // isHiddenResult = !isHiddenResult;
+    }
+    toggleKindProject(isHiddenResult, kind) {
+        let toValue = heightResult;
+        if (isHiddenResult) {
+            toValue = 0;
+            this.setState({ kind, modalKind: true });
+        }
+        Animated.spring(
+            this.state.kindValue,
+            {
+                toValue,
+                velocity: 3,
+                tension: 2,
+                friction: 8,
+            }
+        ).start();
     }
     keyExtractor = (item) => item.id.toString(); //eslint-disable-line
     render() {
@@ -224,45 +220,61 @@ export default class MapProject extends React.Component {
                             longitudeDelta: 0.0421,
                         }}
                         // mapType="standard"
-                        // followsUserLocation
-                        // showsUserLocation
-                        // showsMyLocationButton
+                        followsUserLocation
+                        showsUserLocation
+                        showsMyLocationButton
                         moveOnMarkerPress
                         onPress={() => {
                             this.togglePopup(true);
+                            this.toggleKindProject();
                         }}
-                        ref={(ref) => { this.mapView = ref; }}
+                        ref={(ref) => {
+                            this.mapView = ref;
+                        }}
                     >
-                        {this.state.listProject.map(project => (
-                            <Marker
-                                key={project.id}
-                                coordinate={{
-                                    latitude: parseFloat(project.latitude),
-                                    longitude: parseFloat(project.longitude),
-                                }}
-                                title={project.name}
-                                description={project.address}
-                                image={icPin}
-                                onPress={() => {
-                                    this.togglePopup(false, project.id);
-                                }}
-                            // ref={ref => { this[`marker${project.id}`] = ref; }}
-                            // ref={ref => { this.test[project.id] = ref; }}
-                            // ref={`marker${project.jd}`}
-                            />
-                        ))}
+
+                        <FlatList
+                            data={this.state.listProject}
+                            keyExtractor={this.keyExtractor}
+                            renderItem={({ item }) => (
+                                <Marker
+                                    key={item.id}
+                                    coordinate={{
+                                        latitude: parseFloat(item.latitude),
+                                        longitude: parseFloat(item.longitude),
+                                    }}
+                                    title={item.name}
+                                    description={item.address}
+                                    image={icPin}
+                                    onPress={() => {
+                                        this.togglePopup(false, item.id);
+                                    }}
+                                />
+                            )}
+                        />
                     </MapView>
                 </View>
                 <View style={styles.actionContainer}>
-                    <View style={{ height: 40, width: '100%', borderRadius: 20, marginTop: 5, backgroundColor: '#dddddd', flexDirection: 'row' }}>
-                        <Icon name='ios-search' style={{ color: 'orange', fontSize: 20, textAlign: 'center', marginTop: 10, marginLeft: 15 }} />
-                        {/* <TextInput
-                            style={{ height: 40, width: '100%', marginLeft: 15 }}
-                            placeholder='Nhập tên dự án...'
-                            underlineColorAndroid='transparent'
-                            value={this.state.name}
-                            onChangeText={text => this.setState({ name: text })}
-                        /> */}
+                    <View
+                        style={{
+                            height: 40,
+                            width: '100%',
+                            borderRadius: 20,
+                            marginTop: 5,
+                            backgroundColor: '#dddddd',
+                            flexDirection: 'row'
+                        }}
+                    >
+                        <Icon
+                            name='ios-search'
+                            style={{
+                                color: 'orange',
+                                fontSize: 20,
+                                textAlign: 'center',
+                                marginTop: 10,
+                                marginLeft: 15
+                            }}
+                        />
                         <TouchableOpacity
                             style={styles.fakeInputSearch}
                             onPress={() => {
@@ -279,42 +291,58 @@ export default class MapProject extends React.Component {
                         }}
                     >
                         <Text style={styles.txtAdvanceSearch}>Tìm kiếm nâng cao </Text>
-                        <Icon type='FontAwesome' name='caret-up' style={{ color: '#004a80', fontSize: 14 }} />
+                        <Icon
+                            type='FontAwesome'
+                            name='caret-up'
+                            style={{ color: '#004a80', fontSize: 14 }}
+                        />
                     </TouchableOpacity>
-                    <View style={{ flexDirection: 'row', paddingTop: 10, justifyContent: 'space-between', paddingHorizontal: 10 }}>
-
+                    <View style={styles.modalAction}>
                         <TouchableOpacity
                             style={styles.mapQuickAction}
                             onPress={() => {
-                                this.toggleResult(true, true);
+                                this.toggleKindProject(true, GLOBAL.REAL_ESTATE.TO_LIVE);
                             }}
                         >
-                            <View style={{ width: 50, height: 50, backgroundColor: '#F58319', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={styles.btnMapOrange}>
                                 <Icon name='ios-home' style={{ color: '#fff' }} />
                             </View>
                             <Text style={styles.textQuickAction}>Bất động sản để ở</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.mapQuickAction}
+                            onPress={() => {
+                                this.toggleKindProject(true, GLOBAL.REAL_ESTATE.TO_SELL);
+                            }}
                         >
-                            <View style={{ width: 50, height: 50, backgroundColor: 'red', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={styles.btnMapRed}>
                                 <Image source={icInvest} style={{ width: 25, height: 25 }} />
                             </View>
                             <Text style={styles.textQuickAction}>Bất động sản đầu tư</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.mapQuickAction}
+                            onPress={() => {
+                                this.toggleKindProject(true, GLOBAL.REAL_ESTATE.TO_REST);
+                            }}
                         >
-                            <View style={{ width: 50, height: 50, backgroundColor: 'green', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={styles.btnMapGreen}>
                                 <Image source={icRest} style={{ width: 25, height: 25 }} />
                             </View>
                             <Text style={styles.textQuickAction}>Bất động sản nghỉ dưỡng</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.mapQuickAction}
+                            onPress={() => {
+                                this.toggleKindProject(true, GLOBAL.REAL_ESTATE.TO_INTERNATIONAL);
+                            }}
                         >
-                            <View style={{ width: 50, height: 50, backgroundColor: '#004a80', borderRadius: 25, justifyContent: 'center', alignItems: 'center' }}>
-                                <Icon type='MaterialCommunityIcons' name='earth' style={{ color: '#fff' }} />
+                            <View style={styles.btnMapBlue}>
+                                <Icon
+                                    type='MaterialCommunityIcons'
+                                    name='earth'
+                                    style={{ color: '#fff' }}
+                                />
                             </View>
                             <Text style={styles.textQuickAction}>Bất động sản quốc tế</Text>
                         </TouchableOpacity>
@@ -323,23 +351,52 @@ export default class MapProject extends React.Component {
 
                 <Animated.View
                     style={[styles.subView,
-                    { transform: [{ translateY: this.state.bounceValue }] }]}
+                        { transform: [{ translateY: this.state.bounceValue }] }]}
                 >
-                    {this.state.modalAdvanceSearch && <AdvanceSearch navigation={this.props.navigation} toggleAdvanceSearch={this.toggleAdvanceSearch} bounceValue={this.state.bounceValue} state={this.state} toggleResult={this.toggleResult} setDataResult={this.setDataResult} />}
+                    {this.state.modalAdvanceSearch &&
+                    <AdvanceSearch
+                        navigation={this.props.navigation}
+                        toggleAdvanceSearch={this.toggleAdvanceSearch}
+                        bounceValue={this.state.bounceValue}
+                        state={this.state}
+                        toggleResult={this.toggleResult}
+                        setDataResult={this.setDataResult}
+                    />}
                 </Animated.View>
                 <Animated.View
                     style={[styles.popupProject,
-                    { transform: [{ translateY: this.state.popupValue }] }]}
+                        { transform: [{ translateY: this.state.popupValue }] }]}
                 >
-                    {this.state.modalPreview && <PreviewProject project={this.state.detailProject} navigation={this.props.navigation} />}
+                    {this.state.modalPreview &&
+                    <PreviewProject
+                        project={this.state.detailProject}
+                        navigation={this.props.navigation}
+                    />}
                 </Animated.View>
                 <Animated.View
                     style={[styles.popupResult,
-                    { transform: [{ translateY: this.state.resultValue }] }]}
+                        { transform: [{ translateY: this.state.resultValue }] }]}
                 >
-                    {this.state.modalResult && <SearchResult navigation={this.props.navigation} toggleResult={this.toggleResult} state={this.state} />}
+                    {this.state.modalResult &&
+                    <SearchResult
+                        navigation={this.props.navigation}
+                        toggleResult={this.toggleResult}
+                        state={this.state}
+                    />}
                 </Animated.View>
-            </View >
+                <Animated.View
+                    style={[styles.popupResult,
+                        { transform: [{ translateY: this.state.kindValue }] }]}
+                >
+                    {this.state.modalKind &&
+                    <KindProject
+                        navigation={this.props.navigation}
+                        state={this.state}
+                        toggleKindProject={this.toggleKindProject}
+                        kind={this.state.kind}
+                    />}
+                </Animated.View>
+            </View>
         );
     }
 }

@@ -9,7 +9,7 @@ import {
 import { Icon } from 'native-base';
 import Header from '../Home/Header';
 import styles from './../../../styles';
-import { loading } from '../../../Helpers';
+import { convertIntToDateTime, formatMoney, loading } from '../../../Helpers';
 
 export default class DetailTransaction extends React.Component {
     constructor(props) {
@@ -36,7 +36,9 @@ export default class DetailTransaction extends React.Component {
         return true;
     }
     render() {
-        if (!this.state.loaded) {
+        const { navigation } = this.props;
+        const transaction = navigation.getParam('transaction', null);
+        if (!this.state.loaded || !transaction) {
             return loading();
         }
         return (
@@ -47,37 +49,37 @@ export default class DetailTransaction extends React.Component {
                         style={styles.lineInfo}
                     >
                         <Text style={{ fontSize: 14 }}>MÃ GD</Text>
-                        <Text style={{ fontSize: 14 }}>A0502</Text>
+                        <Text style={{ fontSize: 14 }}>{transaction.id}</Text>
                     </View>
                     <View
                         style={styles.lineInfo}
                     >
                         <Text style={{ fontSize: 14 }}>GIAO DỊCH</Text>
-                        <Text style={{ fontSize: 14 }}>Đặt cọc</Text>
+                        <Text style={{ fontSize: 14 }}>{transaction.status.name}</Text>
                     </View>
                     <View
                         style={styles.lineInfo}
                     >
                         <Text style={{ fontSize: 14 }}>Mã SP</Text>
-                        <Text style={{ fontSize: 14 }}>30</Text>
+                        <Text style={{ fontSize: 14 }}>{transaction.apartment.id}</Text>
                     </View>
                     <View
                         style={styles.lineInfo}
                     >
                         <Text style={{ fontSize: 14 }}>DỰ ÁN</Text>
-                        <Text style={{ fontSize: 14 }}>Roman Plaza</Text>
+                        <Text style={{ fontSize: 14 }}>{transaction.project.name}</Text>
                     </View>
                     <View
                         style={styles.lineInfo}
                     >
                         <Text style={{ fontSize: 14 }}>KHÁCH HÀNG</Text>
-                        <Text style={{ fontSize: 14 }}>Nguyễn Huy Tuân</Text>
+                        <Text style={{ fontSize: 14 }}>{transaction.customer.full_name}</Text>
                     </View>
                     <View
                         style={styles.lineInfo}
                     >
                         <Text style={{ fontSize: 14 }}>THỜI GIAN</Text>
-                        <Text style={{ fontSize: 14 }}>16:00 15-12-2018</Text>
+                        <Text style={{ fontSize: 14 }}>{convertIntToDateTime(transaction.created_at)}</Text>
                     </View>
 
                     <View
@@ -85,8 +87,8 @@ export default class DetailTransaction extends React.Component {
                     >
                         <Text style={{ fontSize: 14 }}>GIÁ TRỊ GIAO DỊCH</Text>
                         <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                            <Text style={{ fontSize: 14 }}>20</Text>
-                            <Text style={{ fontSize: 14 }}> triệu</Text>
+                            <Text style={{ fontSize: 14 }}>{formatMoney(transaction.reserve_value, 0)}</Text>
+                            <Text style={{ fontSize: 14 }}> VNĐ</Text>
                         </View>
                     </View>
                     <TouchableOpacity
@@ -98,13 +100,6 @@ export default class DetailTransaction extends React.Component {
                         QUAY LẠI
                             </Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity
-                        style={styles.bigBtn}
-                    >
-                        <Text style={styles.textBtnActive}>
-                            QUAY LẠI
-                        </Text>
-                    </TouchableOpacity> */}
                 </ScrollView>
             </View >
         );

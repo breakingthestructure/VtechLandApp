@@ -1,6 +1,11 @@
-import { StyleSheet, Dimensions } from 'react-native';
-
-const { width, height } = Dimensions.get('window');
+import {
+    StyleSheet,
+    Dimensions
+} from 'react-native';
+const {
+    width,
+    height
+} = Dimensions.get('window');
 const heightPopup = 220;
 const heightResult = 300;
 const heightSearch = height - 15;
@@ -8,14 +13,22 @@ const imageWidth = width;
 const imageHeight = (imageWidth / 3900) * 2092;
 
 export default StyleSheet.create({
-    containerLoading: { flex: 1, justifyContent: 'center' },
-    //calcdebt
+    containerLoading: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    //calc debt
     content: {
         flex: 1,
         backgroundColor: 'white',
         padding: 10,
     },
-    txtHeader: { fontWeight: '600', fontSize: 14, color: '#053654', paddingBottom: 5 },
+    txtHeader: {
+        fontWeight: '600',
+        fontSize: 14,
+        color: '#053654',
+        paddingBottom: 5
+    },
     item: {
         width: '100%',
         flexDirection: 'row',
@@ -91,7 +104,11 @@ export default StyleSheet.create({
         padding: 10,
         marginTop: 15,
     },
-    txtBtn: { color: 'white', textAlign: 'center', fontSize: 10 },
+    txtBtn: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 10
+    },
     bigBtn: {
         height: 40,
         width: '100%',
@@ -107,7 +124,12 @@ export default StyleSheet.create({
         justifyContent: 'center',
         borderColor: '#dee2e6'
     },
-    textHeader: { textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 12 },
+    textHeader: {
+        textAlign: 'center',
+        color: 'white',
+        fontWeight: '600',
+        fontSize: 12
+    },
     textCell: {
         textAlign: 'center',
         color: '#666',
@@ -139,9 +161,18 @@ export default StyleSheet.create({
         overflow: 'hidden'
     },
     //mapscreen
-    wrapper: { flex: 1, backgroundColor: '#F6F6F6' },
-    mapQuickAction: { width: '25%', alignItems: 'center' },
-    textQuickAction: { fontSize: 8, textAlign: 'center' },
+    wrapper: {
+        flex: 1,
+        backgroundColor: '#F6F6F6'
+    },
+    mapQuickAction: {
+        width: '25%',
+        alignItems: 'center'
+    },
+    textQuickAction: {
+        fontSize: 8,
+        textAlign: 'center'
+    },
     mapContainer: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -150,7 +181,10 @@ export default StyleSheet.create({
         // margin: 10,
         borderRadius: 2,
         shadowColor: '#3B5458',
-        shadowOffset: { width: 0, height: 3 },
+        shadowOffset: {
+            width: 0,
+            height: 3
+        },
         shadowOpacity: 0.2,
     },
     actionContainer: {
@@ -158,7 +192,10 @@ export default StyleSheet.create({
         padding: 10,
         borderRadius: 2,
         shadowColor: '#3B5458',
-        shadowOffset: { width: 0, height: 3 },
+        shadowOffset: {
+            width: 0,
+            height: 3
+        },
         shadowOpacity: 0.2
     },
     subView: {
@@ -177,7 +214,10 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         height: heightPopup
     },
-    iconStyle: { width: 20, height: 20 },
+    iconStyle: {
+        width: 20,
+        height: 20
+    },
     btnProject: {
         backgroundColor: 'white',
         borderRadius: 15,
@@ -188,7 +228,12 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderColor: '#33563743'
     },
-    txtBtnProject: { fontWeight: '400', marginHorizontal: 15, fontSize: 12, color: 'black' },
+    txtBtnProject: {
+        fontWeight: '400',
+        marginHorizontal: 15,
+        fontSize: 12,
+        color: 'black'
+    },
     popupResult: {
         position: 'absolute',
         bottom: 0,
@@ -208,7 +253,10 @@ export default StyleSheet.create({
         padding: 5,
         margin: 10,
         borderRadius: 5,
-        shadowOffset: { width: 0, height: 10 },
+        shadowOffset: {
+            width: 0,
+            height: 10
+        },
         shadowColor: '#000',
         shadowOpacity: 0.2,
         elevation: 3,
@@ -223,11 +271,62 @@ export default StyleSheet.create({
         borderColor: '#33563743',
         flexDirection: 'row'
     },
-    fakeInputSearch: { marginTop: 10, borderBottomWidth: 1, borderColor: '#cecece', marginLeft: 15, width: width / 1.4 },
-    iconSearch: { color: '#F58319', marginLeft: 10, fontSize: 20, marginTop: 5 },
-    txtAdvanceSearch: { textAlign: 'center', fontSize: 12, color: '#053654' },
+    fakeInputSearch: {
+        marginTop: 10,
+        borderBottomWidth: 1,
+        borderColor: '#cecece',
+        marginLeft: 15,
+        width: width / 1.4
+    },
+    iconSearch: {
+        color: '#F58319',
+        marginLeft: 10,
+        fontSize: 20,
+        marginTop: 5
+    },
+    txtAdvanceSearch: {
+        textAlign: 'center',
+        fontSize: 12,
+        color: '#053654'
+    },
+    btnMapOrange: {
+        width: 50,
+        height: 50,
+        backgroundColor: '#F58319',
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    btnMapRed: {
+        width: 50,
+        height: 50,
+        backgroundColor: 'red',
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    btnMapGreen: {
+        width: 50,
+        height: 50,
+        backgroundColor: 'green',
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    btnMapBlue: {
+        width: 50,
+        height: 50,
+        backgroundColor: '#004a80',
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     //previewproject
-    thumbProject: { width: 120, height: 120, marginRight: 5 },
+    thumbProject: {
+        width: 120,
+        height: 120,
+        marginRight: 5
+    },
     btnDetail: {
         height: 30,
         borderRadius: 5,
@@ -247,11 +346,31 @@ export default StyleSheet.create({
         alignItems: 'center',
         marginRight: 1,
     },
-    icTitle: { width: 2, height: 13 },
-    title: { fontWeight: '600', fontSize: 16, paddingLeft: 5, color: '#053654' },
-    txtDetail: { fontWeight: '500', marginHorizontal: 15, fontSize: 14, color: 'white', marginTop: 5 },
-    iconBtn: { color: '#fff', fontSize: 14 },
-    actionPreview: { flexDirection: 'row', paddingTop: 5 },
+    icTitle: {
+        width: 2,
+        height: 13
+    },
+    title: {
+        fontWeight: '600',
+        fontSize: 16,
+        paddingLeft: 5,
+        color: '#053654'
+    },
+    txtDetail: {
+        fontWeight: '500',
+        marginHorizontal: 15,
+        fontSize: 14,
+        color: 'white',
+        marginTop: 5
+    },
+    iconBtn: {
+        color: '#fff',
+        fontSize: 14
+    },
+    actionPreview: {
+        flexDirection: 'row',
+        paddingTop: 5
+    },
     //advancesearch
     inputStyle: {
         height: 40,
@@ -298,10 +417,30 @@ export default StyleSheet.create({
         marginTop: 15,
         justifyContent: 'center',
     },
-    textBtnActive: { fontSize: 14, textAlign: 'center', color: '#fff', fontWeight: '600' },
-    textBtnDeactive: { fontSize: 14, textAlign: 'center', color: '#666', fontWeight: '600' },
-    titleGroup: { fontSize: 14, paddingTop: 5, color: '#000', fontWeight: '600' },
-    rowOption: { justifyContent: 'space-between', flexDirection: 'row', width: '100%', paddingTop: 5 },
+    textBtnActive: {
+        fontSize: 14,
+        textAlign: 'center',
+        color: '#fff',
+        fontWeight: '600'
+    },
+    textBtnDeactive: {
+        fontSize: 14,
+        textAlign: 'center',
+        color: '#666',
+        fontWeight: '600'
+    },
+    titleGroup: {
+        fontSize: 14,
+        paddingTop: 5,
+        color: '#000',
+        fontWeight: '600'
+    },
+    rowOption: {
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        width: '100%',
+        paddingTop: 5
+    },
     option: {
         borderWidth: 1,
         borderColor: '#33563743',
@@ -327,7 +466,12 @@ export default StyleSheet.create({
         marginBottom: 20,
         justifyContent: 'center',
     },
-    textBtnSearch: { textAlign: 'center', color: 'white', fontWeight: '600', fontSize: 16 },
+    textBtnSearch: {
+        textAlign: 'center',
+        color: 'white',
+        fontWeight: '600',
+        fontSize: 16
+    },
     picker: { height: 40 },
     //table package
     container: {
@@ -365,7 +509,12 @@ export default StyleSheet.create({
         justifyContent: 'center',
         borderColor: '#dee2e6'
     },
-    textFirstCol: { textAlign: 'center', color: 'white', fontWeight: '500', fontSize: 12 },
+    textFirstCol: {
+        textAlign: 'center',
+        color: 'white',
+        fontWeight: '500',
+        fontSize: 12
+    },
     textFirstRow: {
         textAlign: 'center',
         color: '#fff',
@@ -379,7 +528,11 @@ export default StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
     },
-    note: { flexDirection: 'row', paddingTop: 5, width: '50%' },
+    note: {
+        flexDirection: 'row',
+        paddingTop: 5,
+        width: '50%'
+    },
     avaiable: {
         width: 80,
         height: 40,
@@ -424,7 +577,7 @@ export default StyleSheet.create({
         width: 80,
         height: 40,
         borderWidth: 1,
-        backgroundColor: 'gray',
+        backgroundColor: '#c2c2c2',
         justifyContent: 'center',
         borderColor: '#dee2e6'
     },
@@ -468,12 +621,46 @@ export default StyleSheet.create({
         marginTop: 5,
         height: 40,
     },
-    btnSubmit: { width: (width - 50) / 2, height: 40, borderRadius: 20, backgroundColor: '#177dba', marginTop: 5, justifyContent: 'center' },
-    btnCancel: { width: (width - 50) / 2, height: 40, borderRadius: 20, backgroundColor: '#464646', marginTop: 5, justifyContent: 'center' },
-    textSuggest: { fontSize: 12, color: '#555', paddingTop: 10, fontStyle: 'italic' },
-    inputMoney: { fontSize: 12, width: '45%', borderWidth: 1, borderColor: '#cecece' },
-    labelMoney: { color: '#fff', textAlign: 'center' },
-    sectionInputMoney: { backgroundColor: '#1f7eb8', height: '100%', width: '40%', justifyContent: 'center', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 },
+    btnSubmit: {
+        width: (width - 50) / 2,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: '#177dba',
+        marginTop: 5,
+        justifyContent: 'center'
+    },
+    btnCancel: {
+        width: (width - 50) / 2,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: '#464646',
+        marginTop: 5,
+        justifyContent: 'center'
+    },
+    textSuggest: {
+        fontSize: 12,
+        color: '#555',
+        paddingTop: 10,
+        fontStyle: 'italic'
+    },
+    inputMoney: {
+        fontSize: 12,
+        width: '45%',
+        borderWidth: 1,
+        borderColor: '#cecece'
+    },
+    labelMoney: {
+        color: '#fff',
+        textAlign: 'center'
+    },
+    sectionInputMoney: {
+        backgroundColor: '#1f7eb8',
+        height: '100%',
+        width: '40%',
+        justifyContent: 'center',
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20
+    },
     inputInline: {
         height: 40,
         marginBottom: 10,
@@ -492,16 +679,34 @@ export default StyleSheet.create({
         // marginTop: 10,
         marginBottom: 10
     },
-    titleScreen: { fontWeight: '600', fontSize: 18, textAlign: 'center', color: '#053654', paddingTop: 10 },
+    titleScreen: {
+        fontWeight: '600',
+        fontSize: 18,
+        textAlign: 'center',
+        color: '#053654',
+        paddingTop: 10
+    },
     headerSection: {
         height: height / 13,
         backgroundColor: '#F58319',
         // padding: 10,
         justifyContent: 'space-around'
     },
-    headerAction: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 5 },
-    modalAction: { flexDirection: 'row', justifyContent: 'space-between', padding: 10 },
-    iconHeaderStyle: { width: 20, height: 20, marginLeft: 10 },
+    headerAction: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 5
+    },
+    modalAction: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10
+    },
+    iconHeaderStyle: {
+        width: 20,
+        height: 20,
+        marginLeft: 10
+    },
     //menu
     menu: {
         flex: 1,
@@ -516,13 +721,17 @@ export default StyleSheet.create({
         height: height / 10
     },
     iconAvatar: {
-        width: 50, height: 50
+        width: 50,
+        height: 50
     },
     infoUser: {
-        paddingLeft: 15, paddingTop: 10
+        paddingLeft: 15,
+        paddingTop: 10
     },
     textHeading: {
-        fontSize: 16, fontWeight: '500', color: '#f48120'
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#f48120'
     },
     underLine: {
         borderBottomColor: '#cccccc',
@@ -536,21 +745,69 @@ export default StyleSheet.create({
         height: 45
     },
     iconMenu: {
-        width: 20, height: 20
+        width: 20,
+        height: 20
     },
     textMenu: {
-        fontSize: 14, paddingLeft: 10
+        fontSize: 14,
+        paddingLeft: 10,
     },
-    logoMenu: { width: width / 2, height: ((width / 2) / 492) * 79, marginVertical: 10 },
-    subTitleScreen: { fontWeight: '300', fontSize: 14, textAlign: 'center', color: '#f48120', paddingTop: 5 },
-    sectionInputInline: { flexDirection: 'row', justifyContent: 'center' },
-    titleDescription: { fontWeight: '100', fontSize: 14, textAlign: 'center', color: '#005b92', paddingTop: 5, fontStyle: 'italic' },
-    contentWrapper: { paddingTop: 10, paddingHorizontal: 10 },
-    subLabel: { fontSize: 14, fontStyle: 'italic', fontWeight: '600' },
-    imageApartment: { width: width - 50, height: ((width - 50) / 337) * 367 },
-    titleModal: { backgroundColor: '#F58319', height: 50, borderTopLeftRadius: 15, borderTopRightRadius: 15, justifyContent: 'center' },
-    textTitleModal: { textAlign: 'center', color: '#fff', fontSize: 18, fontWeight: '600' },
-    contentModal: { padding: 10, backgroundColor: '#fff', borderBottomLeftRadius: 15, borderBottomRightRadius: 15 },
+    logoMenu: {
+        width: width / 2,
+        height: ((width / 2) / 492) * 79,
+        marginVertical: 10
+    },
+    subTitleScreen: {
+        fontWeight: '300',
+        fontSize: 14,
+        textAlign: 'center',
+        color: '#f48120',
+        paddingTop: 5
+    },
+    sectionInputInline: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    titleDescription: {
+        fontWeight: '100',
+        fontSize: 14,
+        textAlign: 'center',
+        color: '#005b92',
+        paddingTop: 5,
+        fontStyle: 'italic'
+    },
+    contentWrapper: {
+        paddingTop: 10,
+        paddingHorizontal: 10
+    },
+    subLabel: {
+        fontSize: 14,
+        fontStyle: 'italic',
+        fontWeight: '600'
+    },
+    imageApartment: {
+        width: width - 50,
+        height: ((width - 50) / 337) * 367
+    },
+    titleModal: {
+        backgroundColor: '#F58319',
+        height: 50,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        justifyContent: 'center'
+    },
+    textTitleModal: {
+        textAlign: 'center',
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: '600'
+    },
+    contentModal: {
+        padding: 10,
+        backgroundColor: '#fff',
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15
+    },
     btnSubmitModal: {
         width: (width - 100) / 2,
         height: 30,
@@ -567,22 +824,87 @@ export default StyleSheet.create({
         marginHorizontal: 5,
         justifyContent: 'center'
     },
-    titleNoIcon: { fontWeight: '600', fontSize: 16 },
+    titleNoIcon: {
+        fontWeight: '600',
+        fontSize: 16
+    },
     //detail project
-    titleSection: { fontWeight: '400', fontSize: 16, color: '#1f7eb8', paddingBottom: 5, paddingTop: 5 },
-    titleScreenLeft: { fontWeight: '400', fontSize: 18, color: '#1f7eb8', paddingBottom: 5 },
-    iconText: { fontSize: 12, color: 'orange' },
-    textDescription: { fontSize: 12, marginTop: 4, paddingLeft: 5 },
-    basicInfoProject: { flexDirection: 'row', height: 80, borderWidth: 1, borderColor: '#cecece', borderRadius: 5, marginTop: 10 },
-    leftInfoProject: { height: 75, width: (width - 20) / 4, borderRightWidth: 1, borderRightColor: '#cecece', justifyContent: 'center' },
-    centerInfoProject: { height: 75, width: (width - 20) / 2, justifyContent: 'center' },
-    rightInfoProject: { height: 75, width: (width - 20) / 4, borderLeftWidth: 1, borderLeftColor: '#cecece', justifyContent: 'center' },
-    numberBasicInfo: { fontWeight: '400', color: '#333333', textAlign: 'center' },
-    textBasicInfo: { fontSize: 8, color: '#333333', textAlign: 'center' },
-    imgThumbProject: { width: (width - 20) / 3, height: 110, marginRight: 5 },
-    bodyList: { margin: 0, height: 100 },
-    imgList: { height: 60, borderRadius: 5 },
-    itemList: { marginLeft: 0, width: '100%' },
+    titleSection: {
+        fontWeight: '400',
+        fontSize: 16,
+        color: '#1f7eb8',
+        paddingBottom: 5,
+        paddingTop: 5
+    },
+    titleScreenLeft: {
+        fontWeight: '400',
+        fontSize: 18,
+        color: '#1f7eb8',
+        paddingBottom: 5
+    },
+    iconText: {
+        fontSize: 12,
+        color: 'orange'
+    },
+    textDescription: {
+        fontSize: 12,
+        marginTop: 4,
+        paddingLeft: 5
+    },
+    basicInfoProject: {
+        flexDirection: 'row',
+        height: 80,
+        borderWidth: 1,
+        borderColor: '#cecece',
+        borderRadius: 5,
+        marginTop: 10
+    },
+    leftInfoProject: {
+        height: 75,
+        width: (width - 20) / 4,
+        borderRightWidth: 1,
+        borderRightColor: '#cecece',
+        justifyContent: 'center'
+    },
+    centerInfoProject: {
+        height: 75,
+        width: (width - 20) / 2,
+        justifyContent: 'center'
+    },
+    rightInfoProject: {
+        height: 75,
+        width: (width - 20) / 4,
+        borderLeftWidth: 1,
+        borderLeftColor: '#cecece',
+        justifyContent: 'center'
+    },
+    numberBasicInfo: {
+        fontWeight: '400',
+        color: '#333333',
+        textAlign: 'center'
+    },
+    textBasicInfo: {
+        fontSize: 8,
+        color: '#333333',
+        textAlign: 'center'
+    },
+    imgThumbProject: {
+        width: (width - 20) / 3,
+        height: 110,
+        marginRight: 5
+    },
+    bodyList: {
+        margin: 0,
+        height: 100
+    },
+    imgList: {
+        height: 60,
+        borderRadius: 5
+    },
+    itemList: {
+        marginLeft: 0,
+        width: '100%'
+    },
     bigBtnIcon: {
         height: 40,
         width: '100%',
@@ -601,8 +923,19 @@ export default StyleSheet.create({
         flexDirection: 'row',
         marginVertical: 10,
     },
-    textBtnIcon: { color: 'white', fontWeight: '600', fontSize: 14, textAlign: 'center', marginTop: 10 },
-    iconBigBtn: { fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 },
+    textBtnIcon: {
+        color: 'white',
+        fontWeight: '600',
+        fontSize: 14,
+        textAlign: 'center',
+        marginTop: 10
+    },
+    iconBigBtn: {
+        fontSize: 14,
+        color: 'white',
+        marginTop: 13,
+        marginRight: 5
+    },
     //contact form
     textInput: {
         fontSize: 12,
@@ -630,15 +963,36 @@ export default StyleSheet.create({
         width: width / 2.2,
         right: 0
     },
-    rightSectionInputContact: { position: 'absolute', right: 0, marginTop: 10 },
-    textAreaContact: { borderColor: '#cecece', borderRadius: 20, fontSize: 10 },
-    subTitle: { fontSize: 14, fontStyle: 'italic' },
+    rightSectionInputContact: {
+        position: 'absolute',
+        right: 0,
+        marginTop: 10
+    },
+    textAreaContact: {
+        borderColor: '#cecece',
+        borderRadius: 20,
+        fontSize: 10
+    },
+    subTitle: {
+        fontSize: 14,
+        fontStyle: 'italic'
+    },
     //tab project
-    scrollTabProject: { backgroundColor: '#cacaca', height: 40 },
+    scrollTabProject: {
+        backgroundColor: '#cacaca',
+        height: 40
+    },
     tabProject: { backgroundColor: '#fff' },
-    textTabProject: { color: '#666', fontSize: 12 },
+    textTabProject: {
+        color: '#666',
+        fontSize: 12
+    },
     activeTab: { backgroundColor: '#F58319' },
-    textActiveTab: { color: 'white', fontWeight: '600', fontSize: 12 },
+    textActiveTab: {
+        color: 'white',
+        fontWeight: '600',
+        fontSize: 12
+    },
     slideProject: { height: height / 4 },
     btnSubmitSquareInline: {
         width: '48%',
@@ -681,8 +1035,16 @@ export default StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
     },
-    groupInline: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 },
-    groupBoCongThuong: { flexDirection: 'row', justifyContent: 'space-between', marginRight: 20 },
+    groupInline: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 10
+    },
+    groupBoCongThuong: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginRight: 20
+    },
     viewInput: {
         height: 40,
         width: '100%',
@@ -692,7 +1054,11 @@ export default StyleSheet.create({
         borderColor: '#cecece',
         borderWidth: 1
     },
-    input: { height: 40, width: '100%', marginLeft: 15 },
+    input: {
+        height: 40,
+        width: '100%',
+        marginLeft: 15
+    },
     viewHalfInput: {
         height: 40,
         width: '48%',
@@ -701,15 +1067,6 @@ export default StyleSheet.create({
         backgroundColor: '#fff',
         borderColor: '#cecece',
         borderWidth: 1
-    },
-    bigBtnIcon: {
-        height: 40,
-        width: '100%',
-        borderRadius: 20,
-        backgroundColor: '#187EB9',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        marginVertical: 10,
     },
     btnBtnIconSpecial: {
         height: 40,
@@ -724,8 +1081,30 @@ export default StyleSheet.create({
         padding: 20,
         flex: 1
     },
-    textBtnIconFacebook: { color: '#4e64ad', fontWeight: '300', fontSize: 12, textAlign: 'center', marginTop: 10 },
-    textBtnIconGoogle: { color: '#dd4b39', fontWeight: '300', fontSize: 12, textAlign: 'center', marginTop: 10 },
-    iconBigBtnFacebook: { fontSize: 12, color: '#4e64ad', marginTop: 13, marginRight: 5 },
-    iconBigBtnGoogle: { fontSize: 12, color: '#dd4b39', marginTop: 13, marginRight: 5 },
+    textBtnIconFacebook: {
+        color: '#4e64ad',
+        fontWeight: '300',
+        fontSize: 12,
+        textAlign: 'center',
+        marginTop: 10
+    },
+    textBtnIconGoogle: {
+        color: '#dd4b39',
+        fontWeight: '300',
+        fontSize: 12,
+        textAlign: 'center',
+        marginTop: 10
+    },
+    iconBigBtnFacebook: {
+        fontSize: 12,
+        color: '#4e64ad',
+        marginTop: 13,
+        marginRight: 5
+    },
+    iconBigBtnGoogle: {
+        fontSize: 12,
+        color: '#dd4b39',
+        marginTop: 13,
+        marginRight: 5
+    },
 });

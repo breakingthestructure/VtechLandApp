@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { FlatList } from 'react-native';
 import {
     Container,
     Content,
-    List,
     ListItem,
     Thumbnail,
     Text,
@@ -14,7 +13,6 @@ import {
     Icon,
     Spinner
 } from 'native-base';
-
 import icSale from './../../../icons/sale.png';
 import { callingPhone } from '../../../Helpers';
 
@@ -30,105 +28,40 @@ export default class SupportProject extends Component {
             this.setState({ loaded: true });
         }, 200);
     }
+    keyExtractor = (item, index) => index.toString(); //eslint-disable-line
     render() {
         if (!this.state.loaded) {
             return (
                 <Container>
                     <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
+                        <Spinner/>
                     </Content>
                 </Container>
             );
         }
         return (
             <Container>
-                <ScrollView>
-                    <ListItem avatar>
-                        <Left>
-                            <Thumbnail source={icSale} />
-                        </Left>
-                        <Body>
-                            <Text>James Bond</Text>
-                            <Text note numberOfLines={1}>091236587</Text>
-                            <Text note numberOfLines={1}>jamesbond@haiphatland.vn</Text>
-                        </Body>
-                        <Right>
-                            <Button transparent onPress={() => callingPhone('091236587')}>
-                                <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
-                            </Button>
-                        </Right>
-                    </ListItem>
-                    <ListItem avatar>
-                        <Left>
-                            <Thumbnail source={icSale} />
-                        </Left>
-                        <Body>
-                            <Text>James Bond</Text>
-                            <Text note numberOfLines={1}>Phòng kinh doanh 2</Text>
-                        </Body>
-                        <Right>
-                            <Button transparent onPress={() => callingPhone('091236587')} >
-                                <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
-                            </Button>
-                        </Right>
-                    </ListItem>
-                    <ListItem avatar>
-                        <Left>
-                            <Thumbnail source={icSale} />
-                        </Left>
-                        <Body>
-                            <Text>James Bond</Text>
-                            <Text note numberOfLines={1}>Phòng kinh doanh 2</Text>
-                        </Body>
-                        <Right>
-                            <Button transparent onPress={() => callingPhone('091236587')} >
-                                <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
-                            </Button>
-                        </Right>
-                    </ListItem>
-                    <ListItem avatar>
-                        <Left>
-                            <Thumbnail source={icSale} />
-                        </Left>
-                        <Body>
-                            <Text>James Bond</Text>
-                            <Text note numberOfLines={1}>Phòng kinh doanh 2</Text>
-                        </Body>
-                        <Right>
-                            <Button transparent onPress={() => callingPhone('091236587')} >
-                                <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
-                            </Button>
-                        </Right>
-                    </ListItem>
-                    <ListItem avatar>
-                        <Left>
-                            <Thumbnail source={icSale} />
-                        </Left>
-                        <Body>
-                            <Text>James Bond</Text>
-                            <Text note numberOfLines={1}>Phòng kinh doanh 2</Text>
-                        </Body>
-                        <Right>
-                            <Button transparent onPress={() => callingPhone('091236587')} >
-                                <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
-                            </Button>
-                        </Right>
-                    </ListItem>
-                    <ListItem avatar>
-                        <Left>
-                            <Thumbnail source={icSale} />
-                        </Left>
-                        <Body>
-                            <Text>James Bond</Text>
-                            <Text note numberOfLines={1}>Phòng kinh doanh 2</Text>
-                        </Body>
-                        <Right>
-                            <Button transparent onPress={() => callingPhone('091236587')} >
-                                <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
-                            </Button>
-                        </Right>
-                    </ListItem>
-                </ScrollView>
+                <FlatList
+                    data={this.props.directors}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={({ item }) => (
+                        <ListItem avatar>
+                            <Left>
+                                <Thumbnail source={icSale}/>
+                            </Left>
+                            <Body>
+                            <Text>{item.name}</Text>
+                            <Text note numberOfLines={1}>{item.phone}</Text>
+                            <Text note numberOfLines={1}>{item.email}</Text>
+                            </Body>
+                            <Right>
+                                <Button transparent onPress={() => callingPhone(item.phone)}>
+                                    <Text><Icon name="ios-call" style={{ color: 'green' }}/></Text>
+                                </Button>
+                            </Right>
+                        </ListItem>
+                    )}
+                />
             </Container>
         );
     }

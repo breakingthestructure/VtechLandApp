@@ -12,8 +12,9 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import icTitle from './../../icons/ic_title.png';
 import { BASE_URL, NO_IMAGE } from './../../Globals';
 import styles from './../../styles';
+import {loading} from "../../Helpers";
 
-export default class AdvanceSearch extends Component {
+export default class PreviewProject extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -49,13 +50,7 @@ export default class AdvanceSearch extends Component {
     keyExtractor = (item) => item.toString(); //eslint-disable-line
     render() {
         if (!this.state.loaded) {
-            return (
-                <Container>
-                    <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
-                    </Content>
-                </Container>
-            );
+            return loading();
         }
         const { project } = this.props;
         if (!project) {

@@ -5,7 +5,8 @@ import {
     Image,
     ScrollView,
     Modal,
-    TouchableOpacity
+    TouchableOpacity,
+    ImageBackground
 } from 'react-native';
 import {
     ListItem,
@@ -18,12 +19,13 @@ import {
     CardItem
 } from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import YouTube from 'react-native-youtube';
+import YouTube, { YouTubeStandaloneAndroid } from 'react-native-youtube';
 import HTMLView from 'react-native-htmlview';
 import styles from './../../../styles';
 import { BASE_URL, NO_IMAGE, YOUTUBE_APIKEY } from './../../../Globals';
 import icLogo from './../../../icons/logo_new.png';
 import getYoutubeId, { loading } from './../../../Helpers';
+import icPlay from './../../../icons/play.png';
 
 export default class DetailProject extends React.Component {
     constructor(props) {
@@ -52,13 +54,13 @@ export default class DetailProject extends React.Component {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 200);
-        if (this.props.project.data.images.feature)
+        if (this.props.project.data.images.feature) {
             this.setState({
                 listImage: this.props.project.data.images.feature.map((item, index) => {
                     return { url: `${BASE_URL}${item}` };
                 })
             });
-
+        }
         if (this.props.project.data.youtube_video) {
             if (newval = this.props.project.data.youtube_video.match(/(\?|&)v=([^&#]+)/)) {
                 videoId = newval.pop();
@@ -71,23 +73,32 @@ export default class DetailProject extends React.Component {
             // videoID = getYoutubeId(this.props.project.data.youtube_video);
             this.setState({ videoId });
         }
-
     }
+
     onDisplayImage(index) {
         this.setState({ modalVisible: true, index });
     }
+
     setReady() {
-        this.setState({ isReady: true })
+        console.log('ready');
+        this.setState({ isReady: true });
     }
+
     setChangeState(param) {
-        this.setState({ status: param })
+        console.log('ready2', param);
+        this.setState({ status: param });
     }
+
     setChangeQuality(param) {
-        this.setState({ quality: param })
+        console.log('ready3', param);
+        this.setState({ quality: param });
     }
+
     setOnError(param) {
-        this.setState({ error: param })
+        console.log('ready4', param);
+        this.setState({ error: param });
     }
+
     render() {
         const { project } = this.props;
         if (!this.state.loaded) {
@@ -132,7 +143,7 @@ export default class DetailProject extends React.Component {
                         </View>
                     </View>
                     <Text style={styles.titleSection}>TỔNG QUAN DỰ ÁN</Text>
-                    { project.data.infomation && <HTMLView value={project.data.infomation}/>}
+                    {project.data.infomation && <HTMLView value={project.data.infomation} />}
                     <Text style={styles.titleSection}>TIỆN ÍCH DỰ ÁN</Text>
                     <Modal
                         visible={this.state.modalVisible}
@@ -158,7 +169,10 @@ export default class DetailProject extends React.Component {
                     </Modal>
                     <ScrollView horizontal style={{ flexDirection: 'row', marginBottom: 5 }}>
                         {project.data.images.image_advance && project.data.images.image_advance.map((value, key) => (
-                            <TouchableOpacity key={key} onPress={this.onDisplayImage.bind(this, key)}>
+                            <TouchableOpacity
+                                key={key}
+                                onPress={this.onDisplayImage.bind(this, key)}
+                            >
                                 <Image
                                     source={{ uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE }}
                                     style={styles.imgThumbProject}
@@ -171,82 +185,96 @@ export default class DetailProject extends React.Component {
                         {project.data.images.design && project.data.images.design.map((value, key) => (
                             <ListItem thumbnail style={styles.itemList} key={key}>
                                 <Left>
-                                    <Thumbnail square source={{ uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE }} style={styles.imgList} />
+                                    <Thumbnail
+                                        square
+                                        source={{
+                                            uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE
+                                        }}
+                                        style={styles.imgList}
+                                    />
                                 </Left>
                                 <Body style={styles.bodyList}>
-                                    <Text style={styles.textTitle}>An Phú Shop Villa - P1 - 1</Text>
-                                    <Text style={styles.textDesc} note numberOfLines={1}>
-                                        Kích thước: 9m x 18m
+                                <Text style={styles.textTitle}>An Phú Shop Villa - P1 - 1</Text>
+                                <Text style={styles.textDesc} note numberOfLines={1}>
+                                    Kích thước: 9m x 18m
                                 </Text>
-                                    <Text style={styles.textDesc} note numberOfLines={1}>
-                                        Số lượng: 72 Lô
+                                <Text style={styles.textDesc} note numberOfLines={1}>
+                                    Số lượng: 72 Lô
                                 </Text>
-                                    <Text style={styles.textDesc} note numberOfLines={1}>
-                                        Xây dựng: 3 tầng 1 tum
+                                <Text style={styles.textDesc} note numberOfLines={1}>
+                                    Xây dựng: 3 tầng 1 tum
                                 </Text>
                                 </Body>
                             </ListItem>
                         ))}
 
                     </View>
+                    {/*<View style={{ height: 450 }}>*/}
+                    {/*<DeckSwiper*/}
+                    {/*dataSource={project.data.images.feature}*/}
+                    {/*renderItem={item =>*/}
+                    {/*<Card style={{ elevation: 3 }}>*/}
+                    {/*<CardItem>*/}
+                    {/*<Left>*/}
+                    {/*<Thumbnail source={{ uri: (item) ? `${BASE_URL}${item}` : NO_IMAGE }} />*/}
+                    {/*<Body>*/}
+                    {/*<Text>{project.name}</Text>*/}
+                    {/*<Text note>V-techHome</Text>*/}
+                    {/*</Body>*/}
+                    {/*</Left>*/}
+                    {/*</CardItem>*/}
+                    {/*<CardItem cardBody>*/}
+                    {/*<Image style={{ height: 300, flex: 1 }} source={{ uri: (item) ? `${BASE_URL}${item}` : NO_IMAGE }} />*/}
+                    {/*</CardItem>*/}
+                    {/*<CardItem>*/}
+                    {/*<Icon name="heart" style={{ color: '#ED4A6A' }} />*/}
+                    {/*<Text>{project.name}</Text>*/}
+                    {/*</CardItem>*/}
+                    {/*</Card>*/}
+                    {/*}*/}
+                    {/*/>*/}
+                    {/*</View>*/}
                     <Text style={styles.titleSection}>Hình ảnh dự án & TVC</Text>
-                    <YouTube
-                        apiKey={YOUTUBE_APIKEY}
-                        videoId={this.state.videoId}   // The YouTube video ID
-                        play={true}             // control playback of video with true/false
-                        // fullscreen={true}       // control whether the video should play in fullscreen or inline
-                        // loop={true}             // control whether the video should loop when ended
-
-                        onReady={e => this.setReady.bind(this)}
-                        onChangeState={e => this.setChangeState.bind(this, e.state)}
-                        onChangeQuality={e => this.setChangeQuality.bind(this, e.quality)}
-                        onError={e => this.setOnError.bind(this, e.error)}
-
-                        style={{ alignSelf: 'stretch', height: 300 }}
-                    />
-
-                    <View style={{ height: 450 }}>
-                        <DeckSwiper
-                            dataSource={project.data.images.feature}
-                            renderItem={item =>
-                                <Card style={{ elevation: 3 }}>
-                                    <CardItem>
-                                        <Left>
-                                            <Thumbnail source={{ uri: (item) ? `${BASE_URL}${item}` : NO_IMAGE }} />
-                                            <Body>
-                                                <Text>{project.name}</Text>
-                                                <Text note>V-techHome</Text>
-                                            </Body>
-                                        </Left>
-                                    </CardItem>
-                                    <CardItem cardBody>
-                                        <Image style={{ height: 300, flex: 1 }} source={{ uri: (item) ? `${BASE_URL}${item}` : NO_IMAGE }} />
-                                    </CardItem>
-                                    <CardItem>
-                                        <Icon name="heart" style={{ color: '#ED4A6A' }} />
-                                        <Text>{project.name}</Text>
-                                    </CardItem>
-                                </Card>
-                            }
-                        />
-                    </View>
+                    <TouchableOpacity
+                        onPress={() =>
+                            YouTubeStandaloneAndroid.playVideo({
+                                apiKey: YOUTUBE_APIKEY,
+                                videoId: this.state.videoId,
+                                autoplay: true,
+                                lightboxMode: false,
+                                startTime: 124.5,
+                            })
+                                .then(() => console.log('Android Standalone Player Finished'))
+                                .catch(errorMessage => this.setState({ error: errorMessage }))
+                        }
+                    >
+                        <ImageBackground
+                            source={{ uri: 'https://img.youtube.com/vi/KkM71JPHfjk/hqdefault.jpg' }}
+                            style={{ alignSelf: 'stretch', height: 300, justifyContent: 'center', alignItems: 'center' }}
+                        >
+                            <Image source={icPlay} style={{ height: 50, width: 50, borderRadius: 10 }} />
+                        </ImageBackground>
+                    </TouchableOpacity>
+                    {/*<YouTube*/}
+                    {/*apiKey={YOUTUBE_APIKEY}*/}
+                    {/*videoId={this.state.videoId}*/}
+                    {/*play*/}
+                    {/*// fullscreen={true}*/}
+                    {/*onReady={e => this.setReady.bind(this)}*/}
+                    {/*onChangeState={e => this.setChangeState.bind(this, e.state)}*/}
+                    {/*onChangeQuality={e => this.setChangeQuality.bind(this, e.quality)}*/}
+                    {/*onError={e => this.setOnError.bind(this, e.error)}*/}
+                    {/*style={{ alignSelf: 'stretch', height: 300 }}*/}
+                    {/*/>*/}
                     <TouchableOpacity
                         style={styles.btnBtnIconSpecial}
                         onPress={() => this.props.onChangeTab(4)}
                     >
                         <Icon type="FontAwesome" name='calendar' style={styles.iconBigBtn} />
                         <Text style={styles.textBtnIcon}>
-                        Đặt lịch thăm quan dự án & Nhà mẫu
-                        </Text>
-                    </TouchableOpacity>
-                    {/* <TouchableOpacity
-                        style={styles.bigBtn}
-                        onPress={() => this.props.onChangeTab(4)}
-                    >
-                        <Text style={styles.textBtnActive}>
                             Đặt lịch thăm quan dự án & Nhà mẫu
                         </Text>
-                    </TouchableOpacity> */}
+                    </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.bigBtnIcon}
                         onPress={() => this.props.onChangeTab(5)}
@@ -257,7 +285,7 @@ export default class DetailProject extends React.Component {
                         </Text>
                     </TouchableOpacity>
                 </ScrollView>
-            </View >
+            </View>
         );
     }
 }

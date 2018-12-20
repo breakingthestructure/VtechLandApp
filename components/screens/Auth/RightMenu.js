@@ -14,28 +14,7 @@ export default class RightMenu extends Component {
         super(props);
         this.state = {
             loaded: false
-        }
-    }
-    onSignOut() {
-        Alert.alert(
-            'Thông báo',
-            'Bạn muốn đăng xuất khỏi hệ thống',
-            [
-                {
-                    text: 'Đồng ý',
-                    onPress: () => {
-                        GLOBAL.user = null;
-                        saveToken('');
-                        this.props.navigation.navigate('LoginScreen');
-                    }
-                },
-                { text: 'Hủy', onPress: () => console.log('Cancel Pressed') },
-            ],
-            { cancelable: false }
-        );
-    }
-    onGoToSignIn() {
-        this.props.navigation.navigate('LoginScreen');
+        };
     }
     async componentDidMount() {
         getUser()
@@ -44,11 +23,8 @@ export default class RightMenu extends Component {
                 this.setState({ loaded: true });
             });
     }
-    componentWillReceiveProps() {
-
-    }
     render() {
-        if(!this.state.loaded) {
+        if (!this.state.loaded) {
             return loading();
         }
         const mainJSX = !GLOBAL.user ? <SignIn navigation={this.props.navigation} /> : <SignOut navigation={this.props.navigation} />;
