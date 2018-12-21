@@ -39,21 +39,25 @@ export default class DetailApartment extends React.Component {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         const { navigation } = this.props;
         const apartmentId = navigation.getParam('apartmentId', null);
-        // if (apartmentId) {
-            getDetailApartment(589)
+        if (apartmentId) {
+            getDetailApartment(apartmentId)
                 .then(resJson => {
                     if (resJson) {
+                        let img3Ds = [];
+                        if (resJson.image_3d && resJson.image_3d.length > 0) {
+                            img3Ds = resJson.image_3d.map((item) => {
+                                return { url: `${BASE_URL}${item}` };
+                            });
+                        }
                         this.setState({
                             apartment: resJson,
-                            image3d: resJson.image_3d.map((item) => {
-                                return { url: `${BASE_URL}${item}` };
-                            }),
+                            image3d: img3Ds,
                             loaded: true
                         });
                     }
                 })
                 .catch(err => console.log(err));
-        // }
+        }
     }
     onDisplayImage(type) {
         if (type === '3d') {
@@ -178,9 +182,9 @@ export default class DetailApartment extends React.Component {
                                 <Text style={{ fontSize: 14 }}>{apartment.direction.description}</Text>
                             </View>
                         </View>
-                        {apartment.room.map(item => (
+                        {apartment.room.map((item, index) => (
                             <View
-                                key={item.area}
+                                key={index}
                                 style={styles.lineInfo}
                             >
                                 <Text style={{ fontSize: 14 }}>{TYPE_ROOM[item.type]}</Text>
@@ -192,9 +196,9 @@ export default class DetailApartment extends React.Component {
                         ))}
                         <Text style={styles.txtHeader}>Phối cảnh 3D</Text>
                         <ScrollView horizontal style={{ flexDirection: 'row' }}>
-                            {apartment.image_3d.map(image => (
+                            {apartment.image_3d.map((image, index) => (
                                 <TouchableOpacity
-                                    key={image}
+                                    key={index}
                                     onPress={this.onDisplayImage.bind(this, '3d')}
                                 >
                                     <Image

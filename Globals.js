@@ -1,5 +1,6 @@
 module.exports = {
     API_URL: 'https://nghetuvan.tk/api',
+    MEDIA_API_URL: 'https://news.nghetuvan.tk/api',
     BASE_URL: 'https://nghetuvan.tk/',
     COLOR: {
         ORANGE: '#C50',
@@ -20,16 +21,6 @@ module.exports = {
         bedroom: 'Phòng ngủ',
         kitchen: 'Phòng bếp',
         toilet: 'Toilet'
-    },
-    DIRECTIONS: {
-        south: 'Nam',
-        east: 'Đông',
-        north: 'Bắc',
-        west: 'Tây',
-        southeast: 'Đông Nam',
-        southwest: 'Tây Nam',
-        northeast: 'Đông bắc',
-        westeast: 'Tây Nam'
     },
     YOUTUBE_APIKEY: 'AIzaSyByXMeeujrWpH517p7LkQrfBmTNIN1RTkQ',
     CLIENT_SECRET: '3GfSREURwlYxIAg5yPDacPG0hvE0AtamUlc82na6',

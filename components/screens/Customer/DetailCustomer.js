@@ -33,13 +33,11 @@ export default class DetailCustomer extends React.Component {
     state = {
         isDatePickerVisible: false,
     };
-
     componentDidMount() {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 200);
     }
-
     onSubmit() {
         getToken()
             .then(token => {
@@ -119,9 +117,7 @@ export default class DetailCustomer extends React.Component {
         );
     }
     showDatePicker = () => this.setState({ isDatePickerVisible: true }); //eslint-disable-line
-
     hideDatePicker = () => this.setState({ isDatePickerVisible: false }); //eslint-disable-line
-
     handleDatePicked = (date) => { //eslint-disable-line
         let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
         this.setState({ txtDate: selected, date });
@@ -131,9 +127,10 @@ export default class DetailCustomer extends React.Component {
         if (!this.state.loaded) {
             return loading();
         }
+        console.log(this.state.customer);
         return (
             <View style={styles.container}>
-                <Header navigation={this.props.navigation} title='THÔNG TIN KHÁCH HÀNG' back={'ok'} />
+                <Header navigation={this.props.navigation} title='THÔNG TIN KHÁCH HÀNG' back={'back'} />
                 <ScrollView>
                     <View style={styles.content}>
                         <View style={{ alignItems: 'center', padding: 20 }}>
@@ -154,14 +151,14 @@ export default class DetailCustomer extends React.Component {
                         </View>
                         <View style={styles.list}>
                             <Button transparent onPress={() => callingPhone(this.state.phone)}>
-                                <Text><Icon type="Feather" name="phone-call" style={{ color: '#666666', fontSize: 30 }} /></Text>
+                                <Text><Icon type="Feather" name="phone-call" style={{ color: 'orange', fontSize: 30 }} /></Text>
                             </Button>
                             <Button transparent onPress={() => openSmsUrl(this.state.phone, '')}
                                     style={{ paddingLeft: 50 }}>
-                                <Text><Icon type="MaterialCommunityIcons" name="message-text-outline" style={{ color: '#666666', fontSize: 30 }} /></Text>
+                                <Text><Icon type="MaterialCommunityIcons" name="message-text-outline" style={{ color: 'orange', fontSize: 30 }} /></Text>
                             </Button>
                             <Button transparent onPress={() => openEmail()} style={{ paddingLeft: 50 }}>
-                                <Text><Icon type="Octicons" name="mail" style={{ color: '#666666', fontSize: 34 }} /></Text>
+                                <Text><Icon type="Octicons" name="mail" style={{ color: 'orange', fontSize: 34 }} /></Text>
                             </Button>
                         </View>
                         <View style={styles.viewInput}>

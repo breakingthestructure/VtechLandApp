@@ -24,6 +24,8 @@ import icRest from './../../../icons/rest.png';
 import icInvest from './../../../icons/invest.png';
 import { loading } from '../../../Helpers';
 import KindProject from '../../Modal/KindProject';
+import saveProject from '../../../api/saveProject';
+import saveUser from '../../../api/saveUser';
 
 const { width, height } = Dimensions.get('window');
 let isHidden = true;
@@ -74,6 +76,9 @@ export default class MapProject extends React.Component {
                         listProject: this.arrayProject,
                         loaded: true
                     });
+                    saveProject(resJson.data)
+                        .then()
+                        .catch(err => console.log(err));
                 }
             })
             .catch(err => console.log(err));

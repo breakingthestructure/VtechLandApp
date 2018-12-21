@@ -14,9 +14,6 @@ import {
     Left,
     Body,
     Icon,
-    DeckSwiper,
-    Card,
-    CardItem
 } from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import YouTube, { YouTubeStandaloneAndroid } from 'react-native-youtube';
@@ -207,33 +204,7 @@ export default class DetailProject extends React.Component {
                                 </Body>
                             </ListItem>
                         ))}
-
                     </View>
-                    {/*<View style={{ height: 450 }}>*/}
-                    {/*<DeckSwiper*/}
-                    {/*dataSource={project.data.images.feature}*/}
-                    {/*renderItem={item =>*/}
-                    {/*<Card style={{ elevation: 3 }}>*/}
-                    {/*<CardItem>*/}
-                    {/*<Left>*/}
-                    {/*<Thumbnail source={{ uri: (item) ? `${BASE_URL}${item}` : NO_IMAGE }} />*/}
-                    {/*<Body>*/}
-                    {/*<Text>{project.name}</Text>*/}
-                    {/*<Text note>V-techHome</Text>*/}
-                    {/*</Body>*/}
-                    {/*</Left>*/}
-                    {/*</CardItem>*/}
-                    {/*<CardItem cardBody>*/}
-                    {/*<Image style={{ height: 300, flex: 1 }} source={{ uri: (item) ? `${BASE_URL}${item}` : NO_IMAGE }} />*/}
-                    {/*</CardItem>*/}
-                    {/*<CardItem>*/}
-                    {/*<Icon name="heart" style={{ color: '#ED4A6A' }} />*/}
-                    {/*<Text>{project.name}</Text>*/}
-                    {/*</CardItem>*/}
-                    {/*</Card>*/}
-                    {/*}*/}
-                    {/*/>*/}
-                    {/*</View>*/}
                     <Text style={styles.titleSection}>Hình ảnh dự án & TVC</Text>
                     <TouchableOpacity
                         onPress={() =>

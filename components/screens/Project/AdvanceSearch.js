@@ -176,7 +176,7 @@ export default class AdvanceSearch extends Component {
                 <Header
                     navigation={this.props.navigation}
                     title='TÌM KIẾM NÂNG CAO'
-                    back={'AnimateView'}
+                    back={'hideAdvanceSearch'}
                     toggleAdvanceSearch={this.props.toggleAdvanceSearch}
                     bounceValue={this.props.bounceValue}
                 />

@@ -16,14 +16,17 @@ export default class Header extends Component {
         this.props.navigation.openDrawer();
     }
     goBack() {
-        if (this.props.back === 'AnimateView') {
+        console.log(this.props.back);
+        if (this.props.back === 'hideAdvanceSearch') {
             this.props.toggleAdvanceSearch(this.props.bounceValue, true);
         }
-        if (this.props.back !== 'MapScreen') {
-            this.props.navigation.navigate('MapScreen');
-        } else {
-            this.props.navigation.pop();
+        if (this.props.back === 'popToTop') {
+            this.props.navigation.popToTop();
         }
+        if (this.props.back === 'MapScreen') {
+            this.props.navigation.navigate('MapScreen');
+        }
+        this.props.navigation.pop();
     }
     openRightMenu() {
         this.props.navigation.toggleRightDrawer();

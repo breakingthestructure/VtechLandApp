@@ -1,22 +1,25 @@
 import React from 'react';
 import {
-    View,
-    Text,
-    ScrollView,
-    TouchableOpacity,
+    Alert,
     BackHandler,
+    Keyboard,
+    ScrollView,
+    Switch,
+    Text,
     TextInput,
-    Keyboard, Alert,
-    Switch
+    TouchableOpacity,
+    View
 } from 'react-native';
 
-import { ListItem, CheckBox, Body, Icon } from 'native-base';
+import { Body, Icon, ListItem } from 'native-base';
 import { TextInputMask } from 'react-native-masked-text';
+import Autocomplete from 'react-native-autocomplete-input';
 import Header from '../Home/Header';
 import styles from './../../../styles';
 import { formatMoney, loading } from '../../../Helpers';
 import postOrderTransaction from './../../../api/postOrderTransaction';
 import getToken from '../../../api/getToken';
+import getCustomers from '../../../api/getCustomers';
 
 export default class OrderSubmit extends React.Component {
     constructor(props) {
@@ -34,7 +37,11 @@ export default class OrderSubmit extends React.Component {
             apartment: null,
             paymentMethod: 1,
             transactionCode: '',
-            txtSubmit: 'ĐẶT CỌC'
+            txtSubmit: 'ĐẶT CỌC',
+            fullName: '',
+            customerId: '',
+            searchCustomer: 0,
+            customers: []
         };
     }
 
@@ -43,7 +50,21 @@ export default class OrderSubmit extends React.Component {
         const { navigation } = this.props;
         const apartment = navigation.getParam('apartment', null);
         const transactionCode = navigation.getParam('transactionCode', null);
-        this.setState({ loaded: true, apartment, transactionCode });
+        this.setState({ apartment, transactionCode });
+        getToken()
+            .then(token => {
+                this.setState({ token });
+                getCustomers(token)
+                    .then(resJson => {
+                        if (resJson.data) {
+                            this.setState({
+                                customers: resJson.data.data,
+                                loaded: true
+                            });
+                        }
+                    })
+                    .catch(err => console.log(err));
+            });
     }
 
     handleBackPress = () => { //eslint-disable-line
@@ -58,8 +79,8 @@ export default class OrderSubmit extends React.Component {
         this.setState({ txtSubmit: 'Đang xử lý' });
         getToken()
             .then(token => {
-                const { fullName, email, address, phone, identity, paymentMethod, reserveValue, transactionCode } = this.state;
-                postOrderTransaction(token, transactionCode, 0, '', fullName, email, address, phone, identity, paymentMethod, reserveValue)
+                const { fullName, email, address, phone, identity, paymentMethod, reserveValue, transactionCode, customerId, searchCustomer } = this.state;
+                postOrderTransaction(token, transactionCode, searchCustomer, customerId, fullName, email, address, phone, identity, paymentMethod, reserveValue)
                     .then(res => {
                         if (res.status === 200) {
                             Alert.alert(
@@ -91,13 +112,42 @@ export default class OrderSubmit extends React.Component {
                     });
             });
     }
-
     selectMethodPayment(type) {
         console.log(type);
         this.setState({ paymentMethod: type });
     }
+
+    findFilm(fullName) {
+        if (fullName === '') {
+            return [];
+        }
+        const { customers } = this.state;
+        const regex = new RegExp(`${fullName.trim()}`, 'i');
+        return customers.filter(film => film.full_name.search(regex) >= 0);
+    }
+
+    _filterData(fullName) {
+        if (fullName === '') {
+            return [];
+        }
+        getToken()
+            .then(token => {
+                this.setState({ token });
+                getCustomers(token, `text_search=${fullName}`)
+                    .then(resJson => {
+                        console.log('aaa', resJson);
+                        return resJson.data.data;
+                    })
+                    .catch(err => console.log(err));
+            });
+    }
     render() {
         const { apartment } = this.state;
+        const { fullName } = this.state;
+        const customers = this.findFilm(fullName);
+        console.log('123', customers);
+        let height = 40;
+        const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
         if (!this.state.loaded || !apartment) {
             return loading();
         }
@@ -144,15 +194,95 @@ export default class OrderSubmit extends React.Component {
                     </View>
                     <Text style={styles.txtHeader}>Thông tin khách hàng</Text>
 
-                    <View style={styles.viewInput}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Họ tên'
-                            underlineColorAndroid='transparent'
-                            value={this.state.fullName}
+                    <View
+                        style={{
+                            position: 'relative',
+                            height: 40,
+                        }}
+                    >
+                        <Autocomplete
+                            containerStyle={{
+                                flex: 1,
+                                left: 0,
+                                position: 'absolute',
+                                right: 0,
+                                top: 0,
+                                zIndex: 1,
+                                backgroundColor: 'white',
+                                borderRadius: 20,
+                                borderWidth: 1,
+                                borderColor: '#cecece'
+                            }}
+                            inputContainerStyle={{
+                                borderRadius: 20,
+                                borderWidth: 0,
+                            }}
+                            listStyle={{
+                                borderWidth: 0
+                            }}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            defaultValue={fullName}
                             onChangeText={text => this.setState({ fullName: text })}
+                            data={customers.length === 1 && comp(fullName, customers[0].full_name) ? [] : customers}
+                            renderTextInput={() => (
+                                <TextInput
+                                    style={{
+                                        height: 40,
+                                        width: '90%',
+                                        backgroundColor: 'white',
+                                        borderRadius: 20,
+                                        borderWidth: 0,
+                                        marginLeft: 15
+                                    }}
+                                    placeholder='Họ tên'
+                                    underlineColorAndroid='transparent'
+                                    value={this.state.fullName}
+                                    onChangeText={text => {
+                                        this.setState({
+                                            fullName: text,
+                                            searchCustomer: 0,
+                                            customerId: '',
+                                            address: '',
+                                            phone: '',
+                                            email: '',
+                                            identity: ''
+                                        });
+
+                                    }}
+                                />
+                            )}
+                            renderItem={item => (
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        this.setState({
+                                            fullName: item.full_name,
+                                            searchCustomer: 1,
+                                            customerId: item.id,
+                                            address: item.address,
+                                            phone: item.phone,
+                                            email: item.email,
+                                            identity: item.identity
+                                        });
+                                        console.log('hehe');
+                                    }}
+                                    style={{ flexDirection: 'column' }}
+                                >
+                                    <Text>{item.full_name}</Text>
+                                    <Text>{item.phone}</Text>
+                                </TouchableOpacity>
+                            )}
                         />
                     </View>
+                    {/*<View style={styles.viewInput}>*/}
+                    {/*<TextInput*/}
+                    {/*style={styles.input}*/}
+                    {/*placeholder='Họ tên'*/}
+                    {/*underlineColorAndroid='transparent'*/}
+                    {/*value={this.state.fullName}*/}
+                    {/*onChangeText={text => this.setState({ fullName: text })}*/}
+                    {/*/>*/}
+                    {/*</View>*/}
                     <View style={styles.viewInput}>
                         <TextInput
                             style={styles.input}

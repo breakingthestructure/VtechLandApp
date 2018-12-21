@@ -82,7 +82,7 @@ export default class ChangePassword extends React.Component {
         }
         return (
             <View style={styles.container}>
-                <Header navigation={this.props.navigation} title='THÔNG TIN TÀI KHOẢN' back={'ok'} />
+                <Header navigation={this.props.navigation} title='THÔNG TIN TÀI KHOẢN' back={'popToTop'} />
                 <ScrollView>
                     <View style={styles.content}>
                         <View style={{ alignItems: 'center', padding: 20 }}>

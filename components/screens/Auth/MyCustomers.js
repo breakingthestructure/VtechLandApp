@@ -61,7 +61,7 @@ export default class MyCustomers extends Component {
         }
         return (
             <Container>
-                <Header navigation={this.props.navigation} title='DANH SÁCH KHÁCH HÀNG' back={'ok'} />
+                <Header navigation={this.props.navigation} title='DANH SÁCH KHÁCH HÀNG' back={'MapScreen'} />
                 <List>
                     <ListItem style={{ borderBottomWidth: 0 }}>
                         <View

@@ -31,6 +31,8 @@ export default class SearchResult extends Component {
                             .then(token => {
                                 postLikeProject(token, id)
                                     .then(res => {
+                                        console.log(res);
+                                        this.props.navigation.navigate('MyProjectScreen');
                                     });
                             });
                     }
@@ -64,7 +66,7 @@ export default class SearchResult extends Component {
                                     <TouchableOpacity
                                         onPress={() => {
                                             this.props.navigation.navigate('TabProjectScreen', {
-                                                projectId: value.id
+                                                project: value
                                             });
                                         }}
                                     >
@@ -75,7 +77,7 @@ export default class SearchResult extends Component {
                                     <TouchableOpacity
                                         onPress={() => {
                                             this.props.navigation.navigate('TabProjectScreen', {
-                                                projectId: value.id
+                                                project: value
                                             });
                                         }}
                                     >

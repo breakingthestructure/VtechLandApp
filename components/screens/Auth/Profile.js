@@ -1,20 +1,10 @@
 import React from 'react';
-import {
-    View,
-    Text,
-    Image,
-    Alert,
-    TextInput,
-    TouchableOpacity,
-    ScrollView,
-    Keyboard
-} from 'react-native';
+import { Alert, Image, Keyboard, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Icon } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ImageResizer from 'react-native-image-resizer';
 import ImagePicker from 'react-native-image-crop-picker';
 import Header from '../Home/Header';
-import saveToken from './../../../api/saveToken';
 import GLOBAL from './../../../Globals';
 import getUser from './../../../api/getUser';
 import avatar from './../../../images/avatar.jpg';
@@ -150,7 +140,7 @@ export default class Profile extends React.Component {
         }
         return (
             <View style={styles.container}>
-                <Header navigation={this.props.navigation} title='THÔNG TIN TÀI KHOẢN' back={'ok'}/>
+                <Header navigation={this.props.navigation} title='THÔNG TIN TÀI KHOẢN' back={'MapScreen'} />
                 <ScrollView>
                     <View style={styles.content}>
                         <View style={{ alignItems: 'center', padding: 20 }}>

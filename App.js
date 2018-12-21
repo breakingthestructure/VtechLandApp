@@ -1,8 +1,8 @@
 import React from 'react';
-import { Alert, ImageBackground, NetInfo, View, Easing, Animated, BackHandler } from 'react-native';
-import { createAppContainer, createDrawerNavigator, DrawerActions, createStackNavigator } from 'react-navigation';
-import firebase from 'react-native-firebase';
+import { Alert, Animated, BackHandler, Easing, ImageBackground, NetInfo, View } from 'react-native';
+import { createAppContainer, createDrawerNavigator, createStackNavigator, DrawerActions } from 'react-navigation';
 import type { Notification, NotificationOpen } from 'react-native-firebase';
+import firebase from 'react-native-firebase';
 import Login from './components/screens/Auth/Login';
 import Menu from './components/screens/Auth/Menu';
 import RightMenu from './components/screens/Auth/RightMenu';
@@ -27,6 +27,8 @@ import DetailCustomer from './components/screens/Customer/DetailCustomer';
 import Register from './components/screens/Auth/Register';
 import ForgotPassword from './components/screens/Auth/ForgotPassword';
 import ResetPassword from './components/screens/Auth/ResetPassword';
+import Building from './components/screens/Project/Building';
+import SearchApartment from './components/screens/Project/SearchApartment';
 import Test from './Test';
 
 const ProjectStack = createStackNavigator(
@@ -90,16 +92,18 @@ const LeftDrawer = createDrawerNavigator(
         DetailNewsScreen: {
             screen: DetailNews
         },
-        DetailApartmentScreen: {
-            screen: DetailApartment
+        BuildingScreen: {
+            screen: Building
         },
-        TabProjectScreen: { screen: TabProject },
         TestScreen: {
             screen: Test
-        }
+        },
+        SearchApartmentScreen: {
+            screen: SearchApartment
+        },
     },
     {
-        initialRouteName: 'DetailApartmentScreen',
+        initialRouteName: 'SearchApartmentScreen',
         contentComponent: Menu,
         getCustomActionCreators: (route, stateKey) => {
             return {
@@ -117,20 +121,8 @@ const UserStack = createStackNavigator(
         ChangePasswordScreen: {
             screen: ChangePassword
         },
-        MyCustomerScreen: {
-            screen: MyCustomers
-        },
-        DetailCustomerScreen: {
-            screen: DetailCustomer
-        },
         NotificationScreen: {
             screen: MyNotification
-        },
-        MyTransactionScreen: {
-            screen: MyTransactions
-        },
-        DetailTransactionScreen: {
-            screen: DetailTransaction
         },
         MyProjectScreen: {
             screen: MyProject
@@ -184,6 +176,90 @@ const UserStack = createStackNavigator(
     }
 );
 
+const CustomerStack = createStackNavigator(
+    {
+        MyCustomerScreen: {
+            screen: MyCustomers
+        },
+        DetailCustomerScreen: {
+            screen: DetailCustomer
+        },
+    },
+    {
+        headerMode: 'none',
+        // mode: 'modal',
+        navigationOptions: {
+            gesturesEnabled: false,
+        },
+        transitionConfig: () => ({
+            transitionSpec: {
+                duration: 300,
+                easing: Easing.out(Easing.poly(4)),
+                timing: Animated.timing,
+            },
+            screenInterpolator: sceneProps => {
+                const { layout, position, scene } = sceneProps;
+                const { index } = scene;
+
+                const height = layout.initHeight;
+                const translateY = position.interpolate({
+                    inputRange: [index - 1, index, index + 1],
+                    outputRange: [height, 0, 0],
+                });
+
+                const opacity = position.interpolate({
+                    inputRange: [index - 1, index - 0.99, index],
+                    outputRange: [0, 1, 1],
+                });
+
+                return { opacity, transform: [{ translateY }] };
+            },
+        }),
+    }
+);
+
+const TransactionStack = createStackNavigator(
+    {
+        MyTransactionScreen: {
+            screen: MyTransactions
+        },
+        DetailTransactionScreen: {
+            screen: DetailTransaction
+        },
+    },
+    {
+        headerMode: 'none',
+        // mode: 'modal',
+        navigationOptions: {
+            gesturesEnabled: false,
+        },
+        transitionConfig: () => ({
+            transitionSpec: {
+                duration: 300,
+                easing: Easing.out(Easing.poly(4)),
+                timing: Animated.timing,
+            },
+            screenInterpolator: sceneProps => {
+                const { layout, position, scene } = sceneProps;
+                const { index } = scene;
+
+                const height = layout.initHeight;
+                const translateY = position.interpolate({
+                    inputRange: [index - 1, index, index + 1],
+                    outputRange: [height, 0, 0],
+                });
+
+                const opacity = position.interpolate({
+                    inputRange: [index - 1, index - 0.99, index],
+                    outputRange: [0, 1, 1],
+                });
+
+                return { opacity, transform: [{ translateY }] };
+            },
+        }),
+    }
+);
+
 const RightDrawer = createDrawerNavigator({
         Left: {
             screen: LeftDrawer,
@@ -191,6 +267,12 @@ const RightDrawer = createDrawerNavigator({
         User: {
             screen: UserStack,
         },
+        Customer: {
+            screen: CustomerStack
+        },
+        Transaction: {
+            screen: TransactionStack
+        }
     }, {
         contentComponent: RightMenu,
         drawerPosition: 'right',

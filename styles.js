@@ -13,6 +13,9 @@ const imageWidth = width;
 const imageHeight = (imageWidth / 3900) * 2092;
 
 export default StyleSheet.create({
+    container: {
+        flex: 1
+    },
     containerLoading: {
         flex: 1,
         justifyContent: 'center'
@@ -474,9 +477,6 @@ export default StyleSheet.create({
     },
     picker: { height: 40 },
     //table package
-    container: {
-        flex: 1
-    },
     firstCol: {
         width: 80,
         height: 40,

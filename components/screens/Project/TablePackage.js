@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { Fab, Icon } from 'native-base';
 import Header from '../Home/Header';
 import styles from './../../../styles';
 import getTablePackage from './../../../api/getTablePackage';
@@ -138,7 +139,7 @@ export default class TablePackage extends Component {
                         </View>
                         <View style={styles.note}>
                             <View style={{ width: 20, height: 20, backgroundColor: '#FFDA23' }} />
-                            <Text style={{ fontSize: 12 }}>Chờ thanh toán</Text>
+                            <Text style={{ fontSize: 12 }}> Chờ thanh toán</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
@@ -190,6 +191,16 @@ export default class TablePackage extends Component {
                         }}
                     />
                 </ScrollView>
+                <Fab
+                    active={this.state.active}
+                    direction="up"
+                    containerStyle={{}}
+                    style={{ backgroundColor: '#F58319', width: 35, height: 35 }}
+                    position="bottomRight"
+                    onPress={() => this.props.navigation.navigate('SearchApartmentScreen')}
+                >
+                    <Icon type="MaterialIcons" name="add" />
+                </Fab>
             </View>
         );
     }

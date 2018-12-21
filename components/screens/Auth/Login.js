@@ -51,7 +51,7 @@ export default class Login extends React.Component {
                                 .then(res => console.log(res))
                                 .catch(err => console.log(err));
                             GLOBAL.user = response.data;
-                            this.props.navigation.navigate('MapScreen')
+                            this.props.navigation.navigate('MapScreen');
                         })
                         .catch(err => console.log(err));
 

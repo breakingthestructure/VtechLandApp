@@ -1,56 +1,42 @@
 import React, { Component } from 'react';
-import {
-    Text,
-    StyleSheet,
-    ScrollView,
-    TouchableOpacity,
-    Alert, RefreshControl, FlatList
-} from 'react-native';
-import {
-    Container,
-    Content,
-    ListItem,
-    Thumbnail,
-    Left,
-    Body,
-    Right,
-    Button,
-    Icon,
-    Tab,
-    Tabs, ScrollableTab
-} from 'native-base';
+import { Alert, FlatList, Text, TouchableOpacity } from 'react-native';
+import { Body, Button, Container, Content, Icon, Left, ListItem, Right, Thumbnail } from 'native-base';
 import { loading } from '../../Helpers';
 import getProject from '../../api/getProject';
 import { BASE_URL, NO_IMAGE } from './../../Globals';
 import styles from './../../styles';
+import getToken from '../../api/getToken';
+import getFavouriteProjects from '../../api/getFavouriteProjects';
+import postLikeProject from '../../api/postLikeProject';
 
 export default class KindProject extends Component {
+    keyExtractor = (item) => item.id.toString(); //eslint-disable-line
+
     constructor(props) {
         super(props);
         this.state = {
             listImage: null,
             index: 0,
-            loaded: true,
+            loaded: false,
             imagePreview: false,
-            listProject: null
+            listProject: [],
+            listFavourite: []
         };
         this.arrayProject = [];
     }
 
-    onLikeProject() {
-        Alert.alert(
-            'Bạn quan tâm dự án này',
-            '',
-            [
-                { text: 'OK', onPress: () => this.props.navigation.navigate('HomeScreen') },
-                { text: 'Hủy', onPress: () => console.log('ok') },
-            ],
-            { cancelable: false }
-        );
-    }
-
     componentDidMount() {
-        this.setState({ loaded: false });
+        getToken()
+            .then(token => {
+                getFavouriteProjects(token)
+                    .then(res => {
+                        this.setState({
+                            listFavourite: res.data
+                        });
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
         getProject(`kind=${this.props.kind}`)
             .then(resJson => {
                 if (resJson.data) {
@@ -65,7 +51,6 @@ export default class KindProject extends Component {
     }
 
     componentWillReceiveProps(props) {
-        this.setState({ loaded: false });
         getProject(`kind=${props.kind}`)
             .then(resJson => {
                 if (resJson.data) {
@@ -79,9 +64,32 @@ export default class KindProject extends Component {
             .catch(err => console.log(err));
     }
 
-    keyExtractor = (item) => item.id.toString(); //eslint-disable-line
+    onLikeProject(id) {
+        Alert.alert(
+            'Bạn quan tâm dự án này',
+            '',
+            [
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        getToken()
+                            .then(token => {
+                                postLikeProject(token, id)
+                                    .then(res => {
+                                        console.log(res);
+                                        this.props.navigation.navigate('MyProjectScreen');
+                                    });
+                            });
+                    }
+                },
+                { text: 'Hủy', onPress: () => console.log('ok') },
+            ],
+            { cancelable: false }
+        );
+    }
+
     render() {
-        if (!this.props.state.loaded || !this.state.listProject) {
+        if (!this.state.loaded || !this.state.listProject) {
             return loading();
         }
         return (
@@ -108,7 +116,8 @@ export default class KindProject extends Component {
                                     <TouchableOpacity
                                         onPress={() => {
                                             this.props.navigation.navigate('TabProjectScreen', {
-                                                projectId: item.id
+                                                // projectId: item.id,
+                                                project
                                             });
                                         }}
                                     >
@@ -124,7 +133,8 @@ export default class KindProject extends Component {
                                 <TouchableOpacity
                                     onPress={() => {
                                         this.props.navigation.navigate('TabProjectScreen', {
-                                            projectId: item.id
+                                            // projectId: item.id,
+                                            project
                                         });
                                     }}
                                 >
@@ -146,8 +156,12 @@ export default class KindProject extends Component {
                                 </TouchableOpacity>
                                 </Body>
                                 <Right>
-                                    <Button transparent onPress={this.onLikeProject.bind(this)}>
-                                        <Icon active name='ios-heart' style={{ color: 'orange' }} />
+                                    <Button transparent onPress={this.onLikeProject.bind(this, item.id)}>
+                                        <Icon
+                                            type='FontAwesome'
+                                            name={this.state.listFavourite.includes(item.id) ? 'heart' : 'heart-o'}
+                                            style={{ color: 'orange' }}
+                                        />
                                     </Button>
                                 </Right>
                             </ListItem>

@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
-import { Image, View, ScrollView, BackHandler } from 'react-native';
-import {
-    Container,
-    Tab,
-    Tabs,
-    ScrollableTab,
-    Content,
-    // Icon, 
-    // Fab,
-    // Button 
-} from 'native-base';
+import { BackHandler, Image, ScrollView, View } from 'react-native';
+import { Container, Content, ScrollableTab, Tab, Tabs, TabHeading, Icon } from 'native-base';
 import Swiper from 'react-native-swiper';
 import ActionProject from './ActionProject';
 import SetCalendar from './SetCalendar';
@@ -19,75 +10,67 @@ import DetailProject from './DetailProject';
 import CalcDebt from './CalcDebt';
 import News from './News';
 import styles from './../../../styles';
-import getDetailProject from './../../../api/getDetailProject';
-import getBuildings from './../../../api/getBuildings';
 import { BASE_URL, NO_IMAGE } from './../../../Globals';
 import { loading } from '../../../Helpers';
 
 export default class TabProject extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            initialPage: 0,
-            activeTab: 0,
-            project: null,
-            buildings: [],
-            showSlide: true,
-        };
-        this.onChangeTab = this.onChangeTab.bind(this);
-    }
-    componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-        const { navigation } = this.props;
-        const projectId = navigation.getParam('projectId', null);
-        const activeTab = navigation.getParam('activeTab', null);
-        if (projectId) {
-            getDetailProject(projectId)
-                .then(resJson => {
-                    if (resJson) {
-                        this.setState({
-                            project: resJson,
-                            loaded: true
-                        });
-                    }
-                    if (activeTab) {
-                        this.onChangeTab(activeTab);
-                    }
-                })
-                .catch(err => console.log(err));
-            getBuildings(projectId)
-                .then(resJson => {
-                    if (resJson.status === 200) {
-                        this.setState({
-                            buildings: resJson.data,
-                        });
-                    }
-                })
-                .catch(err => console.log(err));
-        }
-    }
-    onChangeTab(page) {
-        this.refs._scrollView.scrollTo({ x: 0, y: 0, animated: true });
-        this.setState({ activeTab: page });
-    }
     handleBackPress = () => { //eslint-disable-line
         // this.props.navigation.pop();
         return true;
     }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            initialPage: 0,
+            activeTab: 0,
+            project: null,
+        };
+        this.onChangeTab = this.onChangeTab.bind(this);
+    }
+
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+        const { navigation } = this.props;
+        const project = navigation.getParam('project', null);
+        const activeTab = navigation.getParam('activeTab', null);
+        if (project) {
+            this.setState({
+                loaded: true,
+                project
+            });
+            if (activeTab) {
+                this.onChangeTab(activeTab);
+            }
+        }
+    }
+
+    onChangeTab(page) {
+        this.refs._scrollView.scrollTo({ x: 0, y: 0, animated: true });
+        this.setState({ activeTab: page });
+    }
+
     render() {
         const { project } = this.state;
-        if (!this.state.loaded || !project) {
+        if (!this.state.loaded) {
             return loading();
         }
         return (
             <Container>
-                <Header navigation={this.props.navigation} title={project.name} back={'MapScreen'} />
+                <Header
+                    navigation={this.props.navigation}
+                    title={project.name}
+                    back={'MapScreen'}
+                />
                 <ScrollView ref='_scrollView'>
                     <View style={styles.slideProject}>
-                        <Swiper showsButtons={true}>
+                        <Swiper showsButtons>
                             {project.data.images.feature && project.data.images.feature.map((value, key) => (
                                 <View key={key}>
-                                    <Image source={{ uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE }} style={styles.imageSlide} />
+                                    <Image
+                                        source={{ uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE }}
+                                        style={styles.imageSlide}
+                                    />
                                 </View>
                             ))}
                         </Swiper>
@@ -104,7 +87,7 @@ export default class TabProject extends Component {
                         >
                             <Tab
                                 heading="Thông tin dự án"
-                                // heading={<TabHeading style={{ backgroundColor: '#cacaca' }} ><Icon name="ios-calculator" /></TabHeading>}
+                                // heading={<TabHeading style={{ backgroundColor: '#fff' }} ><Icon name="ios-calculator" /></TabHeading>}
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}
@@ -114,7 +97,7 @@ export default class TabProject extends Component {
                             </Tab>
                             <Tab
                                 heading="Tin tức & Sự kiện"
-                                // heading={<TabHeading style={{ backgroundColor: '#cacaca' }} ><Icon name="ios-calculator" /></TabHeading>}
+                                // heading={<TabHeading style={{ backgroundColor: '#fff' }} ><Icon name="ios-calculator" /></TabHeading>}
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}
@@ -124,7 +107,7 @@ export default class TabProject extends Component {
                             </Tab>
                             <Tab
                                 heading="Tính lãi suất vay"
-                                // heading={<TabHeading style={{ backgroundColor: '#cacaca' }} ><Icon name="ios-calculator" /></TabHeading>}
+                                // heading={<TabHeading style={{ backgroundColor: '#fff' }} ><Icon name="ios-calculator" /></TabHeading>}
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}
@@ -134,17 +117,21 @@ export default class TabProject extends Component {
                             </Tab>
                             <Tab
                                 heading="Bảng hàng"
-                                // heading={<TabHeading style={{ backgroundColor: '#cacaca' }} ><Icon name="ios-bicycle" /></TabHeading>}
+                                // heading={<TabHeading style={{ backgroundColor: '#fff' }}><Icon name="ios-bicycle" /></TabHeading>}
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}
                                 activeTextStyle={styles.textActiveTab}
                             >
-                                <ActionProject navigation={this.props.navigation} project={project} buildings={this.state.buildings} goToTablePackage={this.goToTablePackage} />
+                                <ActionProject
+                                    navigation={this.props.navigation}
+                                    project={project}
+                                    goToTablePackage={this.goToTablePackage}
+                                />
                             </Tab>
                             <Tab
                                 heading="Đặt lịch"
-                                // heading={<TabHeading style={{ backgroundColor: '#cacaca' }} ><Icon name="ios-calendar" /></TabHeading>}
+                                // heading={<TabHeading style={{ backgroundColor: '#fff' }}><Icon name="ios-calendar" /></TabHeading>}
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}
@@ -154,13 +141,22 @@ export default class TabProject extends Component {
                             </Tab>
                             <Tab
                                 heading="Hỗ trợ dự án"
-                                // heading={<TabHeading style={{ backgroundColor: '#cacaca' }} ><Icon name="ios-call" /></TabHeading>}
+                                // heading={
+                                //     <TabHeading style={{ backgroundColor: '#fff' }}>
+                                //         <Icon
+                                //             name="ios-call"
+                                //         />
+                                //     </TabHeading>
+                                // }
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}
                                 activeTextStyle={styles.textActiveTab}
                             >
-                                <SupportProject navigation={this.props.navigation} directors={project.data.project_directors}/>
+                                <SupportProject
+                                    navigation={this.props.navigation}
+                                    directors={project.data.project_directors}
+                                />
                             </Tab>
                         </Tabs>
                     </Content>

@@ -1,53 +1,53 @@
 import React, { Component } from 'react';
-import { Container, Content, Spinner, Icon } from 'native-base';
-import {
-    Text,
-    FlatList,
-    View,
-    TouchableOpacity,
-    Image,
-    Modal,
-} from 'react-native';
+import { Icon } from 'native-base';
+import { FlatList, Image, Modal, Text, TouchableOpacity, View, } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import icTitle from './../../icons/ic_title.png';
 import { BASE_URL, NO_IMAGE } from './../../Globals';
 import styles from './../../styles';
-import {loading} from "../../Helpers";
+import { loading } from '../../Helpers';
 
 export default class PreviewProject extends Component {
+    keyExtractor = (item) => item.toString(); //eslint-disable-line
+
     constructor(props) {
         super(props);
         this.state = {
             listImage: null,
             index: 0,
-            loaded: true,
+            loaded: false,
             imagePreview: false
         };
-        this.arrayProject = [];
     }
+
     componentDidMount() {
-        if (this.props.project.data.images.feature)
+        if (this.props.project.data.images.feature) {
             this.setState({
                 listImage: this.props.project.data.images.feature.map((item, index) => {
                     return { url: `${BASE_URL}${item}` };
-                })
+                }),
+                loaded: true
             });
+        }
     }
+
     componentWillReceiveProps(props) {
-        if (props.project.data.images.feature)
+        if (props.project.data.images.feature) {
             this.setState({
                 listImage: props.project.data.images.feature.map((item, index) => {
                     return { url: `${BASE_URL}${item}` };
                 })
             });
+        }
     }
+
     onDisplayImage(index) {
         this.setState({
             index,
             imagePreview: true
         });
     }
-    keyExtractor = (item) => item.toString(); //eslint-disable-line
+
     render() {
         if (!this.state.loaded) {
             return loading();
@@ -117,14 +117,16 @@ export default class PreviewProject extends Component {
                         }}
                         onPress={() => {
                             this.props.navigation.navigate('TabProjectScreen', {
-                                projectId: project.id
+                                // projectId: project.id,
+                                project
                             });
                         }}
                     >
                         <Text style={styles.textBtnIcon}>
                             XEM CHI TIẾT
                         </Text>
-                        <Icon type="FontAwesome" name='caret-right' style={{ fontSize: 14, color: 'white', marginTop: 13 }} />
+                        <Icon type="FontAwesome" name='caret-right'
+                              style={{ fontSize: 14, color: 'white', marginTop: 13 }} />
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={{
@@ -136,9 +138,9 @@ export default class PreviewProject extends Component {
                             marginRight: 1,
                         }}
                         onPress={() => {
-                            this.props.navigation.navigate('TabProjectScreen', {
-                                projectId: project.id,
-                                activeTab: 3
+                            this.props.navigation.navigate('BuildingScreen', {
+                                // projectId: project.id,
+                                project
                             });
                         }}
                     >
@@ -155,8 +157,9 @@ export default class PreviewProject extends Component {
                         }}
                         onPress={() => {
                             this.props.navigation.navigate('TabProjectScreen', {
-                                projectId: project.id,
-                                activeTab: 3
+                                // projectId: project.id,
+                                activeTab: 3,
+                                project
                             });
                         }}
                     >
@@ -175,8 +178,9 @@ export default class PreviewProject extends Component {
                         }}
                         onPress={() => {
                             this.props.navigation.navigate('TabProjectScreen', {
-                                projectId: project.id,
-                                activeTab: 3
+                                // projectId: project.id,
+                                activeTab: 3,
+                                project
                             });
                         }}
                     >
