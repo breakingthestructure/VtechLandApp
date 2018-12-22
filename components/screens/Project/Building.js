@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { BackHandler, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { Body, Card, CardItem, Container, DeckSwiper, Icon, Left, Thumbnail } from 'native-base';
+import {
+    Body,
+    Button,
+    Card,
+    CardItem,
+    Container,
+    DeckSwiper,
+    Icon,
+    Left,
+    ListItem,
+    Right,
+    Thumbnail
+} from 'native-base';
 import Header from '../Home/Header';
 import styles from './../../../styles';
 import { BASE_URL, NO_IMAGE } from './../../../Globals';
@@ -33,7 +45,6 @@ export default class Building extends Component {
         getBuildings(project.id)
             .then(resJson => {
                 if (resJson.status === 200) {
-                    console.log(resJson);
                     this.setState({
                         buildings: resJson.data,
                         loaded: true,
@@ -50,7 +61,6 @@ export default class Building extends Component {
     }
 
     render() {
-
         const { navigation } = this.props;
         const project = navigation.getParam('project', null);
         if (!this.state.loaded) {
@@ -93,30 +103,50 @@ export default class Building extends Component {
                             }
                         />
                     </View>
+                    <Text
+                        style={{
+                            fontWeight: '600',
+                            fontSize: 18,
+                            textAlign: 'center',
+                            color: '#053654',
+                            paddingTop: 10
+                        }}
+                    >
+                        Danh sách bảng hàng
+                    </Text>
                     <FlatList
-                        keyExtractor={this._keyExtractor}
-                        horizontal={false}
-                        numColumns={2}
-                        contentContainerStyle={{ justifyContent: 'center', width: '100%', alignItems: 'center', marginTop: 20 }}
                         data={arrBuilding}
+                        keyExtractor={this.keyExtractor}
                         renderItem={({ item }) => (
-                            <TouchableOpacity
-                                key={item}
-                                style={styles.btnAction}
-                                onPress={() => navigation.navigate('TablePackageScreen', {
-                                    project,
-                                    buildingId: item.key,
-                                    buildingName: item.value
-                                })}
-                            >
-                                <View style={{ paddingVertical: 5 }}>
-                                    <Image source={icCalendar} style={{ width: 30, height: 30 }} />
-
-                                </View>
-                                <View style={{ justifyContent: 'center' }}>
-                                    <Text style={styles.btnTextAction}>{item.value}</Text>
-                                </View>
-                            </TouchableOpacity>
+                            <ListItem icon>
+                                <Left>
+                                    <Button style={{ backgroundColor: '#007AFF' }}>
+                                        <Icon active name="ios-home" />
+                                    </Button>
+                                </Left>
+                                <Body>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate('TablePackageScreen', {
+                                        project,
+                                        buildingId: item.key,
+                                        buildingName: item.value
+                                    })}
+                                >
+                                    <Text>{item.value}</Text>
+                                </TouchableOpacity>
+                                </Body>
+                                <Right>
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate('TablePackageScreen', {
+                                            project,
+                                            buildingId: item.key,
+                                            buildingName: item.value
+                                        })}
+                                    >
+                                        <Icon active name="arrow-forward" style={{ fontSize: 20, color: 'orange' }} />
+                                    </TouchableOpacity>
+                                </Right>
+                            </ListItem>
                         )}
                     />
                 </ScrollView>

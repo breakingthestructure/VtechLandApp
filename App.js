@@ -29,20 +29,34 @@ import ForgotPassword from './components/screens/Auth/ForgotPassword';
 import ResetPassword from './components/screens/Auth/ResetPassword';
 import Building from './components/screens/Project/Building';
 import SearchApartment from './components/screens/Project/SearchApartment';
+import ResultApartment from './components/screens/Project/ResultApartment';
 import Test from './Test';
 
 const ProjectStack = createStackNavigator(
     {
-        Map: { screen: MapProject },
-        TabProjectScreen: { screen: TabProject },
-        OrderSubmitScreen: {
-            screen: OrderSubmit
+        Map: {
+            screen: MapProject
+        },
+        BuildingScreen: {
+            screen: Building
+        },
+        TabProjectScreen: {
+            screen: TabProject
         },
         TablePackageScreen: {
             screen: TablePackage
         },
+        SearchApartmentScreen: {
+            screen: SearchApartment
+        },
+        ResultApartmentScreen: {
+            screen: ResultApartment
+        },
         DetailApartmentScreen: {
             screen: DetailApartment
+        },
+        OrderSubmitScreen: {
+            screen: OrderSubmit
         },
     },
     {
@@ -91,19 +105,10 @@ const LeftDrawer = createDrawerNavigator(
         },
         DetailNewsScreen: {
             screen: DetailNews
-        },
-        BuildingScreen: {
-            screen: Building
-        },
-        TestScreen: {
-            screen: Test
-        },
-        SearchApartmentScreen: {
-            screen: SearchApartment
-        },
+        }
     },
     {
-        initialRouteName: 'SearchApartmentScreen',
+        initialRouteName: 'MapScreen',
         contentComponent: Menu,
         getCustomActionCreators: (route, stateKey) => {
             return {

@@ -117,7 +117,7 @@ export default class KindProject extends Component {
                                         onPress={() => {
                                             this.props.navigation.navigate('TabProjectScreen', {
                                                 // projectId: item.id,
-                                                project
+                                                project: item
                                             });
                                         }}
                                     >
@@ -134,7 +134,7 @@ export default class KindProject extends Component {
                                     onPress={() => {
                                         this.props.navigation.navigate('TabProjectScreen', {
                                             // projectId: item.id,
-                                            project
+                                            project: item
                                         });
                                     }}
                                 >

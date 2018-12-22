@@ -833,7 +833,7 @@ export default StyleSheet.create({
         fontWeight: '400',
         fontSize: 16,
         color: '#1f7eb8',
-        paddingBottom: 5,
+        // paddingBottom: 5,
         paddingTop: 5
     },
     titleScreenLeft: {

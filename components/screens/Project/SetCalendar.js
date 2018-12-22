@@ -1,19 +1,30 @@
 import React from 'react';
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    TextInput,
-    Keyboard,
-    Alert
-} from 'react-native';
-import { Content, Item, Input, Icon, Textarea } from 'native-base';
+import { Alert, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Content, Icon, Input, Item, Textarea } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import postContact from './../../../api/postContact';
 import styles from './../../../styles';
 import { formatAMPM, loading } from './../../../Helpers';
 
 export default class SetCalendar extends React.Component {
+    state = { //eslint-disable-line
+        isDatePickerVisible: false,
+        isTimePickerVisible: false
+    };
+    showDatePicker = () => this.setState({ isDatePickerVisible: true });
+    hideDatePicker = () => this.setState({ isDatePickerVisible: false });
+    handleDatePicked = (date) => { //eslint-disable-line
+        let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+        this.setState({ txtDate: selected });
+        this.hideDatePicker();
+    };
+    showTimePicker = () => this.setState({ isTimePickerVisible: true });
+    hideTimePicker = () => this.setState({ isTimePickerVisible: false });
+    handleTimePicked = (date) => { //eslint-disable-line
+        this.setState({ txtTime: formatAMPM(date) });
+        this.hideTimePicker();
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -28,34 +39,13 @@ export default class SetCalendar extends React.Component {
             txtSubmit: 'ĐĂNG KÝ'
         };
     }
-    state = { //eslint-disable-line
-        isDatePickerVisible: false,
-        isTimePickerVisible: false
-    };
+
     componentDidMount() {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 200);
     }
 
-    showDatePicker = () => this.setState({ isDatePickerVisible: true });
-
-    hideDatePicker = () => this.setState({ isDatePickerVisible: false });
-
-    handleDatePicked = (date) => { //eslint-disable-line
-        let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
-        this.setState({ txtDate: selected });
-        this.hideDatePicker();
-    };
-
-    showTimePicker = () => this.setState({ isTimePickerVisible: true });
-
-    hideTimePicker = () => this.setState({ isTimePickerVisible: false });
-
-    handleTimePicked = (date) => { //eslint-disable-line
-        this.setState({ txtTime: formatAMPM(date) });
-        this.hideTimePicker();
-    };
     onSubmit() {
         this.setState({ loaded: false, txtSubmit: 'Đang xử lý' });
         const { txtEmail, txtName, txtAddress, txtPhone, txtDate, txtTime, txtNote } = this.state;
@@ -77,6 +67,7 @@ export default class SetCalendar extends React.Component {
             })
             .catch(err => console.log(err));
     }
+
     render() {
         if (!this.state.loaded) {
             return loading();
@@ -87,7 +78,8 @@ export default class SetCalendar extends React.Component {
                 <Image source={imgDuan} style={{ width: '100%', height: height / 6 }} /> */}
                 <View style={styles.content}>
                     <Text style={styles.titleSection}>ĐẶT LỊCH THAM QUAN NHÀ MẪU</Text>
-                    <Text style={styles.subTitle}>Nhà mẫu dự án mở cửa 8h00 - 18h00 tất cả các ngày trong tuần (kể cả thứ 7 & chủ nhật)</Text>
+                    <Text style={styles.subTitle}>Nhà mẫu dự án mở cửa 8h00 - 18h00 tất cả các ngày trong tuần (kể cả
+                        thứ 7 & chủ nhật)</Text>
                     <View style={styles.viewInput}>
                         <TextInput
                             style={styles.input}
@@ -111,8 +103,8 @@ export default class SetCalendar extends React.Component {
                             style={styles.input}
                             placeholder='Email'
                             underlineColorAndroid='transparent'
-                            value={this.state.email}
-                            onChangeText={text => this.setState({ email: text })}
+                            value={this.state.txtEmail}
+                            onChangeText={text => this.setState({ txtEmail: text })}
                         />
                     </View>
                     <View
@@ -187,10 +179,10 @@ export default class SetCalendar extends React.Component {
                         mode='time'
                         is24Hour={false}
                         neverDisableConfirmIOS
-                    // datePickerModeAndroid='spinner'
+                        datePickerModeAndroid='spinner'
                     />
                 </View>
-            </View >
+            </View>
         );
     }
 }

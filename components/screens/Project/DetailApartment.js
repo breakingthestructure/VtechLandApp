@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-    View,
-    Text,
-    Image,
-    ScrollView,
-    Modal,
-    TouchableOpacity,
-    BackHandler,
-    Alert
-} from 'react-native';
+import { Alert, BackHandler, Image, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Icon } from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import ModalRN from 'react-native-modal';
@@ -22,6 +13,15 @@ import getToken from '../../../api/getToken';
 import postLockApartment from './../../../api/postLockApartment';
 
 export default class DetailApartment extends React.Component {
+    handleBackPress = () => { //eslint-disable-line
+        return this.props.navigation.navigate('TablePackageScreen');
+    }
+    state = {
+        isModalVisible: false
+    };
+    _toggleModal = () => //eslint-disable-line
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+
     constructor(props) {
         super(props);
         this.state = {
@@ -35,6 +35,7 @@ export default class DetailApartment extends React.Component {
             txtSubmit: 'XÁC NHẬN'
         };
     }
+
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         const { navigation } = this.props;
@@ -59,6 +60,7 @@ export default class DetailApartment extends React.Component {
                 .catch(err => console.log(err));
         }
     }
+
     onDisplayImage(type) {
         if (type === '3d') {
             this.setState({ modal3D: true });
@@ -67,9 +69,7 @@ export default class DetailApartment extends React.Component {
             this.setState({ modalPosition: true });
         }
     }
-    handleBackPress = () => { //eslint-disable-line
-        return this.props.navigation.navigate('TablePackageScreen');
-    }
+
     onLockApartment() {
         this.setState({ loaded: false, txtSubmit: 'Đang xử lý' });
         getToken()
@@ -85,6 +85,7 @@ export default class DetailApartment extends React.Component {
                     });
             });
     }
+
     onOrderApartment() {
         Alert.alert(
             'Thông báo',
@@ -119,12 +120,6 @@ export default class DetailApartment extends React.Component {
         );
     }
 
-    state = {
-        isModalVisible: false
-    };
-    _toggleModal = () => //eslint-disable-line
-        this.setState({ isModalVisible: !this.state.isModalVisible });
-
     render() {
         if (!this.state.loaded) {
             return loading();
@@ -132,7 +127,7 @@ export default class DetailApartment extends React.Component {
         const { apartment } = this.state;
         return (
             <View style={styles.wrapper}>
-                <Header navigation={this.props.navigation} title={`CĂN HỘ ${apartment.number}`} />
+                <Header navigation={this.props.navigation} title={`CĂN HỘ ${apartment.number}`} back={'back'} />
                 <ScrollView style={styles.content}>
                     <Text style={styles.titleScreen}>CĂN
                         HỘ {apartment.number} - {apartment.building.name} - {apartment.project.name}</Text>

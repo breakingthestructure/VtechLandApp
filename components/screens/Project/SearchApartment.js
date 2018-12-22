@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { FlatList, Picker, ScrollView, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Picker, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Icon } from 'native-base';
 import Header from './../Home/Header';
 import styles from './../../../styles';
 import getOptionProjects from './../../../api/getOptionProjects';
 import { loading } from './../../../Helpers';
-import getProject from './../../../api/getProject';
+import getTablePackage from '../../../api/getTablePackage';
 
 export default class SearchApartment extends Component {
     _keyExtractor = (item, index) => index.toString(); //eslint-disable-line
@@ -13,27 +13,18 @@ export default class SearchApartment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: '',
-            cities: [],
             loaded: false,
-            city: '',
-            districts: [],
-            district: '',
-            wards: [],
-            ward: '',
-            streets: [],
-            street: '',
             direction: '',
-            kind: 1,
+            status: '',
             options: [],
-            level: '',
             txtSubmit: 'TÌM KIẾM',
-            feature: {},
-            arrFeature: [],
-            type: 1,
-            area: '',
             minPrice: '',
-            maxPrice: ''
+            maxPrice: '',
+            minArea: '',
+            maxArea: '',
+            row: '',
+            column: '',
+            bedroom: ''
         };
     }
 
@@ -53,13 +44,59 @@ export default class SearchApartment extends Component {
                 }
             })
             .catch(err => console.log(err));
-    }
-    onSearch() {
 
+
+        getTablePackage(2, 4)
+            .then(resJson => {
+                if (resJson.status) {
+                    this.setState({
+                        listApartment: resJson.data.apartment,
+                    });
+                }
+            })
+            .catch(err => console.error(err));
     }
+
+    onSearch() {
+        // const { navigation } = this.props;
+        const { status, direction, row, column, minPrice, maxPrice, minArea, maxArea } = this.state;
+        // const listApartment = navigation.getParam('listApartment', null);
+        const apartments = this.state.listApartment.filter(function (el) {
+            if (row !== '' && el.row !== parseInt(row)) {
+                return null;
+            }
+            if (column !== '' && el.column !== parseInt(column)) {
+                return null;
+            }
+            if (status !== '' && el.status !== parseInt(status)) {
+                return null;
+            }
+            if (direction !== '' && el.direction !== direction) {
+                return null;
+            }
+            if (minPrice !== '' && el.price >= parseInt(minPrice)) {
+                return null;
+            }
+            if (maxPrice !== '' && el.price >= parseInt(maxPrice)) {
+                return null;
+            }
+            if (minArea !== '' && el.area <= parseInt(minArea)) {
+                return null;
+            }
+            if (maxArea !== '' && el.area <= parseInt(maxArea)) {
+                return null;
+            }
+            return el;
+        });
+        this.props.navigation.navigate('ResultApartmentScreen', {
+            apartments
+        });
+    }
+
     render() {
-        const { cities, districts, wards, streets, options } = this.state;
-        if (!this.state.loaded || !cities || !options.length === 0 || !options.project_types) {
+        const { options } = this.state;
+        console.log(this.state.loaded);
+        if (!this.state.loaded) {
             return loading();
         }
         return (
@@ -78,13 +115,13 @@ export default class SearchApartment extends Component {
                             style={styles.optionAlone}
                         >
                             <Picker
-                                selectedValue={this.state.type}
-                                onValueChange={(itemValue) => this.setState({ type: itemValue })}
+                                selectedValue={this.state.status}
+                                onValueChange={(itemValue) => this.setState({ status: itemValue })}
                                 style={styles.picker}
                             >
                                 <Picker.Item
                                     label='Tất cả'
-                                    value='0'
+                                    value=''
                                 />
                                 {Object.keys(options.apartment_status).map(function (key) {
                                     return (
@@ -160,27 +197,16 @@ export default class SearchApartment extends Component {
                             <Picker
                                 style={styles.picker}
                                 selectedValue={this.state.direction}
-                                onValueChange={(itemValue) => this.setState({ direction: itemValue })}
+                                onValueChange={(itemValue) => {
+                                    this.setState({ direction: itemValue });
+                                }}
                             >
+                                <Picker.Item label='Hướng' value='' />
                                 {Object.keys(options.directions).map(function (key) {
                                     return <Picker.Item key={key} label={options.directions[key]} value={key} />
                                 })}
                             </Picker>
                         </View>
-                        <View
-                            style={styles.option}
-                        >
-                            <TextInput
-                                style={styles.input}
-                                placeholder='Diện tích'
-                                underlineColorAndroid='transparent'
-                                value={this.state.area}
-                                onChangeText={text => this.setState({ area: text })}
-                                keyboardType={'numeric'}
-                            />
-                        </View>
-                    </View>
-                    <View style={styles.rowOption}>
                         <View
                             style={styles.option}
                         >
@@ -193,15 +219,30 @@ export default class SearchApartment extends Component {
                                 keyboardType={'numeric'}
                             />
                         </View>
+                    </View>
+                    <Text style={styles.titleSection}>Diện tích</Text>
+                    <View style={styles.rowOption}>
                         <View
                             style={styles.option}
                         >
                             <TextInput
                                 style={styles.input}
-                                placeholder='Số phòng khách'
+                                placeholder='Từ'
                                 underlineColorAndroid='transparent'
-                                value={this.state.livingroom}
-                                onChangeText={text => this.setState({ livingroom: text })}
+                                value={this.state.minArea}
+                                onChangeText={text => this.setState({ minArea: text })}
+                                keyboardType={'numeric'}
+                            />
+                        </View>
+                        <View
+                            style={styles.option}
+                        >
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Đến'
+                                underlineColorAndroid='transparent'
+                                value={this.state.maxArea}
+                                onChangeText={text => this.setState({ maxArea: text })}
                                 keyboardType={'numeric'}
                             />
                         </View>

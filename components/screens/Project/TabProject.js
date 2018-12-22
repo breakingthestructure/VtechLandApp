@@ -60,7 +60,7 @@ export default class TabProject extends Component {
                 <Header
                     navigation={this.props.navigation}
                     title={project.name}
-                    back={'MapScreen'}
+                    back={'popToTop'}
                 />
                 <ScrollView ref='_scrollView'>
                     <View style={styles.slideProject}>

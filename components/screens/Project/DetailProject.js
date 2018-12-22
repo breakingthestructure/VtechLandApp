@@ -220,7 +220,7 @@ export default class DetailProject extends React.Component {
                         }
                     >
                         <ImageBackground
-                            source={{ uri: 'https://img.youtube.com/vi/KkM71JPHfjk/hqdefault.jpg' }}
+                            source={{ uri: `https://img.youtube.com/vi/${this.state.videoId}/hqdefault.jpg` }}
                             style={{ alignSelf: 'stretch', height: 300, justifyContent: 'center', alignItems: 'center' }}
                         >
                             <Image source={icPlay} style={{ height: 50, width: 50, borderRadius: 10 }} />

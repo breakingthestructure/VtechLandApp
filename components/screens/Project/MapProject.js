@@ -1,17 +1,7 @@
 import React from 'react';
-import {
-    View,
-    BackHandler,
-    Dimensions,
-    TouchableOpacity,
-    Text,
-    Animated,
-    Image, FlatList,
-} from 'react-native';
+import { Animated, BackHandler, Dimensions, FlatList, Image, Text, TouchableOpacity, View, } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import {
-    Icon
-} from 'native-base';
+import { Icon } from 'native-base';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import AdvanceSearch from './AdvanceSearch';
@@ -25,7 +15,6 @@ import icInvest from './../../../icons/invest.png';
 import { loading } from '../../../Helpers';
 import KindProject from '../../Modal/KindProject';
 import saveProject from '../../../api/saveProject';
-import saveUser from '../../../api/saveUser';
 
 const { width, height } = Dimensions.get('window');
 let isHidden = true;
@@ -35,6 +24,37 @@ const heightResult = 300;
 const heightSearch = height - 5;
 
 export default class MapProject extends React.Component {
+    handleBackPress = () => { //eslint-disable-line
+        if (!isHidden) {
+            return this.toggleAdvanceSearch();
+        }
+        return this.props.navigation.navigate('MapScreen');
+    }
+    keyExtractor = (item) => item.id.toString(); //eslint-disable-line
+
+    // onSearch() {
+    //     fetch(GLOBAL.GOOGLE_API + this.state.txtAddress, //eslint-disable-line
+    //         {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 Accept: 'application/json'
+    //             },
+    //         })
+    //         .then(res => res.json())
+    //         .then(resJson => {
+    //             if (resJson.results.length > 0) {
+    //                 this.setState({
+    //                     currentLocation: {
+    //                         latitude: resJson.results[0].geometry.location.lat,
+    //                         longitude: resJson.results[0].geometry.location.lng
+    //                     }
+    //                 });
+    //             }
+    //         })
+    //         .catch(err => console.log(err));
+    // }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -84,35 +104,6 @@ export default class MapProject extends React.Component {
             .catch(err => console.log(err));
     }
 
-    // onSearch() {
-    //     fetch(GLOBAL.GOOGLE_API + this.state.txtAddress, //eslint-disable-line
-    //         {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 Accept: 'application/json'
-    //             },
-    //         })
-    //         .then(res => res.json())
-    //         .then(resJson => {
-    //             if (resJson.results.length > 0) {
-    //                 this.setState({
-    //                     currentLocation: {
-    //                         latitude: resJson.results[0].geometry.location.lat,
-    //                         longitude: resJson.results[0].geometry.location.lng
-    //                     }
-    //                 });
-    //             }
-    //         })
-    //         .catch(err => console.log(err));
-    // }
-
-    handleBackPress = () => { //eslint-disable-line
-        if (!isHidden) {
-            return this.toggleAdvanceSearch();
-        }
-        return this.props.navigation.navigate('MapScreen');
-    }
     toggleAdvanceSearch(val, wantHide, dataSearch) {
         let toValue = heightSearch;
         if (isHidden) {
@@ -141,6 +132,7 @@ export default class MapProject extends React.Component {
         ).start();
         isHidden = !isHidden;
     }
+
     togglePopup(wantHide, projectId) {
         let toValue = heightPopup;
         if (isHiddenPopup) {
@@ -173,6 +165,7 @@ export default class MapProject extends React.Component {
         ).start();
         isHiddenPopup = !isHiddenPopup;
     }
+
     toggleResult(isHiddenResult, dataSearch) {
         if (dataSearch) {
             this.setState({ dataSearch, modalResult: true });
@@ -191,6 +184,7 @@ export default class MapProject extends React.Component {
             }
         ).start();
     }
+
     toggleKindProject(isHiddenResult, kind) {
         let toValue = heightResult;
         if (isHiddenResult) {
@@ -207,7 +201,7 @@ export default class MapProject extends React.Component {
             }
         ).start();
     }
-    keyExtractor = (item) => item.id.toString(); //eslint-disable-line
+
     render() {
         if (!this.state.loaded) {
             return loading();
@@ -224,7 +218,7 @@ export default class MapProject extends React.Component {
                             latitudeDelta: 0.0922,
                             longitudeDelta: 0.0421,
                         }}
-                        // mapType="standard"
+                        mapType="standard"
                         followsUserLocation
                         showsUserLocation
                         showsMyLocationButton
@@ -236,6 +230,7 @@ export default class MapProject extends React.Component {
                         ref={(ref) => {
                             this.mapView = ref;
                         }}
+                        onMapReady={() => console.log('map loaded')}
                     >
 
                         <FlatList

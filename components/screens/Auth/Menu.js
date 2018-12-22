@@ -45,17 +45,17 @@ export default class Menu extends Component {
                             <Text style={styles.textMenu}>Tổng kho bất động sản</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('TablePackageScreen')}>
+                        <TouchableOpacity style={styles.btnMenu} >
                             <Image source={icCart} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Bảng hàng online</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('TabProjectScreen')}>
+                        <TouchableOpacity style={styles.btnMenu} >
                             <Image source={icTraning} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Huấn luyện - đào tạo</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('TabProjectScreen')}>
+                        <TouchableOpacity style={styles.btnMenu} >
                             <Image source={icPartner} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Đối tác</Text>
                         </TouchableOpacity>

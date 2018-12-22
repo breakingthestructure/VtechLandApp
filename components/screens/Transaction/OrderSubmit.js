@@ -90,9 +90,7 @@ export default class OrderSubmit extends React.Component {
                                     {
                                         text: 'OK',
                                         onPress: () => {
-                                            this.props.navigation.navigate('DetailApartmentScreen', {
-                                                apartmentId: this.state.apartment.id
-                                            });
+                                            this.props.navigation.navigate('MapScreen');
                                         }
                                     },
                                     { text: 'Hủy', onPress: () => console.log('ok') },

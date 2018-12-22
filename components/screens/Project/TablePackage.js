@@ -120,7 +120,17 @@ export default class TablePackage extends Component {
             </View>
         );
     }
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => item.id; //eslint-disable-line
+    onFilter() {
+        var newArray = this.state.listApartment.filter(function (el) {
+            return el.number === '102';
+            // return el.price <= 1000 &&
+            //     el.sqft >= 500 &&
+            //     el.num_of_beds >=2 &&
+            //     el.num_of_baths >= 2.5;
+        });
+        console.log(newArray);
+    }
     render() {
         const { navigation } = this.props;
         const buildingName = navigation.getParam('buildingName', null);
@@ -130,7 +140,7 @@ export default class TablePackage extends Component {
         }
         return (
             <View style={styles.container}>
-                <Header navigation={this.props.navigation} title={`${buildingName} - ${project.name}`} back={'MapScreen'} />
+                <Header navigation={this.props.navigation} title={`${buildingName} - ${project.name}`} back={'popToTop'} />
                 <View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
@@ -148,7 +158,7 @@ export default class TablePackage extends Component {
                             <Text style={{ fontSize: 12 }}> Đang giữ chỗ</Text>
                         </View>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: '#F68121' }} />
+                            <View style={{ width: 20, height: 20, backgroundColor: 'red' }} />
                             <Text style={{ fontSize: 12 }}> Đã bán</Text>
                         </View>
                     </View>
@@ -197,9 +207,12 @@ export default class TablePackage extends Component {
                     containerStyle={{}}
                     style={{ backgroundColor: '#F58319', width: 35, height: 35 }}
                     position="bottomRight"
-                    onPress={() => this.props.navigation.navigate('SearchApartmentScreen')}
+                    onPress={() => this.props.navigation.navigate('SearchApartmentScreen', {
+                        listApartment: this.state.listApartment
+                    })}
+                    // onPress={this.onFilter.bind(this)}
                 >
-                    <Icon type="MaterialIcons" name="add" />
+                    <Icon type={'FontAwesome'} name="filter" />
                 </Fab>
             </View>
         );
