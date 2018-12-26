@@ -138,6 +138,11 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-youtube')
+    compile project(':react-native-maps')
+    compile project(':react-native-linear-gradient')
+    compile project(':react-native-gesture-handler')
+    compile project(':react-native-firebase')
     compile project(':react-native-image-resizer')
     compile project(':react-native-image-crop-picker')
     implementation project(':react-native-youtube')

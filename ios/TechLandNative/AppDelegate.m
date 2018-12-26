@@ -6,15 +6,20 @@
  */
 
 #import "AppDelegate.h"
-
+#import <Firebase.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-
+#import <AVFoundation/AVFoundation.h>
+@import GoogleMaps;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error: nil];
   NSURL *jsCodeLocation;
+
+  [GMSServices provideAPIKey:@"AIzaSyByXMeeujrWpH517p7LkQrfBmTNIN1RTkQ"];
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 

@@ -1,14 +1,17 @@
 import {
     StyleSheet,
-    Dimensions
+    Dimensions,
+    Platform,
+    StatusBar
 } from 'react-native';
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const {
     width,
     height
 } = Dimensions.get('window');
 const heightPopup = 220;
 const heightResult = 300;
-const heightSearch = height - 15;
+const heightSearch = Platform.OS === 'ios' ? height : height - 15;
 const imageWidth = width;
 const imageHeight = (imageWidth / 3900) * 2092;
 
@@ -19,6 +22,9 @@ export default StyleSheet.create({
     containerLoading: {
         flex: 1,
         justifyContent: 'center'
+    },
+    statusBar: {
+        height: STATUSBAR_HEIGHT,
     },
     //calc debt
     content: {
@@ -690,7 +696,7 @@ export default StyleSheet.create({
         height: height / 13,
         backgroundColor: '#F58319',
         // padding: 10,
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
     },
     headerAction: {
         flexDirection: 'row',
