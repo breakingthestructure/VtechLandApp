@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { FlatList, Picker, ScrollView, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Icon } from 'native-base';
+import { FlatList, ScrollView, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Picker, Icon } from 'native-base';
 import SwitchSelector from 'react-native-switch-selector';
 import Header from './../Home/Header';
 import getCities from './../../../api/getCities';
@@ -26,14 +26,14 @@ export default class AdvanceSearch extends Component {
             ward: '',
             streets: [],
             street: '',
-            direction: '',
+            direction: 'east',
             kind: 1,
             options: [],
-            level: '',
+            level: '1',
             txtSubmit: 'TÌM KIẾM',
             feature: {},
             arrFeature: [],
-            type: 1,
+            type: '1',
             area: '',
             minPrice: '',
             maxPrice: ''
@@ -215,6 +215,9 @@ export default class AdvanceSearch extends Component {
                             style={styles.optionAlone}
                         >
                             <Picker
+                                iosHeader="Loại dự án"
+                                headerBackButtonText={<Icon name='ios-arrow-back' />}
+                                // headerStyle={{ backgroundColor: '#F58319'}}
                                 selectedValue={this.state.type}
                                 onValueChange={(itemValue) => this.setState({ type: itemValue })}
                                 style={styles.picker}
@@ -237,13 +240,15 @@ export default class AdvanceSearch extends Component {
                             style={styles.option}
                         >
                             <Picker
+                                iosHeader="Tỉnh / Thành phố"
+                                headerBackButtonText={<Icon name='ios-arrow-back' />}
                                 style={styles.picker}
                                 selectedValue={this.state.city}
                                 onValueChange={(itemValue) =>
                                     this.onSelectCity(itemValue)
                                 }
                             >
-                                <Picker.Item label="Tỉnh / Thành phố" value="0" />
+                                <Picker.Item label="Tỉnh / Thành phố" value="" />
                                 {Object.keys(cities).map(function (key) {
                                     return <Picker.Item key={key} label={cities[key]} value={key} />
                                 })}
@@ -253,6 +258,8 @@ export default class AdvanceSearch extends Component {
                             style={styles.option}
                         >
                             <Picker
+                                iosHeader="Quận / Huyện"
+                                headerBackButtonText={<Icon name='ios-arrow-back' />}
                                 style={styles.picker}
                                 selectedValue={this.state.district}
                                 onValueChange={(itemValue) =>
@@ -271,6 +278,8 @@ export default class AdvanceSearch extends Component {
                             style={styles.option}
                         >
                             <Picker
+                                iosHeader="Phường / Xã"
+                                headerBackButtonText={<Icon name='ios-arrow-back' />}
                                 style={styles.picker}
                                 selectedValue={this.state.ward}
                                 onValueChange={(itemValue) => this.setState({ ward: itemValue })}
@@ -285,6 +294,8 @@ export default class AdvanceSearch extends Component {
                             style={styles.option}
                         >
                             <Picker
+                                iosHeader="Đường / Phố"
+                                headerBackButtonText={<Icon name='ios-arrow-back' />}
                                 style={styles.picker}
                                 selectedValue={this.state.street}
                                 onValueChange={(itemValue) => this.setState({ street: itemValue })}
@@ -303,6 +314,8 @@ export default class AdvanceSearch extends Component {
                         >
                             <Picker
                                 style={styles.picker}
+                                iosHeader="Phân khúc"
+                                headerBackButtonText={<Icon name='ios-arrow-back' />}
                                 selectedValue={this.state.level}
                                 onValueChange={(itemValue) => this.setState({ level: itemValue })}
                             >
