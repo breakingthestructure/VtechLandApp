@@ -1,21 +1,57 @@
 import React from 'react';
-import {
-    View,
-    Text,
-    ScrollView,
-    TouchableOpacity,
-    Switch,
-    Alert,
-    Keyboard,
-    FlatList,
-} from 'react-native';
-import { Container, Content, Item, Input, Icon, Spinner, Picker, Form } from 'native-base';
+import { Alert, FlatList, Keyboard, ScrollView, Switch, Text, TouchableOpacity, View, } from 'react-native';
+import { Content, Form, Icon, Input, Item, Picker, Toast } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { MaskService } from 'react-native-masked-text';
 import { formatMoney, getDayNextMonth, loading } from './../../../Helpers';
 import styles from './../../../styles';
 
 export default class CalcDebt extends React.Component {
+    state = {
+        isDatePickerVisible: false,
+    };
+    showDatePicker = () => this.setState({ isDatePickerVisible: true }); //eslint-disable-line
+    hideDatePicker = () => this.setState({ isDatePickerVisible: false }); //eslint-disable-line
+    handleDatePicked = (date) => { //eslint-disable-line
+        let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+        this.setState({ txtDate: selected, date });
+        this.hideDatePicker();
+    };
+    renderHeader = () => { //eslint-disable-line
+        return (
+            <View
+                style={{
+                    flexDirection: 'row',
+                    backgroundColor: '#F68121',
+                    borderRadius: 2,
+                    justifyContent: 'center',
+                    marginTop: 10
+                }}
+            >
+                <View style={styles.headerRow}>
+                    <Text style={styles.textHeader}>Ngày</Text>
+                </View>
+                <View style={styles.headerRow}>
+                    <Text style={styles.textHeader}>Gốc</Text>
+                </View>
+                <View style={styles.headerRow}>
+                    <Text style={styles.textHeader}>Lãi</Text>
+                </View>
+                <View style={styles.headerRow}>
+                    <Text style={styles.textHeader}>Tổng</Text>
+                </View>
+                <View style={styles.headerRow}>
+                    <Text style={styles.textHeader}>Còn lại</Text>
+                </View>
+            </View>
+        );
+    }
+    handleChangeFromInput = (index, type, text) => { //eslint-disable-line
+        const newArray = this.state.arrayCondition;
+        newArray[index][type] = text;
+        this.setState({ arrayCondition: newArray });
+    }
+
     constructor(props) {
         super(props);
         // const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -41,33 +77,33 @@ export default class CalcDebt extends React.Component {
             txtSubmit: 'TÍNH BÀI TOÁN TÀI CHÍNH'
         };
     }
-    handleChangeFromInput = (index, type, text) => {
-        const newArray = this.state.arrayCondition;
-        newArray[index][type] = text;
-        this.setState({ arrayCondition: newArray });
-    }
+
     componentDidMount() {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 1000);
     }
+
     onSelectMode(value) {
         this.setState({
             modeDebt: value
         });
     }
-    onCharge(value) {
+
+    onCharge() {
         this.setState({
-            graceDebt: (!this.state.graceDebt) ? true : false
+            graceDebt: (!this.state.graceDebt)
         });
     }
+
     addCondition() {
         const arr = this.state.arrayCondition;
         if (arr[arr.length - 1].to === '') {
-            return Alert.alert(
-                'Thông báo',
-                'Bạn chưa nhập tháng của điều kiện trước'
-            );
+            return Toast.show({
+                text: 'Bạn chưa nhập tháng của điều kiện trước!',
+                type: 'warning',
+                buttonText: 'Okay'
+            });
         }
         this.state.arrayCondition.push({
             from: (parseInt(arr[arr.length - 1].to) + 1).toString(),
@@ -76,6 +112,7 @@ export default class CalcDebt extends React.Component {
         });
         this.setState({ arrayCondition: this.state.arrayCondition });
     }
+
     subCondition(index) {
         if (this.state.arrayCondition.length > 1) {
             const arr = this.state.arrayCondition;
@@ -87,66 +124,75 @@ export default class CalcDebt extends React.Component {
                 arrayCondition: arr
             });
         } else {
-            Alert.alert(
-                'Thông báo',
-                'Phải có ít nhất 1 điều kiện'
-            );
+            return Toast.show({
+                text: 'Phải có ít nhất 1 điều kiện!',
+                type: 'warning',
+                buttonText: 'Okay'
+            });
         }
     }
+
     onCalcDebt() {
-        this.setState({ calculating: true, txtSubmit: 'Đang xử lý' });
         const { modeDebt, txtMoney, txtMonth, graceDebt, arrayCondition, txtTimeGrace, date } = this.state;
-        var moneyDebt = txtMoney.split('.').join('');
+        const moneyDebt = txtMoney.split('.').join('');
         let interestRateMonthly = 0;
         let totalMonthly = 0;
         if (graceDebt) {
             interestRate = 0;
         }
         let rootHavePay = moneyDebt;
-        let result = [];
+        const result = [];
         if (!date) {
-            Alert.alert(
-                'Thông báo',
-                'Bạn chưa chọn ngày'
-            );
-            return false;
+            return Toast.show({
+                text: 'Bạn chưa chọn ngày!',
+                type: 'warning',
+                buttonText: 'Okay'
+            });
+            // Alert.alert(
+            //     'Thông báo',
+            //     'Bạn chưa chọn ngày'
+            // );
+            // return false;
         }
         if (parseInt(moneyDebt) === 0) {
-            Alert.alert(
-                'Thông báo',
-                'Bạn chưa nhập số tiền vay'
-            );
-            return false;
+            return Toast.show({
+                text: 'Bạn chưa nhập số tiền vay!',
+                type: 'warning',
+                buttonText: 'Okay'
+            });
         }
         if (modeDebt === '' || parseInt(modeDebt) === 0) {
-            Alert.alert(
-                'Thông báo',
-                'Bạn chưa chọn hình thức vay'
-            );
-            return false;
+            return Toast.show({
+                text: 'Bạn chưa chọn hình thức vay!',
+                type: 'warning',
+                buttonText: 'Okay'
+            });
         }
         if (parseInt(txtTimeGrace) > parseInt(txtMonth)) {
-            Alert.alert(
-                'Thông báo',
-                'Thời gian ân hạn không được lớn hơn số tháng vay'
-            );
-            return false;
+            return Toast.show({
+                text: 'Thời gian ân hạn không được lớn hơn số tháng vay!',
+                type: 'warning',
+                buttonText: 'Okay'
+            });
         }
-        var totalMonthCondition = 0;
-        var percent = 0;
+        let totalMonthCondition = 0;
+        let percent = 0;
+        this.setState({ calculating: true, txtSubmit: 'Đang xử lý' });
         arrayCondition.map((condition, index) => {
             if (index === 0 && parseInt(condition.from) !== 1) {
-                Alert.alert(
-                    'Điều kiện lãi suất',
-                    'Tháng bắt đầu phải là 1'
-                );
+                Toast.show({
+                    text: 'Điều kiện: Tháng bắt đầu phải là 1',
+                    type: 'warning',
+                    buttonText: 'Okay'
+                });
                 return false;
             }
             if (arrayCondition.length === (index + 1) && parseInt(condition.to) !== parseInt(txtMonth)) {
-                Alert.alert(
-                    'Điều kiện lãi suất',
-                    'Tháng kết thúc phải là tổng số tháng'
-                );
+                Toast.show({
+                    text: 'Điều kiện: Tháng kết thúc phải là tổng số tháng',
+                    type: 'warning',
+                    buttonText: 'Okay'
+                });
                 return false;
             }
             if (condition.from === '' || condition.to === '') {
@@ -155,15 +201,16 @@ export default class CalcDebt extends React.Component {
             totalMonthCondition += condition.to - condition.from + 1;
 
             if (arrayCondition.length === (index + 1) && totalMonthCondition !== parseInt(txtMonth)) {
-                Alert.alert(
-                    'Điều kiện lãi suất không đúng',
-                    'Tổng số tháng không khớp với điều kiện'
-                );
+                Toast.show({
+                    text: 'Điều kiện: Tổng số tháng không khớp với điều kiện',
+                    type: 'warning',
+                    buttonText: 'Okay'
+                });
                 return false;
             }
         });
         let payRootMonthly = 0;
-        for (var i = 1; i <= txtMonth; i++) {
+        for (let i = 1; i <= txtMonth; i++) {
             arrayCondition.map(condition => {
                 if (condition.from === '' || condition.to === '' || condition.percent === '') {
                     return;
@@ -195,48 +242,15 @@ export default class CalcDebt extends React.Component {
         this.setState({ result, calculating: false, txtSubmit: 'TÍNH BÀI TOÁN TÀI CHÍNH' });
     }
 
-    state = {
-        isDatePickerVisible: false,
-    };
-
-    showDatePicker = () => this.setState({ isDatePickerVisible: true });
-
-    hideDatePicker = () => this.setState({ isDatePickerVisible: false });
-
-    handleDatePicked = (date) => {
-        let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
-        this.setState({ txtDate: selected, date });
-        this.hideDatePicker();
-    };
-    renderHeader = () => {
-        return (
-            <View style={{ flexDirection: 'row', backgroundColor: '#F68121', borderRadius: 2, justifyContent: 'center', marginTop: 10 }}>
-                <View style={styles.headerRow}>
-                    <Text style={styles.textHeader}>Ngày</Text>
-                </View>
-                <View style={styles.headerRow}>
-                    <Text style={styles.textHeader}>Gốc</Text>
-                </View>
-                <View style={styles.headerRow}>
-                    <Text style={styles.textHeader}>Lãi</Text>
-                </View>
-                <View style={styles.headerRow}>
-                    <Text style={styles.textHeader}>Tổng</Text>
-                </View>
-                <View style={styles.headerRow}>
-                    <Text style={styles.textHeader}>Còn lại</Text>
-                </View>
-            </View>
-        );
-    }
     setFormatMoney(text) {
-        var money = MaskService.toMask('money', text, {
+        const money = MaskService.toMask('money', text, {
             unit: '',
             separator: ' ',
             precision: 0
         });
         this.setState({ txtMoney: money });
     }
+
     render() {
         if (!this.state.loaded) {
             return loading();
@@ -416,7 +430,13 @@ export default class CalcDebt extends React.Component {
                         style={styles.btnAdd}
                         onPress={this.addCondition.bind(this)}
                     >
-                        <Text style={{ color: 'white', fontWeight: '500', marginHorizontal: 5, fontSize: 12, textAlign: 'center' }}>THÊM ĐIỀU KIỆN</Text>
+                        <Text style={{
+                            color: 'white',
+                            fontWeight: '500',
+                            marginHorizontal: 5,
+                            fontSize: 12,
+                            textAlign: 'center'
+                        }}>THÊM ĐIỀU KIỆN</Text>
                     </TouchableOpacity>
                     <Text style={{ color: '#333333', paddingTop: 15, fontSize: 12 }}>ÂN HẠN NỢ GỐC</Text>
                     <View style={styles.item}>
@@ -477,7 +497,7 @@ export default class CalcDebt extends React.Component {
                     onCancel={this.hideDatePicker}
                     datePickerModeAndroid='calendar'
                 />
-            </View >
+            </View>
         );
     }
 }

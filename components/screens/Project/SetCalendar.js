@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Content, Icon, Input, Item, Textarea } from 'native-base';
+import { Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Content, Icon, Input, Item, Textarea, Toast } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import postContact from './../../../api/postContact';
 import styles from './../../../styles';
@@ -53,17 +53,22 @@ export default class SetCalendar extends React.Component {
             .then(resJson => {
                 this.setState({ loaded: true, txtSubmit: 'ĐĂNG KÝ' });
                 if (resJson.status) {
-                    GLOBAL.user = resJson;
-                    Alert.alert(
-                        'Thông báo',
-                        resJson.message,
-                    );
-                } else {
-                    Alert.alert(
-                        'Thông báo',
-                        resJson.errors.email[0],
-                    );
+                    // GLOBAL.user = resJson;
+                    return Toast.show({
+                        text: resJson.message,
+                        type: 'success',
+                        buttonText: 'Okay'
+                    });
                 }
+                let message = '';
+                Object.keys(resJson.errors).forEach(function (key) {
+                    message += resJson.errors[key] + '\n';
+                });
+                return Toast.show({
+                    text: message,
+                    type: 'danger',
+                    buttonText: 'Okay'
+                });
             })
             .catch(err => console.log(err));
     }

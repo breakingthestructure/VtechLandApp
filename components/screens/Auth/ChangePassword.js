@@ -1,15 +1,6 @@
 import React from 'react';
-import {
-    StyleSheet,
-    View,
-    Text,
-    Image,
-    Alert,
-    TextInput,
-    TouchableOpacity,
-    ScrollView,
-} from 'react-native';
-import { Icon } from 'native-base';
+import { Image, ScrollView, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { Icon, Toast } from 'native-base';
 import Header from '../Home/Header';
 import getUser from './../../../api/getUser';
 import getToken from './../../../api/getToken';
@@ -30,11 +21,13 @@ export default class ChangePassword extends React.Component {
             txtSubmit: 'LƯU'
         };
     }
+
     componentDidMount() {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 1000);
     }
+
     onSubmit() {
         const { currentPassword, newPassword, confirmPassword } = this.state;
         this.setState({ txtSubmit: 'Đang xử lý' });
@@ -47,28 +40,20 @@ export default class ChangePassword extends React.Component {
                                 this.setState({ txtSubmit: 'LƯU' });
                                 if (resJson.status) {
                                     GLOBAL.user = resJson;
-                                    Alert.alert(
-                                        'Thông báo',
-                                        resJson.message,
-                                        [
-                                            {
-                                                text: 'Xác nhận',
-                                                onPress: () => {
-                                                    this.props.navigation.navigate('MapScreen');
-                                                }
-                                            },
-                                        ],
-                                        { cancelable: false }
-                                    );
-                                } else {
-                                    // let message = resJson.data.errors.map((val, key)=> {
-                                    //     return val;
-                                    // });
-                                    Alert.alert(
-                                        'Thông báo',
-                                        resJson.message,
-                                    );
+                                    return Toast.show({
+                                        text: resJson.message,
+                                        type: 'success',
+                                        buttonText: 'Okay'
+                                    });
                                 }
+                                // let message = resJson.data.errors.map((val, key)=> {
+                                //     return val;
+                                // });
+                                return Toast.show({
+                                    text: resJson.message,
+                                    type: 'danger',
+                                    buttonText: 'Okay'
+                                });
                             })
                             .catch(err => console.error(err));
                     });
@@ -76,6 +61,7 @@ export default class ChangePassword extends React.Component {
 
 
     }
+
     render() {
         if (!this.state.loaded) {
             return loading();
@@ -86,7 +72,13 @@ export default class ChangePassword extends React.Component {
                 <ScrollView>
                     <View style={styles.content}>
                         <View style={{ alignItems: 'center', padding: 20 }}>
-                            <Image source={avatar} style={{ width: 120, height: 120, borderRadius: 60, borderWidth: 5, borderColor: '#F58319' }} />
+                            <Image source={avatar} style={{
+                                width: 120,
+                                height: 120,
+                                borderRadius: 60,
+                                borderWidth: 5,
+                                borderColor: '#F58319'
+                            }} />
                             <View style={styles.sectionInputInline}>
 
                                 <Text style={{ fontSize: 18 }}>Xin chào </Text>
@@ -138,7 +130,7 @@ export default class ChangePassword extends React.Component {
                         </View>
                     </View>
                 </ScrollView>
-            </View >
+            </View>
         );
     }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, BackHandler, Image, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { Icon } from 'native-base';
+import { BackHandler, Image, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Icon, Toast } from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import ModalRN from 'react-native-modal';
 import Header from '../Home/Header';
@@ -17,10 +17,13 @@ export default class DetailApartment extends React.Component {
         return this.props.navigation.navigate('TablePackageScreen');
     }
     state = {
-        isModalVisible: false
+        isModalVisible: false,
+        isModalOrderVisible: false,
     };
     _toggleModal = () => //eslint-disable-line
         this.setState({ isModalVisible: !this.state.isModalVisible });
+    _toggleModalOrder = () => //eslint-disable-line
+        this.setState({ isModalOrderVisible: !this.state.isModalOrderVisible });
 
     constructor(props) {
         super(props);
@@ -76,10 +79,11 @@ export default class DetailApartment extends React.Component {
             .then(token => {
                 postLockApartment(token, this.state.apartment.id)
                     .then(res => {
-                        Alert.alert(
-                            'Thông báo',
-                            res.message,
-                        );
+                        Toast.show({
+                            text: res.message,
+                            type: 'success',
+                            buttonText: 'Okay'
+                        });
                         this.setState({ loaded: true, txtSubmit: 'XÁC NHẬN' });
                         this._toggleModal();
                     });
@@ -87,37 +91,24 @@ export default class DetailApartment extends React.Component {
     }
 
     onOrderApartment() {
-        Alert.alert(
-            'Thông báo',
-            'Bạn có chắc muốn đặt cọc căn này',
-            [
-                {
-                    text: 'OK',
-                    onPress: () => {
-                        this.setState({ loaded: false });
-                        getToken()
-                            .then(token => {
-                                createTokenTransaction(token, this.state.apartment.id)
-                                    .then(res => {
-                                        if (res.status === 200) {
-                                            this.props.navigation.navigate('OrderSubmitScreen', {
-                                                apartment: this.state.apartment,
-                                                transactionCode: res.data
-                                            });
-                                        } else {
-                                            Alert.alert(
-                                                'Thông báo',
-                                                res.message,
-                                            );
-                                        }
-                                    });
+        this.setState({ loaded: false });
+        getToken()
+            .then(token => {
+                createTokenTransaction(token, this.state.apartment.id)
+                    .then(res => {
+                        if (res.status === 200) {
+                            return this.props.navigation.navigate('OrderSubmitScreen', {
+                                apartment: this.state.apartment,
+                                transactionCode: res.data
                             });
-                    }
-                },
-                { text: 'Hủy', onPress: () => console.log('ok') },
-            ],
-            { cancelable: false }
-        );
+                        }
+                        return Toast.show({
+                            text: res.message,
+                            type: 'danger',
+                            buttonText: 'Okay'
+                        });
+                    });
+            });
     }
 
     render() {
@@ -142,7 +133,8 @@ export default class DetailApartment extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.btnSpecial}
-                            onPress={this.onOrderApartment.bind(this)}
+                            onPress={this._toggleModalOrder}
+                            // onPress={this.onOrderApartment.bind(this)}
                         >
                             <Icon name='ios-cart' style={styles.iconBigBtn} />
                             <Text style={styles.textBtnIcon}>ĐẶT CỌC</Text>
@@ -276,6 +268,36 @@ export default class DetailApartment extends React.Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={this._toggleModal}
+                                    style={styles.btnCancelModal}
+                                >
+                                    <Text style={styles.textBtnActive}>HỦY</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </ModalRN>
+                <ModalRN
+                    isVisible={this.state.isModalOrderVisible}
+                    onSwipe={() => this.setState({ isModalOrderVisible: false })}
+                    swipeDirection="left"
+                >
+                    <View style={{ borderRadius: 15 }}>
+                        <View style={styles.titleModal}>
+                            <Text style={styles.textTitleModal}>GIAO DỊCH ĐẶT CỌC</Text>
+                        </View>
+                        <View style={styles.contentModal}>
+                            <Text style={{ color: '#666' }}>Chuyển tới trang làm thủ tục thanh toán đặt cọc căn hộ.
+                                Các bước thanh toán hoàn tất chỉ sau 1 phút.</Text>
+                            <Text style={{ color: '#666' }}>Bạn có chắc muốn đặt cọc căn hộ này không?</Text>
+                            <View style={styles.modalAction}>
+                                <TouchableOpacity
+                                    onPress={this.onOrderApartment.bind(this)}
+                                    style={styles.btnSubmitModal}
+                                >
+                                    <Text style={styles.textBtnActive}>{this.state.txtSubmit}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={this._toggleModalOrder}
                                     style={styles.btnCancelModal}
                                 >
                                     <Text style={styles.textBtnActive}>HỦY</Text>

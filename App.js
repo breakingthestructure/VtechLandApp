@@ -1,7 +1,26 @@
 import React from 'react';
-import { Alert, Animated, BackHandler, Easing, ImageBackground, NetInfo, View } from 'react-native';
-import { createAppContainer, createDrawerNavigator, createStackNavigator, DrawerActions } from 'react-navigation';
-import type { Notification, NotificationOpen } from 'react-native-firebase';
+import {
+    Alert,
+    Animated,
+    Easing,
+    ImageBackground,
+    NetInfo,
+    View
+} from 'react-native';
+import {
+    Root,
+    Toast
+} from 'native-base';
+import {
+    createAppContainer,
+    createDrawerNavigator,
+    createStackNavigator,
+    DrawerActions
+} from 'react-navigation';
+import type {
+    Notification,
+    NotificationOpen
+} from 'react-native-firebase';
 import firebase from 'react-native-firebase';
 import Login from './components/screens/Auth/Login';
 import Menu from './components/screens/Auth/Menu';
@@ -30,7 +49,6 @@ import ResetPassword from './components/screens/Auth/ResetPassword';
 import Building from './components/screens/Project/Building';
 import SearchApartment from './components/screens/Project/SearchApartment';
 import ResultApartment from './components/screens/Project/ResultApartment';
-import Test from './Test';
 
 const ProjectStack = createStackNavigator(
     {
@@ -73,9 +91,9 @@ const ProjectStack = createStackNavigator(
             },
             screenInterpolator: sceneProps => {
                 const { layout, position, scene } = sceneProps;
-                const { index } = scene;
+                const { index }                   = scene;
 
-                const height = layout.initHeight;
+                const height     = layout.initHeight;
                 const translateY = position.interpolate({
                     inputRange: [index - 1, index, index + 1],
                     outputRange: [height, 0, 0],
@@ -162,9 +180,9 @@ const UserStack = createStackNavigator(
             },
             screenInterpolator: sceneProps => {
                 const { layout, position, scene } = sceneProps;
-                const { index } = scene;
+                const { index }                   = scene;
 
-                const height = layout.initHeight;
+                const height     = layout.initHeight;
                 const translateY = position.interpolate({
                     inputRange: [index - 1, index, index + 1],
                     outputRange: [height, 0, 0],
@@ -204,9 +222,9 @@ const CustomerStack = createStackNavigator(
             },
             screenInterpolator: sceneProps => {
                 const { layout, position, scene } = sceneProps;
-                const { index } = scene;
+                const { index }                   = scene;
 
-                const height = layout.initHeight;
+                const height     = layout.initHeight;
                 const translateY = position.interpolate({
                     inputRange: [index - 1, index, index + 1],
                     outputRange: [height, 0, 0],
@@ -246,9 +264,9 @@ const TransactionStack = createStackNavigator(
             },
             screenInterpolator: sceneProps => {
                 const { layout, position, scene } = sceneProps;
-                const { index } = scene;
+                const { index }                   = scene;
 
-                const height = layout.initHeight;
+                const height     = layout.initHeight;
                 const translateY = position.interpolate({
                     inputRange: [index - 1, index, index + 1],
                     outputRange: [height, 0, 0],
@@ -302,15 +320,20 @@ export default class App extends React.Component {
     async componentDidMount() {
         NetInfo.getConnectionInfo().then((connectionInfo) => {
             if (connectionInfo.type === 'none') {
-                Alert.alert(
-                    'Thông báo',
-                    'Thiết bị của bạn không có kết nối internet. Vui lòng mở kết nối trước khi sử dụng',
-                    [
-                        { text: 'OK', onPress: () => BackHandler.exitApp() },
-                    ],
-                    { cancelable: false }
-                );
-                return false;
+                return Toast.show({
+                    text: 'Thiết bị của bạn không có kết nối internet. Vui lòng mở kết nối trước khi sử dụng!',
+                    buttonText: 'Okay',
+                    type: 'warning',
+                });
+                // Alert.alert(
+                //     'Thông báo',
+                //     'Thiết bị của bạn không có kết nối internet. Vui lòng mở kết nối trước khi sử dụng',
+                //     [
+                //         { text: 'OK', onPress: () => BackHandler.exitApp() },
+                //     ],
+                //     { cancelable: false }
+                // );
+                // return false;
             }
             // console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
         });
@@ -332,9 +355,9 @@ export default class App extends React.Component {
         }, 1000);
         const notificationOpen: NotificationOpen = await firebase.notifications().getInitialNotification();
         if (notificationOpen) {
-            const action = notificationOpen.action;
+            const action                     = notificationOpen.action;
             const notification: Notification = notificationOpen.notification;
-            var seen = [];
+            var seen                         = [];
             // alert(JSON.stringify(notification.data, function (key, val) {
             //   if (val != null && typeof val == "object") {
             //     if (seen.indexOf(val) >= 0) {
@@ -353,7 +376,7 @@ export default class App extends React.Component {
             // Process your notification as required
             // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
         });
-        this.notificationListener = firebase.notifications().onNotification((notification: Notification) => {
+        this.notificationListener          = firebase.notifications().onNotification((notification: Notification) => {
             // Process your notification as required
             notification
                 .android.setChannelId('test-channel')
@@ -361,7 +384,7 @@ export default class App extends React.Component {
             firebase.notifications()
                 .displayNotification(notification);
         });
-        this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen: NotificationOpen) => {
+        this.notificationOpenedListener    = firebase.notifications().onNotificationOpened((notificationOpen: NotificationOpen) => {
             // Get the action triggered by the notification being opened
             // const action = notificationOpen.action;
             // Get information about the notification that was opened
@@ -383,7 +406,9 @@ export default class App extends React.Component {
     render() {
         if (this.state.loaded) {
             return (
-                <AppContainer />
+                <Root>
+                    <AppContainer />
+                </Root>
             );
         }
         return (

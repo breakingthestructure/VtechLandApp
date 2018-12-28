@@ -1,13 +1,37 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { Alert, FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Fab, Icon } from 'native-base';
 import Header from '../Home/Header';
 import styles from './../../../styles';
 import getTablePackage from './../../../api/getTablePackage';
-import { AVAIABLE, HOLDING, WAITING, SOLD, DISABLED, INCOMPLETE } from './../../../constants/app';
+import { AVAIABLE, DISABLED, HOLDING, INCOMPLETE, SOLD, WAITING } from './../../../constants/app';
 import { loading } from '../../../Helpers';
 
 export default class TablePackage extends Component {
+    renderHeader = () => {
+        const { column } = this.state;
+        let header = [];
+        for (let i = 1; i <= column; i++) {
+            let txt = i;
+            if (i < 10 && i != 0) {
+                txt = `0${i}`;
+            }
+            header.push(
+                <View key={i} style={styles.col}>
+                    <Text style={styles.textFirstCol}>
+                        {`Căn ${txt}`}
+                    </Text>
+                </View>
+            );
+        }
+        return (
+            <View style={{ flexDirection: 'row' }}>
+                {header}
+            </View>
+        );
+    }
+    _keyExtractor = (item, index) => item.id; //eslint-disable-line
+
     constructor(props) {
         super(props);
         this.state = {
@@ -18,6 +42,23 @@ export default class TablePackage extends Component {
             listApartment: null,
         };
     }
+
+    // renderTable(obj) {
+    //     return (
+    //         <TouchableOpacity
+    //             style={styles.row}
+    //             onPress={() => {
+    //                 this.props.navigation.navigate('DetailApartmentScreen', {
+    //                     apartmentId: obj.item.key
+    //                 });
+    //             }}
+    //         >
+    //             <Text style={styles.textRow}>
+    //                 {obj.item.key}
+    //             </Text>
+    //         </TouchableOpacity>
+    //     );
+
     componentDidMount() {
         const { navigation } = this.props;
         const project = navigation.getParam('project', null);
@@ -72,22 +113,8 @@ export default class TablePackage extends Component {
         }
         return className;
     }
-    renderTable(obj) {
-        return (
-            <TouchableOpacity
-                style={styles.row}
-                onPress={() => {
-                    this.props.navigation.navigate('DetailApartmentScreen', {
-                        apartmentId: obj.item.key
-                    });
-                }}
-            >
-                <Text style={styles.textRow}>
-                    {obj.item.key}
-                </Text>
-            </TouchableOpacity>
-        );
-    }
+
+    // }
     renderSeparator() {
         return (
             <View
@@ -98,29 +125,7 @@ export default class TablePackage extends Component {
             />
         );
     }
-    renderHeader = () => {
-        const { column } = this.state;
-        let header = [];
-        for (let i = 1; i <= column; i++) {
-            let txt = i;
-            if (i < 10 && i != 0) {
-                txt = `0${i}`;
-            }
-            header.push(
-                <View key={i} style={styles.col}>
-                    <Text style={styles.textFirstCol}>
-                        {`Căn ${txt}`}
-                    </Text>
-                </View>
-            );
-        }
-        return (
-            <View style={{ flexDirection: 'row' }}>
-                {header}
-            </View>
-        );
-    }
-    _keyExtractor = (item, index) => item.id; //eslint-disable-line
+
     onFilter() {
         var newArray = this.state.listApartment.filter(function (el) {
             return el.number === '102';
@@ -131,6 +136,7 @@ export default class TablePackage extends Component {
         });
         console.log(newArray);
     }
+
     render() {
         const { navigation } = this.props;
         const buildingName = navigation.getParam('buildingName', null);
@@ -140,35 +146,36 @@ export default class TablePackage extends Component {
         }
         return (
             <View style={styles.container}>
-                <Header navigation={this.props.navigation} title={`${buildingName} - ${project.name}`} back={'popToTop'} />
-                <View>
+                <Header navigation={this.props.navigation} title={`${buildingName} - ${project.name}`}
+                        back={'popToTop'} />
+                <View style={{ margin: 10 }}>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: '#6EC9FF' }} />
+                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: '#6EC9FF' }} />
                             <Text style={{ fontSize: 12 }}> Còn trống</Text>
                         </View>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: '#FFDA23' }} />
+                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: '#FFDA23' }} />
                             <Text style={{ fontSize: 12 }}> Chờ thanh toán</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: '#FF9323' }} />
+                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: '#FF9323' }} />
                             <Text style={{ fontSize: 12 }}> Đang giữ chỗ</Text>
                         </View>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: 'red' }} />
+                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: 'red' }} />
                             <Text style={{ fontSize: 12 }}> Đã bán</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: '#c2c2c2' }} />
+                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: '#c2c2c2' }} />
                             <Text style={{ fontSize: 12 }}> Chưa mở bán</Text>
                         </View>
                         <View style={styles.note}>
-                            <View style={{ width: 20, height: 20, backgroundColor: 'gray' }} />
+                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: 'gray' }} />
                             <Text style={{ fontSize: 12 }}> Không thể giao dịch</Text>
                         </View>
                     </View>
@@ -183,7 +190,7 @@ export default class TablePackage extends Component {
                         data={this.state.listApartment}
                         // renderItem={this.renderTable}
                         renderItem={obj => {
-                            let className = this.getClassName(obj.item.status);
+                            const className = this.getClassName(obj.item.status);
                             return (
                                 <TouchableOpacity
                                     style={className}
@@ -205,7 +212,7 @@ export default class TablePackage extends Component {
                     active={this.state.active}
                     direction="up"
                     containerStyle={{}}
-                    style={{ backgroundColor: '#F58319', width: 35, height: 35 }}
+                    style={{ backgroundColor: '#F58319', width: 50, height: 50 }}
                     position="bottomRight"
                     onPress={() => this.props.navigation.navigate('SearchApartmentScreen', {
                         listApartment: this.state.listApartment

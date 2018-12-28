@@ -11,7 +11,7 @@ import {
     View
 } from 'react-native';
 
-import { Body, Icon, ListItem } from 'native-base';
+import { Body, Icon, ListItem, Toast } from 'native-base';
 import { TextInputMask } from 'react-native-masked-text';
 import Autocomplete from 'react-native-autocomplete-input';
 import Header from '../Home/Header';
@@ -22,6 +22,10 @@ import getToken from '../../../api/getToken';
 import getCustomers from '../../../api/getCustomers';
 
 export default class OrderSubmit extends React.Component {
+    handleBackPress = () => { //eslint-disable-line
+        return this.props.navigation.navigate('TablePackageScreen');
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -67,10 +71,6 @@ export default class OrderSubmit extends React.Component {
             });
     }
 
-    handleBackPress = () => { //eslint-disable-line
-        return this.props.navigation.navigate('TablePackageScreen');
-    }
-
     onChangeMoney(text) {
         this.setState({ reserveValue: text });
     }
@@ -83,33 +83,25 @@ export default class OrderSubmit extends React.Component {
                 postOrderTransaction(token, transactionCode, searchCustomer, customerId, fullName, email, address, phone, identity, paymentMethod, reserveValue)
                     .then(res => {
                         if (res.status === 200) {
-                            Alert.alert(
-                                'Thông báo',
-                                res.message,
-                                [
-                                    {
-                                        text: 'OK',
-                                        onPress: () => {
-                                            this.props.navigation.navigate('MapScreen');
-                                        }
-                                    },
-                                    { text: 'Hủy', onPress: () => console.log('ok') },
-                                ],
-                                { cancelable: false }
-                            );
-                        } else {
-                            var message = '';
-                            Object.keys(res.data.errors).forEach(function (key) {
-                                message += res.data.errors[key] + '\n';
+                            return Toast.show({
+                                text: res.message,
+                                type: 'success',
+                                buttonText: 'Okay'
                             });
-                            Alert.alert(
-                                'Thông báo',
-                                message,
-                            );
                         }
+                        let message = '';
+                        Object.keys(res.data.errors).forEach(function (key) {
+                            message += res.data.errors[key] + '\n';
+                        });
+                        return Toast.show({
+                            text: message,
+                            type: 'danger',
+                            buttonText: 'Okay'
+                        });
                     });
             });
     }
+
     selectMethodPayment(type) {
         console.log(type);
         this.setState({ paymentMethod: type });
@@ -139,6 +131,7 @@ export default class OrderSubmit extends React.Component {
                     .catch(err => console.log(err));
             });
     }
+
     render() {
         const { apartment } = this.state;
         const { fullName } = this.state;

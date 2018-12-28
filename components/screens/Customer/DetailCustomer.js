@@ -1,11 +1,29 @@
 import React from 'react';
-import { Alert, Image, Keyboard, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Button, Icon } from 'native-base';
+import {
+    Alert,
+    Image,
+    Keyboard,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {
+    Button,
+    Icon,
+    Toast
+} from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import SwitchSelector from 'react-native-switch-selector';
 import Header from '../Home/Header';
 import styles from './../../../styles';
-import { callingPhone, loading, openEmail, openSmsUrl } from '../../../Helpers';
+import {
+    callingPhone,
+    loading,
+    openEmail,
+    openSmsUrl
+} from '../../../Helpers';
 import getToken from '../../../api/getToken';
 import postCreateCustomer from '../../../api/postCreateCustomer';
 import postUpdateCustomer from '../../../api/postUpdateCustomer';
@@ -13,11 +31,22 @@ import postDeleteCustomer from '../../../api/postDeleteCustomer';
 import icSale from './../../../icons/customer.png';
 
 export default class DetailCustomer extends React.Component {
+    state = {
+        isDatePickerVisible: false,
+    };
+    showDatePicker   = () => this.setState({ isDatePickerVisible: true }); //eslint-disable-line
+    hideDatePicker   = () => this.setState({ isDatePickerVisible: false }); //eslint-disable-line
+    handleDatePicked = (date) => { //eslint-disable-line
+        let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+        this.setState({ txtDate: selected, date });
+        this.hideDatePicker();
+    }
+
     constructor(props) {
         super(props);
         const { navigation } = this.props;
-        const customer = navigation.getParam('customer', null);
-        this.state = {
+        const customer       = navigation.getParam('customer', null);
+        this.state           = {
             loaded: false,
             customer: customer ? customer : '',
             fullname: customer ? customer.full_name : '',
@@ -30,14 +59,13 @@ export default class DetailCustomer extends React.Component {
             birthday: customer ? customer.birth_day : '',
         };
     }
-    state = {
-        isDatePickerVisible: false,
-    };
+
     componentDidMount() {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 200);
     }
+
     onSubmit() {
         getToken()
             .then(token => {
@@ -45,36 +73,20 @@ export default class DetailCustomer extends React.Component {
                 if (customer) {
                     postUpdateCustomer(token, customer.id, fullname, phone, address, birthday, identity, gender, email)
                         .then(res => {
-                            Alert.alert(
-                                'Thông báo',
-                                res.message,
-                                [
-                                    {
-                                        text: 'OK',
-                                        onPress: () => {
-                                            this.props.navigation.navigate('MapScreen');
-                                        }
-                                    },
-                                ],
-                                { cancelable: false }
-                            );
+                            return Toast.show({
+                                text: res.message,
+                                type: 'success',
+                                buttonText: 'Okay'
+                            });
                         });
                 } else {
                     postCreateCustomer(token, fullname, phone, address, birthday, identity, gender, email)
                         .then(res => {
-                            Alert.alert(
-                                'Thông báo',
-                                res.message,
-                                [
-                                    {
-                                        text: 'OK',
-                                        onPress: () => {
-                                            this.props.navigation.navigate('MapScreen');
-                                        }
-                                    },
-                                ],
-                                { cancelable: false }
-                            );
+                            return Toast.show({
+                                text: res.message,
+                                type: 'success',
+                                buttonText: 'Okay'
+                            });
                         });
                 }
             });
@@ -94,19 +106,11 @@ export default class DetailCustomer extends React.Component {
                                 if (customer) {
                                     postDeleteCustomer(token, customer.id)
                                         .then(res => {
-                                            Alert.alert(
-                                                'Thông báo',
-                                                res.message,
-                                                [
-                                                    {
-                                                        text: 'OK',
-                                                        onPress: () => {
-                                                            this.props.navigation.navigate('MapScreen');
-                                                        }
-                                                    },
-                                                ],
-                                                { cancelable: false }
-                                            );
+                                            return Toast.show({
+                                                text: res.message,
+                                                type: 'success',
+                                                buttonText: 'Okay'
+                                            });
                                         });
                                 }
                             });
@@ -116,13 +120,7 @@ export default class DetailCustomer extends React.Component {
             { cancelable: false }
         );
     }
-    showDatePicker = () => this.setState({ isDatePickerVisible: true }); //eslint-disable-line
-    hideDatePicker = () => this.setState({ isDatePickerVisible: false }); //eslint-disable-line
-    handleDatePicked = (date) => { //eslint-disable-line
-        let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
-        this.setState({ txtDate: selected, date });
-        this.hideDatePicker();
-    }
+
     render() {
         if (!this.state.loaded) {
             return loading();
@@ -151,14 +149,17 @@ export default class DetailCustomer extends React.Component {
                         </View>
                         <View style={styles.list}>
                             <Button transparent onPress={() => callingPhone(this.state.phone)}>
-                                <Text><Icon type="Feather" name="phone-call" style={{ color: 'orange', fontSize: 30 }} /></Text>
+                                <Text><Icon type="Feather" name="phone-call"
+                                            style={{ color: 'orange', fontSize: 30 }} /></Text>
                             </Button>
                             <Button transparent onPress={() => openSmsUrl(this.state.phone, '')}
                                     style={{ paddingLeft: 50 }}>
-                                <Text><Icon type="MaterialCommunityIcons" name="message-text-outline" style={{ color: 'orange', fontSize: 30 }} /></Text>
+                                <Text><Icon type="MaterialCommunityIcons" name="message-text-outline"
+                                            style={{ color: 'orange', fontSize: 30 }} /></Text>
                             </Button>
                             <Button transparent onPress={() => openEmail()} style={{ paddingLeft: 50 }}>
-                                <Text><Icon type="Octicons" name="mail" style={{ color: 'orange', fontSize: 34 }} /></Text>
+                                <Text><Icon type="Octicons" name="mail"
+                                            style={{ color: 'orange', fontSize: 34 }} /></Text>
                             </Button>
                         </View>
                         <View style={styles.viewInput}>
@@ -275,7 +276,7 @@ export default class DetailCustomer extends React.Component {
                         />
                     </View>
                 </ScrollView>
-            </View >
+            </View>
         );
     }
 }
