@@ -34,7 +34,7 @@ import Test from './Test';
 
 const ProjectStack = createStackNavigator(
     {
-        Map: {
+        MapScreen: {
             screen: MapProject
         },
         BuildingScreen: {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, Dimensions, Alert } from 'react-native';
 import { Icon } from 'native-base';
+import { DrawerActions } from 'react-navigation';
 
 import icAvatar from './../../../icons/customer.png';
 import icProfile from './../../../icons/icon_profile.png';
@@ -27,7 +28,7 @@ export default class SignOut extends Component {
                         GLOBAL.user = null;
                         saveToken('');
                         saveUser('');
-                        this.onGoToSignIn();
+                        return this.props.navigation.navigate('LoginScreen');
                     }
                 },
                 { text: 'Hủy', onPress: () => console.log('Cancel Pressed') },
@@ -35,11 +36,10 @@ export default class SignOut extends Component {
             { cancelable: false }
         );
     }
-
-    onGoToSignIn() {
-        return this.props.navigation.navigate('LoginScreen');
+    gotoScreen(screen) {
+        this.props.navigation.navigate(screen);
+        this.props.navigation.dispatch(DrawerActions.closeDrawer());
     }
-
     render() {
         return (
             <View>
@@ -59,7 +59,7 @@ export default class SignOut extends Component {
                     />
                     <TouchableOpacity
                         style={styles.btnMenu}
-                        onPress={() => this.props.navigation.navigate('ProfileScreen')}
+                        onPress={this.gotoScreen.bind(this, 'ProfileScreen')}
                     >
                         {/*<Image source={icProfile} style={styles.iconMenu} />*/}
                          <Icon type="FontAwesome" name='user' style={{ fontSize: 20, color: 'orange' }} />
@@ -67,7 +67,7 @@ export default class SignOut extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnMenu}
-                        onPress={() => this.props.navigation.navigate('ChangePasswordScreen')}
+                        onPress={this.gotoScreen.bind(this, 'ChangePasswordScreen')}
                     >
                         <Icon name='ios-key' style={{ fontSize: 18, color: 'orange' }} />
                         <Text style={styles.textMenu}>Thay đổi mật khẩu</Text>
@@ -81,7 +81,7 @@ export default class SignOut extends Component {
                     {/*</TouchableOpacity>*/}
                     <TouchableOpacity
                         style={styles.btnMenu}
-                        onPress={() => this.props.navigation.navigate('MyTransactionScreen')}
+                        onPress={this.gotoScreen.bind(this, 'MyTransactionScreen')}
                     >
                         {/*<Image source={icHistory} style={styles.iconMenu} />*/}
                          <Icon name='ios-list-box' style={{ fontSize: 20, color: 'orange' }} />
@@ -89,7 +89,7 @@ export default class SignOut extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnMenu}
-                        onPress={() => this.props.navigation.navigate('MyProjectScreen')}
+                        onPress={this.gotoScreen.bind(this, 'MyProjectScreen')}
                     >
                         {/*<Image source={icList} style={styles.iconMenu} />*/}
                          <Icon name='ios-heart' style={{ fontSize: 18, color: 'orange' }} />
@@ -97,7 +97,7 @@ export default class SignOut extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnMenu}
-                        onPress={() => this.props.navigation.navigate('MyCustomerScreen')}
+                        onPress={this.gotoScreen.bind(this, 'MyCustomerScreen')}
                     >
                         {/* <Image source={icHistory} style={styles.iconMenu} /> */}
                         <Icon name='ios-people' style={{ fontSize: 18, color: 'orange' }} />

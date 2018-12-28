@@ -76,8 +76,18 @@ export default class KindProject extends Component {
                             .then(token => {
                                 postLikeProject(token, id)
                                     .then(res => {
-                                        console.log(res);
-                                        this.props.navigation.navigate('MyProjectScreen');
+                                        if (res.status === 200) {
+                                            const arr = this.state.listFavourite;
+                                            if (res.data === 'added') {
+                                                arr.push(id);
+                                            } else {
+                                                const index = arr.indexOf(id);
+                                                if (index > -1) {
+                                                    arr.splice(index, 1);
+                                                }
+                                            }
+                                            this.setState({ listFavourite: arr });
+                                        }
                                     });
                             });
                     }
@@ -109,6 +119,7 @@ export default class KindProject extends Component {
                     </TouchableOpacity>
                     <FlatList
                         data={this.state.listProject}
+                        extraData={this.state}
                         keyExtractor={this.keyExtractor}
                         renderItem={({ item }) => (
                             <ListItem thumbnail>
@@ -116,7 +127,6 @@ export default class KindProject extends Component {
                                     <TouchableOpacity
                                         onPress={() => {
                                             this.props.navigation.navigate('TabProjectScreen', {
-                                                // projectId: item.id,
                                                 project: item
                                             });
                                         }}
@@ -133,7 +143,6 @@ export default class KindProject extends Component {
                                 <TouchableOpacity
                                     onPress={() => {
                                         this.props.navigation.navigate('TabProjectScreen', {
-                                            // projectId: item.id,
                                             project: item
                                         });
                                     }}

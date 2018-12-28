@@ -11,7 +11,7 @@ const {
 } = Dimensions.get('window');
 const heightPopup = 220;
 const heightResult = 300;
-const heightSearch = Platform.OS === 'ios' ? height : height - 15;
+const heightSearch = Platform.OS === 'ios' ? height : height;
 const imageWidth = width;
 const imageHeight = (imageWidth / 3900) * 2092;
 
@@ -282,7 +282,7 @@ export default StyleSheet.create({
     },
     fakeInputSearch: {
         marginTop: 10,
-        borderBottomWidth: 1,
+        borderBottomWidth: 0,
         borderColor: '#cecece',
         marginLeft: 15,
         width: width / 1.4
@@ -720,11 +720,12 @@ export default StyleSheet.create({
         borderRightWidth: 3,
         borderColor: '#fff',
         paddingLeft: 20,
-        paddingTop: 20
+        paddingTop: 30
     },
     headerInfo: {
         flexDirection: 'row',
-        height: height / 10
+        height: height / 10,
+        marginTop: 20
     },
     iconAvatar: {
         width: 50,

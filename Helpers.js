@@ -19,16 +19,16 @@ export function formatMoney(n, c, d, t) {
 }
 
 export function getDayNextMonth(date, numberMonth = 1) {
-    var day = date.getDate();
-    var month = date.getMonth() + 1 + numberMonth;
-    var year = date.getFullYear();
-    var totalDayInMonth = getDaysInMonth(month, year);
+    let day = date.getDate();
+    let month = date.getMonth() + 1 + numberMonth;
+    let year = date.getFullYear();
+    let totalDayInMonth = getDaysInMonth(month, year);
     if (day > totalDayInMonth) {
         day = totalDayInMonth;
     }
     if (month > 12) {
-        var times = Math.floor(month / 12);
-        var few = month % 12;
+        let times = Math.floor(month / 12);
+        let few = month % 12;
         if (few > 0) {
             month = few;
             year += times;
@@ -123,7 +123,7 @@ export function convertTimestampToDateTime($timestamp) {
 }
 
 export function convertIntToDateTime(t) {
-    let dateObj = new Date(t * 1000);
+    const dateObj = new Date(t * 1000);
     return ((dateObj.getMonth() + 1) + '-' +
         (dateObj.getDate()) + '-' +
         dateObj.getFullYear() + ' ' +
@@ -134,4 +134,18 @@ export function convertIntToDateTime(t) {
         ((dateObj.getSeconds() < 10)
             ? ('0' + dateObj.getSeconds())
             : (dateObj.getSeconds())));
+}
+
+
+// gets the current screen from navigation state
+export function getActiveRouteName(navigationState) {
+    if (!navigationState) {
+        return null;
+    }
+    const route = navigationState.routes[navigationState.index];
+    // dive into nested navigators
+    if (route.routes) {
+        return getActiveRouteName(route);
+    }
+    return route.routeName;
 }

@@ -1,37 +1,26 @@
 import React from 'react';
-import {
-    Animated,
-    BackHandler,
-    Dimensions,
-    FlatList,
-    Image,
-    Platform,
-    Text,
-    TouchableOpacity,
-    View,
-} from 'react-native';
-import MapView, {Marker, Callout} from 'react-native-maps';
-import {Icon} from 'native-base';
+import { Animated, BackHandler, Dimensions, Image, Platform, Text, TouchableOpacity, View, } from 'react-native';
+import MapView, { Callout, Marker } from 'react-native-maps';
+import { Icon } from 'native-base';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import AdvanceSearch from './AdvanceSearch';
-import icPin from './../../../icons/pin-building.png';
 import getProject from './../../../api/getProject';
 import GLOBAL from './../../../Globals';
 import SearchResult from '../../Modal/SearchResult';
 import styles from './../../../styles';
 import icRest from './../../../icons/rest.png';
 import icInvest from './../../../icons/invest.png';
-import {loading} from '../../../Helpers';
+import { loading } from '../../../Helpers';
 import KindProject from '../../Modal/KindProject';
 import saveProject from '../../../api/saveProject';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 let isHidden = true;
 let isHiddenPopup = true;
 const heightPopup = 220;
 const heightResult = 300;
-const heightSearch = Platform.OS === 'ios' ? height : height - 5;
+const heightSearch = Platform.OS === 'ios' ? height : height;
 
 export default class MapProject extends React.Component {
     handleBackPress = () => { //eslint-disable-line
@@ -118,7 +107,7 @@ export default class MapProject extends React.Component {
         let toValue = heightSearch;
         if (isHidden) {
             toValue = 0;
-            this.setState({modalAdvanceSearch: true});
+            this.setState({ modalAdvanceSearch: true });
         }
         let value = '';
         if (wantHide) {
@@ -178,7 +167,7 @@ export default class MapProject extends React.Component {
 
     toggleResult(isHiddenResult, dataSearch) {
         if (dataSearch) {
-            this.setState({dataSearch, modalResult: true});
+            this.setState({ dataSearch, modalResult: true });
         }
         let toValue = heightResult;
         if (isHiddenResult) {
@@ -199,7 +188,7 @@ export default class MapProject extends React.Component {
         let toValue = heightResult;
         if (isHiddenResult) {
             toValue = 0;
-            this.setState({kind, modalKind: true});
+            this.setState({ kind, modalKind: true });
         }
         Animated.spring(
             this.state.kindValue,
@@ -218,10 +207,10 @@ export default class MapProject extends React.Component {
         }
         return (
             <View style={styles.wrapper}>
-                <Header navigation={this.props.navigation} title='BẢN ĐỒ DỰ ÁN'/>
+                <Header navigation={this.props.navigation} title='BẢN ĐỒ DỰ ÁN' />
                 <View style={styles.mapContainer}>
                     <MapView
-                        style={{width, flex: 1}}
+                        style={{ width, flex: 1 }}
                         initialRegion={{
                             latitude: this.state.currentLocation.latitude,
                             longitude: this.state.currentLocation.longitude,
@@ -267,7 +256,7 @@ export default class MapProject extends React.Component {
                                 <Callout>
                                     <TouchableOpacity onPress={() => console.log('aaa')} underlayColor='#dddddd'>
                                         <View style={styles.calloutText}>
-                                            <Text>ok</Text>
+                                            <Text>{project.name}</Text>
                                         </View>
                                     </TouchableOpacity>
                                 </Callout>
@@ -302,11 +291,11 @@ export default class MapProject extends React.Component {
                                 this.toggleAdvanceSearch();
                             }}
                         >
-                            <Text style={{fontStyle: 'italic'}}>Nhập tên dự án...</Text>
+                            <Text style={{ fontStyle: 'italic' }}>Nhập tên dự án...</Text>
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity
-                        style={{marginTop: 5, flexDirection: 'row', justifyContent: 'center'}}
+                        style={{ marginTop: 5, flexDirection: 'row', justifyContent: 'center' }}
                         onPress={() => {
                             this.toggleAdvanceSearch();
                         }}
@@ -315,7 +304,7 @@ export default class MapProject extends React.Component {
                         <Icon
                             type='FontAwesome'
                             name='caret-up'
-                            style={{color: '#004a80', fontSize: 14}}
+                            style={{ color: '#004a80', fontSize: 14 }}
                         />
                     </TouchableOpacity>
                     <View style={styles.modalAction}>
@@ -326,7 +315,7 @@ export default class MapProject extends React.Component {
                             }}
                         >
                             <View style={styles.btnMapOrange}>
-                                <Icon name='ios-home' style={{color: '#fff'}}/>
+                                <Icon name='ios-home' style={{ color: '#fff' }} />
                             </View>
                             <Text style={styles.textQuickAction}>Bất động sản để ở</Text>
                         </TouchableOpacity>
@@ -337,7 +326,7 @@ export default class MapProject extends React.Component {
                             }}
                         >
                             <View style={styles.btnMapRed}>
-                                <Image source={icInvest} style={{width: 25, height: 25}}/>
+                                <Image source={icInvest} style={{ width: 25, height: 25 }} />
                             </View>
                             <Text style={styles.textQuickAction}>Bất động sản đầu tư</Text>
                         </TouchableOpacity>
@@ -348,7 +337,7 @@ export default class MapProject extends React.Component {
                             }}
                         >
                             <View style={styles.btnMapGreen}>
-                                <Image source={icRest} style={{width: 25, height: 25}}/>
+                                <Image source={icRest} style={{ width: 25, height: 25 }} />
                             </View>
                             <Text style={styles.textQuickAction}>Bất động sản nghỉ dưỡng</Text>
                         </TouchableOpacity>
@@ -362,7 +351,7 @@ export default class MapProject extends React.Component {
                                 <Icon
                                     type='MaterialCommunityIcons'
                                     name='earth'
-                                    style={{color: '#fff'}}
+                                    style={{ color: '#fff' }}
                                 />
                             </View>
                             <Text style={styles.textQuickAction}>Bất động sản quốc tế</Text>
@@ -372,7 +361,7 @@ export default class MapProject extends React.Component {
 
                 <Animated.View
                     style={[styles.subView,
-                        {transform: [{translateY: this.state.bounceValue}]}]}
+                        { transform: [{ translateY: this.state.bounceValue }] }]}
                 >
                     {this.state.modalAdvanceSearch &&
                     <AdvanceSearch
@@ -386,7 +375,7 @@ export default class MapProject extends React.Component {
                 </Animated.View>
                 <Animated.View
                     style={[styles.popupProject,
-                        {transform: [{translateY: this.state.popupValue}]}]}
+                        { transform: [{ translateY: this.state.popupValue }] }]}
                 >
                     {this.state.modalPreview &&
                     <PreviewProject
@@ -396,7 +385,7 @@ export default class MapProject extends React.Component {
                 </Animated.View>
                 <Animated.View
                     style={[styles.popupResult,
-                        {transform: [{translateY: this.state.resultValue}]}]}
+                        { transform: [{ translateY: this.state.resultValue }] }]}
                 >
                     {this.state.modalResult &&
                     <SearchResult
@@ -407,7 +396,7 @@ export default class MapProject extends React.Component {
                 </Animated.View>
                 <Animated.View
                     style={[styles.popupResult,
-                        {transform: [{translateY: this.state.kindValue}]}]}
+                        { transform: [{ translateY: this.state.kindValue }] }]}
                 >
                     {this.state.modalKind &&
                     <KindProject

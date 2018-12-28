@@ -65,7 +65,7 @@ export default class MyTransactions extends Component {
         }
         return (
             <Container>
-                <Header navigation={this.props.navigation} title='LỊCH SỬ GIAO DỊCH' back={'ok'} />
+                <Header navigation={this.props.navigation} title='LỊCH SỬ GIAO DỊCH' back={'MapScreen'} />
                 <Content>
                     <FlatList
                         data={this.state.listTransaction}

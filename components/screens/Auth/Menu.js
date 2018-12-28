@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
 import { Icon } from 'native-base';
-
 import icAvatar from './../../../icons/customer.png';
 import icProfile from './../../../icons/icon_profile.png';
 import icHistory from './../../../icons/history.png';
@@ -22,8 +21,9 @@ import bocongthuong_register from './../../../icons/bocongthuong_register.png';
 const { width, height } = Dimensions.get('window');
 
 export default class Menu extends Component {
-    gotoMapProject() {
-        this.props.navigation.navigate('MapScreen');
+    gotoScreen(screen) {
+        this.props.navigation.navigate(screen);
+        this.props.navigation.closeDrawer();
     }
     render() {
         return (
@@ -40,7 +40,7 @@ export default class Menu extends Component {
                         <View
                             style={styles.underLine}
                         />
-                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoMapProject.bind(this)}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'MapScreen')}>
                             <Image source={icSale} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Tổng kho bất động sản</Text>
                         </TouchableOpacity>
@@ -60,7 +60,7 @@ export default class Menu extends Component {
                             <Text style={styles.textMenu}>Đối tác</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('HomeScreen')}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'HomeScreen')}>
                             <Image source={icLogohpt} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Đặc quyền hệ thống</Text>
                         </TouchableOpacity>
@@ -71,22 +71,22 @@ export default class Menu extends Component {
                         <View
                             style={styles.underLine}
                         />
-                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoMapProject.bind(this)}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'MapScreen')}>
                             <Image source={icHistory} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Câu hỏi thường gặp</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoMapProject.bind(this)}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'MapScreen')}>
                             <Image source={icList} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Điều khoản dịch vụ</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoMapProject.bind(this)}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'MapScreen')}>
                             <Image source={icHistory} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Chính sách hoạt động</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoMapProject.bind(this)}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'MapScreen')}>
                             <Image source={icHistory} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Bảo mật thanh toán</Text>
                         </TouchableOpacity>

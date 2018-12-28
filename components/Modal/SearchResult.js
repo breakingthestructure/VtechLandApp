@@ -1,23 +1,40 @@
 import React, { Component } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Alert, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Body, Button, Container, Content, Icon, Left, ListItem, Right, Thumbnail } from 'native-base';
 import { BASE_URL, NO_IMAGE } from './../../Globals';
 import { loading } from '../../Helpers';
 import getToken from '../../api/getToken';
 import postLikeProject from '../../api/postLikeProject';
+import getFavouriteProjects from '../../api/getFavouriteProjects';
 
 // const { width, height } = Dimensions.get('window');
 
 export default class SearchResult extends Component {
+    keyExtractor = (item) => item.id.toString(); //eslint-disable-line
+
     constructor(props) {
         super(props);
         this.state = {
             listImage: null,
             index: 0,
-            loaded: true,
+            loaded: false,
             imagePreview: false
         };
-        this.arrayProject = [];
+    }
+    componentDidMount() {
+        getToken()
+            .then(token => {
+                getFavouriteProjects(token)
+                    .then(res => {
+                        console.log(res);
+                        this.setState({
+                            listFavourite: res.data,
+                            loaded: true
+                        });
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
     }
     onLikeProject(id) {
         Alert.alert(
@@ -31,8 +48,18 @@ export default class SearchResult extends Component {
                             .then(token => {
                                 postLikeProject(token, id)
                                     .then(res => {
-                                        console.log(res);
-                                        this.props.navigation.navigate('MyProjectScreen');
+                                        if (res.status === 200) {
+                                            const arr = this.state.listFavourite;
+                                            if (res.data === 'added') {
+                                                arr.push(id);
+                                            } else {
+                                                const index = arr.indexOf(id);
+                                                if (index > -1) {
+                                                    arr.splice(index, 1);
+                                                }
+                                            }
+                                            this.setState({ listFavourite: arr });
+                                        }
                                     });
                             });
                     }
@@ -42,10 +69,10 @@ export default class SearchResult extends Component {
             { cancelable: false }
         );
     }
-    keyExtractor = (item) => item.toString(); //eslint-disable-line
+
     render() {
         const { dataSearch } = this.props.state;
-        if (!this.props.state.loaded) {
+        if (!this.state.loaded) {
             return loading();
         }
         return (
@@ -59,41 +86,66 @@ export default class SearchResult extends Component {
                     >
                         <Text style={styles.textHeading}>{dataSearch.length} kết quả tìm kiếm</Text>
                     </TouchableOpacity>
-                    <ScrollView>
-                        {dataSearch && dataSearch.map((value, key) => (
-                            <ListItem thumbnail key={key}>
+                    <FlatList
+                        data={dataSearch}
+                        extraData={this.state}
+                        keyExtractor={this.keyExtractor}
+                        renderItem={({ item }) => (
+                            <ListItem thumbnail>
                                 <Left>
                                     <TouchableOpacity
                                         onPress={() => {
                                             this.props.navigation.navigate('TabProjectScreen', {
-                                                project: value
+                                                project: item
                                             });
                                         }}
                                     >
-                                        <Thumbnail square source={{ uri: (value.data.images.feature) ? `${BASE_URL}${value.data.images.feature[0]}` : NO_IMAGE }} />
+                                        <Thumbnail
+                                            square
+                                            source={{
+                                                uri: (item.data.images.feature) ? `${BASE_URL}${item.data.images.feature[0]}` : NO_IMAGE
+                                            }}
+                                        />
                                     </TouchableOpacity>
                                 </Left>
                                 <Body>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            this.props.navigation.navigate('TabProjectScreen', {
-                                                project: value
-                                            });
-                                        }}
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        this.props.navigation.navigate('TabProjectScreen', {
+                                            project: item
+                                        });
+                                    }}
+                                >
+                                    <Text style={styles.textTitle}>{item.name}</Text>
+                                    <Text
+                                        style={styles.textDesc}
+                                        note
+                                        numberOfLines={1}
                                     >
-                                        <Text style={styles.textTitle}>{value.name}</Text>
-                                        <Text style={styles.textDesc} note numberOfLines={1}>{value.address}</Text>
-                                        <Text style={styles.textDesc} note numberOfLines={1}>{value.min_price} Tr - {value.max_price} tr/m2</Text>
-                                    </TouchableOpacity>
+                                        {item.address}
+                                    </Text>
+                                    <Text
+                                        style={styles.textDesc}
+                                        note
+                                        numberOfLines={1}
+                                    >
+                                        {item.min_price} Tr - {item.max_price} tr/m2
+                                    </Text>
+                                </TouchableOpacity>
                                 </Body>
                                 <Right>
-                                    <Button transparent onPress={this.onLikeProject.bind(this, value.id)}>
-                                        <Icon active name='ios-heart' style={{ color: 'orange' }} />
+                                    <Button transparent onPress={this.onLikeProject.bind(this, item.id)}>
+                                        <Icon
+                                            type='FontAwesome'
+                                            name={this.state.listFavourite.includes(item.id) ? 'heart' : 'heart-o'}
+                                            style={{ color: 'orange' }}
+                                        />
                                     </Button>
                                 </Right>
                             </ListItem>
-                        ))}
-                    </ScrollView>
+                        )}
+                    />
+
                 </Content>
             </Container>
         );
