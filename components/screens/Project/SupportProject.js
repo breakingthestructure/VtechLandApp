@@ -23,18 +23,20 @@ export default class SupportProject extends Component {
             loaded: false
         };
     }
+
     componentDidMount() {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 200);
     }
+
     keyExtractor = (item, index) => index.toString(); //eslint-disable-line
     render() {
         if (!this.state.loaded) {
             return (
                 <Container>
                     <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner/>
+                        <Spinner />
                     </Content>
                 </Container>
             );
@@ -47,7 +49,7 @@ export default class SupportProject extends Component {
                     renderItem={({ item }) => (
                         <ListItem avatar>
                             <Left>
-                                <Thumbnail source={icSale}/>
+                                <Thumbnail source={icSale} />
                             </Left>
                             <Body>
                             <Text>{item.name}</Text>
@@ -56,7 +58,7 @@ export default class SupportProject extends Component {
                             </Body>
                             <Right>
                                 <Button transparent onPress={() => callingPhone(item.phone)}>
-                                    <Text><Icon name="ios-call" style={{ color: 'green' }}/></Text>
+                                    <Text><Icon name="ios-call" style={{ color: 'green' }} /></Text>
                                 </Button>
                             </Right>
                         </ListItem>

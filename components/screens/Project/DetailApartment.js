@@ -102,8 +102,13 @@ export default class DetailApartment extends React.Component {
                                 transactionCode: res.data
                             });
                         }
+                        let message = res.message;
+                        if (res.status === 401) {
+                            message = 'Vui lòng đăng nhập để sử dụng chức năng này';
+                        }
+                        this.setState({ loaded: true });
                         return Toast.show({
-                            text: res.message,
+                            text: message,
                             type: 'danger',
                             buttonText: 'Okay'
                         });

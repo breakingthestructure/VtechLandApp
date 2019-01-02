@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { BackHandler, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+    BackHandler,
+    FlatList,
+    Image,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import {
     Body,
     Button,
@@ -15,7 +23,10 @@ import {
 } from 'native-base';
 import Header from '../Home/Header';
 import styles from './../../../styles';
-import { BASE_URL, NO_IMAGE } from './../../../Globals';
+import {
+    BASE_URL,
+    NO_IMAGE
+} from './../../../Globals';
 import { loading } from '../../../Helpers';
 import getBuildings from '../../../api/getBuildings';
 import icCalendar from '../../../icons/calendar.png';
@@ -78,30 +89,19 @@ export default class Building extends Component {
                 />
                 <ScrollView ref='_scrollView'>
                     <View style={{ height: 300 }}>
-                        <DeckSwiper
+                        {project.data.images.feature.length > 0 && <DeckSwiper
                             dataSource={project.data.images.feature}
                             renderItem={item =>
-                                <Card style={{ elevation: 3 }}>
-                                    {/*<CardItem>*/}
-                                        {/*<Left>*/}
-                                            {/*<Thumbnail source={{ uri: (item) ? `${BASE_URL}${item}` : NO_IMAGE }} />*/}
-                                            {/*<Body>*/}
-                                            {/*<Text>{project.name}</Text>*/}
-                                            {/*<Text note>V-techHome</Text>*/}
-                                            {/*</Body>*/}
-                                        {/*</Left>*/}
-                                    {/*</CardItem>*/}
-                                    <CardItem cardBody>
-                                        <Image style={{ height: 300, flex: 1 }}
-                                               source={{ uri: (item) ? `${BASE_URL}${item}` : NO_IMAGE }} />
-                                    </CardItem>
-                                    {/*<CardItem>*/}
-                                        {/*<Icon name="heart" style={{ color: '#ED4A6A' }} />*/}
-                                        {/*<Text>{project.name}</Text>*/}
-                                    {/*</CardItem>*/}
-                                </Card>
-                            }
-                        />
+                            <Card style={{ elevation: 3 }}>
+                                <CardItem cardBody>
+                                    <Image
+                                        style={{ height: 300, flex: 1 }}
+                                        source={{ uri: (item) ? `${BASE_URL}${item}` : NO_IMAGE }}
+                                    />
+                                </CardItem>
+                            </Card>
+                        }
+                            />}
                     </View>
                     <Text
                         style={{

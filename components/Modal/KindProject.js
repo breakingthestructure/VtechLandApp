@@ -1,9 +1,27 @@
 import React, { Component } from 'react';
-import { Alert, FlatList, Text, TouchableOpacity } from 'react-native';
-import { Body, Button, Container, Content, Icon, Left, ListItem, Right, Thumbnail } from 'native-base';
+import {
+    Alert,
+    FlatList,
+    Text,
+    TouchableOpacity
+} from 'react-native';
+import {
+    Body,
+    Button,
+    Container,
+    Content,
+    Icon,
+    Left,
+    ListItem,
+    Right,
+    Thumbnail
+} from 'native-base';
 import { loading } from '../../Helpers';
 import getProject from '../../api/getProject';
-import { BASE_URL, NO_IMAGE } from './../../Globals';
+import {
+    BASE_URL,
+    NO_IMAGE
+} from './../../Globals';
 import styles from './../../styles';
 import getToken from '../../api/getToken';
 import getFavouriteProjects from '../../api/getFavouriteProjects';

@@ -1,25 +1,41 @@
 import React from 'react';
-import { Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Content, Icon, Input, Item, Textarea, Toast } from 'native-base';
+import {
+    Keyboard,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {
+    Content,
+    Icon,
+    Input,
+    Item,
+    Textarea,
+    Toast
+} from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import postContact from './../../../api/postContact';
 import styles from './../../../styles';
-import { formatAMPM, loading } from './../../../Helpers';
+import {
+    formatAMPM,
+    loading
+} from './../../../Helpers';
 
 export default class SetCalendar extends React.Component {
     state = { //eslint-disable-line
         isDatePickerVisible: false,
         isTimePickerVisible: false
     };
-    showDatePicker = () => this.setState({ isDatePickerVisible: true });
-    hideDatePicker = () => this.setState({ isDatePickerVisible: false });
+    showDatePicker = () => this.setState({ isDatePickerVisible: true }); //eslint-disable-line
+    hideDatePicker = () => this.setState({ isDatePickerVisible: false }); //eslint-disable-line
     handleDatePicked = (date) => { //eslint-disable-line
-        let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+        const selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
         this.setState({ txtDate: selected });
         this.hideDatePicker();
     };
-    showTimePicker = () => this.setState({ isTimePickerVisible: true });
-    hideTimePicker = () => this.setState({ isTimePickerVisible: false });
+    showTimePicker = () => this.setState({ isTimePickerVisible: true }); //eslint-disable-line
+    hideTimePicker = () => this.setState({ isTimePickerVisible: false }); //eslint-disable-line
     handleTimePicked = (date) => { //eslint-disable-line
         this.setState({ txtTime: formatAMPM(date) });
         this.hideTimePicker();
@@ -79,12 +95,12 @@ export default class SetCalendar extends React.Component {
         }
         return (
             <View>
-                {/* <Header navigation={this.props.navigation} title='ĐẶT LỊCH THAM QUAN NHÀ MẪU' />
-                <Image source={imgDuan} style={{ width: '100%', height: height / 6 }} /> */}
                 <View style={styles.content}>
                     <Text style={styles.titleSection}>ĐẶT LỊCH THAM QUAN NHÀ MẪU</Text>
-                    <Text style={styles.subTitle}>Nhà mẫu dự án mở cửa 8h00 - 18h00 tất cả các ngày trong tuần (kể cả
-                        thứ 7 & chủ nhật)</Text>
+                    <Text style={styles.subTitle}>
+                        Nhà mẫu dự án mở cửa 8h00 - 18h00 tất cả các ngày trong tuần (kể cả
+                        thứ 7 & chủ nhật)
+                    </Text>
                     <View style={styles.viewInput}>
                         <TextInput
                             style={styles.input}

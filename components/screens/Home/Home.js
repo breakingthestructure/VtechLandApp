@@ -6,19 +6,17 @@ import {
     Dimensions,
     TouchableOpacity,
     StyleSheet,
-    ScrollView,
     FlatList,
     RefreshControl
 } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import Header from './Header';
 
-// import imgDuan from './../../../images/duan.jpg';
 import icTitle from './../../../icons/ic_title.png';
 import getProject from './../../../api/getProject';
 import { BASE_URL, NO_IMAGE } from './../../../Globals';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default class Home extends React.Component {
     constructor(props) {

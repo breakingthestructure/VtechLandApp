@@ -1,0 +1,31 @@
+dependencies: \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/Surface/SurfaceHostingView/RCTSurfaceHostingProxyRootView.mm \
+  /Users/69minhkhai/VtechLandApp/ios/Pods/Target\ Support\ Files/React/React-prefix.pch \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/Surface/SurfaceHostingView/RCTSurfaceHostingProxyRootView.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTRootView.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTBridge.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTBridgeDelegate.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTJavaScriptLoader.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTDefines.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTBridgeModule.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTFrameUpdate.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTInvalidating.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/Surface/SurfaceHostingView/RCTSurfaceHostingView.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/Surface/RCTSurfaceDelegate.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/Surface/RCTSurfaceStage.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/Surface/SurfaceHostingView/RCTSurfaceSizeMeasureMode.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTLog.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTUtils.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTPerformanceLogger.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Profiler/RCTProfile.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTRootContentView.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Views/RCTView.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Views/RCTBorderStyle.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Views/RCTComponent.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Views/RCTPointerEvents.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/RCTRootViewDelegate.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Base/Surface/RCTSurface.h \
+  /Users/69minhkhai/VtechLandApp/node_modules/react-native/React/Views/UIView+React.h \
+  /Users/69minhkhai/VtechLandApp/ios/Pods/Headers/Private/yoga/YGEnums.h \
+  /Users/69minhkhai/VtechLandApp/ios/Pods/Headers/Private/yoga/YGMacros.h

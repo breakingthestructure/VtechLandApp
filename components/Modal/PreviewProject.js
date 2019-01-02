@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import { Icon } from 'native-base';
-import { FlatList, Image, Modal, Text, TouchableOpacity, View, } from 'react-native';
+import {
+    FlatList,
+    Image,
+    Modal,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import icTitle from './../../icons/ic_title.png';
-import { BASE_URL, NO_IMAGE } from './../../Globals';
+import {
+    BASE_URL,
+    NO_IMAGE
+} from './../../Globals';
 import styles from './../../styles';
 import { loading } from '../../Helpers';
 
@@ -45,6 +55,12 @@ export default class PreviewProject extends Component {
         this.setState({
             index,
             imagePreview: true
+        });
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            loaded: false
         });
     }
 
@@ -95,7 +111,9 @@ export default class PreviewProject extends Component {
                         imageUrls={this.state.listImage}
                         index={this.state.index}
                         onSwipeDown={() => {
-                            this.setState({ imagePreview: false });
+                            if (this.state.loaded) {
+                                this.setState({ imagePreview: false });
+                            }
                         }}
                         enableSwipeDown
                         backgroundColor='black'

@@ -1,9 +1,28 @@
 import React from 'react';
-import { Alert, FlatList, Keyboard, ScrollView, Switch, Text, TouchableOpacity, View, } from 'react-native';
-import { Content, Form, Icon, Input, Item, Picker, Toast } from 'native-base';
+import {
+    FlatList,
+    Keyboard,
+    Switch,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+import {
+    Content,
+    Form,
+    Icon,
+    Input,
+    Item,
+    Picker,
+    Toast
+} from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { MaskService } from 'react-native-masked-text';
-import { formatMoney, getDayNextMonth, loading } from './../../../Helpers';
+import {
+    formatMoney,
+    getDayNextMonth,
+    loading
+} from './../../../Helpers';
 import styles from './../../../styles';
 
 export default class CalcDebt extends React.Component {
@@ -13,7 +32,7 @@ export default class CalcDebt extends React.Component {
     showDatePicker = () => this.setState({ isDatePickerVisible: true }); //eslint-disable-line
     hideDatePicker = () => this.setState({ isDatePickerVisible: false }); //eslint-disable-line
     handleDatePicked = (date) => { //eslint-disable-line
-        let selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+        const selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
         this.setState({ txtDate: selected, date });
         this.hideDatePicker();
     };
@@ -148,11 +167,6 @@ export default class CalcDebt extends React.Component {
                 type: 'warning',
                 buttonText: 'Okay'
             });
-            // Alert.alert(
-            //     'Thông báo',
-            //     'Bạn chưa chọn ngày'
-            // );
-            // return false;
         }
         if (parseInt(moneyDebt) === 0) {
             return Toast.show({
@@ -259,7 +273,7 @@ export default class CalcDebt extends React.Component {
             <View style={styles.content}>
                 <Text style={styles.txtHeader}>TÍNH LÃI SUẤT VAY DỰ ÁN</Text>
                 <Text style={{ color: '#333333' }}>Vui lòng nhập các tham số cần thiết</Text>
-                <ScrollView>
+                <View>
 
                     <View style={styles.item}>
                         <Content>
@@ -489,7 +503,7 @@ export default class CalcDebt extends React.Component {
                             </View>
                         }
                     />
-                </ScrollView>
+                </View>
 
                 <DateTimePicker
                     isVisible={this.state.isDatePickerVisible}

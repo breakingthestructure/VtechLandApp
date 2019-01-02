@@ -103,7 +103,7 @@ export default class DetailProject extends React.Component {
         }
         return (
             <View>
-                <ScrollView style={styles.content}>
+                <View style={styles.content}>
                     <Text style={styles.titleScreenLeft}>{project.name}</Text>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{ paddingTop: 5 }}>
@@ -255,7 +255,7 @@ export default class DetailProject extends React.Component {
                             LIÊN HỆ CHUYÊN VIÊN TƯ VẤN NGAY
                         </Text>
                     </TouchableOpacity>
-                </ScrollView>
+                </View>
             </View>
         );
     }

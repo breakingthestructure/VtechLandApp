@@ -1,6 +1,18 @@
 import React from 'react';
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
-import { Body, Icon, Left, ListItem } from 'native-base';
+import {
+    FlatList,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+import {
+    Body,
+    Icon,
+    Left,
+    ListItem
+} from 'native-base';
 import { loading } from '../../../Helpers';
 import getNews from './../../../api/getNews';
 
@@ -47,9 +59,17 @@ export default class News extends React.Component {
         }
         return (
             <View style={styles.container}>
-                <ScrollView style={styles.wrapper}>
-                    <Text style={{ fontWeight: '400', fontSize: 16, color: '#1f7eb8', paddingTop: 15 }}>Tin tức & Sự
-                        kiện</Text>
+                <View style={styles.wrapper}>
+                    <Text
+                        style={{
+                            fontWeight: '400',
+                            fontSize: 16,
+                            color: '#1f7eb8',
+                            paddingTop: 15
+                        }}
+                    >
+                        Tin tức & Sự kiện
+                    </Text>
                     <FlatList
                         data={this.state.listProject}
                         keyExtractor={this.keyExtractor}
@@ -69,7 +89,7 @@ export default class News extends React.Component {
                             </ListItem>
                         )}
                     />
-                </ScrollView>
+                </View>
 
             </View>
         );

@@ -1,16 +1,33 @@
 import React, { Component } from 'react';
-import { Alert, FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { Fab, Icon } from 'native-base';
+import {
+    Alert,
+    FlatList,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {
+    Fab,
+    Icon
+} from 'native-base';
 import Header from '../Home/Header';
 import styles from './../../../styles';
 import getTablePackage from './../../../api/getTablePackage';
-import { AVAIABLE, DISABLED, HOLDING, INCOMPLETE, SOLD, WAITING } from './../../../constants/app';
+import {
+    AVAIABLE,
+    DISABLED,
+    HOLDING,
+    INCOMPLETE,
+    SOLD,
+    WAITING
+} from './../../../constants/app';
 import { loading } from '../../../Helpers';
 
 export default class TablePackage extends Component {
-    renderHeader = () => {
+    renderHeader = () => { //eslint-disable-line
         const { column } = this.state;
-        let header = [];
+        const header = [];
         for (let i = 1; i <= column; i++) {
             let txt = i;
             if (i < 10 && i != 0) {
@@ -114,7 +131,6 @@ export default class TablePackage extends Component {
         return className;
     }
 
-    // }
     renderSeparator() {
         return (
             <View
@@ -146,37 +162,82 @@ export default class TablePackage extends Component {
         }
         return (
             <View style={styles.container}>
-                <Header navigation={this.props.navigation} title={`${buildingName} - ${project.name}`}
-                        back={'popToTop'} />
+                <Header
+                    navigation={this.props.navigation}
+                    title={`${buildingName} - ${project.name}`}
+                    back={'popToTop'}
+                />
                 <View style={{ margin: 10 }}>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
-                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: '#6EC9FF' }} />
-                            <Text style={{ fontSize: 12 }}> Còn trống</Text>
+                            <View
+                                style={{
+                                    borderRadius: 10,
+                                    width: 20,
+                                    height: 20,
+                                    backgroundColor: '#6EC9FF'
+                                }}
+                            />
+                            <Text style={{ fontSize: 12, marginTop: 5 }}> Còn trống</Text>
                         </View>
                         <View style={styles.note}>
-                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: '#FFDA23' }} />
-                            <Text style={{ fontSize: 12 }}> Chờ thanh toán</Text>
+                            <View
+                                style={{
+                                    borderRadius: 10,
+                                    width: 20,
+                                    height: 20,
+                                    backgroundColor: '#FFDA23'
+                                }}
+                            />
+                            <Text style={{ fontSize: 12, marginTop: 5 }}> Chờ thanh toán</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
-                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: '#FF9323' }} />
-                            <Text style={{ fontSize: 12 }}> Đang giữ chỗ</Text>
+                            <View
+                                style={{
+                                    borderRadius: 10,
+                                    width: 20,
+                                    height: 20,
+                                    backgroundColor: '#FF9323'
+                                }}
+                            />
+                            <Text style={{ fontSize: 12, marginTop: 5 }}> Đang giữ chỗ</Text>
                         </View>
                         <View style={styles.note}>
-                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: 'red' }} />
-                            <Text style={{ fontSize: 12 }}> Đã bán</Text>
+                            <View
+                                style={{
+                                    borderRadius: 10,
+                                    width: 20,
+                                    height: 20,
+                                    backgroundColor: 'red'
+                                }}
+                            />
+                            <Text style={{ fontSize: 12, marginTop: 5 }}> Đã bán</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <View style={styles.note}>
-                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: '#c2c2c2' }} />
-                            <Text style={{ fontSize: 12 }}> Chưa mở bán</Text>
+                            <View
+                                style={{
+                                    borderRadius: 10,
+                                    width: 20,
+                                    height: 20,
+                                    backgroundColor: '#c2c2c2'
+                                }}
+                            />
+                            <Text style={{ fontSize: 12, marginTop: 5 }}> Chưa mở bán</Text>
                         </View>
                         <View style={styles.note}>
-                            <View style={{ borderRadius: 10, width: 20, height: 20, backgroundColor: 'gray' }} />
-                            <Text style={{ fontSize: 12 }}> Không thể giao dịch</Text>
+                            <View
+                                style={{
+                                    borderRadius: 10,
+                                    width: 20,
+                                    height: 20,
+                                    backgroundColor: 'gray'
+                                }}
+                            />
+                            <Text style={{ fontSize: 12, marginTop: 5 }}> Không thể giao dịch</Text>
                         </View>
                     </View>
                 </View>

@@ -680,7 +680,7 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         borderBottomWidth: 1,
-        borderStyle: 'dotted',
+        // borderStyle: 'dotted',
         borderBottomColor: '#959595',
         // marginTop: 10,
         marginBottom: 10

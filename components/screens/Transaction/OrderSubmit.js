@@ -29,7 +29,6 @@ export default class OrderSubmit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fullName: '',
             email: '',
             address: '',
             phone: '',

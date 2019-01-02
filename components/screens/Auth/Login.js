@@ -6,9 +6,14 @@ import {
     Text,
     TouchableOpacity,
     View,
-    Alert
 } from 'react-native';
-import { Container, Content, Item, Input, Icon, Spinner } from 'native-base';
+import {
+    Content,
+    Item,
+    Input,
+    Icon,
+    Toast
+} from 'native-base';
 import login from './../../../api/login';
 import saveToken from './../../../api/saveToken';
 import saveUser from './../../../api/saveUser';
@@ -33,11 +38,13 @@ export default class Login extends React.Component {
             txtSubmit: 'ĐĂNG NHẬP'
         };
     }
+
     componentDidMount() {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 200);
     }
+
     postLogin() {
         this.setState({ txtSubmit: 'Đang xử lý' });
         const { email, password } = this.state;
@@ -51,25 +58,21 @@ export default class Login extends React.Component {
                                 .then(res => console.log(res))
                                 .catch(err => console.log(err));
                             GLOBAL.user = response.data;
-                            this.props.navigation.navigate('MapScreen');
+                            return this.props.navigation.navigate('MapScreen');
                         })
                         .catch(err => console.log(err));
-
-
-                } else {
-                    this.setState({ txtSubmit: 'ĐĂNG NHẬP' });
-                    Alert.alert(
-                        'Thông báo',
-                        'Đăng nhập thất bại',
-                        [
-                            { text: 'OK', onPress: () => console.log(password) },
-                        ],
-                        { cancelable: false }
-                    );
                 }
+                this.setState({ txtSubmit: 'ĐĂNG NHẬP' });
+                Toast.show({
+                    text: 'Đăng nhập thất bại',
+                    type: '',
+                    buttonText: 'Okay'
+                });
+                return false;
             })
             .catch(err => console.log(err));
     }
+
     render() {
         if (this.state.loaded) {
             return (
@@ -91,7 +94,12 @@ export default class Login extends React.Component {
                         <View style={{ paddingTop: 20, paddingBottom: 20 }}>
                             <Text style={{ fontSize: 18, fontWeight: '500' }}>TRUY CẬP NHANH</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', paddingHorizontal: 30, width: '100%', justifyContent: 'center' }}>
+                        <View style={{
+                            flexDirection: 'row',
+                            paddingHorizontal: 30,
+                            width: '100%',
+                            justifyContent: 'center'
+                        }}>
                             <TouchableOpacity
                                 style={styles.btnAction}
                             >
@@ -152,7 +160,12 @@ export default class Login extends React.Component {
                         <View style={{ paddingTop: 20, paddingBottom: 10 }}>
                             <Text style={{ fontSize: 18, fontWeight: '600', color: '#333333' }}>ĐĂNG NHẬP NGAY</Text>
                         </View>
-                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30 }}>
+                        <View style={{
+                            width: '100%',
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end',
+                            paddingHorizontal: 30
+                        }}>
                             <Content>
                                 <Item
                                     style={{
@@ -179,7 +192,13 @@ export default class Login extends React.Component {
                                 </Item>
                             </Content>
                         </View>
-                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30, paddingTop: 10 }}>
+                        <View style={{
+                            width: '100%',
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end',
+                            paddingHorizontal: 30,
+                            paddingTop: 10
+                        }}>
                             <Content>
                                 <Item
                                     style={{
@@ -219,9 +238,16 @@ export default class Login extends React.Component {
                             }}
                             onPress={this.postLogin.bind(this)}
                         >
-                            <Icon type="FontAwesome" name='sign-in' style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} />
+                            <Icon type="FontAwesome" name='sign-in'
+                                  style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} />
                             {/* <Icon name='ios-calculator' style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} /> */}
-                            <Text style={{ color: 'white', fontWeight: '600', fontSize: 14, textAlign: 'center', marginTop: 10 }}>
+                            <Text style={{
+                                color: 'white',
+                                fontWeight: '600',
+                                fontSize: 14,
+                                textAlign: 'center',
+                                marginTop: 10
+                            }}>
                                 {this.state.txtSubmit}
                             </Text>
                         </TouchableOpacity>
@@ -235,7 +261,8 @@ export default class Login extends React.Component {
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('RegisterScreen')}>
                                     <Text style={{ color: '#000', fontSize: 12 }}>ĐĂNG KÝ</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}>
+                                <TouchableOpacity
+                                    onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}>
                                     <Text style={{ color: '#000', fontSize: 12 }}>QUÊN MẬT KHẨU ?</Text>
                                 </TouchableOpacity>
                             </View>
@@ -244,7 +271,7 @@ export default class Login extends React.Component {
                     <View style={styles.bottomView}>
                         <Image source={bgImg} style={{ width, height: (width / 1440) * 550 }} />
                     </View>
-                </View >
+                </View>
 
             );
         }

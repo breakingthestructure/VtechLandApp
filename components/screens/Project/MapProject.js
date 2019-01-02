@@ -1,7 +1,21 @@
 import React from 'react';
-import { Animated, BackHandler, Dimensions, Image, Platform, Text, TouchableOpacity, View, } from 'react-native';
-import MapView, { Callout, Marker } from 'react-native-maps';
-import { Icon, Toast } from 'native-base';
+import {
+    Animated,
+    BackHandler,
+    Dimensions,
+    Image,
+    Platform,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+import MapView, {
+    Callout,
+    Marker
+} from 'react-native-maps';
+import {
+    Icon,
+} from 'native-base';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import AdvanceSearch from './AdvanceSearch';
@@ -14,6 +28,7 @@ import icInvest from './../../../icons/invest.png';
 import { loading } from '../../../Helpers';
 import KindProject from '../../Modal/KindProject';
 import saveProject from '../../../api/saveProject';
+import imgDuan from './../../../images/duan.jpg';
 
 const { width, height } = Dimensions.get('window');
 let isHidden = true;
@@ -217,22 +232,19 @@ export default class MapProject extends React.Component {
                             latitudeDelta: 0.0922,
                             longitudeDelta: 0.0421,
                         }}
-                        provider='google'
+                        // provider='google'
                         mapType="standard"
-                        // followsUserLocation
-                        // showsUserLocation
+                        followsUserLocation
+                        showsUserLocation
                         showsMyLocationButton
                         moveOnMarkerPress
                         onPress={() => {
                             this.togglePopup(true);
-                            // this.togglePopup(false, 2);
                             this.toggleKindProject();
                         }}
-                        onMarkerPress={(event: any) => {
-                            const index = parseInt(event.nativeEvent.id, 10);
-                            console.log('vvvv', index);
-                        }
-                        }
+                        onMarkerSelect={(e) => {
+                            this.togglePopup(false, e.nativeEvent.id);
+                        }}
                         // ref={(ref) => {
                         //     this.mapView = ref;
                         // }}
@@ -241,6 +253,7 @@ export default class MapProject extends React.Component {
                         {this.state.listProject.map(project => (
                             <Marker
                                 key={project.id}
+                                identifier={project.id.toString()}
                                 coordinate={{
                                     latitude: parseFloat(project.latitude),
                                     longitude: parseFloat(project.longitude),
@@ -249,18 +262,9 @@ export default class MapProject extends React.Component {
                                 description={project.address}
                                 image={require('./../../../icons/pin-building.png')}
                                 onPress={() => {
-                                    console.log('123');
                                     this.togglePopup(false, project.id);
                                 }}
-                            >
-                                <Callout>
-                                    <TouchableOpacity onPress={() => console.log('aaa')} underlayColor='#dddddd'>
-                                        <View style={styles.calloutText}>
-                                            <Text>{project.name}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </Callout>
-                            </Marker>
+                            />
                         ))}
                     </MapView>
                 </View>
