@@ -58,7 +58,7 @@ export default class AdvanceSearch extends Component {
         getOptionProjects()
             .then(resJson => {
                 if (resJson) {
-                    const arrFeature = Object.keys(resJson.data.project_features).map((item, index) => {
+                    const arrFeature = Object.keys(resJson.data.project_features).map((item) => {
                         return { key: item, value: resJson.data.project_features[item] };
                     });
                     this.setState({
@@ -125,7 +125,20 @@ export default class AdvanceSearch extends Component {
 
     onSearch() {
         this.setState({ txtSubmit: 'Đang xử lý' });
-        const { name, city, district, ward, street, direction, kind, level, type, area, minPrice, maxPrice } = this.state;
+        const {
+            name,
+            city,
+            district,
+            ward,
+            street,
+            direction,
+            kind,
+            level,
+            type,
+            area,
+            minPrice,
+            maxPrice
+        } = this.state;
         let query = '';
         if (name !== '') {
             query += `&key_word=${name}`;
@@ -189,6 +202,7 @@ export default class AdvanceSearch extends Component {
         }
         const { listProject } = this.props.state;
         const regex = new RegExp(`${name.trim()}`, 'i');
+        // const regex = new RegExp(`${query.trim().replace(/[-[]/{}()*+?.\^$|]/g, "\$&")}}`, 'i');
         return listProject.filter(project => project.name.search(regex) >= 0);
     }
 
@@ -225,7 +239,7 @@ export default class AdvanceSearch extends Component {
                                 position: 'absolute',
                                 right: 0,
                                 top: 0,
-                                zIndex: 1,
+                                zIndex: 99999,
                                 backgroundColor: 'white',
                                 borderRadius: 20,
                                 borderWidth: 1,

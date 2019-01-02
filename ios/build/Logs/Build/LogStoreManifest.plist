@@ -6,7 +6,7 @@
 	<integer>9</integer>
 	<key>logs</key>
 	<dict>
-		<key>3C8F9162-6303-4824-A70C-535867C75D34</key>
+		<key>94A87CAB-3989-4A15-B15B-E73FB240C8B7</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,9 +15,9 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>3C8F9162-6303-4824-A70C-535867C75D34.xcactivitylog</string>
+			<string>94A87CAB-3989-4A15-B15B-E73FB240C8B7.xcactivitylog</string>
 			<key>highLevelStatus</key>
-			<string>E</string>
+			<string>S</string>
 			<key>schemeIdentifier-containerName</key>
 			<string>TechLandNative project</string>
 			<key>schemeIdentifier-schemeName</key>
@@ -27,13 +27,13 @@
 			<key>signature</key>
 			<string>Building workspace TechLandNative with scheme TechLandNative and configuration Debug</string>
 			<key>timeStartedRecording</key>
-			<real>568085998.84842801</real>
+			<real>568106300.65754104</real>
 			<key>timeStoppedRecording</key>
-			<real>568086015.81272805</real>
+			<real>568106319.80923605</real>
 			<key>title</key>
 			<string>Building workspace TechLandNative with scheme TechLandNative and configuration Debug</string>
 			<key>uniqueIdentifier</key>
-			<string>3C8F9162-6303-4824-A70C-535867C75D34</string>
+			<string>94A87CAB-3989-4A15-B15B-E73FB240C8B7</string>
 		</dict>
 	</dict>
 </dict>

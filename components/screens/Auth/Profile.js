@@ -1,5 +1,14 @@
 import React from 'react';
-import { Alert, Image, Keyboard, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+    Alert,
+    Image,
+    Keyboard,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import { Icon } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ImageResizer from 'react-native-image-resizer';
@@ -31,9 +40,11 @@ export default class Profile extends React.Component {
             txtSubmit: 'Lưu'
         };
     }
+
     state = {
         isDatePickerVisible: false,
     };
+
     async componentDidMount() {
         getUser()
             .then(user => {
@@ -41,6 +52,7 @@ export default class Profile extends React.Component {
                 this.setState({ loaded: true });
             });
     }
+
     showDatePicker = () => this.setState({ isDatePickerVisible: true });//eslint-disable-line
 
     hideDatePicker = () => this.setState({ isDatePickerVisible: false });//eslint-disable-line
@@ -50,6 +62,7 @@ export default class Profile extends React.Component {
         this.setState({ txtDate: selected, date });
         this.hideDatePicker();
     }
+
     pickSingle(cropit, circular = false) {
         ImagePicker.openPicker({
             width: 300,
@@ -64,8 +77,10 @@ export default class Profile extends React.Component {
             cropperActiveWidgetColor: '#F58319',
             cropperStatusBarColor: '#F58319',
             cropperToolbarColor: '#F58319',
-            hideBottomControls: true
-        }).then(image => {
+            hideBottomControls: true,
+            cropperChooseText: 'Chọn',
+            cropperCancelText: 'Quay lại'
+     }).then(image => {
             this.setState({
                 image: {
                     uri: image.path,
@@ -94,6 +109,7 @@ export default class Profile extends React.Component {
             Alert.alert(e.message ? e.message : e);
         });
     }
+
     onSubmit() {
         getToken()
             .then(token => {
@@ -109,6 +125,7 @@ export default class Profile extends React.Component {
                     });
             });
     }
+
     resize(image) {
         ImageResizer.createResizedImage(image, 8, 6, 'JPEG', 80)
             .then(({ uri }) => {
@@ -125,15 +142,18 @@ export default class Profile extends React.Component {
                 );
             });
     }
+
     renderImage(image) {
         return (<Image
             style={{ width: 120, height: 120, borderRadius: 60, borderWidth: 5, borderColor: '#F58319' }}
             source={image}
         />);
     }
+
     renderAsset(image) {
         return this.renderImage(image);
     }
+
     render() {
         if (!this.state.loaded) {
             return loading();

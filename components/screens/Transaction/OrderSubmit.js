@@ -106,13 +106,13 @@ export default class OrderSubmit extends React.Component {
         this.setState({ paymentMethod: type });
     }
 
-    findFilm(fullName) {
+    findCustomer(fullName) {
         if (fullName === '') {
             return [];
         }
         const { customers } = this.state;
         const regex = new RegExp(`${fullName.trim()}`, 'i');
-        return customers.filter(film => film.full_name.search(regex) >= 0);
+        return customers.filter(customer => customer.full_name.search(regex) >= 0);
     }
 
     _filterData(fullName) {
@@ -134,9 +134,7 @@ export default class OrderSubmit extends React.Component {
     render() {
         const { apartment } = this.state;
         const { fullName } = this.state;
-        const customers = this.findFilm(fullName);
-        console.log('123', customers);
-        let height = 40;
+        const customers = this.findCustomer(fullName);
         const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
         if (!this.state.loaded || !apartment) {
             return loading();

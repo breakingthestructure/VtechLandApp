@@ -46,7 +46,6 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8712EE01CBE54CB9A32CAE66 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D077F5C8510A48BA81875211 /* AntDesign.ttf */; };
 		89D17A2321DC575E00268919 /* libRNImageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D17A2221DC575E00268919 /* libRNImageCropPicker.a */; };
-		89D17A2421DC584200268919 /* libRCTImage-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */; };
 		931014A23B4EE4C0BADC7F93 /* libPods-TechLandNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C03B7657000ECC57CB4556F7 /* libPods-TechLandNative.a */; };
 		984E0F18AFA441E6904D8BCE /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 86A37BF9C73B45698BE93DC5 /* Zocial.ttf */; };
 		9AD81175C742419ABC02511A /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5838C856D5BC45C2A03DA72F /* FontAwesome.ttf */; };
@@ -557,7 +556,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89D17A2421DC584200268919 /* libRCTImage-tvOS.a in Frameworks */,
 				89D17A2321DC575E00268919 /* libRNImageCropPicker.a in Frameworks */,
 				FA0B796221D1CDD200064617 /* libRNFirebase.a in Frameworks */,
 				FA0B791A21D0EF1F00064617 /* libRCTImageResizer.a in Frameworks */,

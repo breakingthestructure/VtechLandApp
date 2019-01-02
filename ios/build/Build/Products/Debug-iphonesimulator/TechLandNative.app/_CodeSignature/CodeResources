@@ -8,9 +8,45 @@
 		<data>
 		TneGhDkoD7Q01Gl8e5EScUBsgfM=
 		</data>
+		<key>AppIcon20x20@2x.png</key>
+		<data>
+		P1zImofRSjLA1ZT59Lq+zu7NC1k=
+		</data>
+		<key>AppIcon20x20@3x.png</key>
+		<data>
+		g4RiycPXg1ZmTcNWon2qtLgxwj0=
+		</data>
+		<key>AppIcon29x29@2x.png</key>
+		<data>
+		nCsngKTy3SMqEjXtt1FJ4SaRyMo=
+		</data>
+		<key>AppIcon29x29@3x.png</key>
+		<data>
+		bNeWyAKYMXS7gohHwc7ewTg1Bck=
+		</data>
+		<key>AppIcon40x40@2x.png</key>
+		<data>
+		yKW5gBLTThpALWNKw7q0421UsMg=
+		</data>
+		<key>AppIcon40x40@3x.png</key>
+		<data>
+		cwPEvR46fJ7P66bJOzZ9QtaKE68=
+		</data>
+		<key>AppIcon60x60@2x.png</key>
+		<data>
+		cwPEvR46fJ7P66bJOzZ9QtaKE68=
+		</data>
+		<key>AppIcon60x60@3x.png</key>
+		<data>
+		qUBjluIqlPQ6Cxp8alD6o2jE7KI=
+		</data>
+		<key>Assets.car</key>
+		<data>
+		SSm7cP3YOQq6TqIza8BSSg5zR9U=
+		</data>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<data>
-		KN+Rh/4BaMS3nLL9D4qIZrg0MDc=
+		/e0USzlEsIxvlRmqnw7URHtpVvI=
 		</data>
 		<key>Entypo.ttf</key>
 		<data>
@@ -789,7 +825,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		NkWQDio+cZZJo4xomBg0QRLWa9s=
+		LfKYIYn+KNy8bsofThcx2nY9vgo=
 		</data>
 		<key>Ionicons.ttf</key>
 		<data>
@@ -821,7 +857,7 @@
 		</data>
 		<key>PlugIns/TechLandNativeTests.xctest.dSYM/Contents/Resources/DWARF/TechLandNativeTests</key>
 		<data>
-		xEwCZfBfEcsj+Z0XitF2bYLBeMA=
+		d706FbfQGi7WnRHGTSkwJiJVvhM=
 		</data>
 		<key>PlugIns/TechLandNativeTests.xctest/Info.plist</key>
 		<data>
@@ -829,7 +865,7 @@
 		</data>
 		<key>PlugIns/TechLandNativeTests.xctest/TechLandNativeTests</key>
 		<data>
-		AXpQeX1cUPlhvYokVff5ReTytuI=
+		EriiTR8s3F1oWAIK+iHdXsyxyUg=
 		</data>
 		<key>PlugIns/TechLandNativeTests.xctest/_CodeSignature/CodeResources</key>
 		<data>
@@ -1351,15 +1387,114 @@
 			eVXKFBJ7MEEsEU6xPP1wK12rJl/rGIDRaV1zyqgkzeE=
 			</data>
 		</dict>
+		<key>AppIcon20x20@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			P1zImofRSjLA1ZT59Lq+zu7NC1k=
+			</data>
+			<key>hash2</key>
+			<data>
+			53afWTQr1V8cEy1jKNCM2Cb6EMdCfdSWn57bsLQvzjw=
+			</data>
+		</dict>
+		<key>AppIcon20x20@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			g4RiycPXg1ZmTcNWon2qtLgxwj0=
+			</data>
+			<key>hash2</key>
+			<data>
+			Fb5K/QVu/vTxfd45bAxb2dWnbJDhwaVUJs9YFyLmy1w=
+			</data>
+		</dict>
+		<key>AppIcon29x29@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			nCsngKTy3SMqEjXtt1FJ4SaRyMo=
+			</data>
+			<key>hash2</key>
+			<data>
+			f7+SvjkWxFN0n7y71nfdHFVSu+qJ+jElNcY6NUKa/hI=
+			</data>
+		</dict>
+		<key>AppIcon29x29@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			bNeWyAKYMXS7gohHwc7ewTg1Bck=
+			</data>
+			<key>hash2</key>
+			<data>
+			Pxy4s0KPTb3YRCINMWgiX+MIif+sX/iGUO7xgtWBHNA=
+			</data>
+		</dict>
+		<key>AppIcon40x40@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			yKW5gBLTThpALWNKw7q0421UsMg=
+			</data>
+			<key>hash2</key>
+			<data>
+			jr/ILt3Qq/q6NhdrYXjjXMNwYG+PRME5/22B1tZeCiY=
+			</data>
+		</dict>
+		<key>AppIcon40x40@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			cwPEvR46fJ7P66bJOzZ9QtaKE68=
+			</data>
+			<key>hash2</key>
+			<data>
+			P7DEnB6tDf/IIdAo2j2eJjrg6Addh8q3WgBci9+emeU=
+			</data>
+		</dict>
+		<key>AppIcon60x60@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			cwPEvR46fJ7P66bJOzZ9QtaKE68=
+			</data>
+			<key>hash2</key>
+			<data>
+			P7DEnB6tDf/IIdAo2j2eJjrg6Addh8q3WgBci9+emeU=
+			</data>
+		</dict>
+		<key>AppIcon60x60@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			qUBjluIqlPQ6Cxp8alD6o2jE7KI=
+			</data>
+			<key>hash2</key>
+			<data>
+			D6ditNf2k2MTZ3W23ASPeInVxIye0PG4P32qP8pzo2E=
+			</data>
+		</dict>
+		<key>Assets.car</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			SSm7cP3YOQq6TqIza8BSSg5zR9U=
+			</data>
+			<key>hash2</key>
+			<data>
+			C17wqmj7mPwl3COLRXwzrjrg4A7S8838J5nr02FzGmk=
+			</data>
+		</dict>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KN+Rh/4BaMS3nLL9D4qIZrg0MDc=
+			/e0USzlEsIxvlRmqnw7URHtpVvI=
 			</data>
 			<key>hash2</key>
 			<data>
-			sRIDQqIWcApU5cx4qt3W9pYPNPMd8aEgqlZTW1hQ7nE=
+			DaVapEZVApoz6a3Wpp6L/I908BnTkE1Doh9np1lTbYI=
 			</data>
 		</dict>
 		<key>Entypo.ttf</key>
@@ -3011,11 +3146,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			xEwCZfBfEcsj+Z0XitF2bYLBeMA=
+			d706FbfQGi7WnRHGTSkwJiJVvhM=
 			</data>
 			<key>hash2</key>
 			<data>
-			xRv/UxLXB8mhU6GgQL5ONEoJTmX0NeTVq5n+PKKKX8M=
+			SOV1JzpOjgpmGyIivay3vVC18F7yYbjg3O+o92/sVQw=
 			</data>
 		</dict>
 		<key>PlugIns/TechLandNativeTests.xctest/Info.plist</key>
@@ -3033,11 +3168,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			AXpQeX1cUPlhvYokVff5ReTytuI=
+			EriiTR8s3F1oWAIK+iHdXsyxyUg=
 			</data>
 			<key>hash2</key>
 			<data>
-			G7ggxvxLc7Y8+fBbzTtvqzbsBNcQSvvJF1iDVmovv3g=
+			XgZoDArdAv0zk3toaNSOc+ItWbrioIjnvp6Jkf3KoWw=
 			</data>
 		</dict>
 		<key>PlugIns/TechLandNativeTests.xctest/_CodeSignature/CodeResources</key>
