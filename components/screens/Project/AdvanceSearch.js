@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
-import { FlatList, ScrollView, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Picker, Icon } from 'native-base';
+import {
+    FlatList,
+    ScrollView,
+    Switch,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {
+    Icon,
+    Picker
+} from 'native-base';
 import SwitchSelector from 'react-native-switch-selector';
+import Autocomplete from 'react-native-autocomplete-input';
 import Header from './../Home/Header';
 import getCities from './../../../api/getCities';
 import getDistricts from './../../../api/getDistricts';
@@ -13,10 +25,12 @@ import { loading } from './../../../Helpers';
 import getProject from './../../../api/getProject';
 
 export default class AdvanceSearch extends Component {
+    _keyExtractor = (item, index) => index.toString(); //eslint-disable-line
+
     constructor(props) {
         super(props);
         this.state = {
-            text: '',
+            name: '',
             cities: [],
             loaded: false,
             city: '',
@@ -39,6 +53,7 @@ export default class AdvanceSearch extends Component {
             maxPrice: ''
         };
     }
+
     componentDidMount() {
         getOptionProjects()
             .then(resJson => {
@@ -66,6 +81,7 @@ export default class AdvanceSearch extends Component {
             })
             .catch(err => console.log(err));
     }
+
     onSelectCity(idCity) {
         this.setState({ city: idCity });
         if (idCity) {
@@ -80,6 +96,7 @@ export default class AdvanceSearch extends Component {
                 .catch(err => console.log(err));
         }
     }
+
     onSelectDistrict(idDistrict) {
         if (idDistrict) {
             getWards(idDistrict)
@@ -105,12 +122,13 @@ export default class AdvanceSearch extends Component {
                 .catch(err => console.log(err));
         }
     }
+
     onSearch() {
         this.setState({ txtSubmit: 'Đang xử lý' });
-        const { text, city, district, ward, street, direction, kind, level, type, area, minPrice, maxPrice } = this.state;
+        const { name, city, district, ward, street, direction, kind, level, type, area, minPrice, maxPrice } = this.state;
         let query = '';
-        if (text !== '') {
-            query += `&key_word=${text}`;
+        if (name !== '') {
+            query += `&key_word=${name}`;
         }
         if (city !== '') {
             query += `&city_id=${city}`;
@@ -165,8 +183,20 @@ export default class AdvanceSearch extends Component {
             .catch(err => console.log(err));
     }
 
-    _keyExtractor = (item, index) => index.toString(); //eslint-disable-line
+    findProject(name) {
+        if (name === '') {
+            return [];
+        }
+        const { listProject } = this.props.state;
+        const regex = new RegExp(`${name.trim()}`, 'i');
+        return listProject.filter(project => project.name.search(regex) >= 0);
+    }
+
     render() {
+        const { name } = this.state;
+        const listProject = this.findProject(name);
+        const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
+
         const { cities, districts, wards, streets, options } = this.state;
         if (!this.state.loaded || !cities || !options.length === 0 || !options.project_types) {
             return loading();
@@ -182,15 +212,76 @@ export default class AdvanceSearch extends Component {
                 />
 
                 <ScrollView style={styles.content}>
-                    <View style={styles.viewInput}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Nhập tên dự án...'
-                            underlineColorAndroid='transparent'
-                            value={this.state.name}
+                    <View
+                        style={{
+                            position: 'relative',
+                            height: 40,
+                        }}
+                    >
+                        <Autocomplete
+                            containerStyle={{
+                                flex: 1,
+                                left: 0,
+                                position: 'absolute',
+                                right: 0,
+                                top: 0,
+                                zIndex: 1,
+                                backgroundColor: 'white',
+                                borderRadius: 20,
+                                borderWidth: 1,
+                                borderColor: '#cecece'
+                            }}
+                            inputContainerStyle={{
+                                borderRadius: 20,
+                                borderWidth: 0,
+                            }}
+                            listStyle={{
+                                borderWidth: 0
+                            }}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            defaultValue={name}
                             onChangeText={text => this.setState({ name: text })}
-                            autoFocus
-                            ref={(input) => { this.nameProject = input; }}
+                            data={listProject.length === 1 && comp(name, listProject[0].name) ? [] : listProject}
+                            renderTextInput={() => (
+                                <TextInput
+                                    style={{
+                                        height: 40,
+                                        width: '90%',
+                                        backgroundColor: 'white',
+                                        borderRadius: 20,
+                                        borderWidth: 0,
+                                        marginLeft: 15
+                                    }}
+                                    placeholder='Nhập tên dự án...'
+                                    underlineColorAndroid='transparent'
+                                    value={this.state.name}
+                                    onChangeText={text => {
+                                        this.setState({
+                                            name: text,
+                                            searchCustomer: 0,
+                                            customerId: '',
+                                            address: '',
+                                            phone: '',
+                                            email: '',
+                                            identity: ''
+                                        });
+                                    }}
+                                />
+                            )}
+                            renderItem={item => (
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        this.setState({
+                                            name: item.name,
+                                        });
+                                    }}
+                                    style={{ flexDirection: 'column' }}
+                                >
+                                    <Text>{item.name}</Text>
+                                    <Text>{item.phone}</Text>
+                                </TouchableOpacity>
+                            )}
                         />
                     </View>
                     <Text style={styles.titleScreen}>Tìm kiếm nâng cao</Text>
@@ -470,7 +561,7 @@ export default class AdvanceSearch extends Component {
                         <Text style={styles.textBtnIcon}>{this.state.txtSubmit}</Text>
                     </TouchableOpacity>
                 </ScrollView>
-            </View >
+            </View>
         );
     }
 }
