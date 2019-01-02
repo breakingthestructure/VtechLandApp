@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {
     Root,
-    Toast
+    Toastp
 } from 'native-base';
 import {
     createAppContainer,

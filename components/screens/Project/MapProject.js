@@ -1,7 +1,19 @@
 import React from 'react';
-import { Animated, BackHandler, Dimensions, Image, Platform, Text, TouchableOpacity, View, } from 'react-native';
-import MapView, { Callout, Marker } from 'react-native-maps';
-import { Icon, Toast } from 'native-base';
+import {
+    Animated,
+    BackHandler,
+    Dimensions,
+    Image,
+    Platform,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+import MapView, {
+    Callout,
+    Marker
+} from 'react-native-maps';
+import { Icon } from 'native-base';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import AdvanceSearch from './AdvanceSearch';
@@ -370,7 +382,7 @@ export default class MapProject extends React.Component {
                         bounceValue={this.state.bounceValue}
                         state={this.state}
                         toggleResult={this.toggleResult}
-                        setDataResult={this.setDataResult}
+                        // setDataResult={this.setDataResult}
                     />}
                 </Animated.View>
                 <Animated.View
