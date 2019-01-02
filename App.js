@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {
     Root,
-    Toastp
+    Toast
 } from 'native-base';
 import {
     createAppContainer,
@@ -49,6 +49,8 @@ import ResetPassword from './components/screens/Auth/ResetPassword';
 import Building from './components/screens/Project/Building';
 import SearchApartment from './components/screens/Project/SearchApartment';
 import ResultApartment from './components/screens/Project/ResultApartment';
+
+console.disableYellowBox = true;
 
 const ProjectStack = createStackNavigator(
     {

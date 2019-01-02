@@ -240,7 +240,7 @@ export default class AdvanceSearch extends Component {
                                 right: 0,
                                 top: 0,
                                 zIndex: 99999,
-                                backgroundColor: 'white',
+                                backgroundColor: 'blue',
                                 borderRadius: 20,
                                 borderWidth: 1,
                                 borderColor: '#cecece'
@@ -250,10 +250,11 @@ export default class AdvanceSearch extends Component {
                                 borderWidth: 0,
                             }}
                             listStyle={{
-                                borderWidth: 0
+                                borderWidth: 0,
+                                backgroundColor: 'green',
                             }}
                             autoCapitalize="none"
-                            autoCorrect={false}
+                            autoCorrect
                             defaultValue={name}
                             onChangeText={text => this.setState({ name: text })}
                             data={listProject.length === 1 && comp(name, listProject[0].name) ? [] : listProject}
