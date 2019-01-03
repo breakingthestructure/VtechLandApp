@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="button_my_location.png" highlightedImage="GMSNavNightModeSprites-0-2x.png" translatesAutoresizingMaskIntoConstraints="NO" id="PgP-8a-eSa">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" highlightedImage="GMSNavNightModeSprites-0-2x.png" translatesAutoresizingMaskIntoConstraints="NO" id="PgP-8a-eSa">
                     <rect key="frame" x="34" y="55" width="341" height="592"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
@@ -28,6 +28,5 @@
     </objects>
     <resources>
         <image name="GMSNavNightModeSprites-0-2x.png" width="256" height="280"/>
-        <image name="button_my_location.png" width="46" height="46"/>
     </resources>
 </document>
