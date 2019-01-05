@@ -11,7 +11,7 @@ const MyStatusBar = ({ backgroundColor, ...props }) => (
     </View>
 );
 
-export default class headerHeader extends Component {
+export default class Header extends Component {
     openMenu() {
         this.props.navigation.openDrawer();
     }

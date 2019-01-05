@@ -103,7 +103,7 @@ export default class TabProject extends Component {
                                 activeTabStyle={styles.activeTab}
                                 activeTextStyle={styles.textActiveTab}
                             >
-                                <News />
+                                <News project={project} navigation={this.props.navigation} />
                             </Tab>
                             <Tab
                                 heading="Tính lãi suất vay"

@@ -41,16 +41,21 @@ export default class News extends React.Component {
     }
 
     componentDidMount() {
-        getNews()
-            .then(res => {
-                if (res.status === 200) {
-                    this.setState({
-                        listNews: res.data.data,
-                        loaded: true
-                    });
-                }
-            })
-            .catch(err => console.log(err));
+        const { project } = this.props;
+        if (project) {
+            console.log(project.name);
+            getNews(project.name)
+                .then(res => {
+                    console.log(res);
+                    if (res.status === 200) {
+                        this.setState({
+                            listNews: res.data.data,
+                            loaded: true
+                        });
+                    }
+                })
+                .catch(err => console.error(err));
+        }
     }
 
     render() {
@@ -60,18 +65,18 @@ export default class News extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.wrapper}>
-                    <Text
-                        style={{
-                            fontWeight: '400',
-                            fontSize: 16,
-                            color: '#1f7eb8',
-                            paddingTop: 15
-                        }}
-                    >
-                        Tin tức & Sự kiện
-                    </Text>
+                    {/*<Text*/}
+                        {/*style={{*/}
+                            {/*fontWeight: '400',*/}
+                            {/*fontSize: 16,*/}
+                            {/*color: '#1f7eb8',*/}
+                            {/*paddingTop: 15*/}
+                        {/*}}*/}
+                    {/*>*/}
+                        {/*Tin tức & Sự kiện*/}
+                    {/*</Text>*/}
                     <FlatList
-                        data={this.state.listProject}
+                        data={this.state.listNews}
                         keyExtractor={this.keyExtractor}
                         renderItem={({ item }) => (
                             <ListItem thumbnail style={{ margin: 0 }}>
@@ -80,10 +85,12 @@ export default class News extends React.Component {
                                 </Left>
                                 <Body style={{ margin: 0, height: 60 }}>
                                 <TouchableOpacity
-                                    onPress={() => this.props.navigation.navigate('DetailNewsScreen')}
+                                    onPress={() => this.props.navigation.navigate('DetailNewsScreen', {
+                                        news: item
+                                    })}
                                 >
-                                    <Text note numberOfLines={1}>Tiến độ dự án An Phú Shop Villa - Tháng 12-2018</Text>
-                                    <Text>Ngày đăng: 05-11.2018</Text>
+                                    <Text note numberOfLines={1}>{item.name}</Text>
+                                    <Text>Ngày đăng: {item.send_at}</Text>
                                 </TouchableOpacity>
                                 </Body>
                             </ListItem>

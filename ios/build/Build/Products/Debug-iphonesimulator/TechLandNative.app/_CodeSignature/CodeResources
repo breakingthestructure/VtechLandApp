@@ -42,11 +42,11 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		SSm7cP3YOQq6TqIza8BSSg5zR9U=
+		pEn6B9cNanNDzOmzUdLyJQs0bSc=
 		</data>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<data>
-		/e0USzlEsIxvlRmqnw7URHtpVvI=
+		OIECbYurjnMsHWnAff19E3+aTnc=
 		</data>
 		<key>Entypo.ttf</key>
 		<data>
@@ -823,6 +823,82 @@
 		<data>
 		3yT7Vyo1pdNUjDlLhzTKIq+TVKE=
 		</data>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowDown@2x.png</key>
+		<data>
+		E5PiMFtkr0ZmN8MxNrxc2l+sWqo=
+		</data>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowDown@3x.png</key>
+		<data>
+		4qk8zwoPP/Hr3/PMu+pXpZndyoI=
+		</data>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowLeft@2x.png</key>
+		<data>
+		FEV/+WMMqefzlnhy+R+VDCwm2LI=
+		</data>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowLeft@3x.png</key>
+		<data>
+		0ty6z7Lc+DVv6EbMb17x6wBO1FI=
+		</data>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowRight@2x.png</key>
+		<data>
+		gOrv0ek+tTv+38A1fsImH29pPmQ=
+		</data>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowRight@3x.png</key>
+		<data>
+		4M1rDWOTRrCoNp/ODMQ4NeCEAM4=
+		</data>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowUp@2x.png</key>
+		<data>
+		6/zeTZLnkYxSzfRaVZqa4FjuWAc=
+		</data>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowUp@3x.png</key>
+		<data>
+		2FGtDJvOI/LkviaOmF9z3/4/rU4=
+		</data>
+		<key>IQKeyboardManager.bundle/de.lproj/IQKeyboardManager.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			XAMtfCBPAbgSPBoutKHQwStCT48=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>IQKeyboardManager.bundle/en.lproj/IQKeyboardManager.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			sMbInXsoKAUK7+dZ1n/0jF84h5o=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>IQKeyboardManager.bundle/es.lproj/IQKeyboardManager.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			vrhRgiujgh91e57LnlUs3rWBD9E=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>IQKeyboardManager.bundle/fr.lproj/IQKeyboardManager.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			rl18EuPDEzLZdb3KYSegFhCp/oo=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>IQKeyboardManager.bundle/zh-Hans/IQKeyboardManager.strings</key>
+		<data>
+		0dhsbGPLjTzRqQAqEGZBhe3AsdM=
+		</data>
+		<key>IQKeyboardManager.bundle/zh-Hant/IQKeyboardManager.strings</key>
+		<data>
+		549Z0CX5jIn+3EYVDi3nSNNKeRY=
+		</data>
 		<key>Info.plist</key>
 		<data>
 		LfKYIYn+KNy8bsofThcx2nY9vgo=
@@ -857,7 +933,7 @@
 		</data>
 		<key>PlugIns/TechLandNativeTests.xctest.dSYM/Contents/Resources/DWARF/TechLandNativeTests</key>
 		<data>
-		d706FbfQGi7WnRHGTSkwJiJVvhM=
+		5NvL00ZAVUWThjj7dZoDUxW29bw=
 		</data>
 		<key>PlugIns/TechLandNativeTests.xctest/Info.plist</key>
 		<data>
@@ -865,7 +941,7 @@
 		</data>
 		<key>PlugIns/TechLandNativeTests.xctest/TechLandNativeTests</key>
 		<data>
-		EriiTR8s3F1oWAIK+iHdXsyxyUg=
+		kbrWxjFH3qb8pFpDWmhjqRVgxco=
 		</data>
 		<key>PlugIns/TechLandNativeTests.xctest/_CodeSignature/CodeResources</key>
 		<data>
@@ -881,23 +957,23 @@
 		</data>
 		<key>QBImagePicker.bundle/QBImagePicker.storyboardc/QBAlbumsNavigationController.nib</key>
 		<data>
-		t+IyZ3t9vtQGxnzIXtPERzyqKZ0=
+		wC+4fy27ybeHnsNKx4Wwm1t9T9k=
 		</data>
 		<key>QBImagePicker.bundle/QBImagePicker.storyboardc/QBAlbumsViewController.nib</key>
 		<data>
-		QqBaIYjVjrV2sI/thQKXH4CIx1M=
+		r25CmCcX3e3MKNX8xZixPhyW3vc=
 		</data>
 		<key>QBImagePicker.bundle/QBImagePicker.storyboardc/QBAssetsViewController.nib</key>
 		<data>
-		0OUazMpyVicb4vjwhLYnv392Oo8=
+		AoglsykR0CTHbj348lP8iquj/S0=
 		</data>
 		<key>QBImagePicker.bundle/QBImagePicker.storyboardc/QL5-wR-LYt-view-66K-TS-Yoc.nib</key>
 		<data>
-		kXnelmLRWoiNTB1lYeEJuHMt3To=
+		IP2rVXyJwXwPu5EwEg0GPXGQXmI=
 		</data>
 		<key>QBImagePicker.bundle/QBImagePicker.storyboardc/QiH-NZ-ZGN-view-sD2-zK-ryo.nib</key>
 		<data>
-		ds23vmG1WEoP7TfPypeDeChXD8U=
+		D9h6yrcZ/9yGSQL9YvwEH97uie0=
 		</data>
 		<key>QBImagePicker.bundle/de.lproj/QBImagePicker.strings</key>
 		<dict>
@@ -1479,22 +1555,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			SSm7cP3YOQq6TqIza8BSSg5zR9U=
+			pEn6B9cNanNDzOmzUdLyJQs0bSc=
 			</data>
 			<key>hash2</key>
 			<data>
-			C17wqmj7mPwl3COLRXwzrjrg4A7S8838J5nr02FzGmk=
+			Cn4zUvq4Uq0EqzzHtFXJIlKAm0JyCw1Z+LSjvBdo8M8=
 			</data>
 		</dict>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			/e0USzlEsIxvlRmqnw7URHtpVvI=
+			OIECbYurjnMsHWnAff19E3+aTnc=
 			</data>
 			<key>hash2</key>
 			<data>
-			DaVapEZVApoz6a3Wpp6L/I908BnTkE1Doh9np1lTbYI=
+			BXHjFUBo6XIdWV6s92wE8CL988TCQmay0FNgDEei52A=
 			</data>
 		</dict>
 		<key>Entypo.ttf</key>
@@ -3076,6 +3152,168 @@
 			W1rHDttKfcPks9rqGMasVRXTP66/FdfS4erGPcsWyHI=
 			</data>
 		</dict>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowDown@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			E5PiMFtkr0ZmN8MxNrxc2l+sWqo=
+			</data>
+			<key>hash2</key>
+			<data>
+			h/9hC+664YiphHIfNIxMWY4yL3xxTy/odnrY1bKCxkw=
+			</data>
+		</dict>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowDown@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			4qk8zwoPP/Hr3/PMu+pXpZndyoI=
+			</data>
+			<key>hash2</key>
+			<data>
+			Slj1H5d6wCG/SKY+GpqQlDAR/96W6To/tdhGSvYXFt0=
+			</data>
+		</dict>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowLeft@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			FEV/+WMMqefzlnhy+R+VDCwm2LI=
+			</data>
+			<key>hash2</key>
+			<data>
+			awBt50hVmNGyePSLBYZzTCvyTZgXpi7YDu6L7UyS53Y=
+			</data>
+		</dict>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowLeft@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			0ty6z7Lc+DVv6EbMb17x6wBO1FI=
+			</data>
+			<key>hash2</key>
+			<data>
+			IiKVdDiE/LEQzMH9eHqQVlo6CGZfrsW/OT/n+/KzCHk=
+			</data>
+		</dict>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowRight@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			gOrv0ek+tTv+38A1fsImH29pPmQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			YWxGn20RL2/1XhKnQIc2kTl+0H50DQ+BqxZ+HTReBoE=
+			</data>
+		</dict>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowRight@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			4M1rDWOTRrCoNp/ODMQ4NeCEAM4=
+			</data>
+			<key>hash2</key>
+			<data>
+			YqYHh7YYvrvLod2iNkX2ja8Uv4W5I2qx8HwBmA3C7EM=
+			</data>
+		</dict>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowUp@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			6/zeTZLnkYxSzfRaVZqa4FjuWAc=
+			</data>
+			<key>hash2</key>
+			<data>
+			m8wHarn1PYnWvYZhVvBtr5y8clhpWJGX5qrwrHrpsQQ=
+			</data>
+		</dict>
+		<key>IQKeyboardManager.bundle/IQButtonBarArrowUp@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			2FGtDJvOI/LkviaOmF9z3/4/rU4=
+			</data>
+			<key>hash2</key>
+			<data>
+			mHgGzwRHbt8d8nUQ3O4sJDpFOCYNM1Lmp9v9bNPk2ek=
+			</data>
+		</dict>
+		<key>IQKeyboardManager.bundle/de.lproj/IQKeyboardManager.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			XAMtfCBPAbgSPBoutKHQwStCT48=
+			</data>
+			<key>hash2</key>
+			<data>
+			Vdo0WXHxpKFIkOhvqAtVNWCpcrtLWrAlXIf++P8fCPg=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>IQKeyboardManager.bundle/en.lproj/IQKeyboardManager.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			sMbInXsoKAUK7+dZ1n/0jF84h5o=
+			</data>
+			<key>hash2</key>
+			<data>
+			p0u9BJJ+NrPaXvSsJR2ZrP4qofaLSvkytiUOwKKUaG8=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>IQKeyboardManager.bundle/es.lproj/IQKeyboardManager.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			vrhRgiujgh91e57LnlUs3rWBD9E=
+			</data>
+			<key>hash2</key>
+			<data>
+			cCsxCINHvDElne9wgRj83RpGsQMDPNXbtUnZv04y118=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>IQKeyboardManager.bundle/fr.lproj/IQKeyboardManager.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			rl18EuPDEzLZdb3KYSegFhCp/oo=
+			</data>
+			<key>hash2</key>
+			<data>
+			sGWAxaZOD8O8j9FXQGiIQeXM41mEU+Etja7zeVaq+gU=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>IQKeyboardManager.bundle/zh-Hans/IQKeyboardManager.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			0dhsbGPLjTzRqQAqEGZBhe3AsdM=
+			</data>
+			<key>hash2</key>
+			<data>
+			te3qioWokz9VNvNx048uvM1cLoGJYGBWmzzYqPPgA6s=
+			</data>
+		</dict>
+		<key>IQKeyboardManager.bundle/zh-Hant/IQKeyboardManager.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			549Z0CX5jIn+3EYVDi3nSNNKeRY=
+			</data>
+			<key>hash2</key>
+			<data>
+			G2mDEDaj2cWyLbZIXakKX87Jux64L8OKYIMSzHYV0HE=
+			</data>
+		</dict>
 		<key>Ionicons.ttf</key>
 		<dict>
 			<key>hash</key>
@@ -3146,11 +3384,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			d706FbfQGi7WnRHGTSkwJiJVvhM=
+			5NvL00ZAVUWThjj7dZoDUxW29bw=
 			</data>
 			<key>hash2</key>
 			<data>
-			SOV1JzpOjgpmGyIivay3vVC18F7yYbjg3O+o92/sVQw=
+			QohEtVHhWo+7/Rx26Z7OndX2mwmIKKmrSm8/GAc7x5A=
 			</data>
 		</dict>
 		<key>PlugIns/TechLandNativeTests.xctest/Info.plist</key>
@@ -3168,11 +3406,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			EriiTR8s3F1oWAIK+iHdXsyxyUg=
+			kbrWxjFH3qb8pFpDWmhjqRVgxco=
 			</data>
 			<key>hash2</key>
 			<data>
-			XgZoDArdAv0zk3toaNSOc+ItWbrioIjnvp6Jkf3KoWw=
+			jNVwF2Tc336muWbVqS8yAjXfM3LArsr+TLPc9z42E90=
 			</data>
 		</dict>
 		<key>PlugIns/TechLandNativeTests.xctest/_CodeSignature/CodeResources</key>
@@ -3212,55 +3450,55 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			t+IyZ3t9vtQGxnzIXtPERzyqKZ0=
+			wC+4fy27ybeHnsNKx4Wwm1t9T9k=
 			</data>
 			<key>hash2</key>
 			<data>
-			5PUDdLO2EWux/c+WzGmOTy+fuopzl++V8RtFX3eEV5E=
+			LmRoRsTPSph4c/9utAbVbLsjJkNPJcVXN+tw4F4HkGw=
 			</data>
 		</dict>
 		<key>QBImagePicker.bundle/QBImagePicker.storyboardc/QBAlbumsViewController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			QqBaIYjVjrV2sI/thQKXH4CIx1M=
+			r25CmCcX3e3MKNX8xZixPhyW3vc=
 			</data>
 			<key>hash2</key>
 			<data>
-			T95xyie1lt+JSNKYaE123th8KyJm4z0zx+7BaJnzsms=
+			fE0LV6Iz2aCYKP4zHaiTrSFEUe+j/8C0oEOeyDPnraM=
 			</data>
 		</dict>
 		<key>QBImagePicker.bundle/QBImagePicker.storyboardc/QBAssetsViewController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			0OUazMpyVicb4vjwhLYnv392Oo8=
+			AoglsykR0CTHbj348lP8iquj/S0=
 			</data>
 			<key>hash2</key>
 			<data>
-			Oosqd9q7+z/wEpCqgjtD2O4WS9xNr1u05vFuTNjwdS0=
+			R4QeO7oMUPdwbAeoiCh2ZNPpeobNOb/pY+zTK6Rd2Ic=
 			</data>
 		</dict>
 		<key>QBImagePicker.bundle/QBImagePicker.storyboardc/QL5-wR-LYt-view-66K-TS-Yoc.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			kXnelmLRWoiNTB1lYeEJuHMt3To=
+			IP2rVXyJwXwPu5EwEg0GPXGQXmI=
 			</data>
 			<key>hash2</key>
 			<data>
-			9HvYjxXazEOc66K03jX1EI4yI605Fk1quzLNPKqzAJ8=
+			oLrjtwuDQ9T1bF6JPVv5PQai1orUSnoxs4DLnuAo4eg=
 			</data>
 		</dict>
 		<key>QBImagePicker.bundle/QBImagePicker.storyboardc/QiH-NZ-ZGN-view-sD2-zK-ryo.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ds23vmG1WEoP7TfPypeDeChXD8U=
+			D9h6yrcZ/9yGSQL9YvwEH97uie0=
 			</data>
 			<key>hash2</key>
 			<data>
-			MHIhlG2vdXntOS+3xpCcJMfR/cUaBpvxcTZnn2vohIg=
+			HYMD4fREXZyVJEbWhnBjMfQVaFrbHLgccEbzNGb8tj4=
 			</data>
 		</dict>
 		<key>QBImagePicker.bundle/de.lproj/QBImagePicker.strings</key>

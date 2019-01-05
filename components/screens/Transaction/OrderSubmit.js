@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Alert,
+    Animated,
     BackHandler,
     Keyboard,
     ScrollView,
@@ -11,15 +11,27 @@ import {
     View
 } from 'react-native';
 
-import { Body, Icon, ListItem, Toast } from 'native-base';
+import {
+    Body,
+    Icon,
+    ListItem,
+    Picker,
+    Toast
+} from 'native-base';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import { TextInputMask } from 'react-native-masked-text';
 import Autocomplete from 'react-native-autocomplete-input';
 import Header from '../Home/Header';
 import styles from './../../../styles';
-import { formatMoney, loading } from '../../../Helpers';
+import {
+    formatMoney,
+    loading
+} from '../../../Helpers';
 import postOrderTransaction from './../../../api/postOrderTransaction';
 import getToken from '../../../api/getToken';
 import getCustomers from '../../../api/getCustomers';
+import getCities from './../../../api/getCities';
+import getDistricts from "../../../api/getDistricts";
 
 export default class OrderSubmit extends React.Component {
     handleBackPress = () => { //eslint-disable-line
@@ -44,8 +56,15 @@ export default class OrderSubmit extends React.Component {
             fullName: '',
             customerId: '',
             searchCustomer: 0,
-            customers: []
+            customers: [],
+            resultValue: new Animated.Value(40),
+            isHidden: true,
+            cities: [],
         };
+    }
+
+    onSelectCity(idCity) {
+        this.setState({ where_identity: idCity });
     }
 
     componentDidMount() {
@@ -68,12 +87,31 @@ export default class OrderSubmit extends React.Component {
                     })
                     .catch(err => console.log(err));
             });
+        getCities()
+            .then(resJson => {
+                if (resJson) {
+                    this.setState({
+                        cities: resJson.data,
+                        loaded: true
+                    });
+                }
+            })
+            .catch(err => console.log(err));
     }
 
     onChangeMoney(text) {
         this.setState({ reserveValue: text });
     }
-
+    state = {
+        isDatePickerVisible: false,
+    };
+    showDatePicker = () => this.setState({ isDatePickerVisible: true }); //eslint-disable-line
+    hideDatePicker = () => this.setState({ isDatePickerVisible: false }); //eslint-disable-line
+    handleDatePicked = (date) => { //eslint-disable-line
+        const selected = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+        this.setState({ day_identity: selected, date });
+        this.hideDatePicker();
+    };
     onSubmit() {
         this.setState({ txtSubmit: 'Đang xử lý' });
         getToken()
@@ -102,7 +140,6 @@ export default class OrderSubmit extends React.Component {
     }
 
     selectMethodPayment(type) {
-        console.log(type);
         this.setState({ paymentMethod: type });
     }
 
@@ -113,6 +150,22 @@ export default class OrderSubmit extends React.Component {
         const { customers } = this.state;
         const regex = new RegExp(`${fullName.trim()}`, 'i');
         return customers.filter(customer => customer.full_name.search(regex) >= 0);
+    }
+
+    toggleQuickSearch(wantHide) {
+        let toValue = 300;
+        if (this.state.name === '' || wantHide) {
+            toValue = 40;
+        }
+        Animated.spring(
+            this.state.resultValue,
+            {
+                toValue,
+                velocity: 3,
+                tension: 2,
+                friction: 8,
+            }
+        ).start();
     }
 
     _filterData(fullName) {
@@ -132,8 +185,7 @@ export default class OrderSubmit extends React.Component {
     }
 
     render() {
-        const { apartment } = this.state;
-        const { fullName } = this.state;
+        const { fullName, apartment, cities } = this.state;
         const customers = this.findCustomer(fullName);
         const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
         if (!this.state.loaded || !apartment) {
@@ -141,7 +193,11 @@ export default class OrderSubmit extends React.Component {
         }
         return (
             <View style={styles.wrapper}>
-                <Header navigation={this.props.navigation} title={`GIAO DỊCH CĂN ${apartment.number}`} back={'ok'} />
+                <Header
+                    navigation={this.props.navigation}
+                    title={`GIAO DỊCH ${apartment.number}`}
+                    back={'ok'}
+                />
                 <ScrollView style={styles.content}>
                     <Text style={styles.titleScreen}>PHIẾU ĐẶT CỌC</Text>
                     <Text style={styles.txtHeader}>Thông tin sản phẩm</Text>
@@ -182,32 +238,22 @@ export default class OrderSubmit extends React.Component {
                     </View>
                     <Text style={styles.txtHeader}>Thông tin khách hàng</Text>
 
-                    <View
-                        style={{
-                            position: 'relative',
-                            height: 40,
-                        }}
+                    <Animated.View
+                        style={
+                            [styles.viewAutocomplete,
+                                { height: this.state.resultValue }]
+                        }
                     >
                         <Autocomplete
-                            containerStyle={{
-                                flex: 1,
-                                left: 0,
-                                position: 'absolute',
-                                right: 0,
-                                top: 0,
-                                zIndex: 1,
-                                backgroundColor: 'white',
-                                borderRadius: 20,
-                                borderWidth: 1,
-                                borderColor: '#cecece'
-                            }}
+                            containerStyle={
+                                this.state.isHidden ?
+                                    styles.autocompleteContainerFull :
+                                    styles.autocompleteContainer
+                            }
                             inputContainerStyle={{
-                                borderRadius: 20,
                                 borderWidth: 0,
                             }}
-                            listStyle={{
-                                borderWidth: 0
-                            }}
+                            listStyle={styles.autocompleteResult}
                             autoCapitalize="none"
                             autoCorrect={false}
                             defaultValue={fullName}
@@ -234,9 +280,23 @@ export default class OrderSubmit extends React.Component {
                                             address: '',
                                             phone: '',
                                             email: '',
-                                            identity: ''
+                                            identity: '',
+                                            isHidden: false
+                                        }, () => {
+                                            let hide = false;
+                                            if (this.state.fullName === '') {
+                                                this.setState({ isHidden: true });
+                                                hide = true;
+                                            }
+                                            this.toggleQuickSearch(hide);
                                         });
-
+                                    }}
+                                    onEndEditing={() => {
+                                        this.setState({ isHidden: true }, () => {
+                                            setTimeout(() => {
+                                                this.toggleQuickSearch(true);
+                                            }, 500);
+                                        });
                                     }}
                                 />
                             )}
@@ -251,17 +311,24 @@ export default class OrderSubmit extends React.Component {
                                             phone: item.phone,
                                             email: item.email,
                                             identity: item.identity
+                                        }, () => {
+                                            this.toggleQuickSearch(true);
+                                            this.setState({ isHidden: true });
                                         });
-                                        console.log('hehe');
                                     }}
-                                    style={{ flexDirection: 'column' }}
+                                    style={{
+                                        flexDirection: 'column',
+                                        height: 50,
+                                        justifyContent: 'center',
+                                        alignContent: 'center'
+                                    }}
                                 >
                                     <Text>{item.full_name}</Text>
                                     <Text>{item.phone}</Text>
                                 </TouchableOpacity>
                             )}
                         />
-                    </View>
+                    </Animated.View>
                     {/*<View style={styles.viewInput}>*/}
                     {/*<TextInput*/}
                     {/*style={styles.input}*/}
@@ -329,13 +396,27 @@ export default class OrderSubmit extends React.Component {
                         <View
                             style={styles.viewHalfInput}
                         >
-                            <TextInput
-                                style={styles.input}
-                                placeholder='Nơi cấp'
-                                underlineColorAndroid='transparent'
-                                value={this.state.where_identity}
-                                onChangeText={text => this.setState({ where_identity: text })}
-                            />
+                            {/*<TextInput*/}
+                                {/*style={styles.input}*/}
+                                {/*placeholder='Nơi cấp'*/}
+                                {/*underlineColorAndroid='transparent'*/}
+                                {/*value={this.state.where_identity}*/}
+                                {/*onChangeText={text => this.setState({ where_identity: text })}*/}
+                            {/*/>*/}
+                            <Picker
+                                iosHeader="Nơi cấp"
+                                headerBackButtonText={<Icon name='ios-arrow-back' />}
+                                style={styles.picker}
+                                selectedValue={this.state.where_identity}
+                                onValueChange={(itemValue) =>
+                                    this.onSelectCity(itemValue)
+                                }
+                            >
+                                <Picker.Item label="Nơi cấp" value="" />
+                                {Object.keys(cities).map(function (key) {
+                                    return <Picker.Item key={key} label={cities[key]} value={key} />
+                                })}
+                            </Picker>
                         </View>
                     </View>
                     <Text style={styles.txtHeader}>
@@ -418,6 +499,12 @@ export default class OrderSubmit extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
+                <DateTimePicker
+                    isVisible={this.state.isDatePickerVisible}
+                    onConfirm={this.handleDatePicked}
+                    onCancel={this.hideDatePicker}
+                    datePickerModeAndroid='calendar'
+                />
             </View>
         );
     }

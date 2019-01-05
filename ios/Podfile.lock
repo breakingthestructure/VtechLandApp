@@ -77,6 +77,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (5.3.6):
     - GoogleUtilities/Logger
+  - IQKeyboardManager (4.0.13)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -84,6 +85,8 @@ PODS:
   - nanopb/encode (0.3.901)
   - Protobuf (3.6.1)
   - QBImagePickerController (3.4.0)
+  - React (0.57.4):
+    - React/Core (= 0.57.4)
   - React/Core (0.57.4):
     - yoga (= 0.57.4.React)
   - React/RCTImage (0.57.4):
@@ -91,6 +94,12 @@ PODS:
     - React/RCTNetwork
   - React/RCTNetwork (0.57.4):
     - React/Core
+  - React/RCTText (0.57.4):
+    - React/Core
+  - ReactNativeKeyboardManager (4.0.13-10):
+    - IQKeyboardManager (= 4.0.13)
+    - React
+    - React/RCTText
   - RNImageCropPicker (0.21.3):
     - QBImagePickerController
     - React/Core
@@ -108,6 +117,7 @@ DEPENDENCIES:
   - QBImagePickerController
   - React/Core (from `../node_modules/react-native`)
   - React/RCTImage (from `../node_modules/react-native`)
+  - ReactNativeKeyboardManager (from `../node_modules/react-native-keyboard-manager`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RSKImageCropper
   - XCDYouTubeKit
@@ -125,6 +135,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleMaps
     - GoogleUtilities
+    - IQKeyboardManager
     - nanopb
     - Protobuf
     - QBImagePickerController
@@ -134,6 +145,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   React:
     :path: "../node_modules/react-native"
+  ReactNativeKeyboardManager:
+    :path: "../node_modules/react-native-keyboard-manager"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
   yoga:
@@ -150,15 +163,17 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
+  IQKeyboardManager: 8eab4d8111418414619d1df8e4779ce5d0f8d7e2
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
+  ReactNativeKeyboardManager: 8b362d8b14c1260c3de489bedffd686d108eff7d
   RNImageCropPicker: 32ca4b9fef4e1b7b85ba69494242122948117e06
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   XCDYouTubeKit: c8567fd5cb388a3099fa26eee4b30df2a467847d
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: aa0c31ee12e985e60d9ab0e530f2d0a9ee6d911e
+PODFILE CHECKSUM: cf0374af39a2a1a913405b6c5ffde81eaf5e3621
 
 COCOAPODS: 1.5.3

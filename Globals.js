@@ -1,6 +1,7 @@
 module.exports = {
     API_URL: 'https://vtechhomes.vn/api',
-    MEDIA_API_URL: 'https://news.vtechhomes.vn/api',
+    MEDIA_API_URL: 'http://news.vtechhomes.vn/api',
+    MEDIA_BASE_URL: 'http://news.vtechhomes.vn',
     BASE_URL: 'https://vtechhomes.vn/',
     COLOR: {
         ORANGE: '#C50',

@@ -7,10 +7,7 @@ import {
     View
 } from 'react-native';
 import {
-    Content,
     Icon,
-    Input,
-    Item,
     Textarea,
     Toast
 } from 'native-base';
@@ -48,8 +45,8 @@ export default class SetCalendar extends React.Component {
             txtName: '',
             txtPhone: '',
             txtEmail: '',
-            txtDate: '',
-            txtTime: '',
+            txtDate: 'Ngày / tháng',
+            txtTime: 'Thời gian',
             txtNote: '',
             loaded: false,
             txtSubmit: 'ĐĂNG KÝ'
@@ -128,49 +125,63 @@ export default class SetCalendar extends React.Component {
                             onChangeText={text => this.setState({ txtEmail: text })}
                         />
                     </View>
-                    <View
-                        style={styles.item}
-                    >
-                        <Content>
-                            <Item
-                                style={styles.leftInputContact}
-                                regular
+                    <View style={styles.item}>
+                        <TouchableOpacity
+                            style={styles.leftInputContact}
+                            onPress={() => {
+                                this.showDatePicker();
+                            }}
+                        >
+                            <Icon
+                                active
+                                name='calendar'
+                                style={{
+                                    color: 'orange',
+                                    fontSize: 22,
+                                    marginTop: 10,
+                                    marginLeft: 20
+                                }}
+                            />
+                            <Text
+                                style={{
+                                    height: 40,
+                                    width: '80%',
+                                    fontSize: 12,
+                                    marginTop: 15,
+                                    marginLeft: 10
+                                }}
                             >
-                                <Icon active name='calendar' style={{ color: 'green' }} />
-                                <Input
-                                    style={{ fontSize: 12 }}
-                                    placeholder='NGÀY/THÁNG'
-                                    placeholderTextColor='#999999'
-                                    underlineColorAndroid='transparent'
-                                    onChangeText={(text) => this.setState({ txtDate: text })}
-                                    value={this.state.txtDate}
-                                    onFocus={() => {
-                                        Keyboard.dismiss();
-                                        this.showDatePicker();
-                                    }}
-                                />
-                            </Item>
-                        </Content>
-                        <Content style={styles.rightSectionInputContact}>
-                            <Item
-                                style={styles.rightInputContact}
-                                regular
+                                {this.state.txtDate}
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.rightInputContact}
+                            onPress={() => {
+                                this.showTimePicker();
+                            }}
+                        >
+                            <Icon
+                                active
+                                name='ios-clock'
+                                style={{
+                                    color: 'orange',
+                                    fontSize: 22,
+                                    marginTop: 10,
+                                    marginLeft: 20
+                                }}
+                            />
+                            <Text
+                                style={{
+                                    height: 40,
+                                    width: '80%',
+                                    fontSize: 12,
+                                    marginTop: 15,
+                                    marginLeft: 10
+                                }}
                             >
-                                <Icon active name='ios-clock' style={{ color: 'green' }} />
-                                <Input
-                                    style={{ fontSize: 12 }}
-                                    placeholder='THỜI GIAN'
-                                    placeholderTextColor='#999999'
-                                    underlineColorAndroid='transparent'
-                                    onChangeText={(text) => this.setState({ txtTime: text })}
-                                    value={this.state.txtTime}
-                                    onFocus={() => {
-                                        Keyboard.dismiss();
-                                        this.showTimePicker();
-                                    }}
-                                />
-                            </Item>
-                        </Content>
+                                {this.state.txtTime}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                     <Textarea
                         style={styles.textAreaContact}

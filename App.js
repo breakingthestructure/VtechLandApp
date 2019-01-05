@@ -22,6 +22,7 @@ import type {
     NotificationOpen
 } from 'react-native-firebase';
 import firebase from 'react-native-firebase';
+import KeyboardManager from 'react-native-keyboard-manager';
 import Login from './components/screens/Auth/Login';
 import Menu from './components/screens/Auth/Menu';
 import RightMenu from './components/screens/Auth/RightMenu';
@@ -51,6 +52,21 @@ import SearchApartment from './components/screens/Project/SearchApartment';
 import ResultApartment from './components/screens/Project/ResultApartment';
 
 console.disableYellowBox = true;
+
+KeyboardManager.setEnable(true);
+KeyboardManager.setEnableDebugging(false);
+KeyboardManager.setKeyboardDistanceFromTextField(10);
+KeyboardManager.setPreventShowingBottomBlankSpace(true);
+KeyboardManager.setEnableAutoToolbar(true);
+KeyboardManager.setToolbarDoneBarButtonItemText('Done');
+KeyboardManager.setToolbarManageBehaviour(0);
+KeyboardManager.setToolbarPreviousNextButtonEnable(true);
+KeyboardManager.setShouldToolbarUsesTextFieldTintColor(false);
+KeyboardManager.setShouldShowTextFieldPlaceholder(true);
+KeyboardManager.setShouldShowToolbarPlaceholder(true);
+KeyboardManager.setOverrideKeyboardAppearance(false);
+KeyboardManager.setShouldResignOnTouchOutside(true);
+KeyboardManager.resignFirstResponder();
 
 const ProjectStack = createStackNavigator(
     {
@@ -93,9 +109,9 @@ const ProjectStack = createStackNavigator(
             },
             screenInterpolator: sceneProps => {
                 const { layout, position, scene } = sceneProps;
-                const { index }                   = scene;
+                const { index } = scene;
 
-                const height     = layout.initHeight;
+                const height = layout.initHeight;
                 const translateY = position.interpolate({
                     inputRange: [index - 1, index, index + 1],
                     outputRange: [height, 0, 0],
@@ -125,7 +141,10 @@ const LeftDrawer = createDrawerNavigator(
         },
         DetailNewsScreen: {
             screen: DetailNews
-        }
+        },
+        LoginScreen: {
+            screen: Login
+        },
     },
     {
         initialRouteName: 'MapScreen',
@@ -155,9 +174,6 @@ const UserStack = createStackNavigator(
         ConfigScreen: {
             screen: Config
         },
-        LoginScreen: {
-            screen: Login
-        },
         RegisterScreen: {
             screen: Register
         },
@@ -182,9 +198,9 @@ const UserStack = createStackNavigator(
             },
             screenInterpolator: sceneProps => {
                 const { layout, position, scene } = sceneProps;
-                const { index }                   = scene;
+                const { index } = scene;
 
-                const height     = layout.initHeight;
+                const height = layout.initHeight;
                 const translateY = position.interpolate({
                     inputRange: [index - 1, index, index + 1],
                     outputRange: [height, 0, 0],
@@ -224,9 +240,9 @@ const CustomerStack = createStackNavigator(
             },
             screenInterpolator: sceneProps => {
                 const { layout, position, scene } = sceneProps;
-                const { index }                   = scene;
+                const { index } = scene;
 
-                const height     = layout.initHeight;
+                const height = layout.initHeight;
                 const translateY = position.interpolate({
                     inputRange: [index - 1, index, index + 1],
                     outputRange: [height, 0, 0],
@@ -266,9 +282,9 @@ const TransactionStack = createStackNavigator(
             },
             screenInterpolator: sceneProps => {
                 const { layout, position, scene } = sceneProps;
-                const { index }                   = scene;
+                const { index } = scene;
 
-                const height     = layout.initHeight;
+                const height = layout.initHeight;
                 const translateY = position.interpolate({
                     inputRange: [index - 1, index, index + 1],
                     outputRange: [height, 0, 0],
@@ -312,8 +328,8 @@ const RightDrawer = createDrawerNavigator({
 const AppContainer = createAppContainer(RightDrawer);
 
 export default class App extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             loaded: false
         };
@@ -357,9 +373,9 @@ export default class App extends React.Component {
         }, 1000);
         const notificationOpen: NotificationOpen = await firebase.notifications().getInitialNotification();
         if (notificationOpen) {
-            const action                     = notificationOpen.action;
+            const action = notificationOpen.action;
             const notification: Notification = notificationOpen.notification;
-            var seen                         = [];
+            var seen = [];
             // alert(JSON.stringify(notification.data, function (key, val) {
             //   if (val != null && typeof val == "object") {
             //     if (seen.indexOf(val) >= 0) {
@@ -378,7 +394,7 @@ export default class App extends React.Component {
             // Process your notification as required
             // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
         });
-        this.notificationListener          = firebase.notifications().onNotification((notification: Notification) => {
+        this.notificationListener = firebase.notifications().onNotification((notification: Notification) => {
             // Process your notification as required
             notification
                 .android.setChannelId('test-channel')
@@ -386,7 +402,7 @@ export default class App extends React.Component {
             firebase.notifications()
                 .displayNotification(notification);
         });
-        this.notificationOpenedListener    = firebase.notifications().onNotificationOpened((notificationOpen: NotificationOpen) => {
+        this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen: NotificationOpen) => {
             // Get the action triggered by the notification being opened
             // const action = notificationOpen.action;
             // Get information about the notification that was opened

@@ -25,7 +25,7 @@ export default class PreviewProject extends Component {
         this.state = {
             listImage: null,
             index: 0,
-            loaded: false,
+            loaded: true,
             imagePreview: false
         };
     }

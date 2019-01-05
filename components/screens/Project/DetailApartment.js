@@ -91,7 +91,7 @@ export default class DetailApartment extends React.Component {
     }
 
     onOrderApartment() {
-        this.setState({ loaded: false });
+        // this.setState({ loaded: false });
         getToken()
             .then(token => {
                 createTokenTransaction(token, this.state.apartment.id)
@@ -106,7 +106,8 @@ export default class DetailApartment extends React.Component {
                         if (res.status === 401) {
                             message = 'Vui lòng đăng nhập để sử dụng chức năng này';
                         }
-                        this.setState({ loaded: true });
+                        // this.setState({ loaded: true });
+                        this._toggleModalOrder();
                         return Toast.show({
                             text: message,
                             type: 'danger',

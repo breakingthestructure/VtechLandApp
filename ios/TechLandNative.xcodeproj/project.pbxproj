@@ -39,6 +39,7 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* TechLandNativeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TechLandNativeTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		54E2236B217E70B00F524B5A /* libPods-TechLandNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02223E687A0B674267B9CE89 /* libPods-TechLandNative.a */; };
 		5630F05A945649DB8C578C90 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0352EF420274EAFBE6A8BAC /* EvilIcons.ttf */; };
 		6C021BE0583142178AFBBA1C /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB865E695AC9475C8FCE8D9B /* Entypo.ttf */; };
 		6E201C72260F4D58AE63B985 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD57A496976248238B760103 /* Feather.ttf */; };
@@ -46,7 +47,6 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8712EE01CBE54CB9A32CAE66 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D077F5C8510A48BA81875211 /* AntDesign.ttf */; };
 		89D17A2321DC575E00268919 /* libRNImageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89D17A2221DC575E00268919 /* libRNImageCropPicker.a */; };
-		931014A23B4EE4C0BADC7F93 /* libPods-TechLandNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C03B7657000ECC57CB4556F7 /* libPods-TechLandNative.a */; };
 		984E0F18AFA441E6904D8BCE /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 86A37BF9C73B45698BE93DC5 /* Zocial.ttf */; };
 		9AD81175C742419ABC02511A /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5838C856D5BC45C2A03DA72F /* FontAwesome.ttf */; };
 		9DAD6AE13C4C460286EBE038 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC9F95D13D704C8985DBEE44 /* FontAwesome5_Brands.ttf */; };
@@ -432,8 +432,8 @@
 		00E356EE1AD99517003FC87E /* TechLandNativeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TechLandNativeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* TechLandNativeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TechLandNativeTests.m; sourceTree = "<group>"; };
+		02223E687A0B674267B9CE89 /* libPods-TechLandNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TechLandNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		08A2393B99AD488F8CE766E8 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
-		0DDF206542D4E6449C4875EF /* libPods-TechLandNative-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TechLandNative-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F7FF3F90BC845CB82C21AC7 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -445,6 +445,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TechLandNative/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TechLandNative/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		232A8E8F65D69B0933F787C6 /* Pods-TechLandNative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TechLandNative.release.xcconfig"; path = "Pods/Target Support Files/Pods-TechLandNative/Pods-TechLandNative.release.xcconfig"; sourceTree = "<group>"; };
 		26F37D8F5FAF4DBA90994631 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* TechLandNative-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TechLandNative-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* TechLandNative-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TechLandNative-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -454,7 +455,6 @@
 		3E92C3152E9F46F8AC1BA95A /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		5838C856D5BC45C2A03DA72F /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		5BE74DE01E7B4DEBBA915D9D /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
-		5C13800BC5E25EC213B4BF15 /* libPods-TechLandNative-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TechLandNative-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		6442217CBDDF4DE8BE273304 /* RCTImageResizer.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTImageResizer.xcodeproj; path = "../node_modules/react-native-image-resizer/ios/RCTImageResizer.xcodeproj"; sourceTree = "<group>"; };
 		6A961EC8E5C14E14B184C345 /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
@@ -463,6 +463,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		85533784FFF244EA962BC592 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		86A37BF9C73B45698BE93DC5 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		891B5FED21DDAD070066E03C /* libGoogle-Maps-iOS-Utils.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libGoogle-Maps-iOS-Utils.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89D179B021DC55EF00268919 /* libRNImageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNImageCropPicker.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		89D17A2221DC575E00268919 /* libRNImageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNImageCropPicker.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		89D17A2B21DC5AE700268919 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
@@ -473,21 +474,18 @@
 		AD57A496976248238B760103 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B2D5C708E031498D82F9DF3A /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
+		B410DEA5B937AEB215225C03 /* Pods-TechLandNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TechLandNative.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TechLandNative/Pods-TechLandNative.debug.xcconfig"; sourceTree = "<group>"; };
 		B443E1BB632C47AE87337351 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		B8E0CD1E4065472F9662A3D9 /* OFL.txt */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = OFL.txt; path = "../node_modules/native-base/Fonts/OFL.txt"; sourceTree = "<group>"; };
 		BB865E695AC9475C8FCE8D9B /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		C03B7657000ECC57CB4556F7 /* libPods-TechLandNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TechLandNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0E2D9A668B74C71B54AA484 /* YTPlayerView-iframe-player.html */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "YTPlayerView-iframe-player.html"; path = "../node_modules/react-native-youtube/assets/YTPlayerView-iframe-player.html"; sourceTree = "<group>"; };
 		CC9F95D13D704C8985DBEE44 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		D077F5C8510A48BA81875211 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
-		D62E469CE8D0F32D4CEF49CB /* libPods-TechLandNativeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TechLandNativeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D73D6CE95EAFB7B2B47BB3E8 /* Pods-TechLandNative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TechLandNative.release.xcconfig"; path = "Pods/Target Support Files/Pods-TechLandNative/Pods-TechLandNative.release.xcconfig"; sourceTree = "<group>"; };
 		E04C21755ED64BA3847888B2 /* libAirMaps.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAirMaps.a; sourceTree = "<group>"; };
 		E27D5A12BBFC4F7DBDE0972B /* libRCTImageResizer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTImageResizer.a; sourceTree = "<group>"; };
 		E4762CBD581A4ACDB04228CC /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		E6FD753A35A348038F3325D5 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		EAEAC6EADA4844488F7B44D8 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		F26E912EA86DC7F1855FEDA6 /* Pods-TechLandNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TechLandNative.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TechLandNative/Pods-TechLandNative.debug.xcconfig"; sourceTree = "<group>"; };
 		FA0B76C721D08EA800064617 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA0B789E21D0E94300064617 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA0B791121D0EEE200064617 /* libFirebaseCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFirebaseCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -574,7 +572,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				931014A23B4EE4C0BADC7F93 /* libPods-TechLandNative.a in Frameworks */,
+				54E2236B217E70B00F524B5A /* libPods-TechLandNative.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,6 +749,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				891B5FED21DDAD070066E03C /* libGoogle-Maps-iOS-Utils.a */,
 				89D17A2221DC575E00268919 /* libRNImageCropPicker.a */,
 				89D179B021DC55EF00268919 /* libRNImageCropPicker.a */,
 				FA0B796021D1CC9C00064617 /* libFirebaseMessaging.a */,
@@ -760,10 +759,7 @@
 				FA0B791321D0EEE500064617 /* libFirebaseMessaging.a */,
 				FA0B791121D0EEE200064617 /* libFirebaseCore.a */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				C03B7657000ECC57CB4556F7 /* libPods-TechLandNative.a */,
-				0DDF206542D4E6449C4875EF /* libPods-TechLandNative-tvOS.a */,
-				5C13800BC5E25EC213B4BF15 /* libPods-TechLandNative-tvOSTests.a */,
-				D62E469CE8D0F32D4CEF49CB /* libPods-TechLandNativeTests.a */,
+				02223E687A0B674267B9CE89 /* libPods-TechLandNative.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -871,8 +867,8 @@
 			isa = PBXGroup;
 			children = (
 				FA0B76C721D08EA800064617 /* GoogleService-Info.plist */,
-				F26E912EA86DC7F1855FEDA6 /* Pods-TechLandNative.debug.xcconfig */,
-				D73D6CE95EAFB7B2B47BB3E8 /* Pods-TechLandNative.release.xcconfig */,
+				B410DEA5B937AEB215225C03 /* Pods-TechLandNative.debug.xcconfig */,
+				232A8E8F65D69B0933F787C6 /* Pods-TechLandNative.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1015,12 +1011,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TechLandNative" */;
 			buildPhases = (
-				8E881091059AB7C0F9F4299B /* [CP] Check Pods Manifest.lock */,
+				8B1C364E6F5BB848F51AFEE6 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				B4D171C46FA6102A854D4152 /* [CP] Copy Pods Resources */,
+				4E2708DEAD09B7B5C0DE7958 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1598,7 +1594,35 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		8E881091059AB7C0F9F4299B /* [CP] Check Pods Manifest.lock */ = {
+		4E2708DEAD09B7B5C0DE7958 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TechLandNative/Pods-TechLandNative-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle",
+				"${PODS_ROOT}/RSKImageCropper/RSKImageCropper/RSKImageCropperStrings.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RSKImageCropperStrings.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TechLandNative/Pods-TechLandNative-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8B1C364E6F5BB848F51AFEE6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1618,32 +1642,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B4D171C46FA6102A854D4152 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TechLandNative/Pods-TechLandNative-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle",
-				"${PODS_ROOT}/RSKImageCropper/RSKImageCropper/RSKImageCropperStrings.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RSKImageCropperStrings.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TechLandNative/Pods-TechLandNative-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1815,7 +1813,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F26E912EA86DC7F1855FEDA6 /* Pods-TechLandNative.debug.xcconfig */;
+			baseConfigurationReference = B410DEA5B937AEB215225C03 /* Pods-TechLandNative.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1861,7 +1859,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D73D6CE95EAFB7B2B47BB3E8 /* Pods-TechLandNative.release.xcconfig */;
+			baseConfigurationReference = 232A8E8F65D69B0933F787C6 /* Pods-TechLandNative.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

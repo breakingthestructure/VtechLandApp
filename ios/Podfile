@@ -18,4 +18,5 @@ target 'TechLandNative' do
   pod 'QBImagePickerController'
   pod 'XCDYouTubeKit'
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
+  pod 'ReactNativeKeyboardManager', :path => '../node_modules/react-native-keyboard-manager'
 end

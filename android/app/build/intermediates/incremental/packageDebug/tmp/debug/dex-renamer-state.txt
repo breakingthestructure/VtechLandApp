@@ -1,0 +1,4 @@
+#Thu Jan 03 15:07:23 ICT 2019
+base.0=/Users/69minhkhai/VtechLandApp/android/app/build/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex

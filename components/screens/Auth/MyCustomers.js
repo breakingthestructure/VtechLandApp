@@ -1,8 +1,30 @@
 import React, { Component } from 'react';
-import { FlatList, RefreshControl, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Body, Button, Container, Fab, Icon, Left, List, ListItem, Right, Thumbnail } from 'native-base';
+import {
+    FlatList,
+    RefreshControl,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {
+    Body,
+    Button,
+    Container,
+    Fab,
+    Icon,
+    Left,
+    List,
+    ListItem,
+    Right,
+    Thumbnail
+} from 'native-base';
 import Header from '../Home/Header';
-import { callingPhone, loading, openSmsUrl } from '../../../Helpers';
+import {
+    callingPhone,
+    loading,
+    openSmsUrl
+} from '../../../Helpers';
 import icSale from './../../../icons/customer.png';
 import getCustomers from './../../../api/getCustomers';
 import getToken from '../../../api/getToken';
@@ -51,7 +73,7 @@ export default class MyCustomers extends Component {
                         loaded: true
                     });
                 }
-            })
+            });
     }
 
     keyExtractor = (item) => item.id.toString(); //eslint-disable-line
@@ -61,7 +83,11 @@ export default class MyCustomers extends Component {
         }
         return (
             <Container>
-                <Header navigation={this.props.navigation} title='DANH SÁCH KHÁCH HÀNG' back={'MapScreen'} />
+                <Header
+                    navigation={this.props.navigation}
+                    title='DANH SÁCH KHÁCH HÀNG'
+                    back={'MapScreen'}
+                />
                 <List>
                     <ListItem style={{ borderBottomWidth: 0 }}>
                         <View
@@ -96,7 +122,10 @@ export default class MyCustomers extends Component {
                                             });
                                         }}
                                     >
-                                        <Thumbnail source={icSale} style={{ width: 50, height: 50 }} />
+                                        <Thumbnail
+                                            source={icSale}
+                                            style={{ width: 50, height: 50 }}
+                                        />
                                     </TouchableOpacity>
                                 </Left>
                                 <Body style={{ borderBottomWidth: 0 }}>
@@ -170,7 +199,6 @@ export default class MyCustomers extends Component {
                                             }
                                         })
                                         .catch(err => console.log(err));
-
                                 }}
                             />
                         }

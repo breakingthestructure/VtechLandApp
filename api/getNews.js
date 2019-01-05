@@ -1,7 +1,7 @@
 const GLOBAL = require('../Globals');
 
 const getNews = (tag) => (
-    fetch(`${GLOBAL.MEDIA_API_URL}/news/get-by-tags?tags=${tag}`,  //eslint-disable-line
+    fetch(`${GLOBAL.MEDIA_API_URL}/news/get-list?tags=${tag}`,  //eslint-disable-line
     {   
         method: 'GET',
         headers: {

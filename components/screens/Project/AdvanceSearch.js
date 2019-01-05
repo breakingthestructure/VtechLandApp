@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+    Animated,
     FlatList,
     ScrollView,
     Switch,
@@ -23,6 +24,8 @@ import styles from './../../../styles';
 import getOptionProjects from './../../../api/getOptionProjects';
 import { loading } from './../../../Helpers';
 import getProject from './../../../api/getProject';
+import getLocalOption from './../../../api/getLocalOption';
+import saveOptionProject from './../../../api/saveOptionProject';
 
 export default class AdvanceSearch extends Component {
     _keyExtractor = (item, index) => index.toString(); //eslint-disable-line
@@ -40,39 +43,61 @@ export default class AdvanceSearch extends Component {
             ward: '',
             streets: [],
             street: '',
-            direction: 'east',
+            direction: '',
             kind: 1,
             options: [],
-            level: '1',
+            level: '',
             txtSubmit: 'TÌM KIẾM',
             feature: {},
             arrFeature: [],
-            type: '1',
+            type: '',
             area: '',
             minPrice: '',
-            maxPrice: ''
+            maxPrice: '',
+            resultValue: new Animated.Value(40),
+            isHidden: true,
         };
     }
 
     componentDidMount() {
-        getOptionProjects()
-            .then(resJson => {
-                if (resJson) {
-                    const arrFeature = Object.keys(resJson.data.project_features).map((item) => {
-                        return { key: item, value: resJson.data.project_features[item] };
+        getLocalOption()
+            .then(res => {
+                if (res) {
+                    const arrFeature = Object.keys(res.project_features).map((item) => {
+                        return { key: item, value: res.project_features[item] };
                     });
                     this.setState({
-                        options: resJson.data,
+                        options: res,
                         loaded: true,
                         arrFeature,
-                        feature: resJson.data.project_features
+                        feature: res.project_features
                     });
+                } else {
+                    getOptionProjects()
+                        .then(resJson => {
+                            if (resJson) {
+                                const arrFeature = Object.keys(resJson.data.project_features).map((item) => {
+                                    return { key: item, value: resJson.data.project_features[item] };
+                                });
+                                saveOptionProject(resJson.data)
+                                    .then(res => console.log(res))
+                                    .catch(err => console.log(err));
+                                this.setState({
+                                    options: resJson.data,
+                                    loaded: true,
+                                    arrFeature,
+                                    feature: resJson.data.project_features
+                                });
+                            }
+                        })
+                        .catch(err => console.log(err));
                 }
             })
             .catch(err => console.log(err));
         getCities()
             .then(resJson => {
                 if (resJson) {
+                    console.log(resJson);
                     this.setState({
                         cities: resJson.data,
                         loaded: true
@@ -206,6 +231,22 @@ export default class AdvanceSearch extends Component {
         return listProject.filter(project => project.name.search(regex) >= 0);
     }
 
+    toggleQuickSearch(wantHide) {
+        let toValue = 300;
+        if (this.state.name === '' || wantHide) {
+            toValue = 40;
+        }
+        Animated.spring(
+            this.state.resultValue,
+            {
+                toValue,
+                velocity: 3,
+                tension: 2,
+                friction: 8,
+            }
+        ).start();
+    }
+
     render() {
         const { name } = this.state;
         const listProject = this.findProject(name);
@@ -226,38 +267,30 @@ export default class AdvanceSearch extends Component {
                 />
 
                 <ScrollView style={styles.content}>
-                    <View
-                        style={{
-                            position: 'relative',
-                            height: 40,
-                        }}
+                    <Animated.View
+                        style={
+                            [styles.viewAutocomplete,
+                                { height: this.state.resultValue }]
+                        }
                     >
                         <Autocomplete
-                            containerStyle={{
-                                flex: 1,
-                                left: 0,
-                                position: 'absolute',
-                                right: 0,
-                                top: 0,
-                                zIndex: 99999,
-                                backgroundColor: 'blue',
-                                borderRadius: 20,
-                                borderWidth: 1,
-                                borderColor: '#cecece'
-                            }}
+                            containerStyle={
+                                this.state.isHidden ?
+                                    styles.autocompleteContainerFull :
+                                    styles.autocompleteContainer
+                            }
                             inputContainerStyle={{
-                                borderRadius: 20,
                                 borderWidth: 0,
                             }}
-                            listStyle={{
-                                borderWidth: 0,
-                                backgroundColor: 'green',
-                            }}
+                            listStyle={styles.autocompleteResult}
                             autoCapitalize="none"
                             autoCorrect
                             defaultValue={name}
                             onChangeText={text => this.setState({ name: text })}
-                            data={listProject.length === 1 && comp(name, listProject[0].name) ? [] : listProject}
+                            data={
+                                listProject.length === 1 && comp(name, listProject[0].name)
+                                    ? [] : listProject
+                            }
                             renderTextInput={() => (
                                 <TextInput
                                     style={{
@@ -274,12 +307,22 @@ export default class AdvanceSearch extends Component {
                                     onChangeText={text => {
                                         this.setState({
                                             name: text,
-                                            searchCustomer: 0,
-                                            customerId: '',
-                                            address: '',
-                                            phone: '',
-                                            email: '',
-                                            identity: ''
+                                            isHidden: false
+                                        }, () => {
+                                            let hide = false;
+                                            if (this.state.name === '') {
+                                                this.setState({ isHidden: true }, () => {
+                                                });
+                                                hide = true;
+                                            }
+                                            this.toggleQuickSearch(hide);
+                                        });
+                                    }}
+                                    onEndEditing={() => {
+                                        this.setState({ isHidden: true }, () => {
+                                            setTimeout(() => {
+                                                this.toggleQuickSearch(true);
+                                            }, 500);
                                         });
                                     }}
                                 />
@@ -289,16 +332,25 @@ export default class AdvanceSearch extends Component {
                                     onPress={() => {
                                         this.setState({
                                             name: item.name,
+                                        }, () => {
+                                            this.toggleQuickSearch(true);
+                                            this.setState({ isHidden: true });
                                         });
                                     }}
-                                    style={{ flexDirection: 'column' }}
+                                    style={{
+                                        flexDirection: 'column',
+                                        height: 50,
+                                        justifyContent: 'center',
+                                        alignContent: 'center'
+                                    }}
                                 >
                                     <Text>{item.name}</Text>
-                                    <Text>{item.phone}</Text>
+                                    <Text>{item.address}</Text>
                                 </TouchableOpacity>
                             )}
                         />
-                    </View>
+                    </Animated.View>
+
                     <Text style={styles.titleScreen}>Tìm kiếm nâng cao</Text>
                     <View style={{ paddingTop: 10 }}>
                         <SwitchSelector
@@ -327,6 +379,7 @@ export default class AdvanceSearch extends Component {
                                 selectedValue={this.state.type}
                                 onValueChange={(itemValue) => this.setState({ type: itemValue })}
                                 style={styles.picker}
+                                placeholder="Loại dự án"
                             >
                                 {Object.keys(options.project_types).map(function (key) {
                                     return (
@@ -353,8 +406,8 @@ export default class AdvanceSearch extends Component {
                                 onValueChange={(itemValue) =>
                                     this.onSelectCity(itemValue)
                                 }
+                                placeholder="Tỉnh / Thành phố"
                             >
-                                <Picker.Item label="Tỉnh / Thành phố" value="" />
                                 {Object.keys(cities).map(function (key) {
                                     return <Picker.Item key={key} label={cities[key]} value={key} />
                                 })}
@@ -371,8 +424,8 @@ export default class AdvanceSearch extends Component {
                                 onValueChange={(itemValue) =>
                                     this.onSelectDistrict(itemValue)
                                 }
+                                placeholder="Quận / Huyện"
                             >
-                                <Picker.Item label="Quận / Huyện" value="" />
                                 {Object.keys(districts).map(function (key) {
                                     return <Picker.Item key={key} label={districts[key]} value={key} />
                                 })}
@@ -389,10 +442,14 @@ export default class AdvanceSearch extends Component {
                                 style={styles.picker}
                                 selectedValue={this.state.ward}
                                 onValueChange={(itemValue) => this.setState({ ward: itemValue })}
+                                placeholder="Phường / Xã"
                             >
-                                <Picker.Item label="Phường / Xã" value="" />
                                 {Object.keys(wards).map(function (key) {
-                                    return <Picker.Item key={key} label={wards[key]} value={key} />
+                                    return (<Picker.Item
+                                        key={key}
+                                        label={wards[key]}
+                                        value={key}
+                                    />);
                                 })}
                             </Picker>
                         </View>
@@ -405,8 +462,9 @@ export default class AdvanceSearch extends Component {
                                 style={styles.picker}
                                 selectedValue={this.state.street}
                                 onValueChange={(itemValue) => this.setState({ street: itemValue })}
+                                placeholder="Đường / Phố"
                             >
-                                <Picker.Item label="Đường / Phố" value="" />
+                                {/*<Picker.Item label="Đường / Phố" value="" />*/}
                                 {Object.keys(streets).map(function (key) {
                                     return <Picker.Item key={key} label={streets[key]} value={key} />
                                 })}
@@ -424,9 +482,14 @@ export default class AdvanceSearch extends Component {
                                 headerBackButtonText={<Icon name='ios-arrow-back' />}
                                 selectedValue={this.state.level}
                                 onValueChange={(itemValue) => this.setState({ level: itemValue })}
+                                placeholder="Phân khúc"
                             >
                                 {Object.keys(options.project_levels).map(function (key) {
-                                    return <Picker.Item key={key} label={options.project_levels[key]} value={key} />
+                                    return (<Picker.Item
+                                        key={key}
+                                        label={options.project_levels[key]}
+                                        value={key}
+                                    />);
                                 })}
                             </Picker>
                         </View>
@@ -467,9 +530,16 @@ export default class AdvanceSearch extends Component {
                                 style={styles.picker}
                                 selectedValue={this.state.direction}
                                 onValueChange={(itemValue) => this.setState({ direction: itemValue })}
+                                iosHeader="Hướng"
+                                headerBackButtonText={<Icon name='ios-arrow-back' />}
+                                placeholder="Hướng"
                             >
                                 {Object.keys(options.directions).map(function (key) {
-                                    return <Picker.Item key={key} label={options.directions[key]} value={key} />
+                                    return (<Picker.Item
+                                        key={key}
+                                        label={options.directions[key]}
+                                        value={key}
+                                    />);
                                 })}
                             </Picker>
                         </View>

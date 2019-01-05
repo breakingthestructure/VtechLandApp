@@ -6,25 +6,31 @@ import {
     Dimensions,
     StyleSheet,
     ScrollView,
-    TouchableOpacity
 } from 'react-native';
-
+import HTMLView from 'react-native-htmlview';
 import Header from './../Home/Header';
-
-import imgDuan from './../../../images/duan.jpg';
 import icTitle from './../../../icons/ic_title.png';
+import {
+    MEDIA_BASE_URL,
+    NO_IMAGE
+} from '../../../Globals';
 
 const { width, height } = Dimensions.get('window');
 
 export default class DetailNews extends React.Component {
     render() {
+        const { navigation } = this.props;
+        const news = navigation.getParam('news', null);
         return (
             <View style={{ backgroundColor: '#f2f2f2', height, width }}>
-                <Header navigation={this.props.navigation} />
+                <Header navigation={this.props.navigation} back={'MapScreen'} title={'TIN DỰ ÁN'} />
                 <ScrollView style={styles.wrapper}>
                     <View style={{ backgroundColor: 'white', marginBottom: 10 }}>
                         <View>
-                            <Image source={imgDuan} style={{ width: '100%', height: ((width - 100) / 975) * 523 }} />
+                            <Image
+                                source={{ uri: (news.image_url) ? `${MEDIA_BASE_URL}${news.image_url}` : NO_IMAGE }}
+                                style={{ width: '100%', height: ((width - 100) / 975) * 523 }}
+                            />
                         </View>
                         <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
                             <View style={{ flexDirection: 'row' }}>
@@ -32,13 +38,16 @@ export default class DetailNews extends React.Component {
                                     <Image source={icTitle} style={{ width: 2, height: 13 }} />
                                 </View>
 
-                                <Text style={{ fontWeight: '600', fontSize: 16, paddingLeft: 5 }}>VINHOMES DRAGON BAY</Text>
+                                <Text style={{ fontWeight: '600', fontSize: 16, paddingLeft: 5 }}>{news.name}</Text>
                             </View>
-                            <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi magnam qui fugit culpa tenetur, quis repellat vero totam quibusdam laborum.</Text>
+                            <Text style={{ fontStyle: 'italic' }}>
+                                {news.description}
+                            </Text>
+                            <HTMLView value={news.content} />
                         </View>
                     </View>
                 </ScrollView>
-            </View >
+            </View>
         );
     }
 }

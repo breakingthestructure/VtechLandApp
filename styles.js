@@ -21,7 +21,8 @@ export default StyleSheet.create({
     },
     containerLoading: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'rgba(52, 52, 52, 0.8)'
     },
     statusBar: {
         height: STATUSBAR_HEIGHT,
@@ -36,12 +37,12 @@ export default StyleSheet.create({
         fontWeight: '600',
         fontSize: 14,
         color: '#053654',
-        paddingBottom: 5
+        paddingVertical: 5
     },
     item: {
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         paddingTop: 10
     },
     inputItem: {
@@ -53,7 +54,9 @@ export default StyleSheet.create({
         borderBottomLeftRadius: 20,
         borderLeftWidth: 1,
         borderTopWidth: 1,
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        flexDirection: 'row',
+        // justifyContent: 'space-between',
     },
     rightBtn: {
         backgroundColor: '#F58319',
@@ -160,14 +163,14 @@ export default StyleSheet.create({
         height: 40
     },
     sectionPickerIcon: {
-        height: 40,
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20,
         borderLeftWidth: 1,
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor: '#808080',
-        overflow: 'hidden'
+        flexDirection: 'row',
+        width: '85%',
     },
     //mapscreen
     wrapper: {
@@ -250,6 +253,54 @@ export default StyleSheet.create({
         right: 0,
         backgroundColor: 'white',
         height: heightResult
+    },
+    viewAutocomplete: {
+        height: 40
+    },
+    autocompleteContainer: {
+        flex: 1,
+        left: 0,
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        zIndex: 1,
+        backgroundColor: 'white',
+        // borderRadius: 20,
+        borderWidth: 1,
+        borderColor: '#cecece',
+        // borderBottomLeftRadius: 20,
+        // borderBottomRightRadius: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+    },
+    autocompleteContainerFull: {
+        flex: 1,
+        left: 0,
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        zIndex: 1,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: '#cecece',
+    },
+    autocompleteResult: {
+        ...Platform.select({
+            ios: {
+                height: 250,
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+                borderWidth: 1,
+                borderColor: '#cecece',
+                width: '100.5%',
+                left: -1,
+                paddingHorizontal: 15
+            },
+            android: {
+                borderWidth: 0,
+            },
+        }),
     },
     toolSearch: {
         position: 'absolute',
@@ -960,7 +1011,9 @@ export default StyleSheet.create({
         height: 40,
         borderRadius: 20,
         width: width / 2.2,
-        marginLeft: 0
+        // marginLeft: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     rightInputContact: {
         borderColor: '#cecece',
@@ -968,12 +1021,9 @@ export default StyleSheet.create({
         height: 40,
         borderRadius: 20,
         width: width / 2.2,
-        right: 0
-    },
-    rightSectionInputContact: {
-        position: 'absolute',
-        right: 0,
-        marginTop: 10
+        // right: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     textAreaContact: {
         borderColor: '#cecece',

@@ -140,7 +140,7 @@ export default class DetailProject extends React.Component {
                         </View>
                     </View>
                     <Text style={styles.titleSection}>TỔNG QUAN DỰ ÁN</Text>
-                    {project.data.infomation && <HTMLView value={project.data.infomation} />}
+                    {project.data.information && <HTMLView value={project.data.information} />}
                     <Text style={styles.titleSection}>TIỆN ÍCH DỰ ÁN</Text>
                     <Modal
                         visible={this.state.modalVisible}

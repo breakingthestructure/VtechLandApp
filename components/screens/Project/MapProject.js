@@ -13,7 +13,10 @@ import MapView, {
     Callout,
     Marker
 } from 'react-native-maps';
-import { Icon } from 'native-base';
+import {
+    Icon,
+    Toast
+} from 'native-base';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import AdvanceSearch from './AdvanceSearch';
@@ -27,6 +30,7 @@ import { loading } from '../../../Helpers';
 import KindProject from '../../Modal/KindProject';
 import saveProject from '../../../api/saveProject';
 import imgDuan from './../../../images/duan.jpg';
+import getLocalProjects from "../../../api/getLocalProjects";
 
 const { width, height } = Dimensions.get('window');
 let isHidden = true;
@@ -100,20 +104,39 @@ export default class MapProject extends React.Component {
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+        // getLocalProjects()
+        //     .then(res => {
+        //         if (res.length > 0) {
+        //             this.arrayProject = res;
+        //             this.setState({
+        //                 listProject: this.arrayProject,
+        //                 loaded: true
+        //             });
+        //         }
+        //     })
+        //     .catch(err => console.log(err));
+        // if (!this.state.loaded) {
         getProject()
             .then(resJson => {
-                if (resJson.data) {
+                if (resJson.data.length > 0) {
                     this.arrayProject = resJson.data;
                     this.setState({
                         listProject: this.arrayProject,
                         loaded: true
                     });
-                    saveProject(resJson.data)
+                    return saveProject(resJson.data)
                         .then()
                         .catch(err => console.log(err));
                 }
+                return Toast.show({
+                    text: 'Kết nối tới máy chủ bị lỗi!',
+                    type: 'danger',
+                    buttonText: 'Okay',
+                    duration: 10000
+                });
             })
             .catch(err => console.log(err));
+        // }
     }
 
     toggleAdvanceSearch(val, wantHide, dataSearch) {
@@ -133,7 +156,7 @@ export default class MapProject extends React.Component {
         if (!wantHide) {
             value = this.state.bounceValue;
         }
-        Animated.spring(
+        Animated.timing(
             value,
             {
                 toValue,
@@ -246,7 +269,7 @@ export default class MapProject extends React.Component {
                         // ref={(ref) => {
                         //     this.mapView = ref;
                         // }}
-                        onMapReady={() => console.log('map loaded')}
+                        onMapReady={() => this.setState({ loaded: true })}
                     >
                         {this.state.listProject.map(project => (
                             <Marker
@@ -386,8 +409,10 @@ export default class MapProject extends React.Component {
                     />}
                 </Animated.View>
                 <Animated.View
-                    style={[styles.popupResult,
-                        { transform: [{ translateY: this.state.resultValue }] }]}
+                    style={
+                        [styles.popupResult,
+                            { transform: [{ translateY: this.state.resultValue }] }]
+                    }
                 >
                     {this.state.modalResult &&
                     <SearchResult

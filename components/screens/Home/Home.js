@@ -15,6 +15,7 @@ import Header from './Header';
 import icTitle from './../../../icons/ic_title.png';
 import getProject from './../../../api/getProject';
 import { BASE_URL, NO_IMAGE } from './../../../Globals';
+import { loading } from "../../../Helpers";
 
 const { width } = Dimensions.get('window');
 
@@ -45,13 +46,7 @@ export default class Home extends React.Component {
     keyExtractor = (item) => item.id.toString(); //eslint-disable-line
     render() {
         if (!this.state.loaded) {
-            return (
-                <Container>
-                    <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
-                    </Content>
-                </Container>
-            );
+            return loading();
         }
         return (
             <View style={{ backgroundColor: '#f2f2f2', flex: 1 }}>

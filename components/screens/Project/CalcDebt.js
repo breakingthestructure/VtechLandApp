@@ -1,7 +1,7 @@
 import React from 'react';
 import {
+    Dimensions,
     FlatList,
-    Keyboard,
     Switch,
     Text,
     TouchableOpacity,
@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {
     Content,
-    Form,
     Icon,
     Input,
     Item,
@@ -24,6 +23,10 @@ import {
     loading
 } from './../../../Helpers';
 import styles from './../../../styles';
+
+const {
+    width,
+} = Dimensions.get('window');
 
 export default class CalcDebt extends React.Component {
     state = {
@@ -78,7 +81,7 @@ export default class CalcDebt extends React.Component {
             modeDebt: '',
             txtMoney: '',
             txtMonth: '',
-            txtDate: '',
+            txtDate: 'NGÀY DẢI NGÂN',
             date: null,
             loaded: false,
             txtTimeGrace: '',
@@ -325,57 +328,90 @@ export default class CalcDebt extends React.Component {
                             <Text style={styles.txtBtn}>THÁNG</Text>
                         </View>
                     </View>
-                    <View style={styles.item}>
-                        <Content>
-                            <Item
-                                style={styles.inputItem}
-                                regular
+                    <TouchableOpacity
+                        style={styles.item}
+                        onPress={() => {
+                            this.showDatePicker();
+                        }}
+                    >
+                        <View
+                            style={{
+                                borderColor: '#808080',
+                                height: 40,
+                                marginLeft: 0,
+                                width: '85%',
+                                borderTopLeftRadius: 20,
+                                borderBottomLeftRadius: 20,
+                                borderLeftWidth: 1,
+                                borderTopWidth: 1,
+                                borderBottomWidth: 1,
+                                flexDirection: 'row',
+                            }}
+                            regular
+                        >
+                            <Icon
+                                active
+                                name='ios-calendar'
+                                style={{
+                                    color: '#75D2BE',
+                                    marginLeft: 15,
+                                    fontSize: 22,
+                                    marginTop: 5
+                                }}
+                            />
+                            <Text
+                                style={{
+                                    height: 40,
+                                    marginTop: 12,
+                                    fontSize: 12,
+                                    marginLeft: 20
+                                }}
                             >
-                                <Icon active name='ios-calendar' style={{ color: '#75D2BE' }} />
-                                <Input
-                                    style={{ fontSize: 12 }}
-                                    placeholder='NGÀY GIẢI NGÂN'
-                                    placeholderTextColor='#999999'
-                                    underlineColorAndroid='transparent'
-                                    onChangeText={(text) => this.setState({ txtDate: text })}
-                                    value={this.state.txtDate}
-                                    onFocus={() => {
-                                        Keyboard.dismiss();
-                                        this.showDatePicker();
-                                    }}
-                                />
-                            </Item>
-                        </Content>
+                                {this.state.txtDate}
+                            </Text>
+                        </View>
                         <View
                             style={styles.rightBtn}
                         >
                             <Text style={styles.txtBtn}>NGÀY</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                     <View
                         style={styles.groupPickerIcon}
                     >
-                        <Content
+                        <View
                             style={styles.sectionPickerIcon}
                         >
-                            <Form>
-                                <Picker
-                                    style={{
-                                        height: 40,
-                                    }}
-                                    selectedValue={this.state.modeDebt}
-                                    onValueChange={this.onSelectMode.bind(this)}
-                                >
-                                    <Picker.Item label="Chọn hình thức vay" value="0" />
-                                    <Picker.Item label="Dư nợ giảm dần" value="1" />
-                                    <Picker.Item label="Dư nợ ban đầu" value="2" />
-                                </Picker>
-                            </Form>
-                        </Content>
+                            <Icon
+                                name="clock"
+                                style={{
+                                    color: 'red',
+                                    marginLeft: 15,
+                                    fontSize: 22,
+                                    marginTop: 5
+                                }}
+                            />
+                            <Picker
+                                style={{
+                                    width: width / 1.2,
+                                    height: 35
+                                }}
+                                iosHeader="Hình thức vay"
+                                placeholder="Chọn hình thức vay"
+                                selectedValue={this.state.modeDebt}
+                                onValueChange={this.onSelectMode.bind(this)}
+                                headerBackButtonText={<Icon name='ios-arrow-back' />}
+                            >
+                                <Picker.Item label="Dư nợ giảm dần" value="1" />
+                                <Picker.Item label="Dư nợ ban đầu" value="2" />
+                            </Picker>
+                        </View>
                         <View
                             style={styles.rightBtn}
                         >
-                            <Text style={styles.txtBtn}><Icon name="ios-arrow-down" style={{ color: 'white' }} /></Text>
+                            <Text style={styles.txtBtn}>
+                                <Icon name="ios-arrow-down" style={{ color: 'white' }} />
+                            </Text>
                         </View>
                     </View>
                     <Text style={{ color: '#333333', fontSize: 12, paddingTop: 10 }}>BÀI TOÁN LÃI SUẤT</Text>
