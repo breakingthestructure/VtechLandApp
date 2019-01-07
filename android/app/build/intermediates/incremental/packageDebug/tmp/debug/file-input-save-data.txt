@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Mon Jan 07 14:22:50 ICT 2019
+#Mon Jan 07 15:52:08 ICT 2019
 5.base=E\:\\Code\\React Native\\VtechLandApp\\android\\app\\build\\intermediates\\transforms\\mergeJniLibs\\debug\\0
 42.base=E\:\\Code\\React Native\\VtechLandApp\\android\\app\\build\\intermediates\\transforms\\mergeJniLibs\\debug\\0
 22.path=fonts/Zocial.ttf

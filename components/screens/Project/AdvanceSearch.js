@@ -151,19 +151,19 @@ export default class AdvanceSearch extends Component {
     onSearch() {
         this.setState({ txtSubmit: 'Đang xử lý' });
         const {
-            name,
-            city,
-            district,
-            ward,
-            street,
-            direction,
-            kind,
-            level,
-            type,
-            area,
-            minPrice,
-            maxPrice
-        } = this.state;
+                  name,
+                  city,
+                  district,
+                  ward,
+                  street,
+                  direction,
+                  kind,
+                  level,
+                  type,
+                  area,
+                  minPrice,
+                  maxPrice
+              } = this.state;
         let query = '';
         if (name !== '') {
             query += `&keyword=${name}`;
@@ -381,6 +381,10 @@ export default class AdvanceSearch extends Component {
                                 style={styles.picker}
                                 placeholder="Loại dự án"
                             >
+                                <Picker.Item
+                                    label='Loại dự án'
+                                    value=''
+                                />
                                 {Object.keys(options.project_types).map(function (key) {
                                     return (
                                         <Picker.Item
@@ -408,6 +412,10 @@ export default class AdvanceSearch extends Component {
                                 }
                                 placeholder="Tỉnh / Thành phố"
                             >
+                                <Picker.Item
+                                    label='Tỉnh / Thành phố'
+                                    value=''
+                                />
                                 {Object.keys(cities).map(function (key) {
                                     return <Picker.Item key={key} label={cities[key]} value={key} />
                                 })}
@@ -426,6 +434,10 @@ export default class AdvanceSearch extends Component {
                                 }
                                 placeholder="Quận / Huyện"
                             >
+                                <Picker.Item
+                                    label='Quận / Huyện'
+                                    value=''
+                                />
                                 {Object.keys(districts).map(function (key) {
                                     return <Picker.Item key={key} label={districts[key]} value={key} />
                                 })}
@@ -444,6 +456,10 @@ export default class AdvanceSearch extends Component {
                                 onValueChange={(itemValue) => this.setState({ ward: itemValue })}
                                 placeholder="Phường / Xã"
                             >
+                                <Picker.Item
+                                    label='Phường / Xã'
+                                    value=''
+                                />
                                 {Object.keys(wards).map(function (key) {
                                     return (<Picker.Item
                                         key={key}
@@ -464,7 +480,7 @@ export default class AdvanceSearch extends Component {
                                 onValueChange={(itemValue) => this.setState({ street: itemValue })}
                                 placeholder="Đường / Phố"
                             >
-                                {/*<Picker.Item label="Đường / Phố" value="" />*/}
+                                <Picker.Item label="Đường / Phố" value="" />
                                 {Object.keys(streets).map(function (key) {
                                     return <Picker.Item key={key} label={streets[key]} value={key} />
                                 })}
@@ -484,6 +500,10 @@ export default class AdvanceSearch extends Component {
                                 onValueChange={(itemValue) => this.setState({ level: itemValue })}
                                 placeholder="Phân khúc"
                             >
+                                <Picker.Item
+                                    label='Phân khúc'
+                                    value=''
+                                />
                                 {Object.keys(options.project_levels).map(function (key) {
                                     return (<Picker.Item
                                         key={key}
@@ -534,6 +554,10 @@ export default class AdvanceSearch extends Component {
                                 headerBackButtonText={<Icon name='ios-arrow-back' />}
                                 placeholder="Hướng"
                             >
+                                <Picker.Item
+                                    label='Hướng'
+                                    value=''
+                                />
                                 {Object.keys(options.directions).map(function (key) {
                                     return (<Picker.Item
                                         key={key}

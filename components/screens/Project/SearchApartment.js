@@ -131,6 +131,10 @@ export default class SearchApartment extends Component {
                                 headerBackButtonText={<Icon name='ios-arrow-back' />}
                                 placeholder="Tất cả"
                             >
+                                <Picker.Item
+                                    label='Tất cả'
+                                    value=''
+                                />
                                 {Object.keys(options.apartment_status).map(function (key) {
                                     return (
                                         <Picker.Item
@@ -212,6 +216,10 @@ export default class SearchApartment extends Component {
                                 headerBackButtonText={<Icon name='ios-arrow-back' />}
                                 placeholder="Hướng"
                             >
+                                <Picker.Item
+                                    label='Hướng'
+                                    value=''
+                                />
                                 {Object.keys(options.directions).map(function (key) {
                                     return <Picker.Item key={key} label={options.directions[key]} value={key} />
                                 })}

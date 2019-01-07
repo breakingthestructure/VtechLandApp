@@ -396,13 +396,6 @@ export default class OrderSubmit extends React.Component {
                         <View
                             style={styles.viewHalfInput}
                         >
-                            {/*<TextInput*/}
-                                {/*style={styles.input}*/}
-                                {/*placeholder='Nơi cấp'*/}
-                                {/*underlineColorAndroid='transparent'*/}
-                                {/*value={this.state.where_identity}*/}
-                                {/*onChangeText={text => this.setState({ where_identity: text })}*/}
-                            {/*/>*/}
                             <Picker
                                 iosHeader="Nơi cấp"
                                 headerBackButtonText={<Icon name='ios-arrow-back' />}
