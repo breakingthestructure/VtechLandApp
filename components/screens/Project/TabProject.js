@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
-import { BackHandler, Image, ScrollView, View } from 'react-native';
-import { Container, Content, ScrollableTab, Tab, Tabs, TabHeading, Icon } from 'native-base';
+import {
+    BackHandler,
+    Image,
+    ScrollView,
+    View
+} from 'react-native';
+import {
+    Container,
+    Content,
+    ScrollableTab,
+    Tab,
+    Tabs,
+} from 'native-base';
 import Swiper from 'react-native-swiper';
 import ActionProject from './ActionProject';
 import SetCalendar from './SetCalendar';
@@ -10,7 +21,10 @@ import DetailProject from './DetailProject';
 import CalcDebt from './CalcDebt';
 import News from './News';
 import styles from './../../../styles';
-import { BASE_URL, NO_IMAGE } from './../../../Globals';
+import {
+    BASE_URL,
+    NO_IMAGE
+} from './../../../Globals';
 import { loading } from '../../../Helpers';
 
 export default class TabProject extends Component {
@@ -87,17 +101,19 @@ export default class TabProject extends Component {
                         >
                             <Tab
                                 heading="Thông tin dự án"
-                                // heading={<TabHeading style={{ backgroundColor: '#fff' }} ><Icon name="ios-calculator" /></TabHeading>}
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}
                                 activeTextStyle={styles.textActiveTab}
                             >
-                                <DetailProject onChangeTab={this.onChangeTab} state={this.state} project={project} />
+                                <DetailProject
+                                    onChangeTab={this.onChangeTab}
+                                    state={this.state}
+                                    project={project}
+                                />
                             </Tab>
                             <Tab
                                 heading="Tin tức & Sự kiện"
-                                // heading={<TabHeading style={{ backgroundColor: '#fff' }} ><Icon name="ios-calculator" /></TabHeading>}
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}
@@ -107,7 +123,6 @@ export default class TabProject extends Component {
                             </Tab>
                             <Tab
                                 heading="Tính lãi suất vay"
-                                // heading={<TabHeading style={{ backgroundColor: '#fff' }} ><Icon name="ios-calculator" /></TabHeading>}
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}
@@ -117,7 +132,6 @@ export default class TabProject extends Component {
                             </Tab>
                             <Tab
                                 heading="Bảng hàng"
-                                // heading={<TabHeading style={{ backgroundColor: '#fff' }}><Icon name="ios-bicycle" /></TabHeading>}
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}
@@ -131,7 +145,6 @@ export default class TabProject extends Component {
                             </Tab>
                             <Tab
                                 heading="Đặt lịch"
-                                // heading={<TabHeading style={{ backgroundColor: '#fff' }}><Icon name="ios-calendar" /></TabHeading>}
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}
@@ -141,13 +154,6 @@ export default class TabProject extends Component {
                             </Tab>
                             <Tab
                                 heading="Hỗ trợ dự án"
-                                // heading={
-                                //     <TabHeading style={{ backgroundColor: '#fff' }}>
-                                //         <Icon
-                                //             name="ios-call"
-                                //         />
-                                //     </TabHeading>
-                                // }
                                 tabStyle={styles.tabProject}
                                 textStyle={styles.textTabProject}
                                 activeTabStyle={styles.activeTab}

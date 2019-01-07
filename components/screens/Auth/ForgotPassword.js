@@ -6,7 +6,8 @@ import {
     Text,
     TouchableOpacity,
     View,
-    Alert
+    Alert,
+    TextInput
 } from 'react-native';
 import { Container, Content, Item, Input, Icon, Spinner } from 'native-base';
 import login from './../../../api/login';
@@ -65,32 +66,43 @@ export default class ForgotPassword extends React.Component {
                     <View style={{ paddingTop: 20, paddingBottom: 10 }}>
                         <Text style={{ fontSize: 18, fontWeight: '600', color: '#333333' }}>QUÊN MẬT KHẨU</Text>
                     </View>
-                    <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30, paddingTop: 10 }}>
-                        <Content>
-                            <Item
+                    <View
+                        style={{
+                            width: '100%',
+                            paddingHorizontal: 30,
+                            paddingTop: 10
+                        }}
+                    >
+                        <View
+                            style={{
+                                height: 40,
+                                width: '100%',
+                                borderRadius: 20,
+                                marginTop: 5,
+                                borderColor: '#33563743',
+                                borderWidth: 1,
+                                flexDirection: 'row',
+                                justifyContent: 'flex-end',
+                            }}
+                        >
+                            <TextInput
+                                style={{ height: 40, width: '95%', paddingLeft: 40 }}
+                                placeholder='E-mail'
+                                underlineColorAndroid='transparent'
+                                value={this.state.email}
+                                onChangeText={text => this.setState({ email: text })}
+                            />
+                            <Icon
+                                active
+                                name='ios-mail'
                                 style={{
-                                    borderColor: '#33563743',
-                                    borderWidth: 1,
-                                    height: 40,
-                                    borderRadius: 20,
-                                    marginLeft: 0,
-                                    width: '100%',
-                                    // borderTopLeftRadius: 20,
-                                    // borderTopRightRadius: 20,
+                                    color: 'gray',
+                                    paddingRight: 20,
+                                    fontSize: 22,
+                                    marginTop: 5
                                 }}
-                                regular
-                            >
-                                <Input
-                                    style={{ fontSize: 12, paddingLeft: 30 }}
-                                    placeholder='E-mail'
-                                    placeholderTextColor='#999999'
-                                    underlineColorAndroid='transparent'
-                                    onChangeText={(text) => this.setState({ email: text })}
-                                    value={this.state.email}
-                                />
-                                <Icon active name='ios-mail' style={{ color: 'gray', marginRight: 15 }} />
-                            </Item>
-                        </Content>
+                            />
+                        </View>
                     </View>
                     <TouchableOpacity
                         style={{

@@ -6,6 +6,7 @@ import {
     Text,
     TouchableOpacity,
     View,
+    TextInput
 } from 'react-native';
 import {
     Content,
@@ -277,51 +278,88 @@ export default class CalcDebt extends React.Component {
                 <Text style={styles.txtHeader}>TÍNH LÃI SUẤT VAY DỰ ÁN</Text>
                 <Text style={{ color: '#333333' }}>Vui lòng nhập các tham số cần thiết</Text>
                 <View>
-
-                    <View style={styles.item}>
-                        <Content>
-                            <Item
-                                style={styles.inputItem}
-                                regular
-                            >
-                                <Icon active name='ios-cash' style={{ color: 'green' }} />
-                                <Input
-                                    style={{ fontSize: 12 }}
-                                    placeholder='SỐ TIỀN VAY'
-                                    placeholderTextColor='#999999'
-                                    underlineColorAndroid='transparent'
-                                    onChangeText={(text) => {
-                                        this.setFormatMoney(text);
-                                    }}
-                                    value={this.state.txtMoney}
-                                    keyboardType={'numeric'}
-                                />
-                            </Item>
-                        </Content>
+                    <View
+                        style={styles.item}
+                    >
+                        <View
+                            style={{
+                                height: 40,
+                                width: '85%',
+                                borderColor: '#33563743',
+                                borderWidth: 1,
+                                flexDirection: 'row',
+                                borderTopLeftRadius: 20,
+                                borderBottomLeftRadius: 20,
+                                borderLeftWidth: 1,
+                                borderTopWidth: 1,
+                                borderBottomWidth: 1,
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Icon
+                                active
+                                name='ios-cash'
+                                style={{
+                                    color: 'orange',
+                                    fontSize: 24,
+                                    paddingLeft: 10
+                                }}
+                            />
+                            <TextInput
+                                style={{ height: 40, width: '95%', paddingLeft: 15, fontSize: 12 }}
+                                placeholder='SỐ TIỀN VAY'
+                                placeholderTextColor='#999999'
+                                underlineColorAndroid='transparent'
+                                onChangeText={(text) => {
+                                    this.setFormatMoney(text);
+                                }}
+                                keyboardType={'numeric'}
+                                value={this.state.txtMoney}
+                            />
+                        </View>
                         <View
                             style={styles.rightBtn}
                         >
                             <Text style={styles.txtBtn}>VND</Text>
                         </View>
                     </View>
-                    <View style={styles.item}>
-                        <Content>
-                            <Item
-                                style={styles.inputItem}
-                                regular
-                            >
-                                <Icon active name='ios-clock' style={{ color: '#75D2BE' }} />
-                                <Input
-                                    style={{ fontSize: 12 }}
-                                    placeholder='THỜI GIAN VAY'
-                                    placeholderTextColor='#999999'
-                                    underlineColorAndroid='transparent'
-                                    onChangeText={(text) => this.setState({ txtMonth: text })}
-                                    value={this.state.txtMonth}
-                                    keyboardType={'numeric'}
-                                />
-                            </Item>
-                        </Content>
+                    <View
+                        style={styles.item}
+                    >
+                        <View
+                            style={{
+                                height: 40,
+                                width: '85%',
+                                borderColor: '#33563743',
+                                borderWidth: 1,
+                                flexDirection: 'row',
+                                borderTopLeftRadius: 20,
+                                borderBottomLeftRadius: 20,
+                                borderLeftWidth: 1,
+                                borderTopWidth: 1,
+                                borderBottomWidth: 1,
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Icon
+                                active
+                                name='ios-clock'
+                                style={{
+                                    color: 'orange',
+                                    fontSize: 24,
+                                    paddingLeft: 10
+                                }}
+                            />
+                            <TextInput
+                                style={{ height: 40, width: '95%', paddingLeft: 15, fontSize: 12 }}
+                                placeholder='THỜI GIAN VAY'
+                                placeholderTextColor='#999999'
+                                underlineColorAndroid='transparent'
+                                onChangeText={(text) => this.setState({ txtMonth: text })}
+                                value={this.state.txtMonth}
+                                keyboardType={'numeric'}
+                            />
+                        </View>
                         <View
                             style={styles.rightBtn}
                         >
@@ -336,7 +374,7 @@ export default class CalcDebt extends React.Component {
                     >
                         <View
                             style={{
-                                borderColor: '#808080',
+                                borderColor: '#33563743',
                                 height: 40,
                                 marginLeft: 0,
                                 width: '85%',
@@ -346,6 +384,7 @@ export default class CalcDebt extends React.Component {
                                 borderTopWidth: 1,
                                 borderBottomWidth: 1,
                                 flexDirection: 'row',
+                                alignItems: 'center'
                             }}
                             regular
                         >
@@ -353,18 +392,16 @@ export default class CalcDebt extends React.Component {
                                 active
                                 name='ios-calendar'
                                 style={{
-                                    color: '#75D2BE',
-                                    marginLeft: 15,
+                                    color: 'orange',
+                                    marginLeft: 10,
                                     fontSize: 22,
-                                    marginTop: 5
                                 }}
                             />
                             <Text
                                 style={{
-                                    height: 40,
-                                    marginTop: 12,
                                     fontSize: 12,
-                                    marginLeft: 20
+                                    marginLeft: 15,
+                                    alignSelf: 'center',
                                 }}
                             >
                                 {this.state.txtDate}
@@ -383,12 +420,12 @@ export default class CalcDebt extends React.Component {
                             style={styles.sectionPickerIcon}
                         >
                             <Icon
-                                name="clock"
+                                type="FontAwesome"
+                                name="list-alt"
                                 style={{
-                                    color: 'red',
-                                    marginLeft: 15,
-                                    fontSize: 22,
-                                    marginTop: 5
+                                    color: 'orange',
+                                    marginLeft: 10,
+                                    fontSize: 20,
                                 }}
                             />
                             <Picker
@@ -396,6 +433,7 @@ export default class CalcDebt extends React.Component {
                                     width: width / 1.2,
                                     height: 35
                                 }}
+                                textStyle={{ fontSize: 14 }}
                                 iosHeader="Hình thức vay"
                                 placeholder="Chọn hình thức vay"
                                 selectedValue={this.state.modeDebt}
@@ -420,49 +458,32 @@ export default class CalcDebt extends React.Component {
                             key={index}
                             style={styles.calcCondition}
                         >
-                            <Content>
-                                <Item
-                                    style={styles.inputLeft}
-                                    regular
-                                >
-                                    <Text style={{ fontSize: 12, paddingLeft: 10, color: '#000' }}>
-                                        {this.state.arrayCondition[index].from}
-                                    </Text>
-                                </Item>
-                            </Content>
-                            <Content>
-                                <Item
-                                    style={styles.inputCenter}
-                                    regular
-                                >
-                                    <Input
-                                        style={{ fontSize: 12 }}
-                                        placeholder='ĐẾN THÁNG'
-                                        placeholderTextColor='#999999'
-                                        underlineColorAndroid='transparent'
-                                        // onChangeText={(text) => this.setState({ txtTo: text })}
-                                        onChangeText={this.handleChangeFromInput.bind(this, index, 'to')}
-                                        value={this.state.arrayCondition[index].to}
-                                        keyboardType={'numeric'}
-                                    />
-                                </Item>
-                            </Content>
-                            <Content>
-                                <Item
-                                    style={styles.inputRight}
-                                    regular
-                                >
-                                    <Input
-                                        style={{ fontSize: 12 }}
-                                        placeholder='LÃI SUẤT'
-                                        placeholderTextColor='#999999'
-                                        underlineColorAndroid='transparent'
-                                        onChangeText={this.handleChangeFromInput.bind(this, index, 'percent')}
-                                        value={this.state.arrayCondition[index].percent}
-                                        keyboardType={'numeric'}
-                                    />
-                                </Item>
-                            </Content>
+                            <View
+                                style={styles.inputLeft}
+                            >
+                                <Text style={{ fontSize: 12, paddingLeft: 10, color: '#000' }}>
+                                    {this.state.arrayCondition[index].from}
+                                </Text>
+                            </View>
+                            <TextInput
+                                style={styles.inputCenter}
+                                placeholder='ĐẾN THÁNG'
+                                placeholderTextColor='#999999'
+                                underlineColorAndroid='transparent'
+                                // onChangeText={(text) => this.setState({ txtTo: text })}
+                                onChangeText={this.handleChangeFromInput.bind(this, index, 'to')}
+                                value={this.state.arrayCondition[index].to}
+                                keyboardType={'numeric'}
+                            />
+                            <TextInput
+                                style={styles.inputRight}
+                                placeholder='LÃI SUẤT'
+                                placeholderTextColor='#999999'
+                                underlineColorAndroid='transparent'
+                                onChangeText={this.handleChangeFromInput.bind(this, index, 'percent')}
+                                value={this.state.arrayCondition[index].percent}
+                                keyboardType={'numeric'}
+                            />
                             <View
                                 style={styles.labelBtn}
                             >
@@ -472,42 +493,71 @@ export default class CalcDebt extends React.Component {
                                 style={styles.closeCondition}
                                 onPress={this.subCondition.bind(this, index)}
                             >
-                                <Text style={styles.txtBtn}>x</Text>
+                                <Icon
+                                    type="FontAwesome"
+                                    name='minus'
+                                    style={{
+                                        fontSize: 14,
+                                        color: 'white',
+                                        marginRight: 5
+                                    }}
+                                />
+                                {/*<Text style={styles.txtBtn}>x</Text>*/}
                             </TouchableOpacity>
                         </View>
                     ))}
                     <TouchableOpacity
-                        style={styles.btnAdd}
+                        style={styles.bigBtnIconSuccess}
                         onPress={this.addCondition.bind(this)}
                     >
-                        <Text style={{
-                            color: 'white',
-                            fontWeight: '500',
-                            marginHorizontal: 5,
-                            fontSize: 12,
-                            textAlign: 'center'
-                        }}>THÊM ĐIỀU KIỆN</Text>
+                        <Icon
+                            type="FontAwesome"
+                            name='plus'
+                            style={styles.iconBigBtn}
+                        />
+                        <Text style={styles.textBtnIcon}>
+                            THÊM ĐIỀU KIỆN
+                        </Text>
                     </TouchableOpacity>
-                    <Text style={{ color: '#333333', paddingTop: 15, fontSize: 12 }}>ÂN HẠN NỢ GỐC</Text>
+                    <Text
+                        style={{
+                            color: '#333333',
+                            paddingTop: 15,
+                            fontSize: 12
+                        }}
+                    >
+                        ÂN HẠN NỢ GỐC
+                    </Text>
                     <View style={styles.item}>
-                        <Switch onValueChange={this.onCharge.bind(this)} value={this.state.graceDebt} />
-                        <Content>
-                            <Item
-                                style={styles.inputItem}
-                                regular
-                            >
-                                <Icon active name='ios-clock' style={{ color: '#75D2BE' }} />
-                                <Input
-                                    style={{ fontSize: 12 }}
-                                    placeholder='THỜI GIAN ÂN HẠN'
-                                    placeholderTextColor='#999999'
-                                    underlineColorAndroid='transparent'
-                                    onChangeText={(text) => this.setState({ txtTimeGrace: text })}
-                                    value={this.state.txtTimeGrace}
-                                    keyboardType={'numeric'}
-                                />
-                            </Item>
-                        </Content>
+                        <Switch
+                            onValueChange={this.onCharge.bind(this)}
+                            value={this.state.graceDebt}
+                            style={{ height: 40 }}
+                        />
+                        <View
+                            style={styles.inputItem}
+                            regular
+                        >
+                            <Icon
+                                active
+                                name='ios-clock'
+                                style={{
+                                    color: 'orange',
+                                    fontSize: 24,
+                                    paddingLeft: 10,
+                                    paddingTop: 5
+                                }}
+                            />
+                            <TextInput
+                                style={{ fontSize: 12, marginLeft: 10 }}
+                                placeholder='THỜI GIAN ÂN HẠN'
+                                placeholderTextColor='#999999'
+                                underlineColorAndroid='transparent'
+                                onChangeText={(text) => this.setState({ txtTimeGrace: text })}
+                                value={this.state.txtTimeGrace}
+                                keyboardType={'numeric'}
+                            />
+                        </View>
                         <View
                             style={styles.rightBtn}
                         >

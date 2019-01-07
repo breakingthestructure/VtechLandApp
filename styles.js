@@ -46,24 +46,25 @@ export default StyleSheet.create({
         paddingTop: 10
     },
     inputItem: {
-        borderColor: '#808080',
+        borderColor: '#33563743',
         height: 40,
         marginLeft: 0,
-        width: '100%',
+        width: '70%',
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20,
         borderLeftWidth: 1,
         borderTopWidth: 1,
         borderBottomWidth: 1,
         flexDirection: 'row',
-        // justifyContent: 'space-between',
+        // justifyContent: 'center',
     },
     rightBtn: {
         backgroundColor: '#F58319',
         justifyContent: 'center',
         width: '15%',
         borderTopRightRadius: 20,
-        borderBottomRightRadius: 20
+        borderBottomRightRadius: 20,
+        height: 40
     },
     calcCondition: {
         flexDirection: 'row',
@@ -74,22 +75,31 @@ export default StyleSheet.create({
         borderColor: '#808080',
         borderWidth: 1,
         height: 40,
-        width: width / 4.2,
+        width: '25%',
         marginLeft: 0,
         borderTopLeftRadius: 20,
-        borderBottomLeftRadius: 20
+        borderBottomLeftRadius: 20,
+        justifyContent: 'center',
+        paddingRight: 5,
+        marginRight: 5,
+        alignItems: 'center'
     },
     inputCenter: {
         borderColor: '#808080',
         borderWidth: 1,
         height: 40,
-        width: width / 4.2,
+        width: '25%',
+        marginRight: 5,
+        fontSize: 14,
+        textAlign: 'center'
     },
     inputRight: {
         borderColor: '#808080',
         borderWidth: 1,
         height: 40,
-        width: width / 4.2,
+        width: '25%',
+        fontSize: 14,
+        textAlign: 'center'
     },
     labelBtn: {
         backgroundColor: '#F58319',
@@ -101,17 +111,18 @@ export default StyleSheet.create({
         marginLeft: 0
     },
     closeCondition: {
-        backgroundColor: 'gray',
+        backgroundColor: 'red',
         justifyContent: 'center',
-        width: '5%',
+        width: '10%',
         borderTopRightRadius: 20,
-        borderBottomRightRadius: 20
+        borderBottomRightRadius: 20,
+        alignItems: 'center'
     },
     btnAdd: {
         width: '100%',
         height: 40,
         borderRadius: 20,
-        backgroundColor: 'gray',
+        backgroundColor: 'green',
         justifyContent: 'center',
         padding: 10,
         marginTop: 15,
@@ -159,7 +170,7 @@ export default StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginTop: 5,
+        marginTop: 10,
         height: 40
     },
     sectionPickerIcon: {
@@ -168,9 +179,10 @@ export default StyleSheet.create({
         borderLeftWidth: 1,
         borderTopWidth: 1,
         borderBottomWidth: 1,
-        borderColor: '#808080',
+        borderColor: '#33563743',
         flexDirection: 'row',
         width: '85%',
+        alignItems: 'center'
     },
     //mapscreen
     wrapper: {
@@ -968,6 +980,15 @@ export default StyleSheet.create({
         width: '100%',
         borderRadius: 20,
         backgroundColor: '#187EB9',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginVertical: 10,
+    },
+    bigBtnIconSuccess: {
+        height: 40,
+        width: '100%',
+        borderRadius: 20,
+        backgroundColor: 'green',
         justifyContent: 'center',
         flexDirection: 'row',
         marginVertical: 10,

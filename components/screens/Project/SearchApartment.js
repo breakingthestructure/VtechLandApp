@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
-import { Alert, Picker, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Icon } from 'native-base';
+import {
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {
+    Picker,
+    Icon
+} from 'native-base';
 import Header from './../Home/Header';
 import styles from './../../../styles';
 import getOptionProjects from './../../../api/getOptionProjects';
@@ -118,11 +127,10 @@ export default class SearchApartment extends Component {
                                 selectedValue={this.state.status}
                                 onValueChange={(itemValue) => this.setState({ status: itemValue })}
                                 style={styles.picker}
+                                iosHeader="Trạng thái"
+                                headerBackButtonText={<Icon name='ios-arrow-back' />}
+                                placeholder="Tất cả"
                             >
-                                <Picker.Item
-                                    label='Tất cả'
-                                    value=''
-                                />
                                 {Object.keys(options.apartment_status).map(function (key) {
                                     return (
                                         <Picker.Item
@@ -200,8 +208,10 @@ export default class SearchApartment extends Component {
                                 onValueChange={(itemValue) => {
                                     this.setState({ direction: itemValue });
                                 }}
+                                iosHeader="Hướng"
+                                headerBackButtonText={<Icon name='ios-arrow-back' />}
+                                placeholder="Hướng"
                             >
-                                <Picker.Item label='Hướng' value='' />
                                 {Object.keys(options.directions).map(function (key) {
                                     return <Picker.Item key={key} label={options.directions[key]} value={key} />
                                 })}

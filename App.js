@@ -145,6 +145,15 @@ const LeftDrawer = createDrawerNavigator(
         LoginScreen: {
             screen: Login
         },
+        RegisterScreen: {
+            screen: Register
+        },
+        ForgotPasswordScreen: {
+            screen: ForgotPassword
+        },
+        ResetPasswordScreen: {
+            screen: ResetPassword
+        },
     },
     {
         initialRouteName: 'MapScreen',
@@ -173,16 +182,7 @@ const UserStack = createStackNavigator(
         },
         ConfigScreen: {
             screen: Config
-        },
-        RegisterScreen: {
-            screen: Register
-        },
-        ForgotPasswordScreen: {
-            screen: ForgotPassword
-        },
-        ResetPasswordScreen: {
-            screen: ResetPassword
-        },
+        }
     },
     {
         headerMode: 'none',

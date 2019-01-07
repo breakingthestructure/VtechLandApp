@@ -250,7 +250,11 @@ export default class DetailProject extends React.Component {
                         style={styles.bigBtnIcon}
                         onPress={() => this.props.onChangeTab(5)}
                     >
-                        <Icon type="FontAwesome" name='volume-control-phone' style={styles.iconBigBtn} />
+                        <Icon
+                            type="FontAwesome"
+                            name='volume-control-phone'
+                            style={styles.iconBigBtn}
+                        />
                         <Text style={styles.textBtnIcon}>
                             LIÊN HỆ CHUYÊN VIÊN TƯ VẤN NGAY
                         </Text>

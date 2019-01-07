@@ -6,9 +6,17 @@ import {
     Text,
     TouchableOpacity,
     View,
-    Alert
+    Alert,
+    TextInput
 } from 'react-native';
-import { Container, Content, Item, Input, Icon, Spinner } from 'native-base';
+import {
+    Container,
+    Content,
+    Item,
+    Input,
+    Icon,
+    Spinner
+} from 'native-base';
 import login from './../../../api/login';
 import saveToken from './../../../api/saveToken';
 import saveUser from './../../../api/saveUser';
@@ -33,14 +41,17 @@ export default class Register extends React.Component {
             txtSubmit: 'ĐĂNG KÝ'
         };
     }
+
     componentDidMount() {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 200);
     }
+
     postRegister() {
         // this.setState({ txtSubmit: 'Đang xử lý' });
     }
+
     render() {
         if (this.state.loaded) {
             return (
@@ -48,8 +59,10 @@ export default class Register extends React.Component {
                     <View style={{ alignItems: 'center', paddingTop: 10 }}>
 
                         <View style={{ paddingTop: 20 }}>
-                            <Image source={icLogo} style={{ width: width / 2, height: ((width / 2) / 492) * 79 }} />
-                            {/* <Image source={icLogo} style={{ width: width - 200, height: ((width - 200) / 935) * 152 }} /> */}
+                            <Image
+                                source={icLogo}
+                                style={{ width: width / 2, height: ((width / 2) / 492) * 79 }}
+                            />
                         </View>
                         <View
                             style={{
@@ -60,145 +73,183 @@ export default class Register extends React.Component {
                             }}
                         />
                         <View style={{ paddingTop: 20, paddingBottom: 10 }}>
-                            <Text style={{ fontSize: 18, fontWeight: '600', color: '#333333' }}>ĐĂNG KÝ</Text>
+                            <Text
+                                style={{ fontSize: 18, fontWeight: '600', color: '#333333' }}>
+                                ĐĂNG KÝ
+                            </Text>
                         </View>
-                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30, paddingTop: 10 }}>
-                            <Content>
-                                <Item
-                                    style={{
-                                        borderColor: '#33563743',
-                                        borderWidth: 1,
-                                        height: 40,
-                                        borderRadius: 20,
-                                        marginLeft: 0,
-                                        width: '100%',
-                                        // borderTopLeftRadius: 20,
-                                        // borderTopRightRadius: 20,
-                                    }}
-                                    regular
-                                >
-                                    <Input
-                                        style={{ fontSize: 12, paddingLeft: 30 }}
-                                        placeholder='Họ tên'
-                                        placeholderTextColor='#999999'
-                                        underlineColorAndroid='transparent'
-                                        onChangeText={(text) => this.setState({ fullname: text })}
-                                        value={this.state.fullname}
-                                    />
-                                    <Icon type='FontAwesome' name='address-card-o' style={{ color: 'gray', marginRight: 15, fontSize: 16 }} />
-                                </Item>
-                            </Content>
+                        <View
+                            style={{
+                                width: '100%',
+                                paddingHorizontal: 30,
+                                paddingTop: 10
+                            }}
+                        >
+                            <View
+                                style={{
+                                    height: 40,
+                                    width: '100%',
+                                    borderRadius: 20,
+                                    marginTop: 5,
+                                    borderColor: '#33563743',
+                                    borderWidth: 1,
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-end',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <TextInput
+                                    style={{ height: 40, width: '95%', paddingLeft: 40 }}
+                                    placeholder='Họ tên'
+                                    underlineColorAndroid='transparent'
+                                    value={this.state.fullname}
+                                    onChangeText={text => this.setState({ fullname: text })}
+                                />
+                                <Icon
+                                    type='FontAwesome'
+                                    name='address-card-o'
+                                    style={{ color: 'gray', marginRight: 15, fontSize: 16 }}
+                                />
+                            </View>
                         </View>
-                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30, paddingTop: 10 }}>
-                            <Content>
-                                <Item
-                                    style={{
-                                        borderColor: '#33563743',
-                                        borderWidth: 1,
-                                        height: 40,
-                                        borderRadius: 20,
-                                        marginLeft: 0,
-                                        width: '100%',
-                                        // borderTopLeftRadius: 20,
-                                        // borderTopRightRadius: 20,
-                                    }}
-                                    regular
-                                >
-                                    <Input
-                                        style={{ fontSize: 12, paddingLeft: 30 }}
-                                        placeholder='Điện thoại'
-                                        placeholderTextColor='#999999'
-                                        underlineColorAndroid='transparent'
-                                        onChangeText={(text) => this.setState({ email: text })}
-                                        value={this.state.email}
-                                        keyboardType={'numeric'}
-                                    />
-                                    <Icon type='FontAwesome' name='phone' style={{ color: 'gray', marginRight: 15 }} />
-                                </Item>
-                            </Content>
+                        <View
+                            style={{
+                                width: '100%',
+                                paddingHorizontal: 30,
+                                paddingTop: 10
+                            }}
+                        >
+                            <View
+                                style={{
+                                    height: 40,
+                                    width: '100%',
+                                    borderRadius: 20,
+                                    marginTop: 5,
+                                    borderColor: '#33563743',
+                                    borderWidth: 1,
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-end',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <TextInput
+                                    style={{ height: 40, width: '95%', paddingLeft: 40 }}
+                                    placeholder='E-mail'
+                                    underlineColorAndroid='transparent'
+                                    value={this.state.email}
+                                    onChangeText={text => this.setState({ email: text })}
+                                />
+                                <Icon
+                                    name='ios-mail'
+                                    style={{ color: 'gray', marginRight: 15, fontSize: 24 }}
+                                />
+                            </View>
                         </View>
-                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30, paddingTop: 10 }}>
-                            <Content>
-                                <Item
-                                    style={{
-                                        borderColor: '#33563743',
-                                        borderWidth: 1,
-                                        height: 40,
-                                        borderRadius: 20,
-                                        marginLeft: 0,
-                                        width: '100%',
-                                        // borderTopLeftRadius: 20,
-                                        // borderTopRightRadius: 20,
-                                    }}
-                                    regular
-                                >
-                                    <Input
-                                        style={{ fontSize: 12, paddingLeft: 30 }}
-                                        placeholder='E-mail'
-                                        placeholderTextColor='#999999'
-                                        underlineColorAndroid='transparent'
-                                        onChangeText={(text) => this.setState({ email: text })}
-                                        value={this.state.email}
-                                    />
-                                    <Icon active name='ios-mail' style={{ color: 'gray', marginRight: 15 }} />
-                                </Item>
-                            </Content>
+                        <View
+                            style={{
+                                width: '100%',
+                                paddingHorizontal: 30,
+                                paddingTop: 10
+                            }}
+                        >
+                            <View
+                                style={{
+                                    height: 40,
+                                    width: '100%',
+                                    borderRadius: 20,
+                                    marginTop: 5,
+                                    borderColor: '#33563743',
+                                    borderWidth: 1,
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-end',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <TextInput
+                                    style={{ height: 40, width: '95%', paddingLeft: 40 }}
+                                    placeholder='Điện thoại'
+                                    underlineColorAndroid='transparent'
+                                    value={this.state.phone}
+                                    onChangeText={text => this.setState({ phone: text })}
+                                    keyboardType={'numeric'}
+                                />
+                                <Icon
+                                    type='FontAwesome'
+                                    name='phone'
+                                    style={{ color: 'gray', marginRight: 15, fontSize: 16 }}
+                                />
+                            </View>
                         </View>
-                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30, paddingTop: 10 }}>
-                            <Content>
-                                <Item
-                                    style={{
-                                        borderColor: '#33563743',
-                                        height: 40,
-                                        marginLeft: 0,
-                                        width: '100%',
-                                        borderWidth: 1,
-                                        borderRadius: 20,
-                                        borderBottomWidth: 1,
-                                        borderTopWidth: 1
-                                    }}
-                                    regular
-                                >
-                                    <Input
-                                        style={{ fontSize: 12, paddingLeft: 30 }}
-                                        placeholder='Mật khẩu'
-                                        placeholderTextColor='#999999'
-                                        underlineColorAndroid='transparent'
-                                        onChangeText={(text) => this.setState({ password: text })}
-                                        value={this.state.password}
-                                        secureTextEntry
-                                    />
-                                    <Icon active name='ios-lock' style={{ color: 'gray', marginRight: 15 }} />
-                                </Item>
-                            </Content>
+                        <View
+                            style={{
+                                width: '100%',
+                                paddingHorizontal: 30,
+                                paddingTop: 10
+                            }}
+                        >
+                            <View
+                                style={{
+                                    height: 40,
+                                    width: '100%',
+                                    borderRadius: 20,
+                                    marginTop: 5,
+                                    borderColor: '#33563743',
+                                    borderWidth: 1,
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-end',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <TextInput
+                                    style={{ height: 40, width: '95%', paddingLeft: 40 }}
+                                    placeholder='Mật khẩu'
+                                    underlineColorAndroid='transparent'
+                                    onChangeText={(text) => this.setState({ password: text })}
+                                    value={this.state.password}
+                                    secureTextEntry
+                                />
+                                <Icon
+                                    active
+                                    name='ios-lock'
+                                    style={{ color: 'gray', marginRight: 15, fontSize: 22 }}
+                                />
+                            </View>
                         </View>
-                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 30, paddingTop: 10 }}>
-                            <Content>
-                                <Item
-                                    style={{
-                                        borderColor: '#33563743',
-                                        height: 40,
-                                        marginLeft: 0,
-                                        width: '100%',
-                                        borderWidth: 1,
-                                        borderRadius: 20,
-                                        borderBottomWidth: 1,
-                                        borderTopWidth: 1
-                                    }}
-                                    regular
-                                >
-                                    <Input
-                                        style={{ fontSize: 12, paddingLeft: 30 }}
-                                        placeholder='Nhập lại mật khẩu'
-                                        placeholderTextColor='#999999'
-                                        underlineColorAndroid='transparent'
-                                        onChangeText={(text) => this.setState({ passwordConfirm: text })}
-                                        value={this.state.passwordConfirm}
-                                        secureTextEntry
-                                    />
-                                    <Icon active name='ios-lock' style={{ color: 'gray', marginRight: 15 }} />
-                                </Item>
-                            </Content>
+
+                        <View
+                            style={{
+                                width: '100%',
+                                paddingHorizontal: 30,
+                                paddingTop: 10
+                            }}
+                        >
+                            <View
+                                style={{
+                                    height: 40,
+                                    width: '100%',
+                                    borderRadius: 20,
+                                    marginTop: 5,
+                                    borderColor: '#33563743',
+                                    borderWidth: 1,
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-end',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <TextInput
+                                    style={{ height: 40, width: '95%', paddingLeft: 40 }}
+                                    placeholder='Nhập lại mật khẩu'
+                                    underlineColorAndroid='transparent'
+                                    onChangeText={(text) => this.setState({ passwordConfirm: text })}
+                                    value={this.state.passwordConfirm}
+                                    secureTextEntry
+                                />
+                                <Icon
+                                    active
+                                    name='ios-lock'
+                                    style={{ color: 'gray', marginRight: 15, fontSize: 22 }}
+                                />
+                            </View>
                         </View>
                         <TouchableOpacity
                             style={{
@@ -212,9 +263,16 @@ export default class Register extends React.Component {
                             }}
                             onPress={this.postRegister.bind(this)}
                         >
-                            <Icon type="FontAwesome" name='sign-in' style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} />
+                            <Icon type="FontAwesome" name='sign-in'
+                                  style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} />
                             {/* <Icon name='ios-calculator' style={{ fontSize: 14, color: 'white', marginTop: 13, marginRight: 5 }} /> */}
-                            <Text style={{ color: 'white', fontWeight: '600', fontSize: 14, textAlign: 'center', marginTop: 10 }}>
+                            <Text style={{
+                                color: 'white',
+                                fontWeight: '600',
+                                fontSize: 14,
+                                textAlign: 'center',
+                                marginTop: 10
+                            }}>
                                 {this.state.txtSubmit}
                             </Text>
                         </TouchableOpacity>
@@ -222,7 +280,7 @@ export default class Register extends React.Component {
                     <View style={styles.bottomView}>
                         <Image source={bgImg} style={{ width, height: (width / 1440) * 550 }} />
                     </View>
-                </View >
+                </View>
 
             );
         }
