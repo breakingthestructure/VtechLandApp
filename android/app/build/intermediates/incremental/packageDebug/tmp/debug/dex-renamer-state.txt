@@ -1,4 +1,0 @@
-#Mon Jan 07 15:52:07 ICT 2019
-base.0=E\:\\Code\\React Native\\VtechLandApp\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-path.0=classes.dex
-renamed.0=classes.dex
