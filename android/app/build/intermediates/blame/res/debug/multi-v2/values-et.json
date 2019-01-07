@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/69minhkhai/VtechLandApp/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-et/values-et.xml",
+            "outputFile": "E:\\Code\\React Native\\VtechLandApp\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-et\\values-et.xml",
             "map": [
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/ca8347c914ce7e4beeca8acc589fc19d/res/values-et/values-et.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\4af70132c268f3da72a2cab259efab23\\res\\values-et\\values-et.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e96efc0d32c6ccdbcf52c1363185036e/res/values-et/values-et.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\78515c6870aef7cd2e2a5467b174a236\\res\\values-et\\values-et.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +38,24 @@
                     }
                 },
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.0.1.aar/8265979e83dfd7330dafa800c5a86106/res/values-et/values.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\firebase-messaging-17.3.4.aar\\b119920b2b114c054d38cce49252b172\\res\\values-et\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "205",
+                        "endColumns": "97",
+                        "endOffsets": "302"
+                    },
+                    "to": {
+                        "startLines": "37",
+                        "startColumns": "4",
+                        "startOffsets": "4590",
+                        "endColumns": "101",
+                        "endOffsets": "4687"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-16.0.1.aar\\df47e247cd8f1630d7d7ce65ff503f62\\res\\values-et\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -55,7 +72,7 @@
                     }
                 },
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/play-services-base-16.0.1.aar/84bb1708bc68ff5037eddebbbc04c2b8/res/values-et/values.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.0.1.aar\\64d3e3a76a60cc4ef03d818fc6b079cf\\res\\values-et\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -69,23 +86,6 @@
                         "startOffsets": "1883,1988,2182,2311,2421,2630,2761,2907,3238,3457,3567,3762,3896,4110,4285,4378,4473",
                         "endColumns": "104,193,128,109,208,130,145,131,218,109,194,133,213,174,92,94,116",
                         "endOffsets": "1983,2177,2306,2416,2625,2756,2902,3034,3452,3562,3757,3891,4105,4280,4373,4468,4585"
-                    }
-                },
-                {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.3.4.aar/cad4768f64c10f1a99acc034e2f2e8ad/res/values-et/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "205",
-                        "endColumns": "97",
-                        "endOffsets": "302"
-                    },
-                    "to": {
-                        "startLines": "37",
-                        "startColumns": "4",
-                        "startOffsets": "4590",
-                        "endColumns": "101",
-                        "endOffsets": "4687"
                     }
                 }
             ]

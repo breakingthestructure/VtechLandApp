@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/69minhkhai/VtechLandApp/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sq/values-sq.xml",
+            "outputFile": "E:\\Code\\React Native\\VtechLandApp\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-sq\\values-sq.xml",
             "map": [
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e96efc0d32c6ccdbcf52c1363185036e/res/values-sq/values-sq.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,219,319,431,518,628,751,832,911,994,1100,1205,1303,1409,1512,1628,1782,1881",
-                        "endColumns": "113,99,111,86,109,122,80,78,82,105,104,97,105,102,115,153,98,80",
-                        "endOffsets": "214,314,426,513,623,746,827,906,989,1095,1200,1298,1404,1507,1623,1777,1876,1957"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,38",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,219,319,431,518,628,751,832,911,994,1100,1205,1303,1409,1512,1628,1782,4828",
-                        "endColumns": "113,99,111,86,109,122,80,78,82,105,104,97,105,102,115,153,98,80",
-                        "endOffsets": "214,314,426,513,623,746,827,906,989,1095,1200,1298,1404,1507,1623,1777,1876,4904"
-                    }
-                },
-                {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.3.4.aar/cad4768f64c10f1a99acc034e2f2e8ad/res/values-sq/values.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\firebase-messaging-17.3.4.aar\\b119920b2b114c054d38cce49252b172\\res\\values-sq\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -38,24 +21,41 @@
                     }
                 },
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/ca8347c914ce7e4beeca8acc589fc19d/res/values-sq/values-sq.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\78515c6870aef7cd2e2a5467b174a236\\res\\values-sq\\values-sq.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,219,319,431,518,628,751,832,911,994,1100,1205,1303,1409,1512,1628,1782,1881",
+                        "endColumns": "113,99,111,86,109,122,80,78,82,105,104,97,105,102,115,153,98,80",
+                        "endOffsets": "214,314,426,513,623,746,827,906,989,1095,1200,1298,1404,1507,1623,1777,1876,1957"
                     },
                     "to": {
-                        "startLines": "39",
-                        "startColumns": "4",
-                        "startOffsets": "4909",
-                        "endColumns": "100",
-                        "endOffsets": "5005"
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,38",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,219,319,431,518,628,751,832,911,994,1100,1205,1303,1409,1512,1628,1782,4828",
+                        "endColumns": "113,99,111,86,109,122,80,78,82,105,104,97,105,102,115,153,98,80",
+                        "endOffsets": "214,314,426,513,623,746,827,906,989,1095,1200,1298,1404,1507,1623,1777,1876,4904"
                     }
                 },
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/play-services-base-16.0.1.aar/84bb1708bc68ff5037eddebbbc04c2b8/res/values-sq/values.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-16.0.1.aar\\df47e247cd8f1630d7d7ce65ff503f62\\res\\values-sq\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "187",
+                        "endOffsets": "434"
+                    },
+                    "to": {
+                        "startLines": "27",
+                        "startColumns": "4",
+                        "startOffsets": "3100",
+                        "endColumns": "187",
+                        "endOffsets": "3283"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.0.1.aar\\64d3e3a76a60cc4ef03d818fc6b079cf\\res\\values-sq\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -72,20 +72,20 @@
                     }
                 },
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.0.1.aar/8265979e83dfd7330dafa800c5a86106/res/values-sq/values.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\4af70132c268f3da72a2cab259efab23\\res\\values-sq\\values-sq.xml",
                     "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "247",
-                        "endColumns": "187",
-                        "endOffsets": "434"
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
                     },
                     "to": {
-                        "startLines": "27",
+                        "startLines": "39",
                         "startColumns": "4",
-                        "startOffsets": "3100",
-                        "endColumns": "187",
-                        "endOffsets": "3283"
+                        "startOffsets": "4909",
+                        "endColumns": "100",
+                        "endOffsets": "5005"
                     }
                 }
             ]

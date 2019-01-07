@@ -9,10 +9,7 @@ import {
     TextInput
 } from 'react-native';
 import {
-    Content,
     Icon,
-    Input,
-    Item,
     Picker,
     Toast
 } from 'native-base';
@@ -425,7 +422,7 @@ export default class CalcDebt extends React.Component {
                                 style={{
                                     color: 'orange',
                                     marginLeft: 10,
-                                    fontSize: 20,
+                                    fontSize: 19,
                                 }}
                             />
                             <Picker
@@ -440,6 +437,7 @@ export default class CalcDebt extends React.Component {
                                 onValueChange={this.onSelectMode.bind(this)}
                                 headerBackButtonText={<Icon name='ios-arrow-back' />}
                             >
+                                <Picker.Item label="Chọn hình thức vay" value="" />
                                 <Picker.Item label="Dư nợ giảm dần" value="1" />
                                 <Picker.Item label="Dư nợ ban đầu" value="2" />
                             </Picker>

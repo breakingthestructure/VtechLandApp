@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/69minhkhai/VtechLandApp/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-h720dp-v13/values-h720dp-v13.xml",
+            "outputFile": "E:\\Code\\React Native\\VtechLandApp\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-h720dp-v13\\values-h720dp-v13.xml",
             "map": [
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e96efc0d32c6ccdbcf52c1363185036e/res/values-h720dp-v13/values-h720dp-v13.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\78515c6870aef7cd2e2a5467b174a236\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

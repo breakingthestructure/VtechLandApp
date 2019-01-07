@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>9</integer>
+	<key>logs</key>
+	<dict>
+		<key>323AEE5E-BF5E-40C4-9CFB-44514503161B</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>323AEE5E-BF5E-40C4-9CFB-44514503161B.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>W</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>TechLandNative project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>TechLandNative</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace TechLandNative with scheme TechLandNative and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>568527326.40871</real>
+			<key>timeStoppedRecording</key>
+			<real>568527358.63366306</real>
+			<key>title</key>
+			<string>Building workspace TechLandNative with scheme TechLandNative and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>323AEE5E-BF5E-40C4-9CFB-44514503161B</string>
+		</dict>
+		<key>50A62CF0-14D5-4AD1-A21C-63BFF2A8A129</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>50A62CF0-14D5-4AD1-A21C-63BFF2A8A129.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>S</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>TechLandNative project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>TechLandNative</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace TechLandNative with scheme TechLandNative and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>568542748.66274405</real>
+			<key>timeStoppedRecording</key>
+			<real>568542765.17025006</real>
+			<key>title</key>
+			<string>Building workspace TechLandNative with scheme TechLandNative and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>50A62CF0-14D5-4AD1-A21C-63BFF2A8A129</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

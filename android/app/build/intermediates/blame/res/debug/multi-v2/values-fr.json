@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/69minhkhai/VtechLandApp/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fr/values-fr.xml",
+            "outputFile": "E:\\Code\\React Native\\VtechLandApp\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-fr\\values-fr.xml",
             "map": [
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/ca8347c914ce7e4beeca8acc589fc19d/res/values-fr/values-fr.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "39",
-                        "startColumns": "4",
-                        "startOffsets": "4999",
-                        "endColumns": "100",
-                        "endOffsets": "5095"
-                    }
-                },
-                {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.0.1.aar/8265979e83dfd7330dafa800c5a86106/res/values-fr/values.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-16.0.1.aar\\df47e247cd8f1630d7d7ce65ff503f62\\res\\values-fr\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -38,7 +21,24 @@
                     }
                 },
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e96efc0d32c6ccdbcf52c1363185036e/res/values-fr/values-fr.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\ucrop-2.2.2-native.aar\\b07c4a6b34cc28dc652122ae3e7c2a7f\\res\\values-fr\\values-fr.xml",
+                    "from": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,124,182",
+                        "endColumns": "68,57,52",
+                        "endOffsets": "119,177,230"
+                    },
+                    "to": {
+                        "startLines": "40,41,42",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "5100,5169,5227",
+                        "endColumns": "68,57,52",
+                        "endOffsets": "5164,5222,5275"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\78515c6870aef7cd2e2a5467b174a236\\res\\values-fr\\values-fr.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -55,7 +55,7 @@
                     }
                 },
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/play-services-base-16.0.1.aar/84bb1708bc68ff5037eddebbbc04c2b8/res/values-fr/values.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.0.1.aar\\64d3e3a76a60cc4ef03d818fc6b079cf\\res\\values-fr\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -72,7 +72,24 @@
                     }
                 },
                 {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.3.4.aar/cad4768f64c10f1a99acc034e2f2e8ad/res/values-fr/values.xml",
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\4af70132c268f3da72a2cab259efab23\\res\\values-fr\\values-fr.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "39",
+                        "startColumns": "4",
+                        "startOffsets": "4999",
+                        "endColumns": "100",
+                        "endOffsets": "5095"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Suzuki\\.gradle\\caches\\transforms-1\\files-1.1\\firebase-messaging-17.3.4.aar\\b119920b2b114c054d38cce49252b172\\res\\values-fr\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -86,23 +103,6 @@
                         "startOffsets": "4808",
                         "endColumns": "104",
                         "endOffsets": "4908"
-                    }
-                },
-                {
-                    "source": "/Users/69minhkhai/.gradle/caches/transforms-1/files-1.1/ucrop-2.2.2-native.aar/b826a9a127d2bfe730f69b3eb7187263/res/values-fr/values-fr.xml",
-                    "from": {
-                        "startLines": "2,3,4",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "55,124,182",
-                        "endColumns": "68,57,52",
-                        "endOffsets": "119,177,230"
-                    },
-                    "to": {
-                        "startLines": "40,41,42",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "5100,5169,5227",
-                        "endColumns": "68,57,52",
-                        "endOffsets": "5164,5222,5275"
                     }
                 }
             ]

@@ -166,7 +166,7 @@ export default class AdvanceSearch extends Component {
         } = this.state;
         let query = '';
         if (name !== '') {
-            query += `&key_word=${name}`;
+            query += `&keyword=${name}`;
         }
         if (city !== '') {
             query += `&city_id=${city}`;
