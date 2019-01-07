@@ -437,6 +437,7 @@ export default class CalcDebt extends React.Component {
                                 onValueChange={this.onSelectMode.bind(this)}
                                 headerBackButtonText={<Icon name='ios-arrow-back' />}
                             >
+                                <Picker.Item label="Chọn hình thức vay" value="" />
                                 <Picker.Item label="Dư nợ giảm dần" value="1" />
                                 <Picker.Item label="Dư nợ ban đầu" value="2" />
                             </Picker>
