@@ -54,7 +54,7 @@ import ResultApartment from './components/screens/Project/ResultApartment';
 
 console.disableYellowBox = true;
 
-if(Platform.OS === 'ios') {
+if (Platform.OS === 'ios') {
     KeyboardManager.setEnable(true);
     KeyboardManager.setEnableDebugging(false);
     KeyboardManager.setKeyboardDistanceFromTextField(10);
