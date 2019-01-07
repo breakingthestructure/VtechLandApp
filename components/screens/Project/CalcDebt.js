@@ -9,10 +9,7 @@ import {
     TextInput
 } from 'react-native';
 import {
-    Content,
     Icon,
-    Input,
-    Item,
     Picker,
     Toast
 } from 'native-base';
@@ -425,7 +422,7 @@ export default class CalcDebt extends React.Component {
                                 style={{
                                     color: 'orange',
                                     marginLeft: 10,
-                                    fontSize: 20,
+                                    fontSize: 19,
                                 }}
                             />
                             <Picker

@@ -5,7 +5,8 @@ import {
     Easing,
     ImageBackground,
     NetInfo,
-    View
+    View,
+    Platform
 } from 'react-native';
 import {
     Root,
@@ -53,20 +54,22 @@ import ResultApartment from './components/screens/Project/ResultApartment';
 
 console.disableYellowBox = true;
 
-KeyboardManager.setEnable(true);
-KeyboardManager.setEnableDebugging(false);
-KeyboardManager.setKeyboardDistanceFromTextField(10);
-KeyboardManager.setPreventShowingBottomBlankSpace(true);
-KeyboardManager.setEnableAutoToolbar(true);
-KeyboardManager.setToolbarDoneBarButtonItemText('Done');
-KeyboardManager.setToolbarManageBehaviour(0);
-KeyboardManager.setToolbarPreviousNextButtonEnable(true);
-KeyboardManager.setShouldToolbarUsesTextFieldTintColor(false);
-KeyboardManager.setShouldShowTextFieldPlaceholder(true);
-KeyboardManager.setShouldShowToolbarPlaceholder(true);
-KeyboardManager.setOverrideKeyboardAppearance(false);
-KeyboardManager.setShouldResignOnTouchOutside(true);
-KeyboardManager.resignFirstResponder();
+if(Platform.OS === 'ios') {
+    KeyboardManager.setEnable(true);
+    KeyboardManager.setEnableDebugging(false);
+    KeyboardManager.setKeyboardDistanceFromTextField(10);
+    KeyboardManager.setPreventShowingBottomBlankSpace(true);
+    KeyboardManager.setEnableAutoToolbar(true);
+    KeyboardManager.setToolbarDoneBarButtonItemText('Done');
+    KeyboardManager.setToolbarManageBehaviour(0);
+    KeyboardManager.setToolbarPreviousNextButtonEnable(true);
+    KeyboardManager.setShouldToolbarUsesTextFieldTintColor(false);
+    KeyboardManager.setShouldShowTextFieldPlaceholder(true);
+    KeyboardManager.setShouldShowToolbarPlaceholder(true);
+    KeyboardManager.setOverrideKeyboardAppearance(false);
+    KeyboardManager.setShouldResignOnTouchOutside(true);
+    KeyboardManager.resignFirstResponder();
+}
 
 const ProjectStack = createStackNavigator(
     {

@@ -22,7 +22,7 @@ export default StyleSheet.create({
     containerLoading: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: 'rgba(52, 52, 52, 0.8)'
+        backgroundColor: 'white'
     },
     statusBar: {
         height: STATUSBAR_HEIGHT,
@@ -49,7 +49,7 @@ export default StyleSheet.create({
         borderColor: '#33563743',
         height: 40,
         marginLeft: 0,
-        width: '70%',
+        width: '73%',
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20,
         borderLeftWidth: 1,
@@ -72,7 +72,7 @@ export default StyleSheet.create({
         paddingTop: 5
     },
     inputLeft: {
-        borderColor: '#808080',
+        borderColor: '#33563743',
         borderWidth: 1,
         height: 40,
         width: '25%',
@@ -85,7 +85,7 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
     inputCenter: {
-        borderColor: '#808080',
+        borderColor: '#33563743',
         borderWidth: 1,
         height: 40,
         width: '25%',
@@ -94,7 +94,7 @@ export default StyleSheet.create({
         textAlign: 'center'
     },
     inputRight: {
-        borderColor: '#808080',
+        borderColor: '#33563743',
         borderWidth: 1,
         height: 40,
         width: '25%',
