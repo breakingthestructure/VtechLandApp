@@ -69,6 +69,7 @@ export default class TabProject extends Component {
         if (!this.state.loaded) {
             return loading();
         }
+        console.log(project.data.images.feature);
         return (
             <Container>
                 <Header
@@ -78,14 +79,14 @@ export default class TabProject extends Component {
                 />
                 <ScrollView ref='_scrollView'>
                     <View style={styles.slideProject}>
-                        <Swiper showsButtons>
-                            {project.data.images.feature && project.data.images.feature.map((value, key) => (
-                                <View key={key}>
-                                    <Image
-                                        source={{ uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE }}
-                                        style={styles.imageSlide}
-                                    />
-                                </View>
+                        <Swiper showsButtons removeClippedSubviews={false}>
+                            {project.data.images.feature &&
+                            project.data.images.feature.map((value, key) => (
+                                <Image
+                                    key={key}
+                                    source={{ uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE }}
+                                    style={styles.imageSlide}
+                                />
                             ))}
                         </Swiper>
                     </View>

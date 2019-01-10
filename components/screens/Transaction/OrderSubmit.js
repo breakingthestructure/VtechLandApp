@@ -102,6 +102,7 @@ export default class OrderSubmit extends React.Component {
     onChangeMoney(text) {
         this.setState({ reserveValue: text });
     }
+
     state = {
         isDatePickerVisible: false,
     };
@@ -112,6 +113,7 @@ export default class OrderSubmit extends React.Component {
         this.setState({ day_identity: selected, date });
         this.hideDatePicker();
     };
+
     onSubmit() {
         this.setState({ txtSubmit: 'Đang xử lý' });
         getToken()
@@ -258,47 +260,72 @@ export default class OrderSubmit extends React.Component {
                             autoCorrect={false}
                             defaultValue={fullName}
                             onChangeText={text => this.setState({ fullName: text })}
-                            data={customers.length === 1 && comp(fullName, customers[0].full_name) ? [] : customers}
+                            data={customers.length === 1 &&
+                            comp(fullName, customers[0].full_name) ? [] : customers
+                            }
                             renderTextInput={() => (
-                                <TextInput
+                                <View
                                     style={{
-                                        height: 40,
-                                        width: '90%',
-                                        backgroundColor: 'white',
-                                        borderRadius: 20,
-                                        borderWidth: 0,
-                                        marginLeft: 15
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between'
                                     }}
-                                    placeholder='Họ tên'
-                                    underlineColorAndroid='transparent'
-                                    value={this.state.fullName}
-                                    onChangeText={text => {
-                                        this.setState({
-                                            fullName: text,
-                                            searchCustomer: 0,
-                                            customerId: '',
-                                            address: '',
-                                            phone: '',
-                                            email: '',
-                                            identity: '',
-                                            isHidden: false
-                                        }, () => {
-                                            let hide = false;
-                                            if (this.state.fullName === '') {
-                                                this.setState({ isHidden: true });
-                                                hide = true;
-                                            }
-                                            this.toggleQuickSearch(hide);
-                                        });
-                                    }}
-                                    onEndEditing={() => {
-                                        this.setState({ isHidden: true }, () => {
-                                            setTimeout(() => {
-                                                this.toggleQuickSearch(true);
-                                            }, 1000);
-                                        });
-                                    }}
-                                />
+                                >
+                                    <TextInput
+                                        style={{
+                                            height: 40,
+                                            width: '90%',
+                                            backgroundColor: 'white',
+                                            borderRadius: 20,
+                                            borderWidth: 0,
+                                            marginLeft: 15
+                                        }}
+                                        placeholder='Họ tên'
+                                        underlineColorAndroid='transparent'
+                                        value={this.state.fullName}
+                                        onChangeText={text => {
+                                            this.setState({
+                                                fullName: text,
+                                                searchCustomer: 0,
+                                                customerId: '',
+                                                address: '',
+                                                phone: '',
+                                                email: '',
+                                                identity: '',
+                                                isHidden: false
+                                            }, () => {
+                                                let hide = false;
+                                                if (this.state.fullName === '') {
+                                                    this.setState({ isHidden: true });
+                                                    hide = true;
+                                                }
+                                                this.toggleQuickSearch(hide);
+                                            });
+                                        }}
+                                        onEndEditing={() => {
+                                            this.setState({ isHidden: true }, () => {
+                                                setTimeout(() => {
+                                                    this.toggleQuickSearch(true);
+                                                }, 1000);
+                                            });
+                                        }}
+                                    />
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            this.toggleQuickSearch(true);
+                                            this.setState({ isHidden: true });
+                                        }}
+                                    >
+                                        <Icon
+                                            name='ios-search'
+                                            style={{
+                                                fontSize: 24,
+                                                color: 'orange',
+                                                marginTop: 10,
+                                                marginRight: 10
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
                             )}
                             renderItem={item => (
                                 <TouchableOpacity

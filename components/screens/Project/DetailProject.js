@@ -28,7 +28,6 @@ import {
     NO_IMAGE,
     YOUTUBE_APIKEY
 } from './../../../Globals';
-import icLogo from './../../../icons/logo_new.png';
 import getYoutubeId, { loading } from './../../../Helpers';
 import icPlay from './../../../icons/play.png';
 
@@ -61,7 +60,7 @@ export default class DetailProject extends React.Component {
         }, 200);
         if (this.props.project.data.images.feature) {
             this.setState({
-                listImage: this.props.project.data.images.feature.map((item, index) => {
+                listImage: this.props.project.data.images.feature.map((item) => {
                     return { url: `${BASE_URL}${item}` };
                 })
             });
@@ -173,7 +172,8 @@ export default class DetailProject extends React.Component {
                         />
                     </Modal>
                     <ScrollView horizontal style={{ flexDirection: 'row', marginBottom: 5 }}>
-                        {project.data.images.image_advance && project.data.images.image_advance.map((value, key) => (
+                        {project.data.images.image_advance &&
+                        project.data.images.image_advance.map((value, key) => (
                             <TouchableOpacity
                                 key={key}
                                 onPress={this.onDisplayImage.bind(this, key)}
@@ -187,7 +187,8 @@ export default class DetailProject extends React.Component {
                     </ScrollView>
                     <View>
                         <Text style={styles.titleSection}>Sản phẩm</Text>
-                        {project.data.images.design && project.data.images.design.map((value, key) => (
+                        {project.data.images.design &&
+                        project.data.images.design.map((value, key) => (
                             <ListItem thumbnail style={styles.itemList} key={key}>
                                 <Left>
                                     <Thumbnail
@@ -214,51 +215,50 @@ export default class DetailProject extends React.Component {
                         ))}
                     </View>
                     <Text style={styles.titleSection}>Hình ảnh dự án & TVC</Text>
-                    <TouchableOpacity
-                        onPress={() => {
-                            YouTubeStandaloneIOS.playVideo('QoX8P7dr6PA')
-                                .then(() => console.log('Standalone Player Exited'))
-                                .catch(errorMessage => console.error(errorMessage));
-                            // if (Platform.OS === 'ios') {
-                            //     return YouTubeStandaloneIOS.playVideo('KVZ-P-ZI6W4')
-                            //         .then(() => console.log('Standalone Player Exited'))
-                            //         .catch(errorMessage => console.error(errorMessage));
-                            // } else {
-                            //     YouTubeStandaloneAndroid.playVideo({
-                            //         apiKey: YOUTUBE_APIKEY,
-                            //         videoId: this.state.videoId,
-                            //         autoplay: true,
-                            //         lightboxMode: false,
-                            //         startTime: 124.5,
-                            //     })
-                            //         .then(() => console.log('Android Standalone Player Finished'))
-                            //         .catch(errorMessage => this.setState({ error: errorMessage }));
-                            // }
-                        }}
-                    >
-                        <ImageBackground
-                            source={{ uri: `https://img.youtube.com/vi/${this.state.videoId}/hqdefault.jpg` }}
-                            style={{
-                                alignSelf: 'stretch',
-                                height: 300,
-                                justifyContent: 'center',
-                                alignItems: 'center'
+                    {Platform.OS === 'android' &&
+                    YouTubeStandaloneAndroid && (
+                        <TouchableOpacity
+                            onPress={() => {
+                                YouTubeStandaloneAndroid.playVideo({
+                                    apiKey: YOUTUBE_APIKEY,
+                                    videoId: this.state.videoId,
+                                    autoplay: true,
+                                    lightboxMode: false,
+                                })
+                                    .then(() => console.log('Android Standalone Player Finished'))
+                                    .catch(errorMessage => this.setState({ error: errorMessage }));
                             }}
                         >
-                            <Image source={icPlay} style={{ height: 50, width: 50, borderRadius: 10 }} />
-                        </ImageBackground>
-                    </TouchableOpacity>
-                    {/*<YouTube*/}
-                        {/*apiKey={YOUTUBE_APIKEY}*/}
-                        {/*videoId={this.state.videoId}*/}
-                        {/*play*/}
-                        {/*// fullscreen={true}*/}
-                        {/*onReady={e => this.setReady.bind(this)}*/}
-                        {/*onChangeState={e => this.setChangeState.bind(this, e.state)}*/}
-                        {/*onChangeQuality={e => this.setChangeQuality.bind(this, e.quality)}*/}
-                        {/*onError={e => this.setOnError.bind(this, e.error)}*/}
-                        {/*style={{ alignSelf: 'stretch', height: 300 }}*/}
-                    {/*/>*/}
+                            <ImageBackground
+                                source={{ uri: `https://img.youtube.com/vi/${this.state.videoId}/hqdefault.jpg` }}
+                                style={{
+                                    alignSelf: 'stretch',
+                                    height: 300,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <Image
+                                    source={icPlay}
+                                    style={{ height: 50, width: 50, borderRadius: 10 }}
+                                />
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    )}
+                    {Platform.OS === 'ios' &&
+                    YouTubeStandaloneIOS && (
+                        <YouTube
+                            apiKey={YOUTUBE_APIKEY}
+                            videoId={this.state.videoId}
+                            // play
+                            // fullscreen={true}
+                            onReady={e => this.setReady.bind(this, e)}
+                            onChangeState={e => this.setChangeState.bind(this, e.state)}
+                            onChangeQuality={e => this.setChangeQuality.bind(this, e.quality)}
+                            onError={e => this.setOnError.bind(this, e.error)}
+                            style={{ alignSelf: 'stretch', height: 300 }}
+                        />
+                    )}
                     <TouchableOpacity
                         style={styles.btnBtnIconSpecial}
                         onPress={() => this.props.onChangeTab(4)}

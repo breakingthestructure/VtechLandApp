@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Image, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import {
+    Image,
+    StatusBar,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import { Icon } from 'native-base';
 import icMenu from './../../../icons/menu.png';
 import icBack from './../../../icons/back_white.png';
@@ -17,7 +23,6 @@ export default class Header extends Component {
     }
 
     goBack() {
-        console.log(this.props.back);
         if (this.props.back === 'hideAdvanceSearch') {
             return this.props.toggleAdvanceSearch(this.props.bounceValue, true);
         }
@@ -64,8 +69,17 @@ export default class Header extends Component {
                         {this.props.back ? goBackJSX : menuJSX}
                         <View style={{ justifyContent: 'center' }}>
                             <Text
-                                style={{ color: 'white', fontWeight: '500', fontSize: 16, textAlign: 'center' }} note
-                                numberOfLines={1}>{this.props.title ? this.props.title : 'VtechHome'}</Text>
+                                style={{
+                                    color: 'white',
+                                    fontWeight: '500',
+                                    fontSize: 16,
+                                    textAlign: 'center'
+                                }}
+                                note
+                                numberOfLines={1}
+                            >
+                                {this.props.title ? this.props.title : 'VtechHome'}
+                            </Text>
                         </View>
                         <TouchableOpacity
                             onPress={this.openRightMenu.bind(this)}

@@ -17,6 +17,6 @@ target 'TechLandNative' do
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
   pod 'QBImagePickerController'
-  pod 'XCDYouTubeKit'
+  pod 'XCDYouTubeKit', '~> 2.5'
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
 end

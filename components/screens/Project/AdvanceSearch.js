@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     Animated,
     FlatList,
+    Platform,
     ScrollView,
     Switch,
     Text,
@@ -149,21 +150,22 @@ export default class AdvanceSearch extends Component {
     }
 
     onSearch() {
-        this.setState({ txtSubmit: 'Đang xử lý' });
+        this.setState({ txtSubmit: 'Đang xử lý', isHidden: true });
+        this.toggleQuickSearch(true);
         const {
-                  name,
-                  city,
-                  district,
-                  ward,
-                  street,
-                  direction,
-                  kind,
-                  level,
-                  type,
-                  area,
-                  minPrice,
-                  maxPrice
-              } = this.state;
+            name,
+            city,
+            district,
+            ward,
+            street,
+            direction,
+            kind,
+            level,
+            type,
+            area,
+            minPrice,
+            maxPrice
+        } = this.state;
         let query = '';
         if (name !== '') {
             query += `&keyword=${name}`;
@@ -272,6 +274,10 @@ export default class AdvanceSearch extends Component {
                             [styles.viewAutocomplete,
                                 { height: this.state.resultValue }]
                         }
+                        // style={{
+                        //     position: 'relative',
+                        //     height: 40,
+                        // }}
                     >
                         <Autocomplete
                             containerStyle={
@@ -292,40 +298,57 @@ export default class AdvanceSearch extends Component {
                                     ? [] : listProject
                             }
                             renderTextInput={() => (
-                                <TextInput
+                                <View
                                     style={{
-                                        height: 40,
-                                        width: '90%',
-                                        backgroundColor: 'white',
-                                        borderRadius: 20,
-                                        borderWidth: 0,
-                                        marginLeft: 15
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between'
                                     }}
-                                    placeholder='Nhập tên dự án...'
-                                    underlineColorAndroid='transparent'
-                                    value={this.state.name}
-                                    onChangeText={text => {
-                                        this.setState({
-                                            name: text,
-                                            isHidden: false
-                                        }, () => {
-                                            let hide = false;
-                                            // if (this.state.name === '') {
-                                            //     this.setState({ isHidden: true }, () => {
-                                            //     });
-                                            //     hide = true;
-                                            // }
-                                            this.toggleQuickSearch(hide);
-                                        });
-                                    }}
-                                    onEndEditing={() => {
-                                        // this.setState({ isHidden: true }, () => {
-                                        //     setTimeout(() => {
-                                        //         this.toggleQuickSearch(true);
-                                        //     }, 1000);
-                                        // });
-                                    }}
-                                />
+                                >
+                                    <TextInput
+                                        style={{
+                                            height: 40,
+                                            width: '90%',
+                                            marginLeft: 15,
+                                        }}
+                                        placeholder='Nhập tên dự án...'
+                                        underlineColorAndroid='transparent'
+                                        value={this.state.name}
+                                        onChangeText={text => {
+                                            this.setState({
+                                                name: text,
+                                                isHidden: false
+                                            }, () => {
+                                                let hide = false;
+                                                // if (this.state.name === '') {
+                                                //     this.setState({ isHidden: true }, () => {
+                                                //     });
+                                                //     hide = true;
+                                                // }
+                                                this.toggleQuickSearch(hide);
+                                            });
+                                        }}
+                                        onEndEditing={() => {
+                                            // this.setState({ isHidden: true }, () => {
+                                            //     setTimeout(() => {
+                                            //         this.toggleQuickSearch(true);
+                                            //     }, 1000);
+                                            // });
+                                        }}
+                                    />
+                                    <TouchableOpacity
+                                        onPress={this.onSearch.bind(this)}
+                                    >
+                                        <Icon
+                                            name='ios-search'
+                                            style={{
+                                                fontSize: 24,
+                                                color: 'orange',
+                                                marginTop: 10,
+                                                marginRight: 10
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
                             )}
                             renderItem={item => (
                                 <TouchableOpacity
@@ -350,13 +373,6 @@ export default class AdvanceSearch extends Component {
                             )}
                         />
                     </Animated.View>
-                    <TouchableOpacity
-                        style={styles.bigBtnIcon}
-                        onPress={this.onSearch.bind(this)}
-                    >
-                        <Icon name='ios-search' style={styles.iconBigBtn} />
-                        <Text style={styles.textBtnIcon}>{this.state.txtSubmit}</Text>
-                    </TouchableOpacity>
                     <Text style={styles.titleScreen}>Tìm kiếm nâng cao</Text>
                     <View style={{ paddingTop: 10 }}>
                         <SwitchSelector

@@ -250,7 +250,7 @@ export default class MapProject extends React.Component {
     }
 
     render() {
-        if (!this.state.loaded) {
+        if (!this.state.loaded || !this.state.currentLocation) {
             return loading();
         }
         return (
@@ -259,21 +259,13 @@ export default class MapProject extends React.Component {
                 <View style={styles.mapContainer}>
                     <MapView
                         style={{ width, flex: 1 }}
-                        // initialRegion={{
-                        //     latitude: this.state.currentLocation.latitude,
-                        //     longitude: this.state.currentLocation.longitude,
-                        //     latitudeDelta: this.state.currentLocation.latitudeDelta,
-                        //     longitudeDelta: this.state.currentLocation.longitudeDelta,
-                        //     // latitudeDelta: 0.0922,
-                        //     // longitudeDelta: 0.0421,
-                        // }}
-                        region={{
+                        initialRegion={{
                             latitude: this.state.currentLocation.latitude,
                             longitude: this.state.currentLocation.longitude,
-                            latitudeDelta: this.state.currentLocation.latitudeDelta,
-                            longitudeDelta: this.state.currentLocation.longitudeDelta,
-                            // latitudeDelta: 0.0922,
-                            // longitudeDelta: 0.0421,
+                            // latitudeDelta: this.state.currentLocation.latitudeDelta,
+                            // longitudeDelta: this.state.currentLocation.longitudeDelta,
+                            latitudeDelta: 0.0922,
+                            longitudeDelta: 0.0421,
                         }}
                         // provider='google'
                         mapType="standard"
