@@ -31,12 +31,14 @@ export default class PreviewProject extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            loaded: true
+        });
         if (this.props.project.data.images.feature) {
             this.setState({
                 listImage: this.props.project.data.images.feature.map((item, index) => {
                     return { url: `${BASE_URL}${item}` };
                 }),
-                loaded: true
             });
         }
     }

@@ -310,20 +310,20 @@ export default class AdvanceSearch extends Component {
                                             isHidden: false
                                         }, () => {
                                             let hide = false;
-                                            if (this.state.name === '') {
-                                                this.setState({ isHidden: true }, () => {
-                                                });
-                                                hide = true;
-                                            }
+                                            // if (this.state.name === '') {
+                                            //     this.setState({ isHidden: true }, () => {
+                                            //     });
+                                            //     hide = true;
+                                            // }
                                             this.toggleQuickSearch(hide);
                                         });
                                     }}
                                     onEndEditing={() => {
-                                        this.setState({ isHidden: true }, () => {
-                                            setTimeout(() => {
-                                                this.toggleQuickSearch(true);
-                                            }, 500);
-                                        });
+                                        // this.setState({ isHidden: true }, () => {
+                                        //     setTimeout(() => {
+                                        //         this.toggleQuickSearch(true);
+                                        //     }, 1000);
+                                        // });
                                     }}
                                 />
                             )}
@@ -350,7 +350,13 @@ export default class AdvanceSearch extends Component {
                             )}
                         />
                     </Animated.View>
-
+                    <TouchableOpacity
+                        style={styles.bigBtnIcon}
+                        onPress={this.onSearch.bind(this)}
+                    >
+                        <Icon name='ios-search' style={styles.iconBigBtn} />
+                        <Text style={styles.textBtnIcon}>{this.state.txtSubmit}</Text>
+                    </TouchableOpacity>
                     <Text style={styles.titleScreen}>Tìm kiếm nâng cao</Text>
                     <View style={{ paddingTop: 10 }}>
                         <SwitchSelector

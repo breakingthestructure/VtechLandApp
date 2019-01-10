@@ -295,7 +295,7 @@ export default class OrderSubmit extends React.Component {
                                         this.setState({ isHidden: true }, () => {
                                             setTimeout(() => {
                                                 this.toggleQuickSearch(true);
-                                            }, 500);
+                                            }, 1000);
                                         });
                                     }}
                                 />

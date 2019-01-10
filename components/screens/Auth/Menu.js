@@ -45,17 +45,17 @@ export default class Menu extends Component {
                             <Text style={styles.textMenu}>Tổng kho bất động sản</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} >
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'AllBuildingScreen')}>
                             <Image source={icCart} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Bảng hàng online</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} >
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'HomeScreen')}>
                             <Image source={icTraning} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Huấn luyện - đào tạo</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} >
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'CategoryPartnerScreen')}>
                             <Image source={icPartner} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Đối tác</Text>
                         </TouchableOpacity>
@@ -71,22 +71,22 @@ export default class Menu extends Component {
                         <View
                             style={styles.underLine}
                         />
-                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'MapScreen')}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'QuestionScreen')}>
                             <Image source={icHistory} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Câu hỏi thường gặp</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'MapScreen')}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'PrivacyScreen')}>
                             <Image source={icList} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Điều khoản dịch vụ</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'MapScreen')}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'PrivacyScreen')}>
                             <Image source={icHistory} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Chính sách hoạt động</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'MapScreen')}>
+                        <TouchableOpacity style={styles.btnMenu} onPress={this.gotoScreen.bind(this, 'PrivacyScreen')}>
                             <Image source={icHistory} style={styles.iconMenu} />
                             <Text style={styles.textMenu}>Bảo mật thanh toán</Text>
                         </TouchableOpacity>

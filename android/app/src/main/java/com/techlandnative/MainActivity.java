@@ -4,6 +4,8 @@ import com.facebook.react.ReactActivity;
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactActivityDelegate;

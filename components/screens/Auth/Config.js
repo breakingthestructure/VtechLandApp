@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { 
-    Container, 
-    Content, 
-    ListItem, 
-    Text, 
-    Icon, 
-    Left, 
-    Body, 
-    Right, 
-    Switch, 
+import {
+    Container,
+    Content,
+    ListItem,
+    Text,
+    Icon,
+    Left,
+    Body,
+    Right,
+    Switch,
     Button,
-    Spinner
 } from 'native-base';
 import Header from './../Home/Header';
 import { loading } from '../../../Helpers';
@@ -22,11 +21,13 @@ export default class Config extends Component {
             loaded: false
         };
     }
+
     componentDidMount() {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 200);
     }
+
     render() {
         if (!this.state.loaded) {
             return loading();
@@ -42,7 +43,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Nhận thông báo từ dự án</Text>
+                        <Text>Nhận thông báo từ dự án</Text>
                         </Body>
                         <Right>
                             <Switch value={false} />
@@ -55,7 +56,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Kết nối chủ đầu tư</Text>
+                        <Text>Kết nối chủ đầu tư</Text>
                         </Body>
                         <Right>
                             <Icon active name="arrow-forward" />
@@ -68,7 +69,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Gửi yêu cầu đặt cọc</Text>
+                        <Text>Gửi yêu cầu đặt cọc</Text>
                         </Body>
                         <Right>
                             <Text>On</Text>
@@ -82,7 +83,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Nhận thông báo từ dự án</Text>
+                        <Text>Nhận thông báo từ dự án</Text>
                         </Body>
                         <Right>
                             <Switch value={false} />
@@ -95,7 +96,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Kết nối chủ đầu tư</Text>
+                        <Text>Kết nối chủ đầu tư</Text>
                         </Body>
                         <Right>
                             <Icon active name="arrow-forward" />
@@ -108,7 +109,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Gửi yêu cầu đặt cọc</Text>
+                        <Text>Gửi yêu cầu đặt cọc</Text>
                         </Body>
                         <Right>
                             <Text>On</Text>
@@ -122,7 +123,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Nhận thông báo từ dự án</Text>
+                        <Text>Nhận thông báo từ dự án</Text>
                         </Body>
                         <Right>
                             <Switch value={false} />
@@ -135,7 +136,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Kết nối chủ đầu tư</Text>
+                        <Text>Kết nối chủ đầu tư</Text>
                         </Body>
                         <Right>
                             <Icon active name="arrow-forward" />
@@ -148,7 +149,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Gửi yêu cầu đặt cọc</Text>
+                        <Text>Gửi yêu cầu đặt cọc</Text>
                         </Body>
                         <Right>
                             <Text>On</Text>
@@ -162,7 +163,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Nhận thông báo từ dự án</Text>
+                        <Text>Nhận thông báo từ dự án</Text>
                         </Body>
                         <Right>
                             <Switch value={false} />
@@ -175,7 +176,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Kết nối chủ đầu tư</Text>
+                        <Text>Kết nối chủ đầu tư</Text>
                         </Body>
                         <Right>
                             <Icon active name="arrow-forward" />
@@ -188,7 +189,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Gửi yêu cầu đặt cọc</Text>
+                        <Text>Gửi yêu cầu đặt cọc</Text>
                         </Body>
                         <Right>
                             <Text>On</Text>
@@ -202,7 +203,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Nhận thông báo từ dự án</Text>
+                        <Text>Nhận thông báo từ dự án</Text>
                         </Body>
                         <Right>
                             <Switch value={false} />
@@ -215,7 +216,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Kết nối chủ đầu tư</Text>
+                        <Text>Kết nối chủ đầu tư</Text>
                         </Body>
                         <Right>
                             <Icon active name="arrow-forward" />
@@ -228,7 +229,7 @@ export default class Config extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Gửi yêu cầu đặt cọc</Text>
+                        <Text>Gửi yêu cầu đặt cọc</Text>
                         </Body>
                         <Right>
                             <Text>On</Text>

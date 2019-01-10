@@ -43,10 +43,8 @@ export default class News extends React.Component {
     componentDidMount() {
         const { project } = this.props;
         if (project) {
-            console.log(project.name);
             getNews(project.name)
                 .then(res => {
-                    console.log(res);
                     if (res.status === 200) {
                         this.setState({
                             listNews: res.data.data,

@@ -8,7 +8,8 @@ target 'TechLandNative' do
       'Core',
       'RCTImage' # <- Add this line
     ]
-    pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  pod 'ReactNativeKeyboardManager', :path => '../node_modules/react-native-keyboard-manager'
   pod 'Firebase'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
@@ -18,5 +19,4 @@ target 'TechLandNative' do
   pod 'QBImagePickerController'
   pod 'XCDYouTubeKit'
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
-  pod 'ReactNativeKeyboardManager', :path => '../node_modules/react-native-keyboard-manager'
 end

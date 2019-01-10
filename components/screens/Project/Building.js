@@ -89,7 +89,8 @@ export default class Building extends Component {
                 />
                 <ScrollView ref='_scrollView'>
                     <View style={{ height: 300 }}>
-                        {project.data.images.feature.length > 0 && <DeckSwiper
+                        {project.data.images.feature.length > 0 &&
+                        <DeckSwiper
                             dataSource={project.data.images.feature}
                             renderItem={item =>
                             <Card style={{ elevation: 3 }}>
@@ -101,7 +102,7 @@ export default class Building extends Component {
                                 </CardItem>
                             </Card>
                         }
-                            />}
+                        />}
                     </View>
                     <Text
                         style={{

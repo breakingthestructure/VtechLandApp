@@ -82,7 +82,9 @@ export default class MapProject extends React.Component {
             errorMessage: null,
             currentLocation: {
                 latitude: 21.027763,
-                longitude: 105.834160
+                longitude: 105.834160,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
             },
             text: '',
             listProject: null,
@@ -116,6 +118,16 @@ export default class MapProject extends React.Component {
         //     })
         //     .catch(err => console.log(err));
         // if (!this.state.loaded) {
+        const northeast = {
+            latitude: this.state.currentLocation.latitude + this.state.currentLocation.latitudeDelta / 2,
+            longitude: this.state.currentLocation.longitude + this.state.currentLocation.longitudeDelta / 2,
+        };
+        const southwest = {
+            latitude: this.state.currentLocation.latitude - this.state.currentLocation.latitudeDelta / 2,
+            longitude: this.state.currentLocation.longitude - this.state.currentLocation.longitudeDelta / 2,
+        };
+
+        console.log(northeast, southwest);
         getProject()
             .then(resJson => {
                 if (resJson.data.length > 0) {
@@ -247,11 +259,21 @@ export default class MapProject extends React.Component {
                 <View style={styles.mapContainer}>
                     <MapView
                         style={{ width, flex: 1 }}
-                        initialRegion={{
+                        // initialRegion={{
+                        //     latitude: this.state.currentLocation.latitude,
+                        //     longitude: this.state.currentLocation.longitude,
+                        //     latitudeDelta: this.state.currentLocation.latitudeDelta,
+                        //     longitudeDelta: this.state.currentLocation.longitudeDelta,
+                        //     // latitudeDelta: 0.0922,
+                        //     // longitudeDelta: 0.0421,
+                        // }}
+                        region={{
                             latitude: this.state.currentLocation.latitude,
                             longitude: this.state.currentLocation.longitude,
-                            latitudeDelta: 0.0922,
-                            longitudeDelta: 0.0421,
+                            latitudeDelta: this.state.currentLocation.latitudeDelta,
+                            longitudeDelta: this.state.currentLocation.longitudeDelta,
+                            // latitudeDelta: 0.0922,
+                            // longitudeDelta: 0.0421,
                         }}
                         // provider='google'
                         mapType="standard"
@@ -259,6 +281,15 @@ export default class MapProject extends React.Component {
                         showsUserLocation
                         showsMyLocationButton
                         moveOnMarkerPress
+                        // minZoomLevel={6}
+                        // maxZoomLevel={12}
+                        // showsCompass
+                        // showsScale
+                        // showsBuildings
+                        // showsTraffic
+                        // showsIndoors
+                        // cacheEnabled
+                        // loadingEnabled
                         onPress={() => {
                             this.togglePopup(true);
                             this.toggleKindProject();
@@ -269,7 +300,21 @@ export default class MapProject extends React.Component {
                         // ref={(ref) => {
                         //     this.mapView = ref;
                         // }}
-                        onMapReady={() => this.setState({ loaded: true })}
+                        onMapReady={() => {
+                            this.setState({ loaded: true });
+                        }}
+                        onRegionChangeComplete={(center) => {
+                            const northeast = {
+                                latitude: center.latitude + center.latitudeDelta / 2,
+                                longitude: center.longitude + center.longitudeDelta / 2,
+                            };
+                            const southwest = {
+                                latitude: center.latitude - center.latitudeDelta / 2,
+                                longitude: center.longitude - center.longitudeDelta / 2,
+                            };
+
+                            console.log(center, northeast, southwest);
+                        }}
                     >
                         {this.state.listProject.map(project => (
                             <Marker

@@ -51,6 +51,12 @@ import ResetPassword from './components/screens/Auth/ResetPassword';
 import Building from './components/screens/Project/Building';
 import SearchApartment from './components/screens/Project/SearchApartment';
 import ResultApartment from './components/screens/Project/ResultApartment';
+import ListQuestion from './components/screens/Option/ListQuestion';
+import Privacy from './components/screens/Option/Privacy';
+import AllBuilding from './components/screens/Project/AllBuilding';
+import ListPartner from './components/screens/Option/ListPartner';
+import DetailPartner from './components/screens/Option/DetailPartner';
+import CategoryPartner from './components/screens/Option/CategoryPartner';
 
 console.disableYellowBox = true;
 
@@ -131,6 +137,51 @@ const ProjectStack = createStackNavigator(
     }
 );
 
+const PartnerStack = createStackNavigator(
+    {
+        CategoryPartnerScreen: {
+            screen: CategoryPartner
+        },
+        ListPartnerScreen: {
+            screen: ListPartner
+        },
+        DetailPartnerScreen: {
+            screen: DetailPartner
+        },
+    },
+    {
+        headerMode: 'none',
+        // mode: 'modal',
+        navigationOptions: {
+            gesturesEnabled: false,
+        },
+        transitionConfig: () => ({
+            transitionSpec: {
+                duration: 300,
+                easing: Easing.out(Easing.poly(4)),
+                timing: Animated.timing,
+            },
+            screenInterpolator: sceneProps => {
+                const { layout, position, scene } = sceneProps;
+                const { index } = scene;
+
+                const height = layout.initHeight;
+                const translateY = position.interpolate({
+                    inputRange: [index - 1, index, index + 1],
+                    outputRange: [height, 0, 0],
+                });
+
+                const opacity = position.interpolate({
+                    inputRange: [index - 1, index - 0.99, index],
+                    outputRange: [0, 1, 1],
+                });
+
+                return { opacity, transform: [{ translateY }] };
+            },
+        }),
+    }
+);
+
 const LeftDrawer = createDrawerNavigator(
     {
         HomeScreen: {
@@ -157,6 +208,18 @@ const LeftDrawer = createDrawerNavigator(
         ResetPasswordScreen: {
             screen: ResetPassword
         },
+        QuestionScreen: {
+            screen: ListQuestion
+        },
+        PrivacyScreen: {
+            screen: Privacy
+        },
+        AllBuildingScreen: {
+            screen: AllBuilding
+        },
+        PartnerScreen: {
+            screen: PartnerStack
+        }
     },
     {
         initialRouteName: 'MapScreen',

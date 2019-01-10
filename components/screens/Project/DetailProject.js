@@ -6,7 +6,8 @@ import {
     ScrollView,
     Modal,
     TouchableOpacity,
-    ImageBackground
+    ImageBackground,
+    Platform
 } from 'react-native';
 import {
     ListItem,
@@ -16,10 +17,17 @@ import {
     Icon,
 } from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import YouTube, { YouTubeStandaloneAndroid } from 'react-native-youtube';
+import YouTube, {
+    YouTubeStandaloneAndroid,
+    YouTubeStandaloneIOS
+} from 'react-native-youtube';
 import HTMLView from 'react-native-htmlview';
 import styles from './../../../styles';
-import { BASE_URL, NO_IMAGE, YOUTUBE_APIKEY } from './../../../Globals';
+import {
+    BASE_URL,
+    NO_IMAGE,
+    YOUTUBE_APIKEY
+} from './../../../Globals';
 import icLogo from './../../../icons/logo_new.png';
 import getYoutubeId, { loading } from './../../../Helpers';
 import icPlay from './../../../icons/play.png';
@@ -207,35 +215,49 @@ export default class DetailProject extends React.Component {
                     </View>
                     <Text style={styles.titleSection}>Hình ảnh dự án & TVC</Text>
                     <TouchableOpacity
-                        onPress={() =>
-                            YouTubeStandaloneAndroid.playVideo({
-                                apiKey: YOUTUBE_APIKEY,
-                                videoId: this.state.videoId,
-                                autoplay: true,
-                                lightboxMode: false,
-                                startTime: 124.5,
-                            })
-                                .then(() => console.log('Android Standalone Player Finished'))
-                                .catch(errorMessage => this.setState({ error: errorMessage }))
-                        }
+                        onPress={() => {
+                            YouTubeStandaloneIOS.playVideo('QoX8P7dr6PA')
+                                .then(() => console.log('Standalone Player Exited'))
+                                .catch(errorMessage => console.error(errorMessage));
+                            // if (Platform.OS === 'ios') {
+                            //     return YouTubeStandaloneIOS.playVideo('KVZ-P-ZI6W4')
+                            //         .then(() => console.log('Standalone Player Exited'))
+                            //         .catch(errorMessage => console.error(errorMessage));
+                            // } else {
+                            //     YouTubeStandaloneAndroid.playVideo({
+                            //         apiKey: YOUTUBE_APIKEY,
+                            //         videoId: this.state.videoId,
+                            //         autoplay: true,
+                            //         lightboxMode: false,
+                            //         startTime: 124.5,
+                            //     })
+                            //         .then(() => console.log('Android Standalone Player Finished'))
+                            //         .catch(errorMessage => this.setState({ error: errorMessage }));
+                            // }
+                        }}
                     >
                         <ImageBackground
                             source={{ uri: `https://img.youtube.com/vi/${this.state.videoId}/hqdefault.jpg` }}
-                            style={{ alignSelf: 'stretch', height: 300, justifyContent: 'center', alignItems: 'center' }}
+                            style={{
+                                alignSelf: 'stretch',
+                                height: 300,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
                         >
                             <Image source={icPlay} style={{ height: 50, width: 50, borderRadius: 10 }} />
                         </ImageBackground>
                     </TouchableOpacity>
                     {/*<YouTube*/}
-                    {/*apiKey={YOUTUBE_APIKEY}*/}
-                    {/*videoId={this.state.videoId}*/}
-                    {/*play*/}
-                    {/*// fullscreen={true}*/}
-                    {/*onReady={e => this.setReady.bind(this)}*/}
-                    {/*onChangeState={e => this.setChangeState.bind(this, e.state)}*/}
-                    {/*onChangeQuality={e => this.setChangeQuality.bind(this, e.quality)}*/}
-                    {/*onError={e => this.setOnError.bind(this, e.error)}*/}
-                    {/*style={{ alignSelf: 'stretch', height: 300 }}*/}
+                        {/*apiKey={YOUTUBE_APIKEY}*/}
+                        {/*videoId={this.state.videoId}*/}
+                        {/*play*/}
+                        {/*// fullscreen={true}*/}
+                        {/*onReady={e => this.setReady.bind(this)}*/}
+                        {/*onChangeState={e => this.setChangeState.bind(this, e.state)}*/}
+                        {/*onChangeQuality={e => this.setChangeQuality.bind(this, e.quality)}*/}
+                        {/*onError={e => this.setOnError.bind(this, e.error)}*/}
+                        {/*style={{ alignSelf: 'stretch', height: 300 }}*/}
                     {/*/>*/}
                     <TouchableOpacity
                         style={styles.btnBtnIconSpecial}

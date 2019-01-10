@@ -9,12 +9,14 @@ import {
     FlatList,
     RefreshControl
 } from 'react-native';
-import { Container, Content, Spinner } from 'native-base';
 import Header from './Header';
 
 import icTitle from './../../../icons/ic_title.png';
 import getProject from './../../../api/getProject';
-import { BASE_URL, NO_IMAGE } from './../../../Globals';
+import {
+    BASE_URL,
+    NO_IMAGE
+} from './../../../Globals';
 import { loading } from "../../../Helpers";
 
 const { width } = Dimensions.get('window');
@@ -30,6 +32,7 @@ export default class Home extends React.Component {
         };
         this.arrayProject = [];
     }
+
     componentDidMount() {
         getProject()
             .then(resJson => {
@@ -43,6 +46,7 @@ export default class Home extends React.Component {
             })
             .catch(err => console.log(err));
     }
+
     keyExtractor = (item) => item.id.toString(); //eslint-disable-line
     render() {
         if (!this.state.loaded) {
@@ -50,7 +54,11 @@ export default class Home extends React.Component {
         }
         return (
             <View style={{ backgroundColor: '#f2f2f2', flex: 1 }}>
-                <Header navigation={this.props.navigation} />
+                <Header
+                    navigation={this.props.navigation}
+                    title={'HUẤN LUYỆN & ĐÀO TẠO'}
+                    back={'MapScreen'}
+                />
                 <FlatList
                     contentContainerStyle={styles.wrapper}
                     data={this.state.listProject}
@@ -81,7 +89,12 @@ export default class Home extends React.Component {
                                             });
                                         }}
                                     >
-                                        <Text style={{ fontWeight: '500', marginHorizontal: 15, fontSize: 12, color: 'black' }}>XEM CHI TIẾT</Text>
+                                        <Text style={{
+                                            fontWeight: '500',
+                                            marginHorizontal: 15,
+                                            fontSize: 12,
+                                            color: 'black'
+                                        }}>XEM CHI TIẾT</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         style={styles.btnTable}
@@ -91,7 +104,12 @@ export default class Home extends React.Component {
                                             });
                                         }}
                                     >
-                                        <Text style={{ color: 'white', fontWeight: '500', marginHorizontal: 5, fontSize: 12 }}>XEM BẢNG HÀNG</Text>
+                                        <Text style={{
+                                            color: 'white',
+                                            fontWeight: '500',
+                                            marginHorizontal: 5,
+                                            fontSize: 12
+                                        }}>XEM BẢNG HÀNG</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -118,7 +136,7 @@ export default class Home extends React.Component {
                         />
                     }
                 />
-            </View >
+            </View>
         );
     }
 }
