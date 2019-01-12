@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import {
     Container,
     Content,
@@ -14,7 +14,10 @@ import {
     Spinner
 } from 'native-base';
 import icSale from './../../../icons/sale.png';
-import { callingPhone } from '../../../Helpers';
+import {
+    callingPhone,
+    loading
+} from '../../../Helpers';
 
 export default class SupportProject extends Component {
     constructor(props) {
@@ -33,16 +36,10 @@ export default class SupportProject extends Component {
     keyExtractor = (item, index) => index.toString(); //eslint-disable-line
     render() {
         if (!this.state.loaded) {
-            return (
-                <Container>
-                    <Content contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <Spinner />
-                    </Content>
-                </Container>
-            );
+            return loading();
         }
         return (
-            <Container>
+            <View>
                 <FlatList
                     data={this.props.directors}
                     keyExtractor={this.keyExtractor}
@@ -64,7 +61,7 @@ export default class SupportProject extends Component {
                         </ListItem>
                     )}
                 />
-            </Container>
+            </View>
         );
     }
 }

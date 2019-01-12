@@ -10,7 +10,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-
+import SwitchSelector from 'react-native-switch-selector';
 import {
     Body,
     Icon,
@@ -31,9 +31,32 @@ import postOrderTransaction from './../../../api/postOrderTransaction';
 import getToken from '../../../api/getToken';
 import getCustomers from '../../../api/getCustomers';
 import getCities from './../../../api/getCities';
-import getDistricts from "../../../api/getDistricts";
 
 export default class OrderSubmit extends React.Component {
+    renderCustomer(customer) {
+        console.log(customer);
+        const { full_name, phone, email, identity, id, address } = customer;
+
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    this.setState({
+                        fullname: full_name,
+                        customerId: id,
+                        address,
+                        phone,
+                        email,
+                        identity
+                    });
+                }}
+            >
+                <Text style={styles.titleText}>{full_name}</Text>
+                <Text style={styles.directorText}>({phone})</Text>
+                <Text style={styles.openingText}>{email}</Text>
+            </TouchableOpacity>
+        );
+    }
+
     handleBackPress = () => { //eslint-disable-line
         return this.props.navigation.navigate('TablePackageScreen');
     }
@@ -53,13 +76,14 @@ export default class OrderSubmit extends React.Component {
             paymentMethod: 1,
             transactionCode: '',
             txtSubmit: 'ĐẶT CỌC',
-            fullName: '',
+            fullname: '',
             customerId: '',
-            searchCustomer: 0,
+            searchCustomer: 1,
             customers: [],
             resultValue: new Animated.Value(40),
             isHidden: true,
             cities: [],
+            searchName: ''
         };
     }
 
@@ -118,8 +142,31 @@ export default class OrderSubmit extends React.Component {
         this.setState({ txtSubmit: 'Đang xử lý' });
         getToken()
             .then(token => {
-                const { fullName, email, address, phone, identity, paymentMethod, reserveValue, transactionCode, customerId, searchCustomer } = this.state;
-                postOrderTransaction(token, transactionCode, searchCustomer, customerId, fullName, email, address, phone, identity, paymentMethod, reserveValue)
+                const {
+                    fullname,
+                    email,
+                    address,
+                    phone,
+                    identity,
+                    paymentMethod,
+                    reserveValue,
+                    transactionCode,
+                    customerId,
+                    searchCustomer
+                } = this.state;
+                postOrderTransaction(
+                    token,
+                    transactionCode,
+                    searchCustomer,
+                    customerId,
+                    fullname,
+                    email,
+                    address,
+                    phone,
+                    identity,
+                    paymentMethod,
+                    reserveValue
+                )
                     .then(res => {
                         if (res.status === 200) {
                             return Toast.show({
@@ -145,12 +192,12 @@ export default class OrderSubmit extends React.Component {
         this.setState({ paymentMethod: type });
     }
 
-    findCustomer(fullName) {
-        if (fullName === '') {
+    findCustomer(fullname) {
+        if (fullname === '') {
             return [];
         }
         const { customers } = this.state;
-        const regex = new RegExp(`${fullName.trim()}`, 'i');
+        const regex = new RegExp(`${fullname.trim()}`, 'i');
         return customers.filter(customer => customer.full_name.search(regex) >= 0);
     }
 
@@ -187,12 +234,244 @@ export default class OrderSubmit extends React.Component {
     }
 
     render() {
-        const { fullName, apartment, cities } = this.state;
-        const customers = this.findCustomer(fullName);
+        const { fullname, apartment, cities, searchName } = this.state;
+        const customers = this.findCustomer(searchName);
         const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
         if (!this.state.loaded || !apartment) {
             return loading();
         }
+        const newCustomerJSX = (
+            <View>
+                <View style={styles.viewInput}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Họ tên'
+                        underlineColorAndroid='transparent'
+                        value={this.state.fullname}
+                        onChangeText={text => this.setState({ fullname: text })}
+                    />
+                </View>
+                <View style={styles.viewInput}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Địa chỉ'
+                        underlineColorAndroid='transparent'
+                        value={this.state.address}
+                        onChangeText={text => this.setState({ address: text })}
+                    />
+                </View>
+                <View style={styles.viewInput}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Điện thoại'
+                        underlineColorAndroid='transparent'
+                        value={this.state.phone}
+                        onChangeText={text => this.setState({ phone: text })}
+                        keyboardType={'numeric'}
+                    />
+                </View>
+                <View style={styles.viewInput}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Email'
+                        underlineColorAndroid='transparent'
+                        value={this.state.email}
+                        onChangeText={text => this.setState({ email: text })}
+                    />
+                </View>
+                <View style={styles.viewInput}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Số CMND'
+                        underlineColorAndroid='transparent'
+                        value={this.state.identity}
+                        onChangeText={text => this.setState({ identity: text })}
+                        keyboardType={'numeric'}
+                    />
+                </View>
+
+                <View style={styles.rowOption}>
+                    <View
+                        style={styles.viewHalfInput}
+                    >
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Ngày cấp'
+                            underlineColorAndroid='transparent'
+                            value={this.state.day_identity}
+                            onChangeText={text => this.setState({ day_identity: text })}
+                            onFocus={() => {
+                                Keyboard.dismiss();
+                                this.showDatePicker();
+                            }}
+                        />
+                    </View>
+                    <View
+                        style={styles.viewHalfInput}
+                    >
+                        <Picker
+                            iosHeader="Nơi cấp"
+                            headerBackButtonText={<Icon name='ios-arrow-back' />}
+                            style={styles.picker}
+                            selectedValue={this.state.where_identity}
+                            onValueChange={(itemValue) =>
+                                this.onSelectCity(itemValue)
+                            }
+                        >
+                            <Picker.Item label="Nơi cấp" value="" />
+                            {Object.keys(cities).map(function (key) {
+                                return (<Picker.Item
+                                    key={key}
+                                    label={cities[key]}
+                                    value={key}
+                                />);
+                            })}
+                        </Picker>
+                    </View>
+                </View>
+            </View>
+        );
+        const searchJsx = (
+            <View
+                style={{
+                    height: 200
+                }}
+            >
+                <Animated.View
+                    // style={
+                    //     [styles.viewAutocomplete,
+                    //         { height: this.state.resultValue }]
+                    // }
+                    style={{
+                        position: 'relative',
+                        height: 40,
+                    }}
+                >
+                    <Autocomplete
+                        containerStyle={
+                            this.state.isHidden ?
+                                styles.autocompleteContainerFull :
+                                styles.autocompleteContainer
+                        }
+                        inputContainerStyle={{
+                            borderWidth: 0,
+                        }}
+                        listStyle={styles.autocompleteResult}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        defaultValue={searchName}
+                        hideResults
+                        onChangeText={text => this.setState({ searchName: text })}
+                        data={customers.length === 1 &&
+                        comp(searchName, customers[0].full_name) ? [] : customers
+                        }
+                        renderTextInput={() => (
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between'
+                                }}
+                            >
+                                <TextInput
+                                    style={{
+                                        height: 40,
+                                        width: '90%',
+                                        backgroundColor: 'white',
+                                        borderRadius: 20,
+                                        borderWidth: 0,
+                                        marginLeft: 15
+                                    }}
+                                    placeholder='Tìm kiếm'
+                                    underlineColorAndroid='transparent'
+                                    value={this.state.searchName}
+                                    onChangeText={text => {
+                                        this.setState({
+                                            searchName: text,
+                                            isHidden: false
+                                        }, () => {
+                                            let hide = false;
+                                            if (this.state.searchName === '') {
+                                                this.setState({ isHidden: true });
+                                                hide = true;
+                                            }
+                                            this.toggleQuickSearch(hide);
+                                        });
+                                    }}
+                                    onEndEditing={() => {
+                                        this.setState({ isHidden: true }, () => {
+                                            setTimeout(() => {
+                                                this.toggleQuickSearch(true);
+                                            }, 1000);
+                                        });
+                                    }}
+                                />
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        this.toggleQuickSearch(true);
+                                        this.setState({ isHidden: true });
+                                    }}
+                                >
+                                    <Icon
+                                        name='ios-search'
+                                        style={{
+                                            fontSize: 24,
+                                            color: 'orange',
+                                            marginTop: 10,
+                                            marginRight: 10
+                                        }}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                        // renderItem={item => (
+                        //     <TouchableOpacity
+                        //         onPress={() => {
+                        //             this.setState({
+                        //                 fullName: item.full_name,
+                        //                 searchCustomer: 1,
+                        //                 customerId: item.id,
+                        //                 address: item.address,
+                        //                 phone: item.phone,
+                        //                 email: item.email,
+                        //                 identity: item.identity
+                        //             }, () => {
+                        //                 this.toggleQuickSearch(true);
+                        //                 this.setState({ isHidden: true });
+                        //             });
+                        //         }}
+                        //         style={{
+                        //             flexDirection: 'column',
+                        //             height: 50,
+                        //             justifyContent: 'center',
+                        //             alignContent: 'center'
+                        //         }}
+                        //     >
+                        //         <Text>{item.full_name}</Text>
+                        //         <Text>{item.phone}</Text>
+                        //     </TouchableOpacity>
+                        // )}
+                    />
+                </Animated.View>
+                <View
+                    style={{
+                        backgroundColor: '#F5FCFF',
+                        marginTop: 8
+                    }}
+                >
+                    {customers.length > 0 ? (
+                        this.renderCustomer(customers[0])
+                    ) : (
+                        <Text
+                            style={{
+                                textAlign: 'center'
+                            }}
+                        >
+                            Tìm kiếm khách hàng
+                        </Text>
+                    )}
+                </View>
+            </View>
+        );
         return (
             <View style={styles.wrapper}>
                 <Header
@@ -239,206 +518,22 @@ export default class OrderSubmit extends React.Component {
                         </View>
                     </View>
                     <Text style={styles.txtHeader}>Thông tin khách hàng</Text>
-
-                    <Animated.View
-                        style={
-                            [styles.viewAutocomplete,
-                                { height: this.state.resultValue }]
-                        }
-                    >
-                        <Autocomplete
-                            containerStyle={
-                                this.state.isHidden ?
-                                    styles.autocompleteContainerFull :
-                                    styles.autocompleteContainer
-                            }
-                            inputContainerStyle={{
-                                borderWidth: 0,
-                            }}
-                            listStyle={styles.autocompleteResult}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            defaultValue={fullName}
-                            onChangeText={text => this.setState({ fullName: text })}
-                            data={customers.length === 1 &&
-                            comp(fullName, customers[0].full_name) ? [] : customers
-                            }
-                            renderTextInput={() => (
-                                <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between'
-                                    }}
-                                >
-                                    <TextInput
-                                        style={{
-                                            height: 40,
-                                            width: '90%',
-                                            backgroundColor: 'white',
-                                            borderRadius: 20,
-                                            borderWidth: 0,
-                                            marginLeft: 15
-                                        }}
-                                        placeholder='Họ tên'
-                                        underlineColorAndroid='transparent'
-                                        value={this.state.fullName}
-                                        onChangeText={text => {
-                                            this.setState({
-                                                fullName: text,
-                                                searchCustomer: 0,
-                                                customerId: '',
-                                                address: '',
-                                                phone: '',
-                                                email: '',
-                                                identity: '',
-                                                isHidden: false
-                                            }, () => {
-                                                let hide = false;
-                                                if (this.state.fullName === '') {
-                                                    this.setState({ isHidden: true });
-                                                    hide = true;
-                                                }
-                                                this.toggleQuickSearch(hide);
-                                            });
-                                        }}
-                                        onEndEditing={() => {
-                                            this.setState({ isHidden: true }, () => {
-                                                setTimeout(() => {
-                                                    this.toggleQuickSearch(true);
-                                                }, 1000);
-                                            });
-                                        }}
-                                    />
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            this.toggleQuickSearch(true);
-                                            this.setState({ isHidden: true });
-                                        }}
-                                    >
-                                        <Icon
-                                            name='ios-search'
-                                            style={{
-                                                fontSize: 24,
-                                                color: 'orange',
-                                                marginTop: 10,
-                                                marginRight: 10
-                                            }}
-                                        />
-                                    </TouchableOpacity>
-                                </View>
-                            )}
-                            renderItem={item => (
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        this.setState({
-                                            fullName: item.full_name,
-                                            searchCustomer: 1,
-                                            customerId: item.id,
-                                            address: item.address,
-                                            phone: item.phone,
-                                            email: item.email,
-                                            identity: item.identity
-                                        }, () => {
-                                            this.toggleQuickSearch(true);
-                                            this.setState({ isHidden: true });
-                                        });
-                                    }}
-                                    style={{
-                                        flexDirection: 'column',
-                                        height: 50,
-                                        justifyContent: 'center',
-                                        alignContent: 'center'
-                                    }}
-                                >
-                                    <Text>{item.full_name}</Text>
-                                    <Text>{item.phone}</Text>
-                                </TouchableOpacity>
-                            )}
-                        />
-                    </Animated.View>
-                    {/*<View style={styles.viewInput}>*/}
-                    {/*<TextInput*/}
-                    {/*style={styles.input}*/}
-                    {/*placeholder='Họ tên'*/}
-                    {/*underlineColorAndroid='transparent'*/}
-                    {/*value={this.state.fullName}*/}
-                    {/*onChangeText={text => this.setState({ fullName: text })}*/}
-                    {/*/>*/}
-                    {/*</View>*/}
-                    <View style={styles.viewInput}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Địa chỉ'
-                            underlineColorAndroid='transparent'
-                            value={this.state.address}
-                            onChangeText={text => this.setState({ address: text })}
+                    <View style={{ paddingVertical: 10 }}>
+                        <SwitchSelector
+                            initial={0}
+                            onPress={value => this.setState({ searchCustomer: value })}
+                            textColor='#21a1fc' //'#7a44cf'
+                            selectedColor='white'
+                            buttonColor='#F58319'
+                            borderColor='#cecece'
+                            hasPadding
+                            options={[
+                                { label: 'Tìm kiếm', value: 1 },
+                                { label: 'Thêm mới', value: 0 }
+                            ]}
                         />
                     </View>
-                    <View style={styles.viewInput}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Điện thoại'
-                            underlineColorAndroid='transparent'
-                            value={this.state.phone}
-                            onChangeText={text => this.setState({ phone: text })}
-                            keyboardType={'numeric'}
-                        />
-                    </View>
-                    <View style={styles.viewInput}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Email'
-                            underlineColorAndroid='transparent'
-                            value={this.state.email}
-                            onChangeText={text => this.setState({ email: text })}
-                        />
-                    </View>
-                    <View style={styles.viewInput}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Số CMND'
-                            underlineColorAndroid='transparent'
-                            value={this.state.identity}
-                            onChangeText={text => this.setState({ identity: text })}
-                            keyboardType={'numeric'}
-                        />
-                    </View>
-
-                    <View style={styles.rowOption}>
-                        <View
-                            style={styles.viewHalfInput}
-                        >
-                            <TextInput
-                                style={styles.input}
-                                placeholder='Ngày cấp'
-                                underlineColorAndroid='transparent'
-                                value={this.state.day_identity}
-                                onChangeText={text => this.setState({ day_identity: text })}
-                                onFocus={() => {
-                                    Keyboard.dismiss();
-                                    this.showDatePicker();
-                                }}
-                            />
-                        </View>
-                        <View
-                            style={styles.viewHalfInput}
-                        >
-                            <Picker
-                                iosHeader="Nơi cấp"
-                                headerBackButtonText={<Icon name='ios-arrow-back' />}
-                                style={styles.picker}
-                                selectedValue={this.state.where_identity}
-                                onValueChange={(itemValue) =>
-                                    this.onSelectCity(itemValue)
-                                }
-                            >
-                                <Picker.Item label="Nơi cấp" value="" />
-                                {Object.keys(cities).map(function (key) {
-                                    return <Picker.Item key={key} label={cities[key]} value={key} />
-                                })}
-                            </Picker>
-                        </View>
-                    </View>
+                    {this.state.searchCustomer === 1 ? searchJsx : newCustomerJSX}
                     <Text style={styles.txtHeader}>
                         Số tiền và phương thức thanh toán tiền cọc
                     </Text>

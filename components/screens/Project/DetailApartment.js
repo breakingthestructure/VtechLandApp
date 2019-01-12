@@ -91,12 +91,12 @@ export default class DetailApartment extends React.Component {
     }
 
     onOrderApartment() {
-        // this.setState({ loaded: false });
+        this._toggleModalOrder();
+        this.setState({ loaded: false });
         getToken()
             .then(token => {
                 createTokenTransaction(token, this.state.apartment.id)
                     .then(res => {
-                        this._toggleModalOrder();
                         if (res.status === 200) {
                             return this.props.navigation.navigate('OrderSubmitScreen', {
                                 apartment: this.state.apartment,

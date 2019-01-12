@@ -1,5 +1,13 @@
 import React from 'react';
-import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+    Dimensions,
+    FlatList,
+    Image,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import icCalendar from './../../../icons/calendar.png';
 import { loading } from '../../../Helpers';
 import getBuildings from '../../../api/getBuildings';
@@ -60,21 +68,27 @@ export default class ActionProject extends React.Component {
                             keyExtractor={this._keyExtractor}
                             horizontal={false}
                             numColumns={2}
-                            contentContainerStyle={{ justifyContent: 'center', width: '100%', alignItems: 'center' }}
+                            contentContainerStyle={{
+                                justifyContent: 'center',
+                                width: '100%',
+                                alignItems: 'center'
+                            }}
                             data={arrBuilding}
                             renderItem={({ item }) => (
                                 <TouchableOpacity
                                     key={item}
                                     style={styles.btnAction}
                                     onPress={() => navigation.navigate('TablePackageScreen', {
-                                        project: project,
+                                        project,
                                         buildingId: item.key,
                                         buildingName: item.value
                                     })}
                                 >
                                     <View style={{ paddingVertical: 5 }}>
-                                        <Image source={icCalendar} style={{ width: 30, height: 30 }} />
-
+                                        <Image
+                                            source={icCalendar}
+                                            style={{ width: 30, height: 30 }}
+                                        />
                                     </View>
                                     <View style={{ justifyContent: 'center' }}>
                                         <Text style={styles.btnTextAction}>{item.value}</Text>

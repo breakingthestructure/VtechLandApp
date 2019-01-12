@@ -10,8 +10,7 @@ import {
     View,
 } from 'react-native';
 import MapView, {
-    Callout,
-    Marker
+    Marker,
 } from 'react-native-maps';
 import {
     Icon,
@@ -29,8 +28,7 @@ import icInvest from './../../../icons/invest.png';
 import { loading } from '../../../Helpers';
 import KindProject from '../../Modal/KindProject';
 import saveProject from '../../../api/saveProject';
-import imgDuan from './../../../images/duan.jpg';
-import getLocalProjects from "../../../api/getLocalProjects";
+import icPin from './../../../icons/pin-building.png';
 
 const { width, height } = Dimensions.get('window');
 let isHidden = true;
@@ -87,7 +85,7 @@ export default class MapProject extends React.Component {
                 longitudeDelta: 0.0421,
             },
             text: '',
-            listProject: null,
+            listProject: [],
             modalKind: false,
             modalPreview: false,
             modalAdvanceSearch: false,
@@ -97,7 +95,8 @@ export default class MapProject extends React.Component {
             popupValue: new Animated.Value(heightPopup),
             resultValue: new Animated.Value(heightResult),
             kindValue: new Animated.Value(heightResult),
-            dataSearch: []
+            dataSearch: [],
+            region: null
         };
         this.arrayProject = [];
         this.test = [];
@@ -118,37 +117,47 @@ export default class MapProject extends React.Component {
         //     })
         //     .catch(err => console.log(err));
         // if (!this.state.loaded) {
+
+        // }
+        // this.fetchProject(this.state.currentLocation);
+        setTimeout(() => {
+            this.setState({ loaded: true });
+        }, 1000);
+    }
+
+    fetchProject(center) {
         const northeast = {
-            latitude: this.state.currentLocation.latitude + this.state.currentLocation.latitudeDelta / 2,
-            longitude: this.state.currentLocation.longitude + this.state.currentLocation.longitudeDelta / 2,
+            latitude: center.latitude + center.latitudeDelta / 2,
+            longitude: center.longitude + center.longitudeDelta / 2,
         };
         const southwest = {
-            latitude: this.state.currentLocation.latitude - this.state.currentLocation.latitudeDelta / 2,
-            longitude: this.state.currentLocation.longitude - this.state.currentLocation.longitudeDelta / 2,
+            latitude: center.latitude - center.latitudeDelta / 2,
+            longitude: center.longitude - center.longitudeDelta / 2,
         };
-
-        console.log(northeast, southwest);
-        getProject()
+        let query = '';
+        query += `&north_east_lat=${northeast.latitude}`;
+        query += `&north_east_lng=${northeast.longitude}`;
+        query += `&south_west_lat=${southwest.latitude}`;
+        query += `&south_west_lng=${southwest.longitude}`;
+        getProject(query)
             .then(resJson => {
                 if (resJson.data.length > 0) {
                     this.arrayProject = resJson.data;
                     this.setState({
-                        listProject: this.arrayProject,
-                        loaded: true
+                        listProject: this.arrayProject
                     });
                     return saveProject(resJson.data)
                         .then()
                         .catch(err => console.log(err));
                 }
                 return Toast.show({
-                    text: 'Kết nối tới máy chủ bị lỗi!',
+                    text: 'Không có dữ liệu!',
                     type: 'danger',
                     buttonText: 'Okay',
                     duration: 10000
                 });
             })
             .catch(err => console.log(err));
-        // }
     }
 
     toggleAdvanceSearch(val, wantHide, dataSearch) {
@@ -168,7 +177,7 @@ export default class MapProject extends React.Component {
         if (!wantHide) {
             value = this.state.bounceValue;
         }
-        Animated.timing(
+        Animated.spring(
             value,
             {
                 toValue,
@@ -250,7 +259,7 @@ export default class MapProject extends React.Component {
     }
 
     render() {
-        if (!this.state.loaded || !this.state.currentLocation) {
+        if (!this.state.loaded) {
             return loading();
         }
         return (
@@ -293,23 +302,14 @@ export default class MapProject extends React.Component {
                         //     this.mapView = ref;
                         // }}
                         onMapReady={() => {
-                            this.setState({ loaded: true });
+                            // this.setState({ loaded: true });
                         }}
                         onRegionChangeComplete={(center) => {
-                            const northeast = {
-                                latitude: center.latitude + center.latitudeDelta / 2,
-                                longitude: center.longitude + center.longitudeDelta / 2,
-                            };
-                            const southwest = {
-                                latitude: center.latitude - center.latitudeDelta / 2,
-                                longitude: center.longitude - center.longitudeDelta / 2,
-                            };
-
-                            console.log(center, northeast, southwest);
+                            this.fetchProject(center);
                         }}
                     >
                         {this.state.listProject.map(project => (
-                            <Marker
+                            <Marker.Animated
                                 key={project.id}
                                 identifier={project.id.toString()}
                                 coordinate={{
@@ -318,7 +318,7 @@ export default class MapProject extends React.Component {
                                 }}
                                 title={project.name}
                                 description={project.address}
-                                image={require('./../../../icons/pin-building.png')}
+                                image={icPin}
                                 onPress={() => {
                                     this.togglePopup(false, project.id);
                                 }}
@@ -430,9 +430,8 @@ export default class MapProject extends React.Component {
                         navigation={this.props.navigation}
                         toggleAdvanceSearch={this.toggleAdvanceSearch}
                         bounceValue={this.state.bounceValue}
-                        state={this.state}
+                        // state={this.state}
                         toggleResult={this.toggleResult}
-                        // setDataResult={this.setDataResult}
                     />}
                 </Animated.View>
                 <Animated.View

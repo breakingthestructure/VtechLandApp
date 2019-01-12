@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     Animated,
     FlatList,
-    Platform,
     ScrollView,
     Switch,
     Text,
@@ -57,10 +56,20 @@ export default class AdvanceSearch extends Component {
             maxPrice: '',
             resultValue: new Animated.Value(40),
             isHidden: true,
+            listProject: []
         };
     }
 
     componentDidMount() {
+        getProject()
+            .then(resJson => {
+                if (resJson.data) {
+                    this.setState({
+                        listProject: resJson.data
+                    });
+                }
+            })
+            .catch(err => console.log(err));
         getLocalOption()
             .then(res => {
                 if (res) {
@@ -77,11 +86,16 @@ export default class AdvanceSearch extends Component {
                     getOptionProjects()
                         .then(resJson => {
                             if (resJson) {
-                                const arrFeature = Object.keys(resJson.data.project_features).map((item) => {
-                                    return { key: item, value: resJson.data.project_features[item] };
-                                });
+                                const arrFeature = Object.keys(
+                                    resJson.data.project_features).map((item) => {
+                                        return {
+                                            key: item,
+                                            value: resJson.data.project_features[item]
+                                        };
+                                    }
+                                );
                                 saveOptionProject(resJson.data)
-                                    .then(res => console.log(res))
+                                    .then(resSave => console.log(resSave))
                                     .catch(err => console.log(err));
                                 this.setState({
                                     options: resJson.data,
@@ -227,7 +241,14 @@ export default class AdvanceSearch extends Component {
         if (name === '') {
             return [];
         }
-        const { listProject } = this.props.state;
+        // getProject(`&keyword=${name}`)
+        //     .then(resJson => {
+        //         this.setState({
+        //             listProject: resJson.data
+        //         });
+        //     })
+        //     .catch(err => console.log(err));
+        const { listProject } = this.state;
         const regex = new RegExp(`${name.trim()}`, 'i');
         // const regex = new RegExp(`${query.trim().replace(/[-[]/{}()*+?.\^$|]/g, "\$&")}}`, 'i');
         return listProject.filter(project => project.name.search(regex) >= 0);
@@ -252,6 +273,7 @@ export default class AdvanceSearch extends Component {
     render() {
         const { name } = this.state;
         const listProject = this.findProject(name);
+        console.log(listProject);
         const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
 
         const { cities, districts, wards, streets, options } = this.state;
@@ -269,110 +291,151 @@ export default class AdvanceSearch extends Component {
                 />
 
                 <ScrollView style={styles.content}>
-                    <Animated.View
-                        style={
-                            [styles.viewAutocomplete,
-                                { height: this.state.resultValue }]
-                        }
-                        // style={{
-                        //     position: 'relative',
-                        //     height: 40,
-                        // }}
+                    {/*<Animated.View*/}
+                        {/*style={*/}
+                            {/*[styles.viewAutocomplete,*/}
+                                {/*{ height: this.state.resultValue }]*/}
+                        {/*}*/}
+                        {/*// style={{*/}
+                        {/*//     position: 'relative',*/}
+                        {/*//     height: 40,*/}
+                        {/*// }}*/}
+                    {/*>*/}
+                        {/*<Autocomplete*/}
+                            {/*containerStyle={*/}
+                                {/*this.state.isHidden ?*/}
+                                    {/*styles.autocompleteContainerFull :*/}
+                                    {/*styles.autocompleteContainer*/}
+                            {/*}*/}
+                            {/*inputContainerStyle={{*/}
+                                {/*borderWidth: 0,*/}
+                            {/*}}*/}
+                            {/*listStyle={styles.autocompleteResult}*/}
+                            {/*// autoCapitalize="none"*/}
+                            {/*// autoCorrect*/}
+                            {/*defaultValue={name}*/}
+                            {/*onChangeText={text => this.setState({ name: text })}*/}
+                            {/*data={*/}
+                                {/*listProject.length === 1 && comp(name, listProject[0].name)*/}
+                                    {/*? [] : listProject*/}
+                            {/*}*/}
+                            {/*renderTextInput={() => (*/}
+                                {/*<View*/}
+                                    {/*style={{*/}
+                                        {/*flexDirection: 'row',*/}
+                                        {/*justifyContent: 'space-between'*/}
+                                    {/*}}*/}
+                                {/*>*/}
+                                    {/*<TextInput*/}
+                                        {/*style={{*/}
+                                            {/*height: 40,*/}
+                                            {/*width: '90%',*/}
+                                            {/*marginLeft: 15,*/}
+                                        {/*}}*/}
+                                        {/*placeholder='Nhập tên dự án...'*/}
+                                        {/*underlineColorAndroid='transparent'*/}
+                                        {/*value={this.state.name}*/}
+                                        {/*onChangeText={text => {*/}
+                                            {/*this.setState({*/}
+                                                {/*name: text,*/}
+                                                {/*isHidden: false*/}
+                                            {/*}, () => {*/}
+                                                {/*let hide = false;*/}
+                                                {/*// if (this.state.name === '') {*/}
+                                                {/*//     this.setState({ isHidden: true }, () => {*/}
+                                                {/*//     });*/}
+                                                {/*//     hide = true;*/}
+                                                {/*// }*/}
+                                                {/*// if (listProject.length === 0) {*/}
+                                                {/*//     hide = true;*/}
+                                                {/*// }*/}
+                                                {/*this.toggleQuickSearch(hide);*/}
+                                            {/*});*/}
+
+                                        {/*}}*/}
+                                        {/*onEndEditing={() => {*/}
+                                            {/*// this.setState({ isHidden: true }, () => {*/}
+                                            {/*//     setTimeout(() => {*/}
+                                            {/*//         this.toggleQuickSearch(true);*/}
+                                            {/*//     }, 1000);*/}
+                                            {/*// });*/}
+                                        {/*}}*/}
+                                    {/*/>*/}
+                                    {/*<TouchableOpacity*/}
+                                        {/*onPress={this.onSearch.bind(this)}*/}
+                                    {/*>*/}
+                                        {/*<Icon*/}
+                                            {/*name='ios-search'*/}
+                                            {/*style={{*/}
+                                                {/*fontSize: 24,*/}
+                                                {/*color: 'orange',*/}
+                                                {/*marginTop: 10,*/}
+                                                {/*marginRight: 10*/}
+                                            {/*}}*/}
+                                        {/*/>*/}
+                                    {/*</TouchableOpacity>*/}
+                                {/*</View>*/}
+                            {/*)}*/}
+                            {/*renderItem={item => (*/}
+                                {/*<TouchableOpacity*/}
+                                    {/*onPress={() => {*/}
+                                        {/*this.setState({*/}
+                                            {/*name: item.name,*/}
+                                        {/*}, () => {*/}
+                                            {/*this.toggleQuickSearch(true);*/}
+                                            {/*this.setState({ isHidden: true });*/}
+                                        {/*});*/}
+                                    {/*}}*/}
+                                    {/*style={{*/}
+                                        {/*flexDirection: 'column',*/}
+                                        {/*height: 50,*/}
+                                        {/*justifyContent: 'center',*/}
+                                        {/*alignContent: 'center'*/}
+                                    {/*}}*/}
+                                {/*>*/}
+                                    {/*<Text>{item.name}</Text>*/}
+                                    {/*<Text>{item.address}</Text>*/}
+                                {/*</TouchableOpacity>*/}
+                            {/*)}*/}
+                        {/*/>*/}
+                    {/*</Animated.View>*/}
+                    <View
+                        style={{
+                            width: '100%',
+                            paddingTop: 10
+                        }}
                     >
-                        <Autocomplete
-                            containerStyle={
-                                this.state.isHidden ?
-                                    styles.autocompleteContainerFull :
-                                    styles.autocompleteContainer
-                            }
-                            inputContainerStyle={{
-                                borderWidth: 0,
+                        <View
+                            style={{
+                                height: 40,
+                                width: '100%',
+                                borderRadius: 20,
+                                marginTop: 5,
+                                borderColor: '#33563743',
+                                borderWidth: 1,
+                                flexDirection: 'row',
+                                justifyContent: 'flex-end',
                             }}
-                            listStyle={styles.autocompleteResult}
-                            autoCapitalize="none"
-                            autoCorrect
-                            defaultValue={name}
-                            onChangeText={text => this.setState({ name: text })}
-                            data={
-                                listProject.length === 1 && comp(name, listProject[0].name)
-                                    ? [] : listProject
-                            }
-                            renderTextInput={() => (
-                                <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between'
-                                    }}
-                                >
-                                    <TextInput
-                                        style={{
-                                            height: 40,
-                                            width: '90%',
-                                            marginLeft: 15,
-                                        }}
-                                        placeholder='Nhập tên dự án...'
-                                        underlineColorAndroid='transparent'
-                                        value={this.state.name}
-                                        onChangeText={text => {
-                                            this.setState({
-                                                name: text,
-                                                isHidden: false
-                                            }, () => {
-                                                let hide = false;
-                                                // if (this.state.name === '') {
-                                                //     this.setState({ isHidden: true }, () => {
-                                                //     });
-                                                //     hide = true;
-                                                // }
-                                                this.toggleQuickSearch(hide);
-                                            });
-                                        }}
-                                        onEndEditing={() => {
-                                            // this.setState({ isHidden: true }, () => {
-                                            //     setTimeout(() => {
-                                            //         this.toggleQuickSearch(true);
-                                            //     }, 1000);
-                                            // });
-                                        }}
-                                    />
-                                    <TouchableOpacity
-                                        onPress={this.onSearch.bind(this)}
-                                    >
-                                        <Icon
-                                            name='ios-search'
-                                            style={{
-                                                fontSize: 24,
-                                                color: 'orange',
-                                                marginTop: 10,
-                                                marginRight: 10
-                                            }}
-                                        />
-                                    </TouchableOpacity>
-                                </View>
-                            )}
-                            renderItem={item => (
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        this.setState({
-                                            name: item.name,
-                                        }, () => {
-                                            this.toggleQuickSearch(true);
-                                            this.setState({ isHidden: true });
-                                        });
-                                    }}
-                                    style={{
-                                        flexDirection: 'column',
-                                        height: 50,
-                                        justifyContent: 'center',
-                                        alignContent: 'center'
-                                    }}
-                                >
-                                    <Text>{item.name}</Text>
-                                    <Text>{item.address}</Text>
-                                </TouchableOpacity>
-                            )}
-                        />
-                    </Animated.View>
+                        >
+                            <TextInput
+                                style={{ height: 40, width: '95%', paddingLeft: 30 }}
+                                placeholder='Nhập tên dự án...'
+                                underlineColorAndroid='transparent'
+                                value={this.state.name}
+                                onChangeText={text => this.setState({ name: text })}
+                            />
+                            <Icon
+                                active
+                                name='ios-search'
+                                style={{
+                                    color: 'orange',
+                                    paddingRight: 20,
+                                    fontSize: 22,
+                                    marginTop: 5
+                                }}
+                            />
+                        </View>
+                    </View>
                     <Text style={styles.titleScreen}>Tìm kiếm nâng cao</Text>
                     <View style={{ paddingTop: 10 }}>
                         <SwitchSelector

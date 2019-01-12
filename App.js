@@ -57,6 +57,7 @@ import AllBuilding from './components/screens/Project/AllBuilding';
 import ListPartner from './components/screens/Option/ListPartner';
 import DetailPartner from './components/screens/Option/DetailPartner';
 import CategoryPartner from './components/screens/Option/CategoryPartner';
+import Test from "./Test";
 
 console.disableYellowBox = true;
 
@@ -219,7 +220,10 @@ const LeftDrawer = createDrawerNavigator(
         },
         PartnerScreen: {
             screen: PartnerStack
-        }
+        },
+        TestScreen: {
+            screen: Test
+        },
     },
     {
         initialRouteName: 'MapScreen',

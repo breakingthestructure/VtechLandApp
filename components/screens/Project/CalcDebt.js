@@ -157,9 +157,9 @@ export default class CalcDebt extends React.Component {
         const moneyDebt = txtMoney.split('.').join('');
         let interestRateMonthly = 0;
         let totalMonthly = 0;
-        if (graceDebt) {
-            interestRate = 0;
-        }
+        // if (graceDebt) {
+        //     interestRate = 0;
+        // }
         let rootHavePay = moneyDebt;
         const result = [];
         if (!date) {
@@ -245,7 +245,7 @@ export default class CalcDebt extends React.Component {
             }
             totalMonthly = interestRateMonthly + payRootMonthly;
             rootHavePay = rootHavePay - payRootMonthly;
-            var payDay = getDayNextMonth(date, i);
+            let payDay = getDayNextMonth(date, i);
             result.push(
                 { key: payDay },
                 { key: formatMoney(payRootMonthly, 0) },

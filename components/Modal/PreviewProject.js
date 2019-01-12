@@ -25,18 +25,18 @@ export default class PreviewProject extends Component {
         this.state = {
             listImage: null,
             index: 0,
-            loaded: true,
+            loaded: false,
             imagePreview: false
         };
     }
 
     componentDidMount() {
-        this.setState({
-            loaded: true
-        });
+        setTimeout(() => {
+            this.setState({ loaded: true });
+        }, 200);
         if (this.props.project.data.images.feature) {
             this.setState({
-                listImage: this.props.project.data.images.feature.map((item, index) => {
+                listImage: this.props.project.data.images.feature.map((item) => {
                     return { url: `${BASE_URL}${item}` };
                 }),
             });
@@ -46,7 +46,7 @@ export default class PreviewProject extends Component {
     componentWillReceiveProps(props) {
         if (props.project.data.images.feature) {
             this.setState({
-                listImage: props.project.data.images.feature.map((item, index) => {
+                listImage: props.project.data.images.feature.map((item) => {
                     return { url: `${BASE_URL}${item}` };
                 })
             });

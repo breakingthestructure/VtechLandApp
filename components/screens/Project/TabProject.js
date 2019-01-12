@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     BackHandler,
+    Dimensions,
     Image,
     ScrollView,
     View
@@ -13,6 +14,11 @@ import {
     Tabs,
 } from 'native-base';
 import Swiper from 'react-native-swiper';
+import {
+    TabView,
+    TabBar,
+    SceneMap
+} from 'react-native-tab-view';
 import ActionProject from './ActionProject';
 import SetCalendar from './SetCalendar';
 import Header from '../Home/Header';
@@ -26,6 +32,7 @@ import {
     NO_IMAGE
 } from './../../../Globals';
 import { loading } from '../../../Helpers';
+import Home from "../Home/Home";
 
 export default class TabProject extends Component {
     handleBackPress = () => { //eslint-disable-line
@@ -59,6 +66,14 @@ export default class TabProject extends Component {
         }
     }
 
+    state = {
+        index: 0,
+        routes: [
+            { key: 'first', title: 'First' },
+            { key: 'second', title: 'Second' },
+        ],
+    };
+
     onChangeTab(page) {
         this.refs._scrollView.scrollTo({ x: 0, y: 0, animated: true });
         this.setState({ activeTab: page });
@@ -69,7 +84,6 @@ export default class TabProject extends Component {
         if (!this.state.loaded) {
             return loading();
         }
-        console.log(project.data.images.feature);
         return (
             <Container>
                 <Header
@@ -77,6 +91,39 @@ export default class TabProject extends Component {
                     title={project.name}
                     back={'popToTop'}
                 />
+                {/*<ScrollView>*/}
+                    {/*<View style={styles.slideProject}>*/}
+                        {/*<Swiper showsButtons removeClippedSubviews={false}>*/}
+                            {/*{project.data.images.feature &&*/}
+                            {/*project.data.images.feature.map((value, key) => (*/}
+                                {/*<Image*/}
+                                    {/*key={key}*/}
+                                    {/*source={{ uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE }}*/}
+                                    {/*style={styles.imageSlide}*/}
+                                {/*/>*/}
+                            {/*))}*/}
+                        {/*</Swiper>*/}
+                    {/*</View>*/}
+                    {/*<TabView*/}
+                        {/*navigationState={{*/}
+                            {/*index: 0,*/}
+                            {/*routes: [*/}
+                                {/*{ key: 'first', title: 'First' },*/}
+                                {/*{ key: 'second', title: 'Second' },*/}
+                            {/*],*/}
+                        {/*}}*/}
+                        {/*renderScene={SceneMap({*/}
+                            {/*first: () => <DetailProject*/}
+                                {/*onChangeTab={this.onChangeTab}*/}
+                                {/*state={this.state}*/}
+                                {/*project={project}*/}
+                            {/*/>,*/}
+                            {/*second: SetCalendar,*/}
+                        {/*})}*/}
+                        {/*onIndexChange={index => this.setState({ index })}*/}
+                        {/*initialLayout={{ width: Dimensions.get('window').width }}*/}
+                    {/*/>*/}
+                {/*</ScrollView>*/}
                 <ScrollView ref='_scrollView'>
                     <View style={styles.slideProject}>
                         <Swiper showsButtons removeClippedSubviews={false}>
