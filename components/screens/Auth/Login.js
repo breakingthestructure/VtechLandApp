@@ -56,7 +56,7 @@ export default class Login extends React.Component {
                     Toast.show({
                         text: 'Đăng nhập thành công',
                         type: 'success',
-                        buttonText: 'Okay'
+                        buttonText: 'Xác nhận'
                     });
                     return getProfile(resJson.access_token)
                         .then(response => {
@@ -76,7 +76,7 @@ export default class Login extends React.Component {
                 return Toast.show({
                     text: 'Đăng nhập thất bại',
                     type: 'danger',
-                    buttonText: 'Okay'
+                    buttonText: 'Xác nhận'
                 });
             })
             .catch(err => console.log(err));

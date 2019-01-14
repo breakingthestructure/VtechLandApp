@@ -248,7 +248,7 @@ export default class OrderSubmit extends React.Component {
                             return Toast.show({
                                 text: res.message,
                                 type: 'success',
-                                buttonText: 'Okay'
+                                buttonText: 'Xác nhận'
                             });
                         }
                         let message = '';
@@ -258,7 +258,7 @@ export default class OrderSubmit extends React.Component {
                         return Toast.show({
                             text: message,
                             type: 'danger',
-                            buttonText: 'Okay'
+                            buttonText: 'Xác nhận'
                         });
                     });
             });

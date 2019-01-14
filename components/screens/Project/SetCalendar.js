@@ -69,7 +69,7 @@ export default class SetCalendar extends React.Component {
                     return Toast.show({
                         text: resJson.message,
                         type: 'success',
-                        buttonText: 'Okay'
+                        buttonText: 'Xác nhận'
                     });
                 }
                 let message = '';
@@ -79,7 +79,7 @@ export default class SetCalendar extends React.Component {
                 return Toast.show({
                     text: message,
                     type: 'danger',
-                    buttonText: 'Okay'
+                    buttonText: 'Xác nhận'
                 });
             })
             .catch(err => console.log(err));

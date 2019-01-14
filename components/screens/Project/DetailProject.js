@@ -17,6 +17,7 @@ import {
     Icon,
 } from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import FastImage from 'react-native-fast-image';
 import YouTube, {
     YouTubeStandaloneAndroid,
     YouTubeStandaloneIOS
@@ -191,9 +192,19 @@ export default class DetailProject extends React.Component {
                             key={key}
                             onPress={this.onDisplayImage.bind(this, key)}
                         >
-                            <Image
-                                source={{ uri: (value) ? value : NO_IMAGE }}
+                            <FastImage
+                                key={key}
                                 style={styles.imgThumbProject}
+                                source={{
+                                    uri: (value) ? value : NO_IMAGE,
+                                    priority: FastImage.priority.normal,
+                                }}
+                                // resizeMode={FastImage.resizeMode.contain}
+                                onProgress={e => {
+                                    console.log(e.nativeEvent.loaded / e.nativeEvent.total);
+                                    if (e.nativeEvent.loaded / e.nativeEvent.total < 1) {
+                                    }
+                                }}
                             />
                         </TouchableOpacity>
                     ))}

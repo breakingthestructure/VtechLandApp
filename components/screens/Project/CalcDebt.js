@@ -122,7 +122,7 @@ export default class CalcDebt extends React.Component {
             return Toast.show({
                 text: 'Bạn chưa nhập tháng của điều kiện trước!',
                 type: 'warning',
-                buttonText: 'Okay'
+                buttonText: 'Xác nhận'
             });
         }
         this.state.arrayCondition.push({
@@ -147,7 +147,7 @@ export default class CalcDebt extends React.Component {
             return Toast.show({
                 text: 'Phải có ít nhất 1 điều kiện!',
                 type: 'warning',
-                buttonText: 'Okay'
+                buttonText: 'Xác nhận'
             });
         }
     }
@@ -166,28 +166,28 @@ export default class CalcDebt extends React.Component {
             return Toast.show({
                 text: 'Bạn chưa chọn ngày!',
                 type: 'warning',
-                buttonText: 'Okay'
+                buttonText: 'Xác nhận'
             });
         }
         if (parseInt(moneyDebt) === 0) {
             return Toast.show({
                 text: 'Bạn chưa nhập số tiền vay!',
                 type: 'warning',
-                buttonText: 'Okay'
+                buttonText: 'Xác nhận'
             });
         }
         if (modeDebt === '' || parseInt(modeDebt) === 0) {
             return Toast.show({
                 text: 'Bạn chưa chọn hình thức vay!',
                 type: 'warning',
-                buttonText: 'Okay'
+                buttonText: 'Xác nhận'
             });
         }
         if (parseInt(txtTimeGrace) > parseInt(txtMonth)) {
             return Toast.show({
                 text: 'Thời gian ân hạn không được lớn hơn số tháng vay!',
                 type: 'warning',
-                buttonText: 'Okay'
+                buttonText: 'Xác nhận'
             });
         }
         let totalMonthCondition = 0;
@@ -198,7 +198,7 @@ export default class CalcDebt extends React.Component {
                 Toast.show({
                     text: 'Điều kiện: Tháng bắt đầu phải là 1',
                     type: 'warning',
-                    buttonText: 'Okay'
+                    buttonText: 'Xác nhận'
                 });
                 return false;
             }
@@ -207,7 +207,7 @@ export default class CalcDebt extends React.Component {
                 Toast.show({
                     text: 'Điều kiện: Tháng kết thúc phải là tổng số tháng',
                     type: 'warning',
-                    buttonText: 'Okay'
+                    buttonText: 'Xác nhận'
                 });
                 return false;
             }
@@ -221,7 +221,7 @@ export default class CalcDebt extends React.Component {
                 Toast.show({
                     text: 'Điều kiện: Tổng số tháng không khớp với điều kiện',
                     type: 'warning',
-                    buttonText: 'Okay'
+                    buttonText: 'Xác nhận'
                 });
                 return false;
             }

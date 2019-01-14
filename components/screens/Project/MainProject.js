@@ -7,9 +7,9 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
+import FastImage from 'react-native-fast-image';
 import styles from './../../../styles';
 import {
-    BASE_URL,
     NO_IMAGE,
 } from './../../../Globals';
 import SetCalendar from './SetCalendar';
@@ -99,10 +99,19 @@ export default class MainProject extends Component {
                         <Swiper showsButtons removeClippedSubviews={false}>
                             {project.images && project.images.project_feature &&
                             project.images.project_feature.map((value, key) => (
-                                <Image
+                                <FastImage
                                     key={key}
-                                    source={{ uri: (value) ? value : NO_IMAGE }}
                                     style={styles.imageSlide}
+                                    source={{
+                                        uri: (value) ? value : NO_IMAGE,
+                                        priority: FastImage.priority.normal,
+                                    }}
+                                    // resizeMode={FastImage.resizeMode.contain}
+                                    onProgress={e => {
+                                        console.log(e.nativeEvent.loaded / e.nativeEvent.total);
+                                        if (e.nativeEvent.loaded / e.nativeEvent.total < 1) {
+                                        }
+                                    }}
                                 />
                             ))}
                         </Swiper>}

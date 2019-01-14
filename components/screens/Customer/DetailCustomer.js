@@ -76,7 +76,7 @@ export default class DetailCustomer extends React.Component {
                             return Toast.show({
                                 text: res.message,
                                 type: 'success',
-                                buttonText: 'Okay'
+                                buttonText: 'Xác nhận'
                             });
                         });
                 } else {
@@ -85,7 +85,7 @@ export default class DetailCustomer extends React.Component {
                             return Toast.show({
                                 text: res.message,
                                 type: 'success',
-                                buttonText: 'Okay'
+                                buttonText: 'Xác nhận'
                             });
                         });
                 }
@@ -109,7 +109,7 @@ export default class DetailCustomer extends React.Component {
                                             return Toast.show({
                                                 text: res.message,
                                                 type: 'success',
-                                                buttonText: 'Okay'
+                                                buttonText: 'Xác nhận'
                                             });
                                         });
                                 }

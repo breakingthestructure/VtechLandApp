@@ -16,7 +16,6 @@ import {
     Icon,
     Toast
 } from 'native-base';
-import * as Progress from 'react-native-progress';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import AdvanceSearch from './AdvanceSearch';
@@ -116,7 +115,7 @@ export default class MapProject extends React.Component {
                 return Toast.show({
                     text: 'Không có dữ liệu!',
                     type: 'danger',
-                    buttonText: 'Okay',
+                    buttonText: 'Xác nhận',
                     duration: 10000
                 });
             })

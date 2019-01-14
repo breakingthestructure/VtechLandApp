@@ -43,7 +43,7 @@ export default class ChangePassword extends React.Component {
                                     return Toast.show({
                                         text: resJson.message,
                                         type: 'success',
-                                        buttonText: 'Okay'
+                                        buttonText: 'Xác nhận'
                                     });
                                 }
                                 // let message = resJson.data.errors.map((val, key)=> {
@@ -52,7 +52,7 @@ export default class ChangePassword extends React.Component {
                                 return Toast.show({
                                     text: resJson.message,
                                     type: 'danger',
-                                    buttonText: 'Okay'
+                                    buttonText: 'Xác nhận'
                                 });
                             })
                             .catch(err => console.error(err));

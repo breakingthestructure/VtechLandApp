@@ -3,9 +3,13 @@ import { BackHandler, Image, Modal, ScrollView, Text, TouchableOpacity, View } f
 import { Icon, Toast } from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import ModalRN from 'react-native-modal';
+import FastImage from 'react-native-fast-image';
 import Header from '../Home/Header';
 import getDetailApartment from './../../../api/getDetailApartment';
-import { BASE_URL, TYPE_ROOM } from './../../../Globals';
+import {
+    BASE_URL,
+    TYPE_ROOM
+} from './../../../Globals';
 import styles from './../../../styles';
 import { loading } from '../../../Helpers';
 import createTokenTransaction from './../../../api/createTokenTransaction';
@@ -83,7 +87,7 @@ export default class DetailApartment extends React.Component {
                         Toast.show({
                             text: res.message,
                             type: 'success',
-                            buttonText: 'Okay'
+                            buttonText: 'Xác nhận'
                         });
                         this.setState({ loaded: true, txtSubmit: 'XÁC NHẬN' });
                         this._toggleModal();
@@ -113,7 +117,7 @@ export default class DetailApartment extends React.Component {
                         return Toast.show({
                             text: message,
                             type: 'danger',
-                            buttonText: 'Okay'
+                            buttonText: 'Xác nhận'
                         });
                     });
             });
@@ -201,9 +205,19 @@ export default class DetailApartment extends React.Component {
                                     key={index}
                                     onPress={this.onDisplayImage.bind(this, '3d')}
                                 >
-                                    <Image
-                                        source={{ uri: `${BASE_URL}${image}` }}
+                                    <FastImage
+                                        key={index}
                                         style={styles.imageApartment}
+                                        source={{
+                                            uri: `${BASE_URL}${image}`,
+                                            priority: FastImage.priority.normal,
+                                        }}
+                                        // resizeMode={FastImage.resizeMode.contain}
+                                        onProgress={e => {
+                                            console.log(e.nativeEvent.loaded / e.nativeEvent.total);
+                                            if (e.nativeEvent.loaded / e.nativeEvent.total < 1) {
+                                            }
+                                        }}
                                     />
                                 </TouchableOpacity>
                             ))}
@@ -214,9 +228,18 @@ export default class DetailApartment extends React.Component {
                             onPress={this.onDisplayImage.bind(this, 'position')}
                             style={{ justifyContent: 'center' }}
                         >
-                            <Image
-                                source={{ uri: `${BASE_URL}${apartment.position_apartment}` }}
+                            <FastImage
                                 style={styles.imageApartment}
+                                source={{
+                                    uri: `${BASE_URL}${apartment.position_apartment}`,
+                                    priority: FastImage.priority.normal,
+                                }}
+                                // resizeMode={FastImage.resizeMode.contain}
+                                onProgress={e => {
+                                    console.log(e.nativeEvent.loaded / e.nativeEvent.total);
+                                    if (e.nativeEvent.loaded / e.nativeEvent.total < 1) {
+                                    }
+                                }}
                             />
                         </TouchableOpacity>
                         <Modal

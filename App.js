@@ -413,7 +413,7 @@ export default class App extends React.Component {
             if (connectionInfo.type === 'none') {
                 return Toast.show({
                     text: 'Thiết bị của bạn không có kết nối internet. Vui lòng mở kết nối trước khi sử dụng!',
-                    buttonText: 'Okay',
+                    buttonText: 'Xác nhận',
                     type: 'warning',
                 });
                 // Alert.alert(

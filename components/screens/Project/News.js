@@ -52,7 +52,7 @@ export default class News extends React.Component {
                             return Toast.show({
                                 text: 'Không có dữ liệu',
                                 type: 'danger',
-                                buttonText: 'Okay'
+                                buttonText: 'Xác nhận'
                             });
                         }
                         this.setState({
@@ -66,7 +66,7 @@ export default class News extends React.Component {
             return Toast.show({
                 text: 'Không tồn tại dự án',
                 type: 'danger',
-                buttonText: 'Okay'
+                buttonText: 'Xác nhận'
             });
         }
     }

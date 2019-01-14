@@ -58,7 +58,7 @@ export default class ListPartner extends Component {
             return Toast.show({
                 text: 'Dữ liệu trống!',
                 type: 'danger',
-                buttonText: 'Okay'
+                buttonText: 'Xác nhận'
             });
         }
         return (

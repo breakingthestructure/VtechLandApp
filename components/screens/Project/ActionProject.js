@@ -49,7 +49,7 @@ export default class ActionProject extends React.Component {
             return Toast.show({
                 text: 'Không có dữ liệu',
                 type: 'danger',
-                buttonText: 'Okay'
+                buttonText: 'Xác nhận'
             });
         }
     }
