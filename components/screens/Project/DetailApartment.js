@@ -46,6 +46,7 @@ export default class DetailApartment extends React.Component {
         if (apartmentId) {
             getDetailApartment(apartmentId)
                 .then(resJson => {
+                    console.log(resJson);
                     if (resJson) {
                         let img3Ds = [];
                         if (resJson.image_3d && resJson.image_3d.length > 0) {
@@ -97,6 +98,7 @@ export default class DetailApartment extends React.Component {
             .then(token => {
                 createTokenTransaction(token, this.state.apartment.id)
                     .then(res => {
+                        this.setState({ loaded: true });
                         if (res.status === 200) {
                             return this.props.navigation.navigate('OrderSubmitScreen', {
                                 apartment: this.state.apartment,
@@ -124,10 +126,15 @@ export default class DetailApartment extends React.Component {
         const { apartment } = this.state;
         return (
             <View style={styles.wrapper}>
-                <Header navigation={this.props.navigation} title={`CĂN HỘ ${apartment.number}`} back={'back'} />
+                <Header
+                    navigation={this.props.navigation}
+                    title={`CĂN HỘ ${apartment.number}`}
+                    back={'back'}
+                />
                 <ScrollView style={styles.content}>
                     <Text style={styles.titleScreen}>CĂN
-                        HỘ {apartment.number} - {apartment.building.name} - {apartment.project.name}</Text>
+                        HỘ {apartment.number} - {apartment.building.name} - {apartment.project.name}
+                    </Text>
                     <Text style={styles.subTitleScreen}>({apartment.status.description})</Text>
                     <View style={styles.groupInline}>
                         <TouchableOpacity

@@ -32,7 +32,6 @@ import {
     NO_IMAGE
 } from './../../../Globals';
 import { loading } from '../../../Helpers';
-import Home from "../Home/Home";
 
 export default class TabProject extends Component {
     handleBackPress = () => { //eslint-disable-line
@@ -46,6 +45,7 @@ export default class TabProject extends Component {
             initialPage: 0,
             activeTab: 0,
             project: null,
+            loaded: false
         };
         this.onChangeTab = this.onChangeTab.bind(this);
     }
@@ -94,8 +94,8 @@ export default class TabProject extends Component {
                 {/*<ScrollView>*/}
                     {/*<View style={styles.slideProject}>*/}
                         {/*<Swiper showsButtons removeClippedSubviews={false}>*/}
-                            {/*{project.data.images.feature &&*/}
-                            {/*project.data.images.feature.map((value, key) => (*/}
+                            {/*{project.images.project_feature &&*/}
+                            {/*project.images.project_feature.map((value, key) => (*/}
                                 {/*<Image*/}
                                     {/*key={key}*/}
                                     {/*source={{ uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE }}*/}
@@ -127,8 +127,8 @@ export default class TabProject extends Component {
                 <ScrollView ref='_scrollView'>
                     <View style={styles.slideProject}>
                         <Swiper showsButtons removeClippedSubviews={false}>
-                            {project.data.images.feature &&
-                            project.data.images.feature.map((value, key) => (
+                            {project.images.project_feature &&
+                            project.images.project_feature.map((value, key) => (
                                 <Image
                                     key={key}
                                     source={{ uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE }}

@@ -103,7 +103,8 @@ export default class SearchResult extends Component {
                                         <Thumbnail
                                             square
                                             source={{
-                                                uri: (item.data.images.feature) ? `${BASE_URL}${item.data.images.feature[0]}` : NO_IMAGE
+                                                uri: (item.images.project_feature) ?
+                                                    item.images.project_feature[0] : NO_IMAGE
                                             }}
                                         />
                                     </TouchableOpacity>

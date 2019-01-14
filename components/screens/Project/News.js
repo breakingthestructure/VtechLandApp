@@ -11,7 +11,8 @@ import {
     Body,
     Icon,
     Left,
-    ListItem
+    ListItem,
+    Toast
 } from 'native-base';
 import { loading } from '../../../Helpers';
 import getNews from './../../../api/getNews';
@@ -45,7 +46,15 @@ export default class News extends React.Component {
         if (project) {
             getNews(project.name)
                 .then(res => {
+                    console.log(res);
                     if (res.status === 200) {
+                        if (res.data.data.length === 0) {
+                            return Toast.show({
+                                text: 'Không có dữ liệu',
+                                type: 'danger',
+                                buttonText: 'Okay'
+                            });
+                        }
                         this.setState({
                             listNews: res.data.data,
                             loaded: true
@@ -53,6 +62,12 @@ export default class News extends React.Component {
                     }
                 })
                 .catch(err => console.error(err));
+        } else {
+            return Toast.show({
+                text: 'Không tồn tại dự án',
+                type: 'danger',
+                buttonText: 'Okay'
+            });
         }
     }
 

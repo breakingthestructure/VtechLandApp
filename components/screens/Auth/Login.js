@@ -50,6 +50,7 @@ export default class Login extends React.Component {
         const { email, password } = this.state;
         login(email, password)
             .then(resJson => {
+                console.log(resJson);
                 if (resJson.access_token) {
                     saveToken(resJson.access_token);
                     Toast.show({
@@ -68,6 +69,10 @@ export default class Login extends React.Component {
                         .catch(err => console.log(err));
                 }
                 this.setState({ txtSubmit: 'ĐĂNG NHẬP' });
+                // let message = '';
+                // Object.keys(resJson.data.errors).forEach(function (key) {
+                //     message += resJson.data.errors[key] + '\n';
+                // });
                 return Toast.show({
                     text: 'Đăng nhập thất bại',
                     type: 'danger',

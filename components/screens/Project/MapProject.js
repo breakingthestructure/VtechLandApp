@@ -16,6 +16,7 @@ import {
     Icon,
     Toast
 } from 'native-base';
+import * as Progress from 'react-native-progress';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import AdvanceSearch from './AdvanceSearch';
@@ -46,29 +47,6 @@ export default class MapProject extends React.Component {
     }
     keyExtractor = (item) => item.id.toString(); //eslint-disable-line
 
-    // onSearch() {
-    //     fetch(GLOBAL.GOOGLE_API + this.state.txtAddress, //eslint-disable-line
-    //         {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 Accept: 'application/json'
-    //             },
-    //         })
-    //         .then(res => res.json())
-    //         .then(resJson => {
-    //             if (resJson.results.length > 0) {
-    //                 this.setState({
-    //                     currentLocation: {
-    //                         latitude: resJson.results[0].geometry.location.lat,
-    //                         longitude: resJson.results[0].geometry.location.lng
-    //                     }
-    //                 });
-    //             }
-    //         })
-    //         .catch(err => console.log(err));
-    // }
-
     constructor(props) {
         super(props);
         this.state = {
@@ -96,7 +74,7 @@ export default class MapProject extends React.Component {
             resultValue: new Animated.Value(heightResult),
             kindValue: new Animated.Value(heightResult),
             dataSearch: [],
-            region: null
+            region: null,
         };
         this.arrayProject = [];
         this.test = [];
@@ -105,21 +83,6 @@ export default class MapProject extends React.Component {
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-        // getLocalProjects()
-        //     .then(res => {
-        //         if (res.length > 0) {
-        //             this.arrayProject = res;
-        //             this.setState({
-        //                 listProject: this.arrayProject,
-        //                 loaded: true
-        //             });
-        //         }
-        //     })
-        //     .catch(err => console.log(err));
-        // if (!this.state.loaded) {
-
-        // }
-        // this.fetchProject(this.state.currentLocation);
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 1000);

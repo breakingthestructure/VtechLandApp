@@ -24,7 +24,6 @@ import YouTube, {
 import HTMLView from 'react-native-htmlview';
 import styles from './../../../styles';
 import {
-    BASE_URL,
     NO_IMAGE,
     YOUTUBE_APIKEY
 } from './../../../Globals';
@@ -58,14 +57,16 @@ export default class DetailProject extends React.Component {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 200);
-        if (this.props.project.data.images.feature) {
+        if (this.props.project.images.project_feature) {
             this.setState({
-                listImage: this.props.project.data.images.feature.map((item) => {
-                    return { url: `${BASE_URL}${item}` };
+                listImage: this.props.project.images.project_feature.map((item) => {
+                    return { url: item };
                 })
             });
         }
         if (this.props.project.data.youtube_video) {
+            let newval = '';
+            let videoId = '';
             if (newval = this.props.project.data.youtube_video.match(/(\?|&)v=([^&#]+)/)) {
                 videoId = newval.pop();
             } else if (newval = this.props.project.data.youtube_video.match(/(\.be\/)+([^\/]+)/)) {
@@ -131,22 +132,35 @@ export default class DetailProject extends React.Component {
                 </View>
                 <View style={styles.basicInfoProject}>
                     <View style={styles.leftInfoProject}>
-                        <Text style={styles.numberBasicInfo}>256</Text>
+                        <Text
+                            style={styles.numberBasicInfo}
+                        >
+                            {project.data.apartment_quantity}
+                        </Text>
                         <Text style={styles.textBasicInfo}>Lô liền kề - Biệt thự</Text>
                     </View>
 
                     <View style={styles.centerInfoProject}>
-                        <Text style={styles.numberBasicInfo}>180m2 - 220m2</Text>
+                        <Text
+                            style={styles.numberBasicInfo}
+                        >
+                            {project.area_min}m2 - {project.area_max}m2
+                        </Text>
                         <Text style={styles.textBasicInfo}>Lô liền kề - Biệt thự</Text>
                     </View>
 
                     <View style={styles.rightInfoProject}>
-                        <Text style={styles.numberBasicInfo}>60 - 80</Text>
+                        <Text
+                            style={styles.numberBasicInfo}
+                        >
+                            {project.price_unit_min} - {project.price_unit_max}
+                        </Text>
                         <Text style={styles.textBasicInfo}>Đơn giá Triệu / m2</Text>
                     </View>
                 </View>
                 <Text style={styles.titleSection}>TỔNG QUAN DỰ ÁN</Text>
-                {project.data.information && <HTMLView value={project.data.information} />}
+                {project.data.information &&
+                <HTMLView value={project.data.information} stylesheet={styles} />}
                 <Text style={styles.titleSection}>TIỆN ÍCH DỰ ÁN</Text>
                 <Modal
                     visible={this.state.modalVisible}
@@ -171,14 +185,14 @@ export default class DetailProject extends React.Component {
                     />
                 </Modal>
                 <ScrollView horizontal style={{ flexDirection: 'row', marginBottom: 5 }}>
-                    {project.data.images.image_advance &&
-                    project.data.images.image_advance.map((value, key) => (
+                    {project.images.project_advance &&
+                    project.images.project_advance.map((value, key) => (
                         <TouchableOpacity
                             key={key}
                             onPress={this.onDisplayImage.bind(this, key)}
                         >
                             <Image
-                                source={{ uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE }}
+                                source={{ uri: (value) ? value : NO_IMAGE }}
                                 style={styles.imgThumbProject}
                             />
                         </TouchableOpacity>
@@ -186,14 +200,14 @@ export default class DetailProject extends React.Component {
                 </ScrollView>
                 <View>
                     <Text style={styles.titleSection}>Sản phẩm</Text>
-                    {project.data.images.design &&
-                    project.data.images.design.map((value, key) => (
+                    {project.images.project_design &&
+                    project.images.project_design.map((value, key) => (
                         <ListItem thumbnail style={styles.itemList} key={key}>
                             <Left>
                                 <Thumbnail
                                     square
                                     source={{
-                                        uri: (value) ? `${BASE_URL}${value}` : NO_IMAGE
+                                        uri: (value) ? value : NO_IMAGE
                                     }}
                                     style={styles.imgList}
                                 />
@@ -260,7 +274,7 @@ export default class DetailProject extends React.Component {
                 )}
                 <TouchableOpacity
                     style={styles.btnBtnIconSpecial}
-                    onPress={() => this.props.onChangeTab(4)}
+                    onPress={() => this.props.onChangeTab(5)}
                 >
                     <Icon type="FontAwesome" name='calendar' style={styles.iconBigBtn} />
                     <Text style={styles.textBtnIcon}>
@@ -269,7 +283,7 @@ export default class DetailProject extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.bigBtnIcon}
-                    onPress={() => this.props.onChangeTab(5)}
+                    onPress={() => this.props.onChangeTab(6)}
                 >
                     <Icon
                         type="FontAwesome"

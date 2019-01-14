@@ -68,7 +68,8 @@ export default class Home extends React.Component {
                         <View style={styles.sectionItem}>
                             <View>
                                 <Image
-                                    source={{ uri: (item.data.images.feature) ? `${BASE_URL}${item.data.images.feature[0]}` : NO_IMAGE }}
+                                    source={{ uri: (item.images.project_feature) ?
+                                            item.images.project_feature[0] : NO_IMAGE }}
                                     style={styles.imgItem}
                                 />
                             </View>

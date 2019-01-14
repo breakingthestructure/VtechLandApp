@@ -202,7 +202,8 @@ export default class CalcDebt extends React.Component {
                 });
                 return false;
             }
-            if (arrayCondition.length === (index + 1) && parseInt(condition.to) !== parseInt(txtMonth)) {
+            if (arrayCondition.length === (index + 1)
+                && parseInt(condition.to) !== parseInt(txtMonth)) {
                 Toast.show({
                     text: 'Điều kiện: Tháng kết thúc phải là tổng số tháng',
                     type: 'warning',
@@ -215,7 +216,8 @@ export default class CalcDebt extends React.Component {
             }
             totalMonthCondition += condition.to - condition.from + 1;
 
-            if (arrayCondition.length === (index + 1) && totalMonthCondition !== parseInt(txtMonth)) {
+            if (arrayCondition.length === (index + 1)
+                && totalMonthCondition !== parseInt(txtMonth)) {
                 Toast.show({
                     text: 'Điều kiện: Tổng số tháng không khớp với điều kiện',
                     type: 'warning',

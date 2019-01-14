@@ -1,5 +1,10 @@
 import React from 'react';
-import { Linking, Platform } from 'react-native';
+import {
+    Linking,
+    Platform,
+    Text,
+    View
+} from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import styles from './styles';
 import { AVAIABLE, DISABLED, HOLDING, INCOMPLETE, SOLD, WAITING } from './constants/app';
@@ -148,4 +153,12 @@ export function getActiveRouteName(navigationState) {
         return getActiveRouteName(route);
     }
     return route.routeName;
+}
+
+export function dataNotFound() {
+    return (
+        <View>
+            <Text>Dữ liệu trống</Text>
+        </View>
+    );
 }

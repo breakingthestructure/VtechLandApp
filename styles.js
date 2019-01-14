@@ -1185,4 +1185,21 @@ export default StyleSheet.create({
         marginTop: 13,
         marginRight: 5
     },
+    btnTab: {
+        justifyContent: 'center',
+        paddingHorizontal: 10
+    },
+    btnTabActive: {
+        justifyContent: 'center',
+        paddingHorizontal: 10,
+        backgroundColor: 'white',
+        borderBottomWidth: 2,
+        borderBottomColor: '#F58319',
+    },
+    textTabActive: {
+        textAlign: 'center',
+        color: '#F58319',
+        fontWeight: '600',
+        fontSize: 12
+    },
 });

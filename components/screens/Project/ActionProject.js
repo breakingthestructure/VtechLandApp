@@ -9,8 +9,12 @@ import {
     View
 } from 'react-native';
 import icCalendar from './../../../icons/calendar.png';
-import { loading } from '../../../Helpers';
+import {
+    dataNotFound,
+    loading,
+} from '../../../Helpers';
 import getBuildings from '../../../api/getBuildings';
+import { Toast } from "native-base";
 
 const { width, height } = Dimensions.get('window');
 
@@ -26,77 +30,98 @@ export default class ActionProject extends React.Component {
     }
 
     componentDidMount() {
-        const { navigation } = this.props;
-        const project = navigation.getParam('project', null);
-        getBuildings(project.id)
-            .then(resJson => {
-                if (resJson.status === 200) {
+        const { project } = this.props;
+        // const project = navigation.getParam('project', null);
+        if (project) {
+            getBuildings(project.id)
+                .then(resJson => {
                     this.setState({
-                        buildings: resJson.data,
                         loaded: true
                     });
-                }
-            })
-            .catch(err => console.log(err));
+                    if (resJson.status === 200) {
+                        this.setState({
+                            buildings: resJson.data,
+                        });
+                    }
+                })
+                .catch(err => console.log(err));
+        } else {
+            return Toast.show({
+                text: 'Không có dữ liệu',
+                type: 'danger',
+                buttonText: 'Okay'
+            });
+        }
     }
 
     render() {
         const { navigation, project } = this.props;
         const { buildings } = this.state;
+        console.log(arrBuilding, buildings);
         if (!this.state.loaded || !this.props.navigation) {
             return loading();
         }
-        const arrBuilding = Object.keys(buildings).map((item, index) => {
+        if (buildings.length <= 0) {
+            return dataNotFound();
+        }
+        const arrBuilding = Object.keys(buildings).map((item) => {
             return { key: item, value: buildings[item] };
         });
         return (
-            <View style={{ backgroundColor: '#f2f2f2', flex: 1 }}>
-                <View style={styles.wrapper}>
-                    <Text
-                        style={{
-                            fontWeight: '600',
-                            fontSize: 18,
-                            textAlign: 'center',
-                            color: '#053654',
-                            paddingTop: 10
+            <View style={styles.wrapper}>
+                <Text
+                    style={{
+                        fontWeight: '600',
+                        fontSize: 18,
+                        textAlign: 'center',
+                        color: '#053654',
+                        paddingTop: 10
+                    }}
+                >
+                    Danh sách bảng hàng
+                </Text>
+                <View>
+                    <FlatList
+                        keyExtractor={this._keyExtractor}
+                        horizontal={false}
+                        numColumns={2}
+                        contentContainerStyle={{
+                            justifyContent: 'center',
+                            width: '100%',
+                            alignItems: 'center',
                         }}
-                    >
-                        Danh sách bảng hàng
-                    </Text>
-                    <View>
-                        <FlatList
-                            keyExtractor={this._keyExtractor}
-                            horizontal={false}
-                            numColumns={2}
-                            contentContainerStyle={{
-                                justifyContent: 'center',
-                                width: '100%',
-                                alignItems: 'center'
-                            }}
-                            data={arrBuilding}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    key={item}
-                                    style={styles.btnAction}
-                                    onPress={() => navigation.navigate('TablePackageScreen', {
-                                        project,
-                                        buildingId: item.key,
-                                        buildingName: item.value
-                                    })}
-                                >
-                                    <View style={{ paddingVertical: 5 }}>
-                                        <Image
-                                            source={icCalendar}
-                                            style={{ width: 30, height: 30 }}
-                                        />
-                                    </View>
-                                    <View style={{ justifyContent: 'center' }}>
-                                        <Text style={styles.btnTextAction}>{item.value}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                        />
-                    </View>
+                        data={arrBuilding}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity
+                                key={item}
+                                style={{
+                                    width: width / 2.5,
+                                    borderColor: '#33563743',
+                                    borderWidth: 1,
+                                    alignItems: 'center',
+                                    borderRadius: 5,
+                                    height: height / 5,
+                                    justifyContent: 'center',
+                                    margin: 15,
+                                }}
+                                onPress={() => navigation.navigate('TablePackageScreen', {
+                                    project,
+                                    buildingId: item.key,
+                                    buildingName: item.value
+                                })}
+                            >
+                                <View style={{ paddingVertical: 5 }}>
+                                    <Image
+                                        source={icCalendar}
+                                        style={{ width: 30, height: 30 }}
+                                    />
+                                </View>
+                                <View style={{ justifyContent: 'center' }}>
+                                    <Text style={styles.btnTextAction}>{item.value}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    />
                 </View>
             </View>
         );

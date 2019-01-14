@@ -87,6 +87,8 @@ PODS:
   - QBImagePickerController (3.4.0)
   - React (0.57.4):
     - React/Core (= 0.57.4)
+  - React/ART (0.57.4):
+    - React/Core
   - React/Core (0.57.4):
     - yoga (= 0.57.4.React)
   - React/RCTImage (0.57.4):
@@ -115,6 +117,7 @@ DEPENDENCIES:
   - Google-Maps-iOS-Utils
   - GoogleMaps
   - QBImagePickerController
+  - React/ART (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
   - React/RCTImage (from `../node_modules/react-native`)
   - ReactNativeKeyboardManager (from `../node_modules/react-native-keyboard-manager`)
@@ -174,6 +177,6 @@ SPEC CHECKSUMS:
   XCDYouTubeKit: c8567fd5cb388a3099fa26eee4b30df2a467847d
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: 612cf12af36ea56e09ce7658508bd30d9e917584
+PODFILE CHECKSUM: d9c2f8f60be76dada12b1a9990ebacd31682fc90
 
 COCOAPODS: 1.5.3

@@ -11,11 +11,14 @@ import {
 import ImageViewer from 'react-native-image-zoom-viewer';
 import icTitle from './../../icons/ic_title.png';
 import {
-    BASE_URL,
     NO_IMAGE
 } from './../../Globals';
 import styles from './../../styles';
-import { loading } from '../../Helpers';
+import {
+    dataNotFound,
+    loading,
+    notFound
+} from '../../Helpers';
 
 export default class PreviewProject extends Component {
     keyExtractor = (item) => item.toString(); //eslint-disable-line
@@ -23,7 +26,7 @@ export default class PreviewProject extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listImage: null,
+            listImage: [],
             index: 0,
             loaded: false,
             imagePreview: false
@@ -34,20 +37,20 @@ export default class PreviewProject extends Component {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 200);
-        if (this.props.project.data.images.feature) {
+        if (this.props.project.images && this.props.project.images.project_feature) {
             this.setState({
-                listImage: this.props.project.data.images.feature.map((item) => {
-                    return { url: `${BASE_URL}${item}` };
+                listImage: this.props.project.images.project_feature.map((item) => {
+                    return { url: item };
                 }),
             });
         }
     }
 
     componentWillReceiveProps(props) {
-        if (props.project.data.images.feature) {
+        if (props.project.images && props.project.images.project_feature) {
             this.setState({
-                listImage: props.project.data.images.feature.map((item) => {
-                    return { url: `${BASE_URL}${item}` };
+                listImage: props.project.images.project_feature.map((item) => {
+                    return { url: item };
                 })
             });
         }
@@ -72,11 +75,7 @@ export default class PreviewProject extends Component {
         }
         const { project } = this.props;
         if (!project) {
-            return (
-                <View>
-                    <Text>Không tìm thấy dự án này</Text>
-                </View>
-            );
+            return dataNotFound();
         }
         return (
             <View style={{ padding: 10 }}>
@@ -89,19 +88,34 @@ export default class PreviewProject extends Component {
                 </View>
                 <Text note numberOfLines={1}>{project.address}</Text>
                 {/* <Text>{project.description}</Text> */}
+                {project.images && project.images.project_feature &&
                 <FlatList
                     horizontal
-                    data={project.data.images.feature}
+                    data={project.images.project_feature}
                     keyExtractor={this.keyExtractor}
                     renderItem={({ item, index }) => (
-                        <TouchableOpacity key={item} onPress={this.onDisplayImage.bind(this, index)}>
+                        <TouchableOpacity
+                            key={item}
+                            onPress={this.onDisplayImage.bind(this, index)}
+                        >
                             <Image
-                                source={{ uri: (item) ? `${BASE_URL}${item}` : NO_IMAGE }}
+                                source={{ uri: (item) ? item : NO_IMAGE }}
                                 style={styles.thumbProject}
+                                onLoad={() => {
+                                    this.setState({
+                                        loaded: true
+                                    });
+                                }}
+                                onLoadStart={() => {
+                                    console.log('onLoadStart');
+                                }}
+                                onLoadEnd={() => {
+                                    console.log('onLoadEnd');
+                                }}
                             />
                         </TouchableOpacity>
                     )}
-                />
+                /> }
                 <Modal
                     visible={this.state.imagePreview}
                     transparent

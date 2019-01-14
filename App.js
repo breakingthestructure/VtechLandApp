@@ -31,7 +31,6 @@ import Home from './components/screens/Home/Home';
 import MapProject from './components/screens/Project/MapProject';
 import ListNews from './components/screens/News/ListNews';
 import DetailNews from './components/screens/News/DetailNews';
-import TabProject from './components/screens/Project/TabProject';
 import Config from './components/screens/Auth/Config';
 import TablePackage from './components/screens/Project/TablePackage';
 import DetailApartment from './components/screens/Project/DetailApartment';
@@ -58,6 +57,7 @@ import ListPartner from './components/screens/Option/ListPartner';
 import DetailPartner from './components/screens/Option/DetailPartner';
 import CategoryPartner from './components/screens/Option/CategoryPartner';
 import Test from "./Test";
+import MainProject from "./components/screens/Project/MainProject";
 
 console.disableYellowBox = true;
 
@@ -87,7 +87,7 @@ const ProjectStack = createStackNavigator(
             screen: Building
         },
         TabProjectScreen: {
-            screen: TabProject
+            screen: MainProject
         },
         TablePackageScreen: {
             screen: TablePackage
@@ -221,9 +221,12 @@ const LeftDrawer = createDrawerNavigator(
         PartnerScreen: {
             screen: PartnerStack
         },
-        TestScreen: {
-            screen: Test
-        },
+        // TestScreen: {
+        //     screen: Test
+        // },
+        // MainProjectScreen: {
+        //     screen: MainProject
+        // },
     },
     {
         initialRouteName: 'MapScreen',

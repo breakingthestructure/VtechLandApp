@@ -6,8 +6,9 @@ target 'TechLandNative' do
   # use_frameworks!
   pod 'React', :path => '../node_modules/react-native', :subspecs => [
       'Core',
-      'RCTImage' # <- Add this line
-    ]
+      'RCTImage',
+      'ART',
+  ]
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
   pod 'ReactNativeKeyboardManager', :path => '../node_modules/react-native-keyboard-manager'
   pod 'Firebase'

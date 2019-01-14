@@ -34,19 +34,21 @@ import getCities from './../../../api/getCities';
 
 export default class OrderSubmit extends React.Component {
     renderCustomer(customer) {
-        console.log(customer);
-        const { full_name, phone, email, identity, id, address } = customer;
-
+        const { full_name, phone, email, id } = customer;
         return (
             <TouchableOpacity
+                style={{
+                    padding: 10
+                }}
                 onPress={() => {
                     this.setState({
-                        fullname: full_name,
-                        customerId: id,
-                        address,
-                        phone,
-                        email,
-                        identity
+                        searchName: full_name,
+                        customerId: id
+                    });
+                    return Toast.show({
+                        text: `Đã chọn khách hàng: ${full_name}`,
+                        type: 'success',
+                        buttonText: 'Xác nhận'
                     });
                 }}
             >
@@ -234,7 +236,7 @@ export default class OrderSubmit extends React.Component {
     }
 
     render() {
-        const { fullname, apartment, cities, searchName } = this.state;
+        const { apartment, cities, searchName } = this.state;
         const customers = this.findCustomer(searchName);
         const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
         if (!this.state.loaded || !apartment) {
@@ -334,29 +336,20 @@ export default class OrderSubmit extends React.Component {
         const searchJsx = (
             <View
                 style={{
-                    height: 200
+                    height: 120
                 }}
             >
                 <Animated.View
-                    // style={
-                    //     [styles.viewAutocomplete,
-                    //         { height: this.state.resultValue }]
-                    // }
                     style={{
                         position: 'relative',
                         height: 40,
                     }}
                 >
                     <Autocomplete
-                        containerStyle={
-                            this.state.isHidden ?
-                                styles.autocompleteContainerFull :
-                                styles.autocompleteContainer
-                        }
+                        containerStyle={styles.autocompleteContainerFull}
                         inputContainerStyle={{
                             borderWidth: 0,
                         }}
-                        listStyle={styles.autocompleteResult}
                         autoCapitalize="none"
                         autoCorrect={false}
                         defaultValue={searchName}
@@ -387,21 +380,8 @@ export default class OrderSubmit extends React.Component {
                                     onChangeText={text => {
                                         this.setState({
                                             searchName: text,
-                                            isHidden: false
-                                        }, () => {
-                                            let hide = false;
-                                            if (this.state.searchName === '') {
-                                                this.setState({ isHidden: true });
-                                                hide = true;
-                                            }
-                                            this.toggleQuickSearch(hide);
-                                        });
-                                    }}
-                                    onEndEditing={() => {
-                                        this.setState({ isHidden: true }, () => {
-                                            setTimeout(() => {
-                                                this.toggleQuickSearch(true);
-                                            }, 1000);
+                                            isHidden: false,
+                                            customerId: '',
                                         });
                                     }}
                                 />
@@ -423,51 +403,29 @@ export default class OrderSubmit extends React.Component {
                                 </TouchableOpacity>
                             </View>
                         )}
-                        // renderItem={item => (
-                        //     <TouchableOpacity
-                        //         onPress={() => {
-                        //             this.setState({
-                        //                 fullName: item.full_name,
-                        //                 searchCustomer: 1,
-                        //                 customerId: item.id,
-                        //                 address: item.address,
-                        //                 phone: item.phone,
-                        //                 email: item.email,
-                        //                 identity: item.identity
-                        //             }, () => {
-                        //                 this.toggleQuickSearch(true);
-                        //                 this.setState({ isHidden: true });
-                        //             });
-                        //         }}
-                        //         style={{
-                        //             flexDirection: 'column',
-                        //             height: 50,
-                        //             justifyContent: 'center',
-                        //             alignContent: 'center'
-                        //         }}
-                        //     >
-                        //         <Text>{item.full_name}</Text>
-                        //         <Text>{item.phone}</Text>
-                        //     </TouchableOpacity>
-                        // )}
                     />
                 </Animated.View>
                 <View
                     style={{
                         backgroundColor: '#F5FCFF',
-                        marginTop: 8
+                        marginTop: 8,
+                        borderRadius: 20,
+                        borderWidth: 1,
+                        borderColor: '#cecece'
                     }}
                 >
                     {customers.length > 0 ? (
                         this.renderCustomer(customers[0])
                     ) : (
-                        <Text
-                            style={{
-                                textAlign: 'center'
-                            }}
-                        >
-                            Tìm kiếm khách hàng
-                        </Text>
+                        <View style={{ height: 70 }}>
+                            <Text
+                                style={{
+                                    textAlign: 'center'
+                                }}
+                            >
+                                Tìm kiếm khách hàng
+                            </Text>
+                        </View>
                     )}
                 </View>
             </View>
@@ -477,7 +435,7 @@ export default class OrderSubmit extends React.Component {
                 <Header
                     navigation={this.props.navigation}
                     title={`GIAO DỊCH ${apartment.number}`}
-                    back={'ok'}
+                    back={'popToTop'}
                 />
                 <ScrollView style={styles.content}>
                     <Text style={styles.titleScreen}>PHIẾU ĐẶT CỌC</Text>

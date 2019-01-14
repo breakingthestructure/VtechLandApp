@@ -89,15 +89,15 @@ export default class Building extends Component {
                 />
                 <ScrollView ref='_scrollView'>
                     <View style={{ height: 300 }}>
-                        {project.data.images.feature.length > 0 &&
+                        {project.images.project_feature.length > 0 &&
                         <DeckSwiper
-                            dataSource={project.data.images.feature}
+                            dataSource={project.images.project_feature}
                             renderItem={item =>
                             <Card style={{ elevation: 3 }}>
                                 <CardItem cardBody>
                                     <Image
                                         style={{ height: 300, flex: 1 }}
-                                        source={{ uri: (item) ? `${BASE_URL}${item}` : NO_IMAGE }}
+                                        source={{ uri: (item) ? item : NO_IMAGE }}
                                     />
                                 </CardItem>
                             </Card>

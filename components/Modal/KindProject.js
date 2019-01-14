@@ -19,7 +19,6 @@ import {
 import { loading } from '../../Helpers';
 import getProject from '../../api/getProject';
 import {
-    BASE_URL,
     NO_IMAGE
 } from './../../Globals';
 import styles from './../../styles';
@@ -152,7 +151,8 @@ export default class KindProject extends Component {
                                         <Thumbnail
                                             square
                                             source={{
-                                                uri: (item.data.images.feature) ? `${BASE_URL}${item.data.images.feature[0]}` : NO_IMAGE
+                                                uri: (item.images.project_feature) ?
+                                                    item.images.project_feature[0] : NO_IMAGE
                                             }}
                                         />
                                     </TouchableOpacity>
