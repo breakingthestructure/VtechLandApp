@@ -26,7 +26,6 @@ export default class SearchResult extends Component {
             .then(token => {
                 getFavouriteProjects(token)
                     .then(res => {
-                        console.log(res);
                         this.setState({
                             listFavourite: res.data,
                             loaded: true

@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { Icon, Spinner } from 'native-base';
 import {
     FlatList,
-    Image,
     Modal,
     Text,
     TouchableOpacity,
     View,
+    Image
 } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import FastImage from 'react-native-fast-image';
+import { createImageProgress } from 'react-native-image-progress';
 import icTitle from './../../icons/ic_title.png';
 import {
     NO_IMAGE
@@ -17,8 +18,11 @@ import {
 import styles from './../../styles';
 import {
     dataNotFound,
+    getLinkImage,
     loading,
 } from '../../Helpers';
+
+const ImageProgress = createImageProgress(FastImage);
 
 export default class PreviewProject extends Component {
     keyExtractor = (item) => item.toString(); //eslint-disable-line
@@ -98,35 +102,11 @@ export default class PreviewProject extends Component {
                             key={item}
                             onPress={this.onDisplayImage.bind(this, index)}
                         >
-                            <FastImage
+                            <ImageProgress
+                                source={{ uri: (item) ? item : NO_IMAGE }}
+                                indicator={Spinner}
                                 style={styles.thumbProject}
-                                source={{
-                                    uri: (item) ? item : NO_IMAGE,
-                                    priority: FastImage.priority.normal,
-                                }}
-                                // resizeMode={FastImage.resizeMode.contain}
-                                onProgress={e => {
-                                    console.log(e.nativeEvent.loaded / e.nativeEvent.total);
-                                    if (e.nativeEvent.loaded / e.nativeEvent.total < 1) {
-                                        return <Spinner />;
-                                    }
-                                }}
                             />
-                            {/*<Image*/}
-                                {/*source={{ uri: (item) ? item : NO_IMAGE }}*/}
-                                {/*style={styles.thumbProject}*/}
-                                {/*onLoad={() => {*/}
-                                    {/*this.setState({*/}
-                                        {/*loaded: true*/}
-                                    {/*});*/}
-                                {/*}}*/}
-                                {/*onLoadStart={() => {*/}
-                                    {/*console.log('onLoadStart');*/}
-                                {/*}}*/}
-                                {/*onLoadEnd={() => {*/}
-                                    {/*console.log('onLoadEnd');*/}
-                                {/*}}*/}
-                            {/*/>*/}
                         </TouchableOpacity>
                     )}
                 /> }

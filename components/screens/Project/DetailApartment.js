@@ -1,20 +1,34 @@
 import React from 'react';
-import { BackHandler, Image, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { Icon, Toast } from 'native-base';
+import {
+    BackHandler,
+    Modal,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {
+    Icon,
+    Spinner,
+    Toast
+} from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import ModalRN from 'react-native-modal';
 import FastImage from 'react-native-fast-image';
+import { createImageProgress } from 'react-native-image-progress';
 import Header from '../Home/Header';
 import getDetailApartment from './../../../api/getDetailApartment';
 import {
     BASE_URL,
-    TYPE_ROOM
 } from './../../../Globals';
 import styles from './../../../styles';
 import { loading } from '../../../Helpers';
 import createTokenTransaction from './../../../api/createTokenTransaction';
 import getToken from '../../../api/getToken';
 import postLockApartment from './../../../api/postLockApartment';
+import getLocalOption from '../../../api/getLocalOption';
+
+const ImageProgress = createImageProgress(FastImage);
 
 export default class DetailApartment extends React.Component {
     handleBackPress = () => { //eslint-disable-line
@@ -39,7 +53,8 @@ export default class DetailApartment extends React.Component {
             modalPosition: false,
             apartment: null,
             image3d: null,
-            txtSubmit: 'XÁC NHẬN'
+            txtSubmit: 'XÁC NHẬN',
+            options: null
         };
     }
 
@@ -47,10 +62,18 @@ export default class DetailApartment extends React.Component {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         const { navigation } = this.props;
         const apartmentId = navigation.getParam('apartmentId', null);
+        getLocalOption()
+            .then(res => {
+                if (res) {
+                    this.setState({
+                        options: res
+                    });
+                }
+            })
+            .catch(err => console.log(err));
         if (apartmentId) {
             getDetailApartment(apartmentId)
                 .then(resJson => {
-                    console.log(resJson);
                     if (resJson) {
                         let img3Ds = [];
                         if (resJson.image_3d && resJson.image_3d.length > 0) {
@@ -183,7 +206,9 @@ export default class DetailApartment extends React.Component {
                         >
                             <Text style={{ fontSize: 14 }}>Hướng</Text>
                             <View style={styles.headerAction}>
-                                <Text style={{ fontSize: 14 }}>{apartment.direction.description}</Text>
+                                <Text style={{ fontSize: 14 }}>
+                                    {apartment.direction.description}
+                                </Text>
                             </View>
                         </View>
                         {apartment.room.map((item, index) => (
@@ -191,7 +216,9 @@ export default class DetailApartment extends React.Component {
                                 key={index}
                                 style={styles.lineInfo}
                             >
-                                <Text style={{ fontSize: 14 }}>{TYPE_ROOM[item.type]}</Text>
+                                <Text style={{ fontSize: 14 }}>
+                                    {this.state.options.rooms[item.type]}
+                                </Text>
                                 <View style={styles.headerAction}>
                                     <Text style={{ fontSize: 14 }}>{item.area}</Text>
                                     <Text style={styles.subLabel}> m2</Text>
@@ -205,19 +232,11 @@ export default class DetailApartment extends React.Component {
                                     key={index}
                                     onPress={this.onDisplayImage.bind(this, '3d')}
                                 >
-                                    <FastImage
-                                        key={index}
+                                    <ImageProgress
+                                        source={{ uri: `${BASE_URL}${image}` }}
+                                        indicator={Spinner}
                                         style={styles.imageApartment}
-                                        source={{
-                                            uri: `${BASE_URL}${image}`,
-                                            priority: FastImage.priority.normal,
-                                        }}
                                         // resizeMode={FastImage.resizeMode.contain}
-                                        onProgress={e => {
-                                            console.log(e.nativeEvent.loaded / e.nativeEvent.total);
-                                            if (e.nativeEvent.loaded / e.nativeEvent.total < 1) {
-                                            }
-                                        }}
                                     />
                                 </TouchableOpacity>
                             ))}
@@ -228,18 +247,11 @@ export default class DetailApartment extends React.Component {
                             onPress={this.onDisplayImage.bind(this, 'position')}
                             style={{ justifyContent: 'center' }}
                         >
-                            <FastImage
+                            <ImageProgress
+                                source={{ uri: `${BASE_URL}${apartment.position_apartment}` }}
+                                indicator={Spinner}
                                 style={styles.imageApartment}
-                                source={{
-                                    uri: `${BASE_URL}${apartment.position_apartment}`,
-                                    priority: FastImage.priority.normal,
-                                }}
                                 // resizeMode={FastImage.resizeMode.contain}
-                                onProgress={e => {
-                                    console.log(e.nativeEvent.loaded / e.nativeEvent.total);
-                                    if (e.nativeEvent.loaded / e.nativeEvent.total < 1) {
-                                    }
-                                }}
                             />
                         </TouchableOpacity>
                         <Modal

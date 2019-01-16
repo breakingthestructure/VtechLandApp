@@ -57,7 +57,6 @@ export default class ActionProject extends React.Component {
     render() {
         const { navigation, project } = this.props;
         const { buildings } = this.state;
-        console.log(arrBuilding, buildings);
         if (!this.state.loaded || !this.props.navigation) {
             return loading();
         }

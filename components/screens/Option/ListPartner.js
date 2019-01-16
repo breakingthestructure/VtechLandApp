@@ -45,7 +45,7 @@ export default class ListPartner extends Component {
                         });
                     }
                 })
-                .catch(err => console.error(err));
+                .catch(err => console.log(err));
         }
     }
 

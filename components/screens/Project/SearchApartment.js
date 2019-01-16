@@ -63,7 +63,7 @@ export default class SearchApartment extends Component {
                     });
                 }
             })
-            .catch(err => console.error(err));
+            .catch(err => console.log(err));
     }
 
     onSearch() {

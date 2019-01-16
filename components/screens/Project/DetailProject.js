@@ -2,12 +2,12 @@ import React from 'react';
 import {
     View,
     Text,
-    Image,
     ScrollView,
     Modal,
     TouchableOpacity,
     ImageBackground,
-    Platform
+    Platform,
+    Image
 } from 'react-native';
 import {
     ListItem,
@@ -15,9 +15,11 @@ import {
     Left,
     Body,
     Icon,
+    Spinner,
 } from 'native-base';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import FastImage from 'react-native-fast-image';
+import { createImageProgress } from 'react-native-image-progress';
 import YouTube, {
     YouTubeStandaloneAndroid,
     YouTubeStandaloneIOS
@@ -26,10 +28,16 @@ import HTMLView from 'react-native-htmlview';
 import styles from './../../../styles';
 import {
     NO_IMAGE,
-    YOUTUBE_APIKEY
+    YOUTUBE_APIKEY,
+    YOUTUBE_IMG
 } from './../../../Globals';
-import getYoutubeId, { loading } from './../../../Helpers';
+import {
+    getLinkImage,
+    loading
+} from './../../../Helpers';
 import icPlay from './../../../icons/play.png';
+
+const ImageProgress = createImageProgress(FastImage);
 
 export default class DetailProject extends React.Component {
     constructor(props) {
@@ -38,7 +46,9 @@ export default class DetailProject extends React.Component {
             loaded: false,
             isReady: false,
             index: 0,
+            index3D: 0,
             modalVisible: false,
+            modal3DVisible: false,
             status: null,
             quality: null,
             error: null,
@@ -50,6 +60,7 @@ export default class DetailProject extends React.Component {
             containerMounted: false,
             containerWidth: null,
             listImage: [],
+            listImage3D: [],
             videoId: '',
         };
     }
@@ -58,10 +69,17 @@ export default class DetailProject extends React.Component {
         setTimeout(() => {
             this.setState({ loaded: true });
         }, 200);
-        if (this.props.project.images.project_feature) {
+        if (this.props.project.images.project_advance) {
             this.setState({
-                listImage: this.props.project.images.project_feature.map((item) => {
-                    return { url: item };
+                listImage: this.props.project.images.project_advance.map((item) => {
+                    return { url: getLinkImage(item) };
+                })
+            });
+        }
+        if (this.props.project.images.project_image_3d) {
+            this.setState({
+                listImage3D: this.props.project.images.project_image_3d.map((item) => {
+                    return { url: getLinkImage(item) };
                 })
             });
         }
@@ -81,27 +99,33 @@ export default class DetailProject extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        this.setState({
+            loaded: false
+        });
+    }
+
+    onDisplayImage3D(index3D) {
+        this.setState({ modal3DVisible: true, index3D });
+    }
+
     onDisplayImage(index) {
         this.setState({ modalVisible: true, index });
     }
 
     setReady() {
-        console.log('ready');
         this.setState({ isReady: true });
     }
 
     setChangeState(param) {
-        console.log('ready2', param);
         this.setState({ status: param });
     }
 
     setChangeQuality(param) {
-        console.log('ready3', param);
         this.setState({ quality: param });
     }
 
     setOnError(param) {
-        console.log('ready4', param);
         this.setState({ error: param });
     }
 
@@ -110,6 +134,7 @@ export default class DetailProject extends React.Component {
         if (!this.state.loaded) {
             return loading();
         }
+        console.log(project);
         return (
             <View style={styles.content}>
                 <Text style={styles.titleScreenLeft}>{project.name}</Text>
@@ -123,7 +148,7 @@ export default class DetailProject extends React.Component {
                     <View style={{ paddingTop: 5 }}>
                         <Icon type="FontAwesome" name='list-ul' style={styles.iconText} />
                     </View>
-                    <Text style={styles.textDescription}>{project.type.description}</Text>
+                    <Text style={styles.textDescription}>{project.type.name}</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ paddingTop: 5 }}>
@@ -145,7 +170,7 @@ export default class DetailProject extends React.Component {
                         <Text
                             style={styles.numberBasicInfo}
                         >
-                            {project.area_min}m2 - {project.area_max}m2
+                            {project.data.area_min}m2 - {project.data.area_max}m2
                         </Text>
                         <Text style={styles.textBasicInfo}>Lô liền kề - Biệt thự</Text>
                     </View>
@@ -154,14 +179,18 @@ export default class DetailProject extends React.Component {
                         <Text
                             style={styles.numberBasicInfo}
                         >
-                            {project.price_unit_min} - {project.price_unit_max}
+                            {project.data.price_unit_min} - {project.data.price_unit_max}
                         </Text>
                         <Text style={styles.textBasicInfo}>Đơn giá Triệu / m2</Text>
                     </View>
                 </View>
                 <Text style={styles.titleSection}>TỔNG QUAN DỰ ÁN</Text>
                 {project.data.information &&
-                <HTMLView value={project.data.information} stylesheet={styles} />}
+                <HTMLView
+                    value={project.data.information}
+                    paragraphBreak=''
+                    sylesheet={styles}
+                />}
                 <Text style={styles.titleSection}>TIỆN ÍCH DỰ ÁN</Text>
                 <Modal
                     visible={this.state.modalVisible}
@@ -192,19 +221,44 @@ export default class DetailProject extends React.Component {
                             key={key}
                             onPress={this.onDisplayImage.bind(this, key)}
                         >
-                            <FastImage
-                                key={key}
+                            <ImageProgress
+                                source={{ uri: (value) ? getLinkImage(value) : NO_IMAGE }}
+                                indicator={Spinner}
                                 style={styles.imgThumbProject}
-                                source={{
-                                    uri: (value) ? value : NO_IMAGE,
-                                    priority: FastImage.priority.normal,
-                                }}
-                                // resizeMode={FastImage.resizeMode.contain}
-                                onProgress={e => {
-                                    console.log(e.nativeEvent.loaded / e.nativeEvent.total);
-                                    if (e.nativeEvent.loaded / e.nativeEvent.total < 1) {
-                                    }
-                                }}
+                            />
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
+                <Text style={styles.titleSection}>Ảnh 3D dự án</Text>
+                <Modal
+                    visible={this.state.modal3DVisible}
+                    transparent
+                    onRequestClose={() => {
+                        this.setState({ modal3DVisible: false });
+                    }}
+                >
+                    <ImageViewer
+                        imageUrls={this.state.listImage3D}
+                        index={this.state.index3D}
+                        onSwipeDown={() => {
+                            this.setState({ modal3DVisible: false });
+                        }}
+                        enableSwipeDown
+                        backgroundColor='black'
+                        enablePreload
+                    />
+                </Modal>
+                <ScrollView horizontal style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    {project.images.project_image_3d &&
+                    project.images.project_image_3d.map((value, key) => (
+                        <TouchableOpacity
+                            key={key}
+                            onPress={this.onDisplayImage3D.bind(this, key)}
+                        >
+                            <ImageProgress
+                                source={{ uri: (value) ? getLinkImage(value) : NO_IMAGE }}
+                                indicator={Spinner}
+                                style={styles.imgThumbProject}
                             />
                         </TouchableOpacity>
                     ))}
@@ -254,7 +308,7 @@ export default class DetailProject extends React.Component {
                         }}
                     >
                         <ImageBackground
-                            source={{ uri: `https://img.youtube.com/vi/${this.state.videoId}/hqdefault.jpg` }}
+                            source={{ uri: `${YOUTUBE_IMG}${this.state.videoId}/hqdefault.jpg` }}
                             style={{
                                 alignSelf: 'stretch',
                                 height: 300,

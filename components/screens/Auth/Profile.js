@@ -102,7 +102,7 @@ export default class Profile extends React.Component {
                                 res.message,
                             );
                         })
-                        .catch(err => console.error(err));
+                        .catch(err => console.log(err));
                 });
         }).catch(e => {
             console.log(e);

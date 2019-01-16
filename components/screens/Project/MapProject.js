@@ -13,9 +13,14 @@ import MapView, {
     Marker,
 } from 'react-native-maps';
 import {
+    Container,
+    Content,
     Icon,
+    Spinner,
     Toast
 } from 'native-base';
+import * as Progress from 'react-native-progress';
+import Modal from 'react-native-modal';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import AdvanceSearch from './AdvanceSearch';
@@ -29,6 +34,9 @@ import { loading } from '../../../Helpers';
 import KindProject from '../../Modal/KindProject';
 import saveProject from '../../../api/saveProject';
 import icPin from './../../../icons/pin-building.png';
+import getLocalOption from '../../../api/getLocalOption';
+import getOptionProjects from '../../../api/getOptionProjects';
+import saveOptionProject from '../../../api/saveOptionProject';
 
 const { width, height } = Dimensions.get('window');
 let isHidden = true;
@@ -74,6 +82,9 @@ export default class MapProject extends React.Component {
             kindValue: new Animated.Value(heightResult),
             dataSearch: [],
             region: null,
+            isSearching: false,
+            isMoving: false,
+            isLoadingModal: false
         };
         this.arrayProject = [];
         this.test = [];
@@ -82,44 +93,85 @@ export default class MapProject extends React.Component {
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-        setTimeout(() => {
-            this.setState({ loaded: true });
-        }, 1000);
+        getLocalOption()
+            .then(res => {
+                this.setState({ loaded: true });
+                if (!res) {
+                    getOptionProjects()
+                        .then(resJson => {
+                            if (resJson) {
+                                saveOptionProject(resJson.data)
+                                    .then(resSave => console.log(resSave))
+                                    .catch(err => console.log(err));
+                                this.setState({
+                                    options: resJson.data,
+                                });
+                            }
+                        })
+                        .catch(err => console.log(err));
+                }
+            })
+            .catch(err => console.log(err));
     }
 
     fetchProject(center) {
-        const northeast = {
-            latitude: center.latitude + center.latitudeDelta / 2,
-            longitude: center.longitude + center.longitudeDelta / 2,
-        };
-        const southwest = {
-            latitude: center.latitude - center.latitudeDelta / 2,
-            longitude: center.longitude - center.longitudeDelta / 2,
-        };
-        let query = '';
-        query += `&north_east_lat=${northeast.latitude}`;
-        query += `&north_east_lng=${northeast.longitude}`;
-        query += `&south_west_lat=${southwest.latitude}`;
-        query += `&south_west_lng=${southwest.longitude}`;
-        getProject(query)
-            .then(resJson => {
-                if (resJson.data.length > 0) {
-                    this.arrayProject = resJson.data;
+        setTimeout(() => {
+            console.log(this.state.isMoving);
+            // if (this.state.isMoving) {
+            //     return false;
+            // }
+
+            // if (this.state.isSearching) {
+            //     return false;
+            // }
+            this.setState({
+                isSearching: true,
+                isMoving: false,
+                isLoadingModal: true
+            });
+            const northeast = {
+                latitude: center.latitude + center.latitudeDelta / 2,
+                longitude: center.longitude + center.longitudeDelta / 2,
+            };
+            const southwest = {
+                latitude: center.latitude - center.latitudeDelta / 2,
+                longitude: center.longitude - center.longitudeDelta / 2,
+            };
+            let query = '';
+            query += `&north_east_lat=${northeast.latitude}`;
+            query += `&north_east_lng=${northeast.longitude}`;
+            query += `&south_west_lat=${southwest.latitude}`;
+            query += `&south_west_lng=${southwest.longitude}`;
+            getProject(query)
+                .then(resJson => {
                     this.setState({
-                        listProject: this.arrayProject
+                        isSearching: false,
+                        isLoadingModal: false
                     });
-                    return saveProject(resJson.data)
-                        .then()
-                        .catch(err => console.log(err));
-                }
-                return Toast.show({
-                    text: 'Không có dữ liệu!',
-                    type: 'danger',
-                    buttonText: 'Xác nhận',
-                    duration: 10000
+                    console.log(resJson);
+                    if (resJson.data.length > 0) {
+                        this.arrayProject = resJson.data;
+                        this.setState({
+                            listProject: this.arrayProject
+                        });
+                        return saveProject(resJson.data)
+                            .then()
+                            .catch(err => console.log(err));
+                    }
+                    // return Toast.show({
+                    //     text: 'Không có dữ liệu!',
+                    //     type: 'danger',
+                    //     buttonText: 'Xác nhận',
+                    //     duration: 2000
+                    // });
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.setState({
+                        isLoadingModal: false
+                    });
                 });
-            })
-            .catch(err => console.log(err));
+        }, 200);
     }
 
     toggleAdvanceSearch(val, wantHide, dataSearch) {
@@ -224,9 +276,11 @@ export default class MapProject extends React.Component {
         if (!this.state.loaded) {
             return loading();
         }
+        console.log(this.state.isLoadingModal);
         return (
             <View style={styles.wrapper}>
                 <Header navigation={this.props.navigation} title='BẢN ĐỒ DỰ ÁN' />
+                {/*{this.state.isSearching && <Progress.Bar indeterminate />}*/}
                 <View style={styles.mapContainer}>
                     <MapView
                         style={{ width, flex: 1 }}
@@ -256,6 +310,7 @@ export default class MapProject extends React.Component {
                         onPress={() => {
                             this.togglePopup(true);
                             this.toggleKindProject();
+                            this.toggleResult(false);
                         }}
                         onMarkerSelect={(e) => {
                             this.togglePopup(false, e.nativeEvent.id);
@@ -266,11 +321,27 @@ export default class MapProject extends React.Component {
                         onMapReady={() => {
                             // this.setState({ loaded: true });
                         }}
+                        // onRegionChange={() => {
+                        //     console.log('onRegionChange');
+                        //     if (!this.state.isMoving) {
+                        //         setTimeout(() => {
+                        //             this.setState({ isMoving: true });
+                        //         }, 200);
+                        //     }
+                        // }}
+                        // onLongPress={() => {
+                        //     console.log('onLongPress');
+                        //     if (!this.state.isMoving) {
+                        //         setTimeout(() => {
+                        //             this.setState({ isMoving: true });
+                        //         }, 200);
+                        //     }
+                        // }}
                         onRegionChangeComplete={(center) => {
-                            this.fetchProject(center);
+                             this.fetchProject(center);
                         }}
                     >
-                        {this.state.listProject.map(project => (
+                        {this.state.listProject && this.state.listProject.map(project => (
                             <Marker.Animated
                                 key={project.id}
                                 identifier={project.id.toString()}
@@ -431,6 +502,16 @@ export default class MapProject extends React.Component {
                         kind={this.state.kind}
                     />}
                 </Animated.View>
+                {/*<Modal*/}
+                    {/*isVisible={this.state.isLoadingModal}*/}
+                    {/*onSwipe={() => this.setState({ isLoadingModal: false })}*/}
+                    {/*swipeDirection="left"*/}
+                    {/*transparent*/}
+                    {/*onBackButtonPress={() => this.setState({ isLoadingModal: false })}*/}
+                    {/*onBackdropPress={() => this.setState({ isLoadingModal: false })}*/}
+                {/*>*/}
+                    {/*{loading()}*/}
+                {/*</Modal>*/}
             </View>
         );
     }

@@ -183,10 +183,14 @@ export default class KindProject extends Component {
                                 </TouchableOpacity>
                                 </Body>
                                 <Right>
-                                    <Button transparent onPress={this.onLikeProject.bind(this, item.id)}>
+                                    <Button
+                                        transparent
+                                        onPress={this.onLikeProject.bind(this, item.id)}
+                                    >
                                         <Icon
                                             type='FontAwesome'
-                                            name={this.state.listFavourite.includes(item.id) ? 'heart' : 'heart-o'}
+                                            name={this.state.listFavourite.includes(item.id) ?
+                                                'heart' : 'heart-o'}
                                             style={{ color: 'orange' }}
                                         />
                                     </Button>

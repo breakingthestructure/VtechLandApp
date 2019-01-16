@@ -11,21 +11,23 @@ import {
 } from 'react-native';
 import {
     Icon,
-    Picker
+    Picker,
+    Container,
+    Content,
+    Spinner
 } from 'native-base';
 import SwitchSelector from 'react-native-switch-selector';
 import Autocomplete from 'react-native-autocomplete-input';
+import Modal from 'react-native-modal';
 import Header from './../Home/Header';
 import getCities from './../../../api/getCities';
 import getDistricts from './../../../api/getDistricts';
 import getWards from './../../../api/getWards';
 import getStreets from './../../../api/getStreets';
 import styles from './../../../styles';
-import getOptionProjects from './../../../api/getOptionProjects';
 import { loading } from './../../../Helpers';
 import getProject from './../../../api/getProject';
 import getLocalOption from './../../../api/getLocalOption';
-import saveOptionProject from './../../../api/saveOptionProject';
 
 export default class AdvanceSearch extends Component {
     _keyExtractor = (item, index) => index.toString(); //eslint-disable-line
@@ -82,37 +84,12 @@ export default class AdvanceSearch extends Component {
                         arrFeature,
                         feature: res.project_features
                     });
-                } else {
-                    getOptionProjects()
-                        .then(resJson => {
-                            if (resJson) {
-                                const arrFeature = Object.keys(
-                                    resJson.data.project_features).map((item) => {
-                                        return {
-                                            key: item,
-                                            value: resJson.data.project_features[item]
-                                        };
-                                    }
-                                );
-                                saveOptionProject(resJson.data)
-                                    .then(resSave => console.log(resSave))
-                                    .catch(err => console.log(err));
-                                this.setState({
-                                    options: resJson.data,
-                                    loaded: true,
-                                    arrFeature,
-                                    feature: resJson.data.project_features
-                                });
-                            }
-                        })
-                        .catch(err => console.log(err));
                 }
             })
             .catch(err => console.log(err));
         getCities()
             .then(resJson => {
                 if (resJson) {
-                    console.log(resJson);
                     this.setState({
                         cities: resJson.data,
                         loaded: true
@@ -164,7 +141,7 @@ export default class AdvanceSearch extends Component {
     }
 
     onSearch() {
-        this.setState({ txtSubmit: 'Đang xử lý', isHidden: true });
+        this.setState({ txtSubmit: 'Đang xử lý', isHidden: true, isLoadingModal: true });
         this.toggleQuickSearch(true);
         const {
             name,
@@ -230,7 +207,7 @@ export default class AdvanceSearch extends Component {
         getProject(query)
             .then(resJson => {
                 if (resJson.data) {
-                    this.setState({ txtSubmit: 'TÌM KIẾM' });
+                    this.setState({ txtSubmit: 'TÌM KIẾM', isLoadingModal: false });
                     this.props.toggleAdvanceSearch(this.props.bounceValue, true, resJson.data);
                 }
             })
@@ -272,9 +249,8 @@ export default class AdvanceSearch extends Component {
 
     render() {
         const { name } = this.state;
-        const listProject = this.findProject(name);
-        console.log(listProject);
-        const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
+        // const listProject = this.findProject(name);
+        // const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
 
         const { cities, districts, wards, streets, options } = this.state;
         if (!this.state.loaded || !cities || !options.length === 0 || !options.project_types) {
@@ -292,112 +268,112 @@ export default class AdvanceSearch extends Component {
 
                 <ScrollView style={styles.content}>
                     {/*<Animated.View*/}
-                        {/*style={*/}
-                            {/*[styles.viewAutocomplete,*/}
-                                {/*{ height: this.state.resultValue }]*/}
-                        {/*}*/}
-                        {/*// style={{*/}
-                        {/*//     position: 'relative',*/}
-                        {/*//     height: 40,*/}
-                        {/*// }}*/}
+                    {/*style={*/}
+                    {/*[styles.viewAutocomplete,*/}
+                    {/*{ height: this.state.resultValue }]*/}
+                    {/*}*/}
+                    {/*// style={{*/}
+                    {/*//     position: 'relative',*/}
+                    {/*//     height: 40,*/}
+                    {/*// }}*/}
                     {/*>*/}
-                        {/*<Autocomplete*/}
-                            {/*containerStyle={*/}
-                                {/*this.state.isHidden ?*/}
-                                    {/*styles.autocompleteContainerFull :*/}
-                                    {/*styles.autocompleteContainer*/}
-                            {/*}*/}
-                            {/*inputContainerStyle={{*/}
-                                {/*borderWidth: 0,*/}
-                            {/*}}*/}
-                            {/*listStyle={styles.autocompleteResult}*/}
-                            {/*// autoCapitalize="none"*/}
-                            {/*// autoCorrect*/}
-                            {/*defaultValue={name}*/}
-                            {/*onChangeText={text => this.setState({ name: text })}*/}
-                            {/*data={*/}
-                                {/*listProject.length === 1 && comp(name, listProject[0].name)*/}
-                                    {/*? [] : listProject*/}
-                            {/*}*/}
-                            {/*renderTextInput={() => (*/}
-                                {/*<View*/}
-                                    {/*style={{*/}
-                                        {/*flexDirection: 'row',*/}
-                                        {/*justifyContent: 'space-between'*/}
-                                    {/*}}*/}
-                                {/*>*/}
-                                    {/*<TextInput*/}
-                                        {/*style={{*/}
-                                            {/*height: 40,*/}
-                                            {/*width: '90%',*/}
-                                            {/*marginLeft: 15,*/}
-                                        {/*}}*/}
-                                        {/*placeholder='Nhập tên dự án...'*/}
-                                        {/*underlineColorAndroid='transparent'*/}
-                                        {/*value={this.state.name}*/}
-                                        {/*onChangeText={text => {*/}
-                                            {/*this.setState({*/}
-                                                {/*name: text,*/}
-                                                {/*isHidden: false*/}
-                                            {/*}, () => {*/}
-                                                {/*let hide = false;*/}
-                                                {/*// if (this.state.name === '') {*/}
-                                                {/*//     this.setState({ isHidden: true }, () => {*/}
-                                                {/*//     });*/}
-                                                {/*//     hide = true;*/}
-                                                {/*// }*/}
-                                                {/*// if (listProject.length === 0) {*/}
-                                                {/*//     hide = true;*/}
-                                                {/*// }*/}
-                                                {/*this.toggleQuickSearch(hide);*/}
-                                            {/*});*/}
+                    {/*<Autocomplete*/}
+                    {/*containerStyle={*/}
+                    {/*this.state.isHidden ?*/}
+                    {/*styles.autocompleteContainerFull :*/}
+                    {/*styles.autocompleteContainer*/}
+                    {/*}*/}
+                    {/*inputContainerStyle={{*/}
+                    {/*borderWidth: 0,*/}
+                    {/*}}*/}
+                    {/*listStyle={styles.autocompleteResult}*/}
+                    {/*// autoCapitalize="none"*/}
+                    {/*// autoCorrect*/}
+                    {/*defaultValue={name}*/}
+                    {/*onChangeText={text => this.setState({ name: text })}*/}
+                    {/*data={*/}
+                    {/*listProject.length === 1 && comp(name, listProject[0].name)*/}
+                    {/*? [] : listProject*/}
+                    {/*}*/}
+                    {/*renderTextInput={() => (*/}
+                    {/*<View*/}
+                    {/*style={{*/}
+                    {/*flexDirection: 'row',*/}
+                    {/*justifyContent: 'space-between'*/}
+                    {/*}}*/}
+                    {/*>*/}
+                    {/*<TextInput*/}
+                    {/*style={{*/}
+                    {/*height: 40,*/}
+                    {/*width: '90%',*/}
+                    {/*marginLeft: 15,*/}
+                    {/*}}*/}
+                    {/*placeholder='Nhập tên dự án...'*/}
+                    {/*underlineColorAndroid='transparent'*/}
+                    {/*value={this.state.name}*/}
+                    {/*onChangeText={text => {*/}
+                    {/*this.setState({*/}
+                    {/*name: text,*/}
+                    {/*isHidden: false*/}
+                    {/*}, () => {*/}
+                    {/*let hide = false;*/}
+                    {/*// if (this.state.name === '') {*/}
+                    {/*//     this.setState({ isHidden: true }, () => {*/}
+                    {/*//     });*/}
+                    {/*//     hide = true;*/}
+                    {/*// }*/}
+                    {/*// if (listProject.length === 0) {*/}
+                    {/*//     hide = true;*/}
+                    {/*// }*/}
+                    {/*this.toggleQuickSearch(hide);*/}
+                    {/*});*/}
 
-                                        {/*}}*/}
-                                        {/*onEndEditing={() => {*/}
-                                            {/*// this.setState({ isHidden: true }, () => {*/}
-                                            {/*//     setTimeout(() => {*/}
-                                            {/*//         this.toggleQuickSearch(true);*/}
-                                            {/*//     }, 1000);*/}
-                                            {/*// });*/}
-                                        {/*}}*/}
-                                    {/*/>*/}
-                                    {/*<TouchableOpacity*/}
-                                        {/*onPress={this.onSearch.bind(this)}*/}
-                                    {/*>*/}
-                                        {/*<Icon*/}
-                                            {/*name='ios-search'*/}
-                                            {/*style={{*/}
-                                                {/*fontSize: 24,*/}
-                                                {/*color: 'orange',*/}
-                                                {/*marginTop: 10,*/}
-                                                {/*marginRight: 10*/}
-                                            {/*}}*/}
-                                        {/*/>*/}
-                                    {/*</TouchableOpacity>*/}
-                                {/*</View>*/}
-                            {/*)}*/}
-                            {/*renderItem={item => (*/}
-                                {/*<TouchableOpacity*/}
-                                    {/*onPress={() => {*/}
-                                        {/*this.setState({*/}
-                                            {/*name: item.name,*/}
-                                        {/*}, () => {*/}
-                                            {/*this.toggleQuickSearch(true);*/}
-                                            {/*this.setState({ isHidden: true });*/}
-                                        {/*});*/}
-                                    {/*}}*/}
-                                    {/*style={{*/}
-                                        {/*flexDirection: 'column',*/}
-                                        {/*height: 50,*/}
-                                        {/*justifyContent: 'center',*/}
-                                        {/*alignContent: 'center'*/}
-                                    {/*}}*/}
-                                {/*>*/}
-                                    {/*<Text>{item.name}</Text>*/}
-                                    {/*<Text>{item.address}</Text>*/}
-                                {/*</TouchableOpacity>*/}
-                            {/*)}*/}
-                        {/*/>*/}
+                    {/*}}*/}
+                    {/*onEndEditing={() => {*/}
+                    {/*// this.setState({ isHidden: true }, () => {*/}
+                    {/*//     setTimeout(() => {*/}
+                    {/*//         this.toggleQuickSearch(true);*/}
+                    {/*//     }, 1000);*/}
+                    {/*// });*/}
+                    {/*}}*/}
+                    {/*/>*/}
+                    {/*<TouchableOpacity*/}
+                    {/*onPress={this.onSearch.bind(this)}*/}
+                    {/*>*/}
+                    {/*<Icon*/}
+                    {/*name='ios-search'*/}
+                    {/*style={{*/}
+                    {/*fontSize: 24,*/}
+                    {/*color: 'orange',*/}
+                    {/*marginTop: 10,*/}
+                    {/*marginRight: 10*/}
+                    {/*}}*/}
+                    {/*/>*/}
+                    {/*</TouchableOpacity>*/}
+                    {/*</View>*/}
+                    {/*)}*/}
+                    {/*renderItem={item => (*/}
+                    {/*<TouchableOpacity*/}
+                    {/*onPress={() => {*/}
+                    {/*this.setState({*/}
+                    {/*name: item.name,*/}
+                    {/*}, () => {*/}
+                    {/*this.toggleQuickSearch(true);*/}
+                    {/*this.setState({ isHidden: true });*/}
+                    {/*});*/}
+                    {/*}}*/}
+                    {/*style={{*/}
+                    {/*flexDirection: 'column',*/}
+                    {/*height: 50,*/}
+                    {/*justifyContent: 'center',*/}
+                    {/*alignContent: 'center'*/}
+                    {/*}}*/}
+                    {/*>*/}
+                    {/*<Text>{item.name}</Text>*/}
+                    {/*<Text>{item.address}</Text>*/}
+                    {/*</TouchableOpacity>*/}
+                    {/*)}*/}
+                    {/*/>*/}
                     {/*</Animated.View>*/}
                     <View
                         style={{
@@ -424,16 +400,20 @@ export default class AdvanceSearch extends Component {
                                 value={this.state.name}
                                 onChangeText={text => this.setState({ name: text })}
                             />
-                            <Icon
-                                active
-                                name='ios-search'
-                                style={{
-                                    color: 'orange',
-                                    paddingRight: 20,
-                                    fontSize: 22,
-                                    marginTop: 5
-                                }}
-                            />
+                            <TouchableOpacity
+                                onPress={this.onSearch.bind(this)}
+                            >
+                                <Icon
+                                    active
+                                    name='ios-search'
+                                    style={{
+                                        color: 'orange',
+                                        paddingRight: 20,
+                                        fontSize: 22,
+                                        marginTop: 5
+                                    }}
+                                />
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <Text style={styles.titleScreen}>Tìm kiếm nâng cao</Text>
@@ -755,6 +735,14 @@ export default class AdvanceSearch extends Component {
                         <Text style={styles.textBtnIcon}>{this.state.txtSubmit}</Text>
                     </TouchableOpacity>
                 </ScrollView>
+                <Modal
+                    isVisible={this.state.isLoadingModal}
+                    onSwipe={() => this.setState({ isLoadingModal: false })}
+                    swipeDirection="left"
+                    transparent
+                >
+                    {loading()}
+                </Modal>
             </View>
         );
     }

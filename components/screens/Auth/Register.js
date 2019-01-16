@@ -68,7 +68,7 @@ export default class Register extends React.Component {
                     duration: 10000
                 });
             })
-            .catch(err => console.error(err));
+            .catch(err => console.log(err));
     }
 
     render() {

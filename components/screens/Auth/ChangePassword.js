@@ -55,7 +55,7 @@ export default class ChangePassword extends React.Component {
                                     buttonText: 'Xác nhận'
                                 });
                             })
-                            .catch(err => console.error(err));
+                            .catch(err => console.log(err));
                     });
             });
 

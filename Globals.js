@@ -18,11 +18,6 @@ module.exports = {
     user: null,
     NO_IMAGE: 'http://vtechhomes.vn/img/nophoto.png',
     GOOGLE_API: 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyByXMeeujrWpH517p7LkQrfBmTNIN1RTkQ&address=',
-    TYPE_ROOM: {
-        bedroom: 'Phòng ngủ',
-        kitchen: 'Phòng bếp',
-        toilet: 'Toilet'
-    },
     YOUTUBE_APIKEY: 'AIzaSyByXMeeujrWpH517p7LkQrfBmTNIN1RTkQ',
     CLIENT_SECRET: '3GfSREURwlYxIAg5yPDacPG0hvE0AtamUlc82na6',
     CLIENT_ID: 2,
@@ -31,5 +26,7 @@ module.exports = {
         TO_SELL: 2,
         TO_REST: 3,
         TO_INTERNATIONAL: 4
-    }
+    },
+    IMG_RESIZE_LINK: '?w=800',
+    YOUTUBE_IMG: 'https://img.youtube.com/vi/'
 };

@@ -152,8 +152,20 @@ export default class CalcDebt extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        this.setState({ loaded: false });
+    }
+
     onCalcDebt() {
-        const { modeDebt, txtMoney, txtMonth, graceDebt, arrayCondition, txtTimeGrace, date } = this.state;
+        const {
+            modeDebt,
+            txtMoney,
+            txtMonth,
+            graceDebt,
+            arrayCondition,
+            txtTimeGrace,
+            date
+        } = this.state;
         const moneyDebt = txtMoney.split('.').join('');
         let interestRateMonthly = 0;
         let totalMonthly = 0;

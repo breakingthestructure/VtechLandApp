@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import FastImage from 'react-native-fast-image';
+import { createImageProgress } from 'react-native-image-progress';
+import { Spinner } from 'native-base';
 import styles from './../../../styles';
 import {
     NO_IMAGE,
@@ -16,10 +18,16 @@ import SetCalendar from './SetCalendar';
 import CalcDebt from './CalcDebt';
 import SupportProject from './SupportProject';
 import DetailProject from './DetailProject';
-import { loading } from '../../../Helpers';
+import {
+    dataNotFound,
+    getLinkImage,
+    loading
+} from '../../../Helpers';
 import Header from '../Home/Header';
 import ActionProject from './ActionProject';
 import News from './News';
+
+const ImageProgress = createImageProgress(FastImage);
 
 export default class MainProject extends Component {
     handleBackPress = () => { //eslint-disable-line
@@ -35,20 +43,6 @@ export default class MainProject extends Component {
             project: null,
             loaded: false,
             tab: 1,
-            isReady: false,
-            index: 0,
-            modalVisible: false,
-            status: null,
-            quality: null,
-            error: null,
-            isPlaying: true,
-            isLooping: true,
-            duration: 0,
-            currentTime: 0,
-            fullscreen: false,
-            containerMounted: false,
-            containerWidth: null,
-            listImage: [],
             videoId: '',
         };
         this.onChangeTab = this.onChangeTab.bind(this);
@@ -86,6 +80,9 @@ export default class MainProject extends Component {
         if (!this.state.loaded) {
             return loading();
         }
+        if (!project) {
+            return dataNotFound();
+        }
         return (
             <View style={styles.container}>
                 <Header
@@ -99,19 +96,11 @@ export default class MainProject extends Component {
                         <Swiper showsButtons removeClippedSubviews={false}>
                             {project.images && project.images.project_feature &&
                             project.images.project_feature.map((value, key) => (
-                                <FastImage
+                                <ImageProgress
                                     key={key}
+                                    source={{ uri: (value) ? getLinkImage(value) : NO_IMAGE }}
+                                    indicator={Spinner}
                                     style={styles.imageSlide}
-                                    source={{
-                                        uri: (value) ? value : NO_IMAGE,
-                                        priority: FastImage.priority.normal,
-                                    }}
-                                    // resizeMode={FastImage.resizeMode.contain}
-                                    onProgress={e => {
-                                        console.log(e.nativeEvent.loaded / e.nativeEvent.total);
-                                        if (e.nativeEvent.loaded / e.nativeEvent.total < 1) {
-                                        }
-                                    }}
                                 />
                             ))}
                         </Swiper>}

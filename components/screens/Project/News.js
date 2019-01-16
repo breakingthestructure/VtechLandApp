@@ -17,6 +17,7 @@ import {
 import { loading } from '../../../Helpers';
 import getNews from './../../../api/getNews';
 
+
 export default class News extends React.Component {
     keyExtractor = (item) => item.id.toString(); //eslint-disable-line
 
@@ -46,7 +47,6 @@ export default class News extends React.Component {
         if (project) {
             getNews(project.name)
                 .then(res => {
-                    console.log(res);
                     if (res.status === 200) {
                         if (res.data.data.length === 0) {
                             return Toast.show({
@@ -61,7 +61,7 @@ export default class News extends React.Component {
                         });
                     }
                 })
-                .catch(err => console.error(err));
+                .catch(err => console.log(err));
         } else {
             return Toast.show({
                 text: 'Không tồn tại dự án',

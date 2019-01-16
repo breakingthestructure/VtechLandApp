@@ -22,7 +22,7 @@ export default StyleSheet.create({
     containerLoading: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: 'white'
+        backgroundColor: 'transparent'
     },
     statusBar: {
         height: STATUSBAR_HEIGHT,
@@ -1202,4 +1202,8 @@ export default StyleSheet.create({
         fontWeight: '600',
         fontSize: 12
     },
+    p: {
+        padding: 0,
+        margin: 0
+    }
 });

@@ -41,7 +41,7 @@ export default class CategoryPartner extends Component {
                     });
                 }
             })
-            .catch(err => console.error(err));
+            .catch(err => console.log(err));
     }
 
     render() {

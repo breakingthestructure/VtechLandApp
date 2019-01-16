@@ -5,13 +5,19 @@ import {
     Text,
     View
 } from 'react-native';
-import { Container, Content, Spinner } from 'native-base';
+import {
+    Container,
+    Content,
+    Spinner
+} from 'native-base';
+import Modal from 'react-native-modal';
 import styles from './styles';
-import { AVAIABLE, DISABLED, HOLDING, INCOMPLETE, SOLD, WAITING } from './constants/app';
+import { IMG_RESIZE_LINK } from './Globals';
 
 export function getDaysInMonth(month, year) {
     return new Date(year, month, 0).getDate();
 }
+
 export function formatMoney(n, c, d, t) {
     var c = isNaN(c = Math.abs(c)) ? 2 : c,
         d = d == undefined ? "." : d,
@@ -71,11 +77,29 @@ export function getYoutubeId(youtubeStr) {
 
 export function loading() {
     return (
-        <Container>
+        <Container style={{ backgroundColor: 'transparent' }}>
             <Content contentContainerStyle={styles.containerLoading}>
                 <Spinner />
             </Content>
         </Container>
+    );
+}
+
+export function modalLoading() {
+    console.log(11);
+    return (
+        <Modal
+            isVisible={true}
+            // onSwipe={() => this.setState({ isLoadingModal: false })}
+            swipeDirection="left"
+            transparent
+        >
+            <Container style={{ backgroundColor: 'transparent' }}>
+                <Content contentContainerStyle={styles.containerLoading}>
+                    <Spinner />
+                </Content>
+            </Container>
+        </Modal>
     );
 }
 
@@ -158,7 +182,14 @@ export function getActiveRouteName(navigationState) {
 export function dataNotFound() {
     return (
         <View>
-            <Text>Dữ liệu trống</Text>
+            <Text style={{ textAlign: 'center' }}>Dữ liệu trống</Text>
         </View>
     );
+}
+
+export function getLinkImage(link) {
+    let url = '';
+    url = link.replace('storage', 'img');
+    url += IMG_RESIZE_LINK;
+    return url;
 }
