@@ -11,7 +11,7 @@ const {
 } = Dimensions.get('window');
 const heightPopup = 220;
 const heightResult = 300;
-const heightSearch = Platform.OS === 'ios' ? height : height;
+const heightSearch = height;
 const imageWidth = width;
 const imageHeight = (imageWidth / 3900) * 2092;
 
@@ -201,6 +201,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
+        height: 400,
         backgroundColor: '#FFFFFF',
         // margin: 10,
         borderRadius: 2,
@@ -220,7 +221,8 @@ export default StyleSheet.create({
             width: 0,
             height: 3
         },
-        shadowOpacity: 0.2
+        shadowOpacity: 0.2,
+        backgroundColor: 'white'
     },
     subView: {
         position: 'absolute',

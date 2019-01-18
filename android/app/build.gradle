@@ -138,6 +138,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-interactable')
     compile project(':react-native-fast-image')
     compile project(':react-native-youtube')
     implementation project(':react-native-image-resizer')

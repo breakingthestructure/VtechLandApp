@@ -56,8 +56,9 @@ import AllBuilding from './components/screens/Project/AllBuilding';
 import ListPartner from './components/screens/Option/ListPartner';
 import DetailPartner from './components/screens/Option/DetailPartner';
 import CategoryPartner from './components/screens/Option/CategoryPartner';
-import Test from "./Test";
-import MainProject from "./components/screens/Project/MainProject";
+import Test from './Test';
+import MainProject from './components/screens/Project/MainProject';
+import MapNew from './components/screens/Project/MapNew';
 
 console.disableYellowBox = true;
 
@@ -221,15 +222,15 @@ const LeftDrawer = createDrawerNavigator(
         PartnerScreen: {
             screen: PartnerStack
         },
-        // TestScreen: {
-        //     screen: Test
-        // },
+        TestScreen: {
+            screen: MapNew
+        },
         // MainProjectScreen: {
         //     screen: MainProject
         // },
     },
     {
-        initialRouteName: 'MapScreen',
+        initialRouteName: 'TestScreen',
         contentComponent: Menu,
         getCustomActionCreators: (route, stateKey) => {
             return {

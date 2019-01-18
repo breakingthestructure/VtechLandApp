@@ -13,14 +13,11 @@ import MapView, {
     Marker,
 } from 'react-native-maps';
 import {
-    Container,
-    Content,
     Icon,
-    Spinner,
-    Toast
 } from 'native-base';
 import * as Progress from 'react-native-progress';
 import Modal from 'react-native-modal';
+import Interactable from 'react-native-interactable';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import AdvanceSearch from './AdvanceSearch';

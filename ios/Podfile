@@ -21,5 +21,5 @@ target 'TechLandNative' do
   pod 'XCDYouTubeKit', '~> 2.5'
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
   pod 'react-native-fast-image', :path => '../node_modules/react-native-fast-image'
-
+  pod 'Interactable', :path => '../node_modules/react-native-interactable'
 end
