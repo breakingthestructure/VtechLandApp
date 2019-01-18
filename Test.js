@@ -1,77 +1,47 @@
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    View,
-    TouchableOpacity,
-    Text
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Interactable from 'react-native-interactable';
 
-export default class Test extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
+export default class SwipeableCard extends Component {
     render() {
-        const snapPoints = [
-            { x: -140, y: -250 },
-            { x: 140, y: -250 },
-            { x: -140, y: -200 },
-            { x: -120, y: 300 },
-            { x: -140, y: 0 },
-            { x: 140, y: 0 },
-            { x: -140, y: 120 },
-            { x: 140, y: 120 },
-            { x: -140, y: 250 },
-            { x: 140, y: 250 }
-        ];
-        const blueDestination = snapPoints[3];
         return (
             <View style={styles.container}>
+
                 <Interactable.View
-                    style={{ zIndex: 2, height: 200, backgroundColor: 'orange' }}
-                    ref='blue'
-                    snapPoints={snapPoints}
-                    initialPosition={{ x: -140, y: 0 }}
-                >
-                    <View style={{ width: 70, height: 70, backgroundColor: 'blue', borderRadius: 35 }} />
+                    key="first"
+                    horizontalOnly={true}
+                    resistance={3000}
+                    snapTo={[
+                        {x: 350},
+                        {x: 0},
+                        {x: -350}
+                    ]}>
+                    <View style={{width: 300, height: 200, backgroundColor: 'red', borderRadius: 8, marginVertical: 6}} />
                 </Interactable.View>
+
                 <Interactable.View
-                    style={{ zIndex: 2 }}
-                    ref='green'
-                    snapPoints={snapPoints}
-                    initialPosition={{ x: -140, y: 0 }}
-                >
-                    <View style={{ width: 70, height: 70, backgroundColor: 'green', borderRadius: 35 }} />
+                    key="second"
+                    horizontalOnly={true}
+                    snapTo={[
+                        {x: 350},
+                        {x: 0},
+                        {x: -350}
+                    ]}>
+                    <View style={{width: 300, height: 200, backgroundColor: 'red', borderRadius: 8, marginVertical: 6}} />
                 </Interactable.View>
-                <View style={{
-                    position: 'absolute',
-                    left: 140,
-                    zIndex: 1,
-                }}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            this.refs['blue'].changePosition(blueDestination)
-                        }}
-                    >
-                        <Text style={{
-                            color: 'blue',
-                            fontSize: 12
-                        }}>{"ChangePosition to1 " + JSON.stringify(blueDestination)}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => {
-                            this.refs['green'].changePosition({
-                                    x: (Math.random() - 0.5) * 280,
-                                    y: (Math.random() - 0.5) * 500
-                                }
-                            )
-                        }}
-                    >
-                        <Text style={{ color: 'green' }}>ChangePosition to random</Text>
-                    </TouchableOpacity>
-                </View>
+
+                <Interactable.View
+                    key="third"
+                    horizontalOnly={true}
+                    allowRotation={true}
+                    snapTo={[
+                        {x: 350},
+                        {x: 0},
+                        {x: -350}
+                    ]}>
+                    <View style={{width: 300, height: 200, backgroundColor: 'red', borderRadius: 8, marginVertical: 6}} />
+                </Interactable.View>
+
             </View>
         );
     }

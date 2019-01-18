@@ -1207,5 +1207,61 @@ export default StyleSheet.create({
     p: {
         padding: 0,
         margin: 0
+    },
+    //MapNewJS
+    mapWrapper: {
+        backgroundColor: '#FFFFFF',
+        flex: 4
+    },
+    mapContent: { width, flex: 1 },
+    dynamicSearch: {
+        padding: 10,
+        borderRadius: 10,
+        shadowColor: '#3B5458',
+        shadowOffset: {
+            width: 0,
+            height: 3
+        },
+        shadowOpacity: 0.2,
+        elevation: 3,
+        backgroundColor: 'white',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        flex: 1
+    },
+    dynamicSearchContent: {
+        height: 600,
+        zIndex: 3
+    },
+    btnShowAdvanceSearch: {
+        marginTop: 5,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    iconShowAdvanceSearch: { color: '#004a80', fontSize: 14 },
+    inputView: {
+        height: 40,
+        width: '100%',
+        borderRadius: 20,
+        marginTop: 5,
+        borderColor: '#33563743',
+        borderWidth: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+    iconSearchInput: {
+        color: 'orange',
+        paddingRight: 20,
+        fontSize: 22,
+        marginTop: 5
+    },
+    listFeature: {
+        marginLeft: 0,
+        width: '50%',
+        flexDirection: 'row',
+        marginBottom: 5,
+        left: 0
     }
 });
