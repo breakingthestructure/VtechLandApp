@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Alert, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Body, Button, Container, Content, Icon, Left, ListItem, Right, Thumbnail } from 'native-base';
 import { BASE_URL, NO_IMAGE } from './../../Globals';
-import { loading } from '../../Helpers';
+import {
+    formatMoney,
+    loading
+} from '../../Helpers';
 import getToken from '../../api/getToken';
 import postLikeProject from '../../api/postLikeProject';
 import getFavouriteProjects from '../../api/getFavouriteProjects';
@@ -129,15 +132,20 @@ export default class SearchResult extends Component {
                                         note
                                         numberOfLines={1}
                                     >
-                                        {item.min_price} Tr - {item.max_price} tr/m2
+                                        {formatMoney(item.data.price_unit_min, 0)}tr
+                                        - {formatMoney(item.data.price_unit_max, 0)}tr/m2
                                     </Text>
                                 </TouchableOpacity>
                                 </Body>
                                 <Right>
-                                    <Button transparent onPress={this.onLikeProject.bind(this, item.id)}>
+                                    <Button
+                                        transparent
+                                        onPress={this.onLikeProject.bind(this, item.id)}
+                                    >
                                         <Icon
                                             type='FontAwesome'
-                                            name={this.state.listFavourite.includes(item.id) ? 'heart' : 'heart-o'}
+                                            name={this.state.listFavourite.includes(item.id) ?
+                                                'heart' : 'heart-o'}
                                             style={{ color: 'orange' }}
                                         />
                                     </Button>

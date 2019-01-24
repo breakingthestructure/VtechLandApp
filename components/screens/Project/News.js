@@ -94,11 +94,15 @@ export default class News extends React.Component {
                         renderItem={({ item }) => (
                             <ListItem thumbnail style={{ margin: 0 }}>
                                 <Left>
-                                    <Icon name='ios-square' style={{ fontSize: 12, color: '#053654' }} />
+                                    <Icon
+                                        name='ios-square'
+                                        style={{ fontSize: 12, color: '#053654' }}
+                                    />
                                 </Left>
                                 <Body style={{ margin: 0, height: 60 }}>
                                 <TouchableOpacity
-                                    onPress={() => this.props.navigation.navigate('DetailNewsScreen', {
+                                    onPress={() => this.props.navigation.navigate(
+                                        'DetailNewsScreen', {
                                         news: item
                                     })}
                                 >

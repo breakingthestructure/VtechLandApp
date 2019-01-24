@@ -33,6 +33,7 @@ export default class DetailNews extends React.Component {
     }
     renderNode(node, index) {
         if (node.name === 'img') {
+            console.log(node);
             const { src } = node.attribs;
             const imageWidth = node.attribs.width;
             const imageHeight = node.attribs.height;

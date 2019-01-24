@@ -134,7 +134,6 @@ export default class DetailProject extends React.Component {
         if (!this.state.loaded) {
             return loading();
         }
-        console.log(project);
         return (
             <View style={styles.content}>
                 <Text style={styles.titleScreenLeft}>{project.name}</Text>

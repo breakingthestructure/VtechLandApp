@@ -1,4 +1,6 @@
 PODS:
+  - boost-for-react-native (1.63.0)
+  - DoubleConversion (1.1.6)
   - Firebase (5.15.0):
     - Firebase/Core (= 5.15.0)
   - Firebase/Core (5.15.0):
@@ -33,6 +35,11 @@ PODS:
     - GoogleUtilities/Reachability (~> 5.2)
     - Protobuf (~> 3.1)
   - FLAnimatedImage (1.0.12)
+  - Folly (2016.10.31.00):
+    - boost-for-react-native
+    - DoubleConversion
+    - glog
+  - glog (0.3.5)
   - Google-Maps-iOS-Utils (2.1.0):
     - Google-Maps-iOS-Utils/Clustering (= 2.1.0)
     - Google-Maps-iOS-Utils/Geometry (= 2.1.0)
@@ -99,6 +106,20 @@ PODS:
     - React/Core
   - React/Core (0.57.4):
     - yoga (= 0.57.4.React)
+  - React/CxxBridge (0.57.4):
+    - Folly (= 2016.10.31.00)
+    - React/Core
+    - React/cxxreact
+  - React/cxxreact (0.57.4):
+    - boost-for-react-native (= 1.63.0)
+    - Folly (= 2016.10.31.00)
+    - React/jschelpers
+    - React/jsinspector
+  - React/jschelpers (0.57.4):
+    - Folly (= 2016.10.31.00)
+    - React/PrivateDatabase
+  - React/jsinspector (0.57.4)
+  - React/PrivateDatabase (0.57.4)
   - React/RCTImage (0.57.4):
     - React/Core
     - React/RCTNetwork
@@ -119,13 +140,16 @@ PODS:
   - SDWebImage/GIF (4.4.3):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
-  - XCDYouTubeKit (2.7.1)
+  - XCDYouTubeKit (2.7.3)
   - yoga (0.57.4.React)
 
 DEPENDENCIES:
+  - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Firebase
   - Firebase/Core
   - Firebase/Messaging
+  - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
+  - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - Google-Maps-iOS-Utils
   - GoogleMaps
   - Interactable (from `../node_modules/react-native-interactable`)
@@ -133,6 +157,7 @@ DEPENDENCIES:
   - react-native-fast-image (from `../node_modules/react-native-fast-image`)
   - React/ART (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
+  - React/CxxBridge (from `../node_modules/react-native`)
   - React/RCTImage (from `../node_modules/react-native`)
   - ReactNativeKeyboardManager (from `../node_modules/react-native-keyboard-manager`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
@@ -142,6 +167,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - boost-for-react-native
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -162,6 +188,12 @@ SPEC REPOS:
     - XCDYouTubeKit
 
 EXTERNAL SOURCES:
+  DoubleConversion:
+    :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
+  Folly:
+    :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
+  glog:
+    :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   Interactable:
     :path: "../node_modules/react-native-interactable"
   React:
@@ -176,6 +208,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
   FirebaseAnalyticsInterop: e5f21be9af6548372e2f0815834ff909bff395a2
@@ -183,6 +217,8 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
   FirebaseMessaging: b412996f6a09337d232bb3a6676ce4d1f353d024
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
+  glog: e8acf0ebbf99759d3ff18c86c292a5898282dcde
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
@@ -198,9 +234,9 @@ SPEC CHECKSUMS:
   RNImageCropPicker: 32ca4b9fef4e1b7b85ba69494242122948117e06
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
-  XCDYouTubeKit: c8567fd5cb388a3099fa26eee4b30df2a467847d
+  XCDYouTubeKit: 3f4fd3eb3ed494a46a8f007b91315eed6dd6df1f
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: 2dffb6db1996172b98bee22ba01e92bf3bd41de8
+PODFILE CHECKSUM: 8aade43c64d9cbc7d8bfaa887751084015870552
 
 COCOAPODS: 1.5.3

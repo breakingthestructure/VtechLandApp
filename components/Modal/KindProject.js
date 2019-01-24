@@ -16,7 +16,10 @@ import {
     Right,
     Thumbnail
 } from 'native-base';
-import { loading } from '../../Helpers';
+import {
+    formatMoney,
+    loading
+} from '../../Helpers';
 import getProject from '../../api/getProject';
 import {
     NO_IMAGE
@@ -178,7 +181,8 @@ export default class KindProject extends Component {
                                         note
                                         numberOfLines={1}
                                     >
-                                        {item.min_price} Tr - {item.max_price} tr/m2
+                                        {formatMoney(item.data.price_unit_min, 0)}tr
+                                        - {formatMoney(item.data.price_unit_max, 0)}tr/m2
                                     </Text>
                                 </TouchableOpacity>
                                 </Body>

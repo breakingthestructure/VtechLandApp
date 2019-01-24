@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import {
+    Dimensions,
+    Image,
+    View,
+    Text
+} from 'react-native';
+import {
     Container,
     Content,
     Accordion,
@@ -7,14 +13,11 @@ import {
     Card,
     CardItem
 } from 'native-base';
+import HTMLView from 'react-native-htmlview';
 import Header from './../Home/Header';
 import { loading } from '../../../Helpers';
-import {
-    Dimensions,
-    Image,
-    View
-} from "react-native";
 import imgQuestion from './../../../images/faq.jpg';
+import styles from "../../../styles";
 
 const dataArray = [
     { title: "Nên mua chung cư hay nhà mặt đất?", content: "Khi bạn sống ở một căn hộ chung cư từ trung cấp đến cao cấp có hạ tầng tương đối đồng bộ, bạn sẽ được tận hưởng những tiện ích và dịch vụ hiện hữu mang lại. Đó là siêu thị, café, quán ăn, khu vui chơi trẻ em, công viên cây xanh, ngân hàng, trường học, nhà thuốc, bể bơi, phòng tập thể dục thẩm mỹ, sân đánh tenis, bóng đá, hồ cảnh quan. Ngoài ra, chưa kể cuộc sống sẽ trở nên an toàn tuyệt đối nhờ hệ thống an ninh hiện đại, bảo vệ 24/24, điều này sẽ không thể có được khi khách hàng mua bất động sản thổ cư, đặc biệt là những khu vực đất thổ cư nhiều làng xóm cũ, khu vực bất ổn hoặc nhiều trộm cắp, thành phần phức tạp.\n" +
@@ -73,13 +76,26 @@ export default class ListQuestion extends Component {
         }, 200);
     }
 
+    _renderContent(item) {
+        return (
+            <HTMLView
+                value={item.content}
+                paragraphBreak=''
+                sylesheet={styles}
+            />
+        );
+    }
+
     render() {
         if (!this.state.loaded) {
             return loading();
         }
         return (
             <Container>
-                <Header navigation={this.props.navigation} title='CÂU HỎI THƯỜNG GẶP' back={'MapScreen'} />
+                <Header
+                    navigation={this.props.navigation}
+                    title='CÂU HỎI THƯỜNG GẶP' back={'MapScreen'}
+                />
                 <View style={{ height: (width / 833) * 457 }}>
                     <DeckSwiper
                         dataSource={cards}
@@ -98,6 +114,7 @@ export default class ListQuestion extends Component {
                 <Content>
                     <Accordion
                         dataArray={dataArray}
+                        renderContent={this._renderContent}
                     />
                 </Content>
             </Container>

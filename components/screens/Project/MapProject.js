@@ -67,7 +67,7 @@ export default class MapProject extends React.Component {
                 longitudeDelta: 0.0421,
             },
             text: '',
-            listProject: [],
+            providerProject: [],
             modalKind: false,
             modalPreview: false,
             modalAdvanceSearch: false,
@@ -113,7 +113,6 @@ export default class MapProject extends React.Component {
 
     fetchProject(center) {
         setTimeout(() => {
-            console.log(this.state.isMoving);
             // if (this.state.isMoving) {
             //     return false;
             // }
@@ -145,7 +144,6 @@ export default class MapProject extends React.Component {
                         isSearching: false,
                         isLoadingModal: false
                     });
-                    console.log(resJson);
                     if (resJson.data.length > 0) {
                         this.arrayProject = resJson.data;
                         this.setState({
@@ -273,7 +271,6 @@ export default class MapProject extends React.Component {
         if (!this.state.loaded) {
             return loading();
         }
-        console.log(this.state.isLoadingModal);
         return (
             <View style={styles.wrapper}>
                 <Header navigation={this.props.navigation} title='BẢN ĐỒ DỰ ÁN' />

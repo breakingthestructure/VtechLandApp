@@ -1,19 +1,20 @@
 import React from 'react';
 import {
+    Alert,
     Animated,
     BackHandler,
     Dimensions,
     FlatList,
-    Platform,
+    Image,
     RefreshControl,
     ScrollView,
     Switch,
     Text,
     TextInput,
     TouchableOpacity,
-    View,
-    Alert
+    View
 } from 'react-native';
+import { NavigationEvents } from 'react-navigation';
 import MapView, { Marker } from 'react-native-maps';
 import {
     Body,
@@ -27,12 +28,16 @@ import {
     Thumbnail
 } from 'native-base';
 import Interactable from 'react-native-interactable';
-import SwitchSelector from 'react-native-switch-selector';
+import Modal from 'react-native-modal';
 import Header from '../Home/Header';
 import PreviewProject from './../../Modal/PreviewProject';
 import getProject from './../../../api/getProject';
 import styles from './../../../styles';
-import { loading, dataNotFound } from '../../../Helpers';
+import {
+    dataNotFound,
+    formatMoney,
+    loading
+} from '../../../Helpers';
 import postLikeProject from './../../../api/postLikeProject';
 import saveProject from '../../../api/saveProject';
 import getLocalOption from '../../../api/getLocalOption';
@@ -43,13 +48,34 @@ import getCities from '../../../api/getCities';
 import getDistricts from '../../../api/getDistricts';
 import getWards from '../../../api/getWards';
 import getStreets from '../../../api/getStreets';
-import { NO_IMAGE } from '../../../Globals';
 import getToken from '../../../api/getToken';
 import getFavouriteProjects from '../../../api/getFavouriteProjects';
+import GLOBAL, { NO_IMAGE } from '../../../Globals';
+import icInvest from '../../../icons/invest.png';
+import icRest from '../../../icons/rest.png';
 
 const { width, height } = Dimensions.get('window');
 let isHiddenPopup = true;
 const heightPopup = 220;
+const heightAdvance = -(height - 160);
+
+const filterProject = value => {
+    return getProject(`&keyword=${value}`)
+        .then(res => {
+            return res.data.map(state => state.name);
+        });
+};
+
+
+const quickSearchName = (value) => {
+    const promise = new Promise((resolve) => {
+        const filteredStates = value === ''
+            ? []
+            : filterProject(value);
+        setTimeout(() => resolve(filteredStates), 400);
+    });
+    return promise;
+};
 
 export default class MapNew extends React.Component {
     handleBackPress = () => { //eslint-disable-line
@@ -60,9 +86,6 @@ export default class MapNew extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loaded: false,
-            location: null,
-            errorMessage: null,
             currentLocation: {
                 latitude: 21.027763,
                 longitude: 105.834160,
@@ -70,14 +93,12 @@ export default class MapNew extends React.Component {
                 longitudeDelta: 0.0421,
             },
             listProject: [],
-            modalPreview: false,
-            detailProject: null,
-            popupValue: new Animated.Value(heightPopup),
-            isSearching: false,
-            isOpeningAdvance: false,
             listSnapPoint: [
-                { x: 0, y: 535 },
-                { x: 0, y: 50 },
+                { x: 0, y: 0 },
+                { x: 0, y: -(height / 3) },
+                { x: 0, y: -(height / 2) },
+                { x: 0, y: -(height - 250) },
+                { x: 0, y: 100 },
             ],
             txtSubmit: 'TÌM KIẾM',
             name: '',
@@ -99,13 +120,21 @@ export default class MapNew extends React.Component {
             area: '',
             minPrice: '',
             maxPrice: '',
+            page: 1,
+            popupValue: new Animated.Value(heightPopup),
             isShowResult: false,
             listResult: [],
             refreshing: false,
-            page: 1
+            loaded: false,
+            location: null,
+            errorMessage: null,
+            modalPreview: false,
+            detailProject: null,
+            isSearching: false,
+            isOpeningAdvance: false,
+            isLoadingModal: false,
         };
         this.arrayProject = [];
-        this.test = [];
     }
 
     _onRefresh = () => { //eslint-disable-line
@@ -154,7 +183,6 @@ export default class MapNew extends React.Component {
             .catch(err => console.log(err));
         getToken()
             .then(token => {
-                console.log(token);
                 getFavouriteProjects(token)
                     .then(res => {
                         this.setState({
@@ -212,6 +240,7 @@ export default class MapNew extends React.Component {
         setTimeout(() => {
             this.setState({
                 isSearching: true,
+                isLoadingModal: true
             });
             const northeast = {
                 latitude: center.latitude + center.latitudeDelta / 2,
@@ -230,8 +259,8 @@ export default class MapNew extends React.Component {
                 .then(resJson => {
                     this.setState({
                         isSearching: false,
+                        isLoadingModal: false
                     });
-                    console.log(resJson);
                     if (resJson.data.length > 0) {
                         this.setState({
                             listProject: resJson.data
@@ -247,6 +276,26 @@ export default class MapNew extends React.Component {
         }, 200);
     }
 
+    showInfo(projectId, wantHide) {
+        const project = this.state.listProject.filter(e => e.id == projectId);
+        if (project[0]) {
+            this.setState({
+                modalPreview: true,
+                currentLocation: {
+                    latitude: parseFloat(project[0].latitude),
+                    longitude: parseFloat(project[0].longitude)
+                },
+                detailProject: project[0]
+            });
+        }
+        let index = 2;
+        if (wantHide) {
+            index = 0;
+        }
+        console.log('pok', index, projectId, this.state.modalPreview);
+        // this.animatedInfoRef.snapTo({ index });
+    }
+
     togglePopup(wantHide, projectId) {
         let toValue = heightPopup;
         if (isHiddenPopup) {
@@ -256,8 +305,9 @@ export default class MapNew extends React.Component {
             toValue = heightPopup;
         } else {
             toValue = 0;
-            const project = this.state.listProject.filter(e => e.id === projectId);
+            const project = this.state.listProject.filter(e => e.id == projectId);
             if (project[0]) {
+                // console.log(12333);
                 this.setState({
                     modalPreview: true,
                     currentLocation: {
@@ -268,6 +318,7 @@ export default class MapNew extends React.Component {
                 });
             }
         }
+        // console.log(toValue);
         Animated.spring(
             this.state.popupValue,
             {
@@ -282,21 +333,28 @@ export default class MapNew extends React.Component {
 
     onDrawerSnap(event) {
         const snapPoint = event.nativeEvent;
-        if (snapPoint.index !== 0) {
+        if (snapPoint.index === 3) {
             this.setState({
                 isOpeningAdvance: true
             });
-        } else {
+        }
+        if (snapPoint.index === 0) {
             this.setState({
                 isOpeningAdvance: false
             });
         }
     }
 
+    handleDidFocus = () => {
+        console.log(this.props.navigation.getParam('value', 'ko bit'));
+        // if (value === undefined) return;
+        // this.setState({
+        //     name: value,
+        // });
+    }
+
     onSearch() {
-        // this.animatedViewRef.changePosition(this.state.listSnapPoint[0]);
-        // this.animatedViewRef.snapTo({ index: 0 });
-        this.setState({ isSearching: true });
+        this.setState({ isSearching: true, isLoadingModal: true });
         const {
             name,
             city,
@@ -356,10 +414,8 @@ export default class MapNew extends React.Component {
             return query;
         });
         query += `&page=${page}`;
-        console.log(query);
         getProject(query)
             .then(resJson => {
-                console.log(resJson);
                 if (resJson.data) {
                     this.arrayProject = resJson.data.concat(this.arrayProject);
                     const nextPage = page + 1;
@@ -368,9 +424,10 @@ export default class MapNew extends React.Component {
                         refreshing: false,
                         page: nextPage,
                         isSearching: false,
+                        isLoadingModal: false,
                         isShowResult: true
                     });
-                    this.animatedViewRef.snapTo({ index: 1 });
+                    this.animatedViewRef.snapTo({ index: 3 });
                     return true;
                 }
             })
@@ -411,6 +468,22 @@ export default class MapNew extends React.Component {
         );
     }
 
+    selectKind(kind) {
+        this.setState({ kind });
+        this.onSearch();
+    }
+
+    searchNameProject() {
+        const { navigation: { navigate } } = this.props;
+        const { name } = this.state;
+        navigate('Autocomplete', {
+            fetchOptions: quickSearchName,
+            returnRoute: 'MapScreen',
+            value: name,
+            navigation: this.props.navigation
+        });
+    }
+
     render() {
         const { cities, districts, wards, streets, options } = this.state;
         if (!this.state.loaded || !options.length === 0 || !options.project_types || !cities) {
@@ -421,8 +494,11 @@ export default class MapNew extends React.Component {
                 style={styles.container}
             >
                 <Header navigation={this.props.navigation} title='BẢN ĐỒ DỰ ÁN' />
+                <NavigationEvents
+                    onDidFocus={this.handleDidFocus}
+                />
                 <View style={styles.wrapper}>
-                    <Animated.View
+                    <View
                         style={styles.mapWrapper}
                     >
                         <MapView
@@ -433,19 +509,22 @@ export default class MapNew extends React.Component {
                                 latitudeDelta: 0.0922,
                                 longitudeDelta: 0.0421,
                             }}
+                            // provider='google'
                             mapType="standard"
-                            followsUserLocation
+                            // followsUserLocation
                             showsUserLocation
                             showsMyLocationButton
-                            moveOnMarkerPress
+                            moveOnMarkerPress={false}
                             onRegionChangeComplete={(center) => {
                                 this.fetchProject(center);
                             }}
                             onPress={() => {
                                 this.togglePopup(true);
+                                // this.showInfo(null, true);
                             }}
                             onMarkerSelect={(e) => {
                                 this.togglePopup(false, e.nativeEvent.id);
+                                // this.showInfo(e.nativeEvent.id, false);
                             }}
                         >
                             {this.state.listProject && this.state.listProject.map(project => (
@@ -461,30 +540,57 @@ export default class MapNew extends React.Component {
                                     image={icPin}
                                     onPress={() => {
                                         this.togglePopup(false, project.id);
+                                        // this.showInfo(project.id, false);
                                     }}
                                 />
                             ))}
                         </MapView>
-                    </Animated.View>
+                    </View>
                     <Interactable.View
-                        style={styles.dynamicSearch}
+                        style={{
+                            padding: 10,
+                            borderRadius: 10,
+                            shadowColor: '#3B5458',
+                            shadowOffset: {
+                                width: 0,
+                                height: 3
+                            },
+                            shadowOpacity: 0.2,
+                            elevation: 3,
+                            backgroundColor: 'white',
+                            position: 'absolute',
+                            bottom: heightAdvance,
+                            left: 0,
+                            right: 0,
+                        }}
                         ref={ref => this.animatedViewRef = ref}
                         snapPoints={this.state.listSnapPoint}
-                        initialPosition={{ x: 0, y: 535 }}
+                        initialPosition={this.state.listSnapPoint[0]}
                         verticalOnly
                         onSnap={this.onDrawerSnap.bind(this)}
                     >
-                        <View style={styles.dynamicSearchContent}>
+                        <View
+                            style={{
+                                height,
+                                // zIndex: 3,
+                            }}
+                        >
                             <TouchableOpacity style={styles.btnShowAdvanceSearch}>
-                                {this.state.isSearching ? <Spinner /> :
+                                {this.state.isSearching &&
+                                !this.state.isOpeningAdvance ? <Spinner /> :
                                     <View style={{ flexDirection: 'row' }}>
                                         <TouchableOpacity
                                             onPress={() => {
                                                 let index = 0;
                                                 if (!this.state.isOpeningAdvance) {
-                                                    index = 1;
+                                                    index = 3;
                                                 }
                                                 this.animatedViewRef.snapTo({ index });
+                                            }}
+                                            style={{
+                                                width: '100%',
+                                                justifyContent: 'center',
+                                                alignItems: 'center'
                                             }}
                                         >
                                             <Icon
@@ -497,7 +603,7 @@ export default class MapNew extends React.Component {
                                     </View>
                                 }
                             </TouchableOpacity>
-                            <View>
+                            <View style={{ paddingBottom: 20 }}>
                                 <View style={styles.inputView}>
                                     <TextInput
                                         style={{ height: 40, width: '95%', paddingLeft: 30 }}
@@ -507,7 +613,8 @@ export default class MapNew extends React.Component {
                                         onChangeText={text => this.setState({ name: text })}
                                     />
                                     <TouchableOpacity
-                                        onPress={this.onSearch.bind(this)}
+                                        // onPress={this.onSearch.bind(this)}
+                                        onPress={this.searchNameProject.bind(this)}
                                     >
                                         <Icon
                                             active
@@ -516,6 +623,67 @@ export default class MapNew extends React.Component {
                                         />
                                     </TouchableOpacity>
                                 </View>
+                            </View>
+                            <View style={styles.modalAction}>
+                                <TouchableOpacity
+                                    style={styles.mapQuickAction}
+                                    onPress={() => {
+                                        this.selectKind(GLOBAL.REAL_ESTATE.TO_LIVE);
+                                    }}
+                                >
+                                    <View style={styles.btnMapOrange}>
+                                        <Icon name='ios-home' style={{ color: '#fff' }} />
+                                    </View>
+                                    <Text style={styles.textQuickAction}>
+                                        Bất động sản để ở
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.mapQuickAction}
+                                    onPress={() => {
+                                        this.selectKind(GLOBAL.REAL_ESTATE.TO_SELL);
+                                    }}
+                                >
+                                    <View style={styles.btnMapRed}>
+                                        <Image
+                                            source={icInvest}
+                                            style={{ width: 25, height: 25 }}
+                                        />
+                                    </View>
+                                    <Text style={styles.textQuickAction}>
+                                        Bất động sản đầu tư
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.mapQuickAction}
+                                    onPress={() => {
+                                        this.selectKind(GLOBAL.REAL_ESTATE.TO_REST);
+                                    }}
+                                >
+                                    <View style={styles.btnMapGreen}>
+                                        <Image source={icRest} style={{ width: 25, height: 25 }} />
+                                    </View>
+                                    <Text style={styles.textQuickAction}>
+                                        Bất động sản nghỉ dưỡng
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.mapQuickAction}
+                                    onPress={() => {
+                                        this.selectKind(GLOBAL.REAL_ESTATE.TO_INTERNATIONAL);
+                                    }}
+                                >
+                                    <View style={styles.btnMapBlue}>
+                                        <Icon
+                                            type='MaterialCommunityIcons'
+                                            name='earth'
+                                            style={{ color: '#fff' }}
+                                        />
+                                    </View>
+                                    <Text style={styles.textQuickAction}>
+                                        Bất động sản quốc tế
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
                             <TouchableOpacity
                                 style={styles.btnBtnIconSpecial}
@@ -584,23 +752,8 @@ export default class MapNew extends React.Component {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-                            {/*<View style={{ paddingTop: 10 }}>*/}
-                                {/*<SwitchSelector*/}
-                                    {/*initial={0}*/}
-                                    {/*onPress={value => this.setState({ isShowResult: value })}*/}
-                                    {/*textColor='#21a1fc' //'#7a44cf'*/}
-                                    {/*selectedColor='white'*/}
-                                    {/*buttonColor='#F58319'*/}
-                                    {/*borderColor='#cecece'*/}
-                                    {/*hasPadding*/}
-                                    {/*options={[*/}
-                                        {/*{ label: 'Cài đặt', value: false },*/}
-                                        {/*{ label: 'Kết quả', value: true }*/}
-                                    {/*]}*/}
-                                {/*/>*/}
-                            {/*</View>*/}
                             {!this.state.isShowResult &&
-                            <ScrollView>
+                            <ScrollView style={{ paddingVertical: 10 }}>
                                 <Text style={styles.titleSection}>Kiểu</Text>
                                 <View style={styles.rowOption}>
                                     <View
@@ -890,7 +1043,9 @@ export default class MapNew extends React.Component {
                                             placeholder='Diện tích xây dựng'
                                             underlineColorAndroid='transparent'
                                             value={this.state.buildArea}
-                                            onChangeText={text => this.setState({ buildArea: text })}
+                                            onChangeText={
+                                                text => this.setState({ buildArea: text })
+                                            }
                                             keyboardType={'numeric'}
                                         />
                                     </View>
@@ -928,7 +1083,7 @@ export default class MapNew extends React.Component {
                                     keyExtractor={this._keyExtractor}
                                     numColumns={2}
                                     data={this.state.arrFeature}
-                                    contentContainerStyle={{ width: '100%', paddingBottom: 50 }}
+                                    contentContainerStyle={{ width: '100%', paddingVertical: 10 }}
                                     renderItem={({ item }) => (
                                         <View
                                             key={item.key}
@@ -948,13 +1103,16 @@ export default class MapNew extends React.Component {
                                     )}
                                 />
                             </ScrollView>}
-                            {this.state.isShowResult && this.state.listResult.length === 0 && dataNotFound()}
                             {this.state.isShowResult &&
                             <FlatList
-                                contentContainerStyle={{ width: '100%', paddingBottom: 50 }}
+                                ListEmptyComponent={() => {
+                                    return dataNotFound();
+                                }}
+                                contentContainerStyle={{ width: '100%', paddingVertical: 10 }}
                                 data={this.state.listResult}
                                 extraData={this.state}
                                 keyExtractor={this.keyExtractor}
+                                refreshing={this.state.refreshing}
                                 refreshControl={
                                     <RefreshControl
                                         refreshing={this.state.refreshing}
@@ -1003,7 +1161,8 @@ export default class MapNew extends React.Component {
                                                 note
                                                 numberOfLines={1}
                                             >
-                                                {item.min_price} Tr - {item.max_price} tr/m2
+                                                {formatMoney(item.data.price_unit_min, 0)} tr
+                                                - {formatMoney(item.data.price_unit_max, 0)}tr/m2
                                             </Text>
                                         </TouchableOpacity>
                                         </Body>
@@ -1025,7 +1184,33 @@ export default class MapNew extends React.Component {
                             />}
                         </View>
                     </Interactable.View>
+                    {/*<Interactable.View*/}
+                    {/*ref={ref => this.animatedInfoRef = ref}*/}
+                    {/*verticalOnly*/}
+                    {/*snapPoints={[*/}
+                    {/*{ x: 0, y: 0 },*/}
+                    {/*// { x: 0, y: -220 },*/}
+                    {/*{ x: 0, y: -320 },*/}
+                    {/*{ x: 0, y: -height },*/}
+                    {/*]}*/}
+                    {/*initialPosition={{ x: 0, y: 0 }}*/}
+                    {/*style={[{*/}
+                    {/*position: 'absolute',*/}
+                    {/*bottom: heightAdvance - 205,*/}
+                    {/*left: 0,*/}
+                    {/*right: 0,*/}
+                    {/*backgroundColor: 'white',*/}
+                    {/*height*/}
+                    {/*}]}*/}
+                    {/*>*/}
+                    {/*{this.state.modalPreview &&*/}
+                    {/*<InfoProject*/}
+                    {/*project={this.state.detailProject}*/}
+                    {/*navigation={this.props.navigation}*/}
+                    {/*/>}*/}
+                    {/*</Interactable.View>*/}
                 </View>
+
                 <Animated.View
                     style={[styles.popupProject,
                         { transform: [{ translateY: this.state.popupValue }] }]}
@@ -1036,6 +1221,16 @@ export default class MapNew extends React.Component {
                         navigation={this.props.navigation}
                     />}
                 </Animated.View>
+                <Modal
+                    isVisible={this.state.isLoadingModal && this.state.isOpeningAdvance}
+                    onSwipe={() => this.setState({ isLoadingModal: false })}
+                    swipeDirection="left"
+                    transparent
+                    onBackButtonPress={() => this.setState({ isLoadingModal: false })}
+                    onBackdropPress={() => this.setState({ isLoadingModal: false })}
+                >
+                    {loading()}
+                </Modal>
             </View>
         );
     }

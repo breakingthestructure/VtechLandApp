@@ -259,7 +259,7 @@ export default class CalcDebt extends React.Component {
             }
             totalMonthly = interestRateMonthly + payRootMonthly;
             rootHavePay = rootHavePay - payRootMonthly;
-            let payDay = getDayNextMonth(date, i);
+            const payDay = getDayNextMonth(date, i);
             result.push(
                 { key: payDay },
                 { key: formatMoney(payRootMonthly, 0) },
@@ -561,7 +561,7 @@ export default class CalcDebt extends React.Component {
                                 }}
                             />
                             <TextInput
-                                style={{ fontSize: 12, marginLeft: 10 }}
+                                style={{ fontSize: 12, marginLeft: 10, width: '80%' }}
                                 placeholder='THỜI GIAN ÂN HẠN'
                                 placeholderTextColor='#999999'
                                 underlineColorAndroid='transparent'

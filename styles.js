@@ -1210,31 +1210,31 @@ export default StyleSheet.create({
     },
     //MapNewJS
     mapWrapper: {
-        backgroundColor: '#FFFFFF',
-        flex: 4
-    },
-    mapContent: { width, flex: 1 },
-    dynamicSearch: {
-        padding: 10,
-        borderRadius: 10,
-        shadowColor: '#3B5458',
-        shadowOffset: {
-            width: 0,
-            height: 3
-        },
-        shadowOpacity: 0.2,
-        elevation: 3,
         backgroundColor: 'white',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
         flex: 1
     },
-    dynamicSearchContent: {
-        height: 600,
-        zIndex: 3
-    },
+    mapContent: { width, flex: 1 },
+    // dynamicSearch: {
+    //     padding: 10,
+    //     borderRadius: 10,
+    //     shadowColor: '#3B5458',
+    //     shadowOffset: {
+    //         width: 0,
+    //         height: 3
+    //     },
+    //     shadowOpacity: 0.2,
+    //     elevation: 3,
+    //     backgroundColor: 'white',
+    //     position: 'absolute',
+    //     bottom: -540,
+    //     left: 0,
+    //     right: 0,
+    //     // flex: 9
+    // },
+    // dynamicSearchContent: {
+    //     height: 600,
+    //     zIndex: 3,
+    // },
     btnShowAdvanceSearch: {
         marginTop: 5,
         flexDirection: 'row',
@@ -1263,5 +1263,5 @@ export default StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 5,
         left: 0
-    }
+    },
 });

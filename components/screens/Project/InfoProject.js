@@ -2,94 +2,98 @@ import React, { Component } from 'react';
 import {
     Image,
     ScrollView,
-    View,
     Text,
     TouchableOpacity,
+    View
 } from 'react-native';
-import Swiper from 'react-native-swiper';
 import FastImage from 'react-native-fast-image';
 import { createImageProgress } from 'react-native-image-progress';
 import { Spinner } from 'native-base';
-import styles from './../../../styles';
+import Swiper from 'react-native-swiper';
 import {
-    NO_IMAGE,
-} from './../../../Globals';
+    dataNotFound,
+    getLinkImage,
+    loading,
+} from './../../../Helpers';
+import styles from '../../../styles';
+import { NO_IMAGE } from '../../../Globals';
 import SetCalendar from './SetCalendar';
 import CalcDebt from './CalcDebt';
 import SupportProject from './SupportProject';
 import DetailProject from './DetailProject';
-import {
-    dataNotFound,
-    getLinkImage,
-    loading
-} from '../../../Helpers';
-import Header from '../Home/Header';
 import ActionProject from './ActionProject';
 import News from './News';
+import icTitle from '../../../icons/ic_title.png';
 
 const ImageProgress = createImageProgress(FastImage);
 
-export default class MainProject extends Component {
-    handleBackPress = () => { //eslint-disable-line
-        // this.props.navigation.pop();
-        return true;
-    }
+export default class InfoProject extends Component {
+    keyExtractor = (item) => item.toString(); //eslint-disable-line
 
     constructor(props) {
         super(props);
         this.state = {
-            initialPage: 0,
-            activeTab: 0,
-            project: null,
+            listImage: [],
+            index: 0,
             loaded: false,
-            tab: 1,
-            videoId: '',
+            imagePreview: false,
+            tab: 1
         };
-        this.onChangeTab = this.onChangeTab.bind(this);
     }
 
     componentDidMount() {
-        const { navigation } = this.props;
-        const project = navigation.getParam('project', null);
-        const activeTab = navigation.getParam('activeTab', null);
-        if (activeTab) {
+        setTimeout(() => {
+            this.setState({ loaded: true });
+        }, 200);
+        if (this.props.project.images && this.props.project.images.project_feature) {
             this.setState({
-                project,
-                loaded: false,
-            });
-            this.setState({
-                tab: activeTab,
-                loaded: true,
-            });
-        }
-        if (project) {
-            this.setState({
-                project,
-                loaded: true,
+                listImage: this.props.project.images.project_feature.map((item) => {
+                    return { url: item };
+                }),
             });
         }
     }
 
-    onChangeTab(page) {
-        // this.refs._scrollView.scrollTo({ x: 0, y: 0, animated: true });
-        this.setState({ tab: page });
+    componentWillReceiveProps(props) {
+        if (props.project.images && props.project.images.project_feature) {
+            this.setState({
+                listImage: props.project.images.project_feature.map((item) => {
+                    return { url: item };
+                })
+            });
+        }
+    }
+
+    onDisplayImage(index) {
+        this.setState({
+            index,
+            imagePreview: true
+        });
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            loaded: false
+        });
     }
 
     render() {
-        const { project } = this.state;
         if (!this.state.loaded) {
             return loading();
         }
+        const { project } = this.props;
         if (!project) {
             return dataNotFound();
         }
         return (
-            <View style={styles.container}>
-                <Header
-                    navigation={this.props.navigation}
-                    title={project.name}
-                    back={'popToTop'}
-                />
+            <View style={{ paddingBottom: 80 }}>
+                <View style={{ flexDirection: 'row', padding: 10 }}>
+                    <View style={{ paddingTop: 5 }}>
+                        <Image source={icTitle} style={styles.icTitle} />
+                    </View>
+
+                    <Text style={styles.title} note numberOfLines={1}>{project.name}</Text>
+                </View>
                 <ScrollView ref='_scrollView'>
                     <View style={styles.slideProject}>
                         {project.images.project_feature &&

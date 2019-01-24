@@ -1,6 +1,35 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+    FlatList,
+    Image,
+    RefreshControl,
+    ScrollView,
+    StyleSheet,
+    Switch,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import Interactable from 'react-native-interactable';
+import {
+    Body,
+    Button,
+    Icon,
+    Left,
+    ListItem,
+    Picker,
+    Right,
+    Spinner,
+    Thumbnail
+} from "native-base";
+import GLOBAL, { NO_IMAGE } from "./Globals";
+import icInvest from "./icons/invest.png";
+import icRest from "./icons/rest.png";
+import {
+    dataNotFound,
+    formatMoney
+} from "./Helpers";
 
 export default class SwipeableCard extends Component {
     render() {

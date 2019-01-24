@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^8.0.0",
+    "axios": "^0.18.0",
     "eslint": "^5.9.0",
     "native-base": "^2.8.1",
+    "prop-types": "^15.6.2",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
     "react-native-autocomplete-input": "^3.6.0",

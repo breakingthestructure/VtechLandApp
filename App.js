@@ -59,6 +59,7 @@ import CategoryPartner from './components/screens/Option/CategoryPartner';
 import Test from './Test';
 import MainProject from './components/screens/Project/MainProject';
 import MapNew from './components/screens/Project/MapNew';
+import Autocomplete from './components/Autocomplete';
 
 console.disableYellowBox = true;
 
@@ -82,7 +83,7 @@ if (Platform.OS === 'ios') {
 const ProjectStack = createStackNavigator(
     {
         MapScreen: {
-            screen: MapProject
+            screen: MapNew
         },
         BuildingScreen: {
             screen: Building
@@ -223,14 +224,14 @@ const LeftDrawer = createDrawerNavigator(
             screen: PartnerStack
         },
         TestScreen: {
-            screen: MapNew
+            screen: Autocomplete
         },
-        // MainProjectScreen: {
-        //     screen: MainProject
-        // },
+        Autocomplete: {
+            screen: Autocomplete
+        },
     },
     {
-        initialRouteName: 'TestScreen',
+        initialRouteName: 'MapScreen',
         contentComponent: Menu,
         getCustomActionCreators: (route, stateKey) => {
             return {

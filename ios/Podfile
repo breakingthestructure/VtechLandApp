@@ -8,6 +8,7 @@ target 'TechLandNative' do
       'Core',
       'RCTImage',
       'ART',
+      'CxxBridge'
   ]
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
   pod 'ReactNativeKeyboardManager', :path => '../node_modules/react-native-keyboard-manager'
@@ -22,4 +23,18 @@ target 'TechLandNative' do
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
   pod 'react-native-fast-image', :path => '../node_modules/react-native-fast-image'
   pod 'Interactable', :path => '../node_modules/react-native-interactable'
+  # Third party deps podspec link
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      if target.name == "React"
+        target.remove_from_project
+      end
+    end
+end
+install! 'cocoapods',
+         :deterministic_uuids => false
